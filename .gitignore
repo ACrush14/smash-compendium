@@ -1,0 +1,25 @@
+# deps
+node_modules/
+
+# next.js
+.next/
+out/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# prisma
+prisma/migrations/
+
+# media gerada (binários grandes)
+public/assets/fighters/
+
+# typescript build cache
+tsconfig.tsbuildinfo
+
+# misc
+.DS_Store
+*.log
+Thumbs.db

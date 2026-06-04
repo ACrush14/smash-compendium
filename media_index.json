@@ -1,0 +1,10 @@
+{
+  "_readme": "Mapeamento de entidades para clipes de mídia. Cada chave é um ID único no formato 'Fighter_Tipo'. O yt-dlp baixa apenas o trecho [start, end] e o ffmpeg converte para VP9 WebM.",
+  "Ness_Select": {
+    "url":     "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start":   "00:45",
+    "end":     "00:49",
+    "fighter": "Ness",
+    "field":   "selectAnimationUrl"
+  }
+}

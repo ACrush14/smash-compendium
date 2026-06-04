@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Franchise {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  svgIconUrl  String?
+  fighters    Fighter[]
+  games       Game[]
+  stages      Stage[]
+  musicTracks Music[]
+}
+
+model Fighter {
+  id                 String        @id @default(cuid())
+  rosterNumber       String
+  name               String        @unique
+  franchiseId        String
+  imageUrl           String?
+  selectAnimationUrl String?       @db.Text
+  // i18n curadoria
+  curatorOverviewEn  String?       @db.Text
+  curatorOverviewPt  String?       @db.Text
+  curatorOverviewJp  String?       @db.Text
+  franchise          Franchise     @relation(fields: [franchiseId], references: [id])
+  bios               FighterBio[]
+  works              FighterWork[]
+  collectibles       Collectible[]
+
+  @@index([franchiseId])
+}
+
+model FighterBio {
+  id                  String  @id @default(cuid())
+  fighterId           String
+  smashGameVersion    String
+  contentEn           String  @db.Text
+  contentPt           String? @db.Text
+  contentJp           String? @db.Text
+  contentJpTranslated String? @db.Text  // deprecated — mantido para compat
+  contentJpEn         String? @db.Text
+  fighter             Fighter @relation(fields: [fighterId], references: [id], onDelete: Cascade)
+
+  @@unique([fighterId, smashGameVersion])
+}
+
+model Game {
+  id           String        @id @default(cuid())
+  titleEn      String
+  titleJp      String?
+  releaseDate  DateTime?
+  platform     String
+  franchiseId  String
+  franchise    Franchise     @relation(fields: [franchiseId], references: [id])
+  fighterWorks FighterWork[]
+}
+
+model FighterWork {
+  fighterId String
+  gameId    String
+  isDebut   Boolean @default(false)
+  fighter   Fighter @relation(fields: [fighterId], references: [id], onDelete: Cascade)
+  game      Game    @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@id([fighterId, gameId])
+}
+
+model Collectible {
+  id               String   @id @default(cuid())
+  fighterId        String?
+  type             String
+  smashGameVersion String
+  name             String
+  nameJp           String?
+  description      String?  @db.Text   // legacy — mantido para compat
+  descriptionNa    String?  @db.Text
+  descriptionEu    String?  @db.Text
+  descriptionEn    String?  @db.Text
+  descriptionPt    String?  @db.Text
+  descriptionJp    String?  @db.Text
+  descriptionJpEn  String?  @db.Text
+  sourceType       String   @default("Official")
+  assetRenderUrl   String?
+  fighter          Fighter? @relation(fields: [fighterId], references: [id], onDelete: SetNull)
+
+  @@index([type, smashGameVersion])
+}
+
+model Stage {
+  id                String     @id @default(cuid())
+  name              String     @unique
+  franchiseId       String
+  smashDebutVersion String
+  description       String?    @db.Text
+  franchise         Franchise  @relation(fields: [franchiseId], references: [id])
+  defaultTracks     StageMusic[]
+}
+
+model Music {
+  id          String     @id @default(cuid())
+  title       String
+  franchiseId String
+  arranger    String?
+  isRemix     Boolean    @default(false)
+  franchise   Franchise  @relation(fields: [franchiseId], references: [id])
+  stages      StageMusic[]
+}
+
+model StageMusic {
+  stageId String
+  musicId String
+  stage   Stage @relation(fields: [stageId], references: [id], onDelete: Cascade)
+  music   Music @relation(fields: [musicId], references: [id], onDelete: Cascade)
+
+  @@id([stageId, musicId])
+}
