@@ -66,14 +66,23 @@ interface SectionImage {
 
 interface SpecialImage {
   type:     "SPRITE" | "SPIRIT";
+  subtype?: "sprite-origin" | "clay-model" | "art-ssb64"; // diferencia dentro do tipo SPRITE
   imageUrl: string;
   caption:  string;
+  smashGameVersion?: string; // para clay (SSBM) e arte SSB64 (SSB64)
+}
+
+interface FandomImage {
+  imageUrl: string;
+  caption:  string;
+  section:  string; // "renders" | "sprites" | "victory" | "other"
 }
 
 interface ImageResult {
   renderUrl:     string | null;
   sectionImages: SectionImage[];
   specialImages: SpecialImage[];
+  fandomImages:  FandomImage[];  // novos — do earthbound.fandom.com
 }
 
 // ─── 1. Render SSBU (infobox da página SSBU) ──────────────────────────────────
@@ -161,14 +170,26 @@ async function fetchSpecialImages(name: string): Promise<SpecialImage[]> {
   const seen = new Set<string>();
 
   // Seções-alvo → tipo de colecionável
+  // "Artwork" inclui clay models e renders de época
   const TARGET_SECTIONS = new Map<string, "SPRITE" | "SPIRIT">([
     ["Background", "SPRITE"],
     ["Origin",     "SPRITE"],
+    ["Artwork",    "SPRITE"],   // clay model, renders históricos
     ["Spirit",     "SPIRIT"],
     ["Spirits",    "SPIRIT"],
   ]);
 
+  // Quantas imagens capturar por seção (Artwork pode ter várias)
+  const SECTION_LIMIT = new Map<string, number>([
+    ["Background", 1],
+    ["Origin",     1],
+    ["Artwork",    4],   // clay model + renders de época (até 4)
+    ["Spirit",     1],
+    ["Spirits",    1],
+  ]);
+
   let currentType:  "SPRITE" | "SPIRIT" | null = null;
+  let currentSection = "";
   let countInSection = 0;
 
   $(".mw-parser-output").children().each((_i, el) => {
@@ -177,6 +198,7 @@ async function fetchSpecialImages(name: string): Promise<SpecialImage[]> {
     if (tag === "h2") {
       const headId   = $(el).find("span.mw-headline").attr("id") ?? "";
       const headText = $(el).find("span.mw-headline").text().trim();
+      currentSection = headId || headText;
       currentType    = TARGET_SECTIONS.get(headId) ?? TARGET_SECTIONS.get(headText) ?? null;
       countInSection = 0;
       return;
@@ -184,8 +206,8 @@ async function fetchSpecialImages(name: string): Promise<SpecialImage[]> {
 
     if (!currentType) return;
 
-    // Para sprites de origem, limitamos a 1 imagem (a mais proeminente da seção)
-    if (countInSection >= 1) return;
+    const limit = SECTION_LIMIT.get(currentSection) ?? 1;
+    if (countInSection >= limit) return;
 
     $(el).find("img").each((_j, imgEl) => {
       if (countInSection >= 1) return;
@@ -208,6 +230,80 @@ async function fetchSpecialImages(name: string): Promise<SpecialImage[]> {
     });
   });
 
+  return results;
+}
+
+// ─── 4. Fandom Wiki — renders, sprites e victory screens ─────────────────────
+//
+//  Alvo: https://earthbound.fandom.com/wiki/Ness/Super_Smash_Bros.
+//  A wiki do Fandom serve HTML estático compatível com cheerio.
+//  Seções capturadas: galeria de renders, sprites e tela de vitória.
+
+async function fetchFandomImages(name: string): Promise<FandomImage[]> {
+  // Mapa de personagem → URL da página Fandom
+  // Estende facilmente para outros lutadores com origem em franquias com wiki no Fandom
+  const FANDOM_URLS: Record<string, string> = {
+    Ness:   "https://earthbound.fandom.com/wiki/Ness/Super_Smash_Bros.",
+    Lucas:  "https://earthbound.fandom.com/wiki/Lucas/Super_Smash_Bros.",
+  };
+
+  const pageUrl = FANDOM_URLS[name];
+  if (!pageUrl) {
+    log.warn(`  Fandom: nenhuma URL mapeada para "${name}" — pulando.`);
+    return [];
+  }
+
+  log.step(`Fandom — ${pageUrl}`);
+
+  const $ = await fetchHtml(pageUrl);
+  const results: FandomImage[] = [];
+  const seen = new Set<string>();
+
+  // Cabeçalhos que identificam seções de interesse
+  const SECTION_KEYWORDS = [
+    { re: /render|artwork|art/i,    section: "renders"  },
+    { re: /sprite/i,               section: "sprites"  },
+    { re: /victory|win/i,          section: "victory"  },
+    { re: /screenshot|in.game/i,   section: "ingame"   },
+    { re: /gallery/i,              section: "gallery"  },
+  ];
+
+  let currentSection = "other";
+
+  $(".mw-parser-output, .page-content").children().each((_i, el) => {
+    const tag  = $(el).prop("tagName")?.toLowerCase() ?? "";
+    const text = $(el).text().trim().toLowerCase();
+
+    // Detecta seção atual pelo heading
+    if (tag === "h2" || tag === "h3") {
+      const matched = SECTION_KEYWORDS.find(({ re }) => re.test(text));
+      currentSection = matched?.section ?? "other";
+      return;
+    }
+
+    // Captura imagens em figuras, galeria e thumbs
+    $(el).find("img, [data-src]").each((_j, imgEl) => {
+      const raw     = $(imgEl).attr("data-src") ?? $(imgEl).attr("src");
+      const resolved = resolveImg(raw);
+      if (!resolved || seen.has(resolved)) return;
+
+      // Filtra ícones muito pequenos (botões de UI do Fandom, etc.)
+      const width = parseInt($(imgEl).attr("width") ?? "200", 10);
+      if (width < 80) return;
+
+      // Filtra URLs de UI do Fandom (avatares, badges, etc.)
+      if (resolved.includes("wiki/Special") || resolved.includes("extensions/")) return;
+
+      const caption = $(imgEl).closest("figure, .thumbinner, .wikia-gallery-item")
+        .find("figcaption, .thumbcaption, .lightbox-caption")
+        .first().text().trim() || $(imgEl).attr("alt") || "";
+
+      seen.add(resolved);
+      results.push({ imageUrl: resolved, caption: cleanText(caption), section: currentSection });
+    });
+  });
+
+  log.ok(`  Fandom: ${results.length} imagens encontradas`);
   return results;
 }
 
@@ -245,6 +341,16 @@ function printResults(result: ImageResult): void {
   }
   if (!result.specialImages.length)
     console.log(`  \x1b[33m  Seções Background/Origin/Spirit não encontradas na página.\x1b[0m`);
+
+  console.log(`\n\x1b[36m${SEP}\x1b[0m`);
+  console.log(`\x1b[36m FANDOM (${result.fandomImages.length})\x1b[0m`);
+  console.log(`\x1b[36m${SEP}\x1b[0m`);
+  for (const img of result.fandomImages) {
+    console.log(`  \x1b[32m[${img.section}]\x1b[0m ${img.caption || "(sem legenda)"}`);
+    console.log(`     ${img.imageUrl.slice(0, 80)}`);
+  }
+  if (!result.fandomImages.length)
+    console.log(`  \x1b[33m  Nenhuma imagem encontrada no Fandom para "${FIGHTER_NAME}".\x1b[0m`);
 }
 
 // ─── Gravação no banco ────────────────────────────────────────────────────────
@@ -299,18 +405,60 @@ async function saveImages(result: ImageResult): Promise<void> {
     }
   }
 
-  // 4. Sprite de origem e Spirit — upsert como Collectible
+  // 4b. Imagens do Fandom — upsert como Collectible tipo SPRITE com sourceType=Fandom
+  for (let i = 0; i < result.fandomImages.length; i++) {
+    const fi  = result.fandomImages[i];
+    if (!fi) continue;
+    const id  = `FANDOM-${FIGHTER_NAME}-${fi.section}-${i}`.slice(0, 255);
+    await db.collectible.upsert({
+      where: { id },
+      create: {
+        id, type: "SPRITE",
+        smashGameVersion: "FANDOM",
+        name:             `${FIGHTER_NAME} — ${fi.section} (Fandom)`,
+        description:      fi.caption || null,
+        assetRenderUrl:   fi.imageUrl,
+        sourceType:       "Fandom",
+        fighterId:        fighter.id,
+      },
+      update: { assetRenderUrl: fi.imageUrl, description: fi.caption || null },
+    });
+    log.ok(`  Fandom [${fi.section}] #${i} "${FIGHTER_NAME}" → salvo.`);
+  }
+
+  // 4. Sprite, Artwork (clay/arte SSB64) e Spirit — upsert como Collectible
   for (const special of result.specialImages) {
-    const id = `${special.type}-${FIGHTER_NAME}-origin`.slice(0, 255);
+    // Determina nome, versão e ID com base no subtype
+    let id: string;
+    let collName: string;
+    let gameVersion: string;
+
+    if (special.subtype === "clay-model") {
+      id          = `SPRITE-${FIGHTER_NAME}-clay`.slice(0, 255);
+      collName    = `${FIGHTER_NAME} — Clay Model (Melee)`;
+      gameVersion = "SSBM";
+    } else if (special.subtype === "art-ssb64") {
+      id          = `SPRITE-${FIGHTER_NAME}-art64`.slice(0, 255);
+      collName    = `${FIGHTER_NAME} — Arte SSB64`;
+      gameVersion = "SSB64";
+    } else if (special.type === "SPIRIT") {
+      id          = `SPIRIT-${FIGHTER_NAME}-ssbu`.slice(0, 255);
+      collName    = `${FIGHTER_NAME} — Spirit`;
+      gameVersion = "SSBU";
+    } else {
+      // sprite-origin padrão
+      id          = `SPRITE-${FIGHTER_NAME}-origin`.slice(0, 255);
+      collName    = `${FIGHTER_NAME} — Sprite Origem`;
+      gameVersion = "ORIGIN";
+    }
+
     await db.collectible.upsert({
       where: { id },
       create: {
         id,
         type:             special.type,
-        smashGameVersion: special.type === "SPRITE" ? "ORIGIN" : "SSBU",
-        name:             special.type === "SPRITE"
-          ? `${FIGHTER_NAME} — Sprite EarthBound`
-          : `${FIGHTER_NAME} — Spirit`,
+        smashGameVersion: gameVersion,
+        name:             collName,
         description:      special.caption || null,
         assetRenderUrl:   special.imageUrl,
         sourceType:       special.type === "SPRITE" ? "Origin" : "Official",
@@ -318,7 +466,7 @@ async function saveImages(result: ImageResult): Promise<void> {
       },
       update: { assetRenderUrl: special.imageUrl, description: special.caption || null },
     });
-    log.ok(`  ${special.type} "${FIGHTER_NAME}" → imagem salva.`);
+    log.ok(`  ${special.type}/${special.subtype ?? "origin"} "${FIGHTER_NAME}" → imagem salva.`);
   }
 }
 
@@ -326,13 +474,14 @@ async function saveImages(result: ImageResult): Promise<void> {
 
 async function main(): Promise<void> {
   try {
-    const [renderUrl, sectionImages, specialImages] = await Promise.all([
+    const [renderUrl, sectionImages, specialImages, fandomImages] = await Promise.all([
       fetchFighterRender(FIGHTER_NAME),
       fetchSectionImages(FIGHTER_NAME),
       fetchSpecialImages(FIGHTER_NAME),
+      fetchFandomImages(FIGHTER_NAME),
     ]);
 
-    const result: ImageResult = { renderUrl, sectionImages, specialImages };
+    const result: ImageResult = { renderUrl, sectionImages, specialImages, fandomImages };
     printResults(result);
 
     if (SAVE_TO_DB) {
