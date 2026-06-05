@@ -27,7 +27,10 @@ export interface SerializedBio {
 export interface SerializedCollectible {
   id:               string;
   name:             string;
+  nameJp?:          string | null;
   description:      string | null;
+  descriptionPt?:   string | null;
+  descriptionJp?:   string | null;
   smashGameVersion: string;
 }
 
@@ -486,25 +489,29 @@ export default function FighterDataZone({
                       {lang === "JP" || lang === "JP_EN" ? "フィギュア" : lang === "PT" ? "Troféus" : "Trophies"}
                     </span>
 
-                    {eraTrophy.map((t) =>
-                      t.description ? (
+                    {eraTrophy.map((t) => {
+                      const desc = lang === "PT" ? (t.descriptionPt || t.description) : lang.startsWith("JP") ? (t.descriptionJp || t.description) : t.description;
+                      const title = lang === "PT" ? (t.name) : lang.startsWith("JP") ? (t.nameJp || t.name) : t.name;
+                      return desc ? (
                         <div key={t.id} className="border-l-2 pl-4" style={{ borderLeftColor: `${meta?.eraTextColor}30` }}>
                           <p className="font-mono text-[9px] uppercase tracking-wider mb-1.5 opacity-70" style={{ color: meta?.eraTextColor }}>
-                            {t.name}
+                            {title}
                           </p>
-                          <p className="text-xs leading-relaxed text-slate-300 italic">{t.description}</p>
+                          <p className="text-xs leading-relaxed text-slate-300 italic">{desc}</p>
                         </div>
-                      ) : null
-                    )}
+                      ) : null;
+                    })}
 
-                    {eraStic.map((s) =>
-                      s.description ? (
+                    {eraStic.map((s) => {
+                      const desc = lang === "PT" ? (s.descriptionPt || s.description) : lang.startsWith("JP") ? (s.descriptionJp || s.description) : s.description;
+                      const title = lang === "PT" ? (s.name) : lang.startsWith("JP") ? (s.nameJp || s.name) : s.name;
+                      return desc ? (
                         <div key={s.id} className="border-l-2 border-purple-500/20 pl-4">
-                          <p className="font-mono text-[9px] uppercase tracking-wider text-purple-400/70 mb-1.5">{s.name}</p>
-                          <p className="text-xs leading-relaxed text-slate-300 italic">{s.description}</p>
+                          <p className="font-mono text-[9px] uppercase tracking-wider text-purple-400/70 mb-1.5">{title}</p>
+                          <p className="text-xs leading-relaxed text-slate-300 italic">{desc}</p>
                         </div>
-                      ) : null
-                    )}
+                      ) : null;
+                    })}
                   </div>
                 )}
 

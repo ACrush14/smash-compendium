@@ -247,8 +247,8 @@ export default async function FighterPage({ params }: PageProps) {
     contentJpTranslated: b.contentJpTranslated,
   }));
 
-  const serializeCollectible = (c: { id: string; name: string; description?: string | null; smashGameVersion: string }): SerializedCollectible => ({
-    id: c.id, name: c.name, description: c.description ?? null, smashGameVersion: c.smashGameVersion,
+  const serializeCollectible = (c: { id: string; name: string; nameJp?: string | null; description?: string | null; descriptionPt?: string | null; descriptionJp?: string | null; smashGameVersion: string }): SerializedCollectible => ({
+    id: c.id, name: c.name, nameJp: c.nameJp ?? null, description: c.description ?? null, descriptionPt: c.descriptionPt ?? null, descriptionJp: c.descriptionJp ?? null, smashGameVersion: c.smashGameVersion,
   });
 
   const trophiesMapSerialized: Record<string, SerializedCollectible[]> = {};
