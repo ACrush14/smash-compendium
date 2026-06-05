@@ -281,6 +281,7 @@ export default async function FighterPage({ params }: PageProps) {
   const dataZoneData: FighterDataZoneData = {
     franchiseName:     fighter.franchise.name,
     curatorOverviewEn: fighter.curatorOverviewEn ?? null,
+    curatorOverviewJp: fighter.curatorOverviewJp ?? null,
     erasToShow,
     bios:              serializedBios,
     trophiesMap:       trophiesMapSerialized,

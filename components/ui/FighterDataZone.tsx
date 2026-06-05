@@ -49,6 +49,7 @@ export interface WorkGame {
 export interface FighterDataZoneProps {
   franchiseName:     string;
   curatorOverviewEn: string | null;
+  curatorOverviewJp: string | null;
   erasToShow:        string[];
   bios:              SerializedBio[];
   trophiesMap:       Record<string, SerializedCollectible[]>;
@@ -70,11 +71,6 @@ interface PtCache {
   bios:     Record<string, string>; // keyed by smashGameVersion
 }
 
-// ─── Japanese placeholder ─────────────────────────────────────────────────────
-
-const JP_LOREM =
-  "吾輩は猫である。名前はまだ無い。どこで生れたかとんと見当がつかぬ。何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。吾輩はここで始めて人間というものを見た。しかもあとで聞くとそれは書生という人間中で一番獰悪な種族であったそうだ。この書生というのは時々我々を捕えて煮て食うという話である。しかしその当時は何という考もなかったから別段恐しいとも思わなかった。ただ彼の掌に載せられてスーと持ち上げられた時何だかふわふわした感じがあったばかりである。掌の上で少し落ち付いて書生の顔を見たのがいわゆる人間というものの見始であろう。";
-
 // ─── Language helpers ─────────────────────────────────────────────────────────
 
 function getBioText(
@@ -82,17 +78,17 @@ function getBioText(
   lang: Lang,
   ptCache: PtCache | null,
 ): string | null {
-  if (!bio) return lang === "JP" || lang === "JP_EN" ? JP_LOREM : null;
+  if (!bio) return null;
 
   switch (lang) {
     case "PT":
-      return bio.contentPt
-        ?? ptCache?.bios[bio.smashGameVersion]
+      return ptCache?.bios[bio.smashGameVersion]
+        ?? bio.contentPt
         ?? bio.contentEn;
     case "JP":
-      return bio.contentJp ?? JP_LOREM;
+      return bio.contentJp ?? null;
     case "JP_EN":
-      return bio.contentJpEn ?? bio.contentJpTranslated ?? JP_LOREM;
+      return bio.contentJpEn ?? bio.contentJpTranslated ?? null;
     default:
       return bio.contentEn;
   }
@@ -277,6 +273,7 @@ function EraHeader({ gameVer, isDebut, lang }: { gameVer: string; isDebut: boole
 export default function FighterDataZone({
   franchiseName,
   curatorOverviewEn,
+  curatorOverviewJp,
   erasToShow,
   bios,
   trophiesMap,
@@ -346,7 +343,7 @@ export default function FighterDataZone({
 
   // ── Curator text resolved by lang ────────────────────────────────────────────
   const curatorText =
-    lang === "JP" || lang === "JP_EN" ? JP_LOREM
+    lang === "JP" || lang === "JP_EN" ? (curatorOverviewJp ?? curatorOverviewEn)
     : lang === "PT"                   ? (ptCache?.curator ?? curatorOverviewEn)
     :                                   curatorOverviewEn;
 
@@ -476,11 +473,7 @@ export default function FighterDataZone({
                     </div>
                   ) : bioText ? (
                     <p className="text-sm leading-relaxed text-slate-200">{bioText}</p>
-                  ) : (
-                    <p className="font-mono text-[10px] italic text-slate-700">
-                      Biografia não catalogada para esta era.
-                    </p>
-                  )}
+                  ) : null}
                 </div>
 
                 {(eraTrophy.length > 0 || eraStic.length > 0) && (
@@ -490,7 +483,9 @@ export default function FighterDataZone({
                     </span>
 
                     {eraTrophy.map((t) => {
-                      const desc = lang === "PT" ? (t.descriptionPt || t.description) : lang.startsWith("JP") ? (t.descriptionJp || t.description) : t.description;
+                      if (lang.startsWith("JP") && !t.descriptionJp) return null;
+                      if (lang === "PT" && !t.descriptionPt && !t.description) return null;
+                      const desc = lang === "PT" ? (t.descriptionPt || t.description) : lang.startsWith("JP") ? t.descriptionJp : t.description;
                       const title = lang === "PT" ? (t.name) : lang.startsWith("JP") ? (t.nameJp || t.name) : t.name;
                       return desc ? (
                         <div key={t.id} className="border-l-2 pl-4" style={{ borderLeftColor: `${meta?.eraTextColor}30` }}>
@@ -503,7 +498,9 @@ export default function FighterDataZone({
                     })}
 
                     {eraStic.map((s) => {
-                      const desc = lang === "PT" ? (s.descriptionPt || s.description) : lang.startsWith("JP") ? (s.descriptionJp || s.description) : s.description;
+                      if (lang.startsWith("JP") && !s.descriptionJp) return null;
+                      if (lang === "PT" && !s.descriptionPt && !s.description) return null;
+                      const desc = lang === "PT" ? (s.descriptionPt || s.description) : lang.startsWith("JP") ? s.descriptionJp : s.description;
                       const title = lang === "PT" ? (s.name) : lang.startsWith("JP") ? (s.nameJp || s.name) : s.name;
                       return desc ? (
                         <div key={s.id} className="border-l-2 border-purple-500/20 pl-4">
