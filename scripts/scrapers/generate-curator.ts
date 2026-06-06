@@ -58,7 +58,7 @@ async function main() {
       });
       
       console.log(`✅ Saved: ${f.name}`);
-      await politeDelay(1000); // 1 second delay to avoid rate limit
+      await politeDelay();
     } catch (err) {
       console.error(`❌ Failed for ${f.name}:`, err);
     }
