@@ -502,6 +502,7 @@ boxArtLandscape?: boolean;  // true = paisagem → container 200×146; false = r
 
 | # | Tarefa | Prioridade | Status |
 |---|---|---|---|
+| 19 | **🔒 Desativar Deployment Protection no Vercel** — visitantes são redirecionados para login. Solução: vercel.com → projeto → Settings → Deployment Protection → None → Save | **URGENTE** | 🔴 Pendente (manual) |
 | 14 | **Página "Coleções"** — grid de cards no estilo SSB Spirit Board, separada por jogo (SSB64 / Melee / Brawl / SSB4 / Ultimate). Ver seção 24. | Alta | 🔴 Pendente |
 | 15 | **Página "Chronicles"** — lista cronológica estilo Nintendo Chronicle, dark theme. Ver seção 24. | Alta | 🔴 Pendente |
 | 18 | **Área de comentários por personagem** — seção em `/fighters/[slug]`, com moderação. Ver seção 25. | Alta | 🔴 Pendente |
