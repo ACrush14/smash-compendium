@@ -1,7 +1,7 @@
 # SmashCompendium — Contexto do Projeto
 
 > Documento vivo. Fonte única de verdade para todos os assistentes (Claude Code, Antigravity/Gemini).
-> Atualizado em: 2026-06-06 (sessão 14 — Bandeiras no LangSelector, JP curator notes, demandas Chronicles/Coleções documentadas)
+> Atualizado em: 2026-06-06 (sessão 14 — Deploy smashcompedium.vercel.app, 404 customizada, comentários documentados)
 
 ---
 
