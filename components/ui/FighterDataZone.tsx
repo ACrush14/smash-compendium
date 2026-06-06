@@ -274,7 +274,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
       <section>
         <div className="flex items-center gap-2 mb-4">
           <span className="h-px w-5 bg-cyan-500/35" />
-          <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-cyan-700 text-glow-cyan">
+          <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-cyan-700 text-glow-cyan">
             Ficha Catalográfica
           </span>
         </div>
@@ -295,7 +295,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                 { label: "Spirits",  value: fichaCounters.spirits  },
               ].map((s) => (
                 <div key={s.label} className="flex flex-col gap-1">
-                  <span className="font-mono text-[8px] uppercase tracking-widest text-cyan-700">{s.label}</span>
+                  <span className="font-mono text-[11px] uppercase tracking-widest text-cyan-700">{s.label}</span>
                   <span className="font-mono text-3xl font-bold text-white leading-none">{s.value}</span>
                 </div>
               ))}
@@ -315,7 +315,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                     .split(/\n+/)
                     .filter(Boolean)
                     .map((para, i) => (
-                      <p key={i} className="text-sm leading-relaxed text-slate-100 italic">
+                      <p key={i} className="text-[15px] leading-relaxed text-slate-100 italic">
                         {para}
                       </p>
                     ))}
@@ -329,7 +329,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
       <section>
         <div className="flex items-center gap-2 mb-4">
           <span className="h-px w-5 bg-cyan-500/35" />
-          <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-cyan-700 text-glow-cyan">
+          <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-cyan-700 text-glow-cyan">
             Linha do Tempo
           </span>
         </div>
@@ -353,7 +353,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
 
                 <div className="px-6 pt-5 pb-4">
                   {gameVer === "SSB64" && (
-                    <span className="font-mono text-[8px] uppercase tracking-[0.25em] block mb-3" style={{ color: `${meta?.eraTextColor}80` }}>
+                    <span className="font-mono text-[11px] uppercase tracking-[0.25em] block mb-3" style={{ color: `${meta?.eraTextColor}80` }}>
                       Bios
                     </span>
                   )}
@@ -370,19 +370,19 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                             >
                               {tipTitle}
                             </span>
-                            <p className="text-sm leading-relaxed text-slate-300">{tipText}</p>
+                            <p className="text-[15px] leading-relaxed text-slate-200">{tipText}</p>
                           </div>
                         );
                       })}
                     </div>
                   ) : bioText ? (
-                    <p className="text-sm leading-relaxed text-slate-200">{bioText}</p>
+                    <p className="text-[15px] leading-relaxed text-slate-200">{bioText}</p>
                   ) : null}
                 </div>
 
                 {(eraTrophy.length > 0 || eraStic.length > 0) && (
                   <div className="px-6 pb-5 flex flex-col gap-4 border-t border-white/5 pt-4">
-                    <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-cyan-800">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-700">
                       {lang === "JP" || lang === "JP_EN" ? "フィギュア" : lang === "PT" ? "Troféus" : "Trophies"}
                     </span>
 
@@ -394,10 +394,10 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                       const title = lang === "JP_EN" && t.nameJp ? t.nameJp.replace(/ネス/g, "Ness") : lang === "JP" && t.nameJp ? t.nameJp : t.name;
                       return desc ? (
                         <div key={t.id} className="border-l-2 pl-4" style={{ borderLeftColor: `${meta?.eraTextColor}30` }}>
-                          <p className="font-mono text-[11px] uppercase tracking-wider mb-1.5 opacity-70" style={{ color: meta?.eraTextColor }}>
+                          <p className="font-mono text-[13px] uppercase tracking-wider mb-2 opacity-80" style={{ color: meta?.eraTextColor }}>
                             {title}
                           </p>
-                          <p className="text-sm leading-relaxed text-slate-300">{desc}</p>
+                          <p className="text-[15px] leading-relaxed text-slate-200">{desc}</p>
                         </div>
                       ) : null;
                     })}
@@ -410,8 +410,8 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                       const title = lang === "JP_EN" && s.nameJp ? s.nameJp.replace(/ネス/g, "Ness") : lang === "JP" && s.nameJp ? s.nameJp : s.name;
                       return desc ? (
                         <div key={s.id} className="border-l-2 border-purple-500/20 pl-4">
-                          <p className="font-mono text-[11px] uppercase tracking-wider text-purple-400/70 mb-1.5">{title}</p>
-                          <p className="text-sm leading-relaxed text-slate-300">{desc}</p>
+                          <p className="font-mono text-[13px] uppercase tracking-wider text-purple-400/80 mb-2">{title}</p>
+                          <p className="text-[15px] leading-relaxed text-slate-200">{desc}</p>
                         </div>
                       ) : null;
                     })}
@@ -465,12 +465,12 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                   {/* Badges de troféus/stickers */}
                   <div className="flex items-center gap-2 flex-wrap">
                     {eraTrophy.length > 0 && (
-                      <span className={`border px-2 py-0.5 font-mono text-[8px] opacity-70 ${meta?.color ?? ""}`}>
+                      <span className={`border px-2 py-0.5 font-mono text-[10px] opacity-80 ${meta?.color ?? ""}`}>
                         {eraTrophy.length} troféu{eraTrophy.length > 1 ? "s" : ""}
                       </span>
                     )}
                     {eraStic.length > 0 && (
-                      <span className="border border-purple-900/30 bg-purple-950/20 px-2 py-0.5 font-mono text-[8px] text-purple-500/70">
+                      <span className="border border-purple-900/30 bg-purple-950/20 px-2 py-0.5 font-mono text-[10px] text-purple-500/80">
                         {eraStic.length} sticker{eraStic.length > 1 ? "s" : ""}
                       </span>
                     )}

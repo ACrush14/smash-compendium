@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
-import { ImageIcon, Package } from "lucide-react";
+import { ImageIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
 import MusicPlayer, { type MusicTrack } from "@/components/ui/MusicPlayer";
 
 export interface MediaAsset {
@@ -57,6 +57,13 @@ const PLACEHOLDER_TAG: Partial<Record<MediaAsset["assetType"], { label: string; 
 export default function MediaVaultViewer({ assets, music }: MediaVaultViewerProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = assets[activeIndex] ?? null;
+  const stripRef = useRef<HTMLDivElement>(null);
+
+  function scrollStrip(dir: "left" | "right") {
+    const el = stripRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir === "left" ? -180 : 180, behavior: "smooth" });
+  }
 
   return (
     <div
@@ -137,13 +144,35 @@ export default function MediaVaultViewer({ assets, music }: MediaVaultViewerProp
           background: "rgba(5,5,24,0.5)",
         }}
       >
-        {/* Contador */}
-        <span className="shrink-0 block mb-2 font-mono text-[9px] uppercase tracking-[0.2em] text-cyan-900">
-          Acervo · {assets.length} artefatos
-        </span>
+        {/* Contador + nav buttons */}
+        <div className="shrink-0 flex items-center justify-between mb-2">
+          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-800">
+            Acervo · {assets.length} artefatos
+          </span>
+          {assets.length > 4 && (
+            <div className="flex gap-1">
+              <button
+                onClick={() => scrollStrip("left")}
+                aria-label="Rolar para esquerda"
+                className="flex items-center justify-center w-7 h-7 border border-cyan-500/20 text-cyan-700 hover:text-cyan-400 hover:border-cyan-500/50 transition-all"
+                style={{ background: "rgba(5,5,24,0.8)" }}
+              >
+                <ChevronLeft className="h-4 w-4" strokeWidth={2} />
+              </button>
+              <button
+                onClick={() => scrollStrip("right")}
+                aria-label="Rolar para direita"
+                className="flex items-center justify-center w-7 h-7 border border-cyan-500/20 text-cyan-700 hover:text-cyan-400 hover:border-cyan-500/50 transition-all"
+                style={{ background: "rgba(5,5,24,0.8)" }}
+              >
+                <ChevronRight className="h-4 w-4" strokeWidth={2} />
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* Strip de thumbnails */}
-        <div className="flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div ref={stripRef} className="flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {assets.map((asset, i) => {
             const isActive = i === activeIndex;
             return (
