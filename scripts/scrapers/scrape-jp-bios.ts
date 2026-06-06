@@ -127,7 +127,7 @@ const BADGE_MAP: Record<string, string> = {
 
 async function scrapeJpBio(slug: string): Promise<Record<string, string>> {
   const url = `https://www.smashwiki.info/${encodeURIComponent(slug)}`;
-  let res: Response;
+  let res!: Response;
   for (let attempt = 1; attempt <= 3; attempt++) {
     res = await fetch(url, {
       headers: {
@@ -142,8 +142,8 @@ async function scrapeJpBio(slug: string): Promise<Record<string, string>> {
     }
     break;
   }
-  if (!res!.ok) {
-    throw new Error(`HTTP ${res!.status} — ${url}`);
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status} — ${url}`);
   }
 
   const html = await res.text();
