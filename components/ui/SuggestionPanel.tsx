@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { MessageSquare, Send, ChevronDown, ChevronUp } from "lucide-react";
+import { MessageSquare, Send } from "lucide-react";
 import { t, type UILang } from "@/lib/ui-i18n";
 
 interface Suggestion {
@@ -14,7 +14,6 @@ interface Suggestion {
 interface SuggestionPanelProps {
   fighterId: string;
   section:   string;
-  label?:    string;
   lang?:     UILang;
 }
 
@@ -29,8 +28,7 @@ function timeAgo(iso: string): string {
   return `${days}d`;
 }
 
-export default function SuggestionPanel({ fighterId, section, label, lang = "EN" }: SuggestionPanelProps) {
-  const [open,        setOpen]        = useState(false);
+export default function SuggestionPanel({ fighterId, section, lang = "EN" }: SuggestionPanelProps) {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [loading,     setLoading]     = useState(false);
   const [name,        setName]        = useState("");
@@ -50,8 +48,8 @@ export default function SuggestionPanel({ fighterId, section, label, lang = "EN"
   }, [fighterId, section]);
 
   useEffect(() => {
-    if (open) fetchSuggestions();
-  }, [open, fetchSuggestions]);
+    fetchSuggestions();
+  }, [fetchSuggestions]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -80,109 +78,97 @@ export default function SuggestionPanel({ fighterId, section, label, lang = "EN"
 
   return (
     <div
-      className="border-t border-cyan-500/15 mt-1"
+      className="border-t border-cyan-500/15 mt-8"
       style={{ background: "rgba(3,3,18,0.6)" }}
     >
-      {/* Accordion header */}
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between px-6 py-4 group hover:bg-cyan-500/5 transition-colors"
-      >
-        <div className="flex items-center gap-2.5">
-          <MessageSquare className="h-4 w-4 text-cyan-600 group-hover:text-cyan-400 transition-colors" strokeWidth={1.5} />
-          <span className="font-mono text-[12px] uppercase tracking-[0.25em] text-cyan-600 group-hover:text-cyan-400 transition-colors">
-            {t(lang, "suggestions")}{label ? ` · ${label}` : ""}{suggestions.length > 0 ? ` (${suggestions.length})` : ""}
-          </span>
-        </div>
-        {open
-          ? <ChevronUp  className="h-4 w-4 text-cyan-600" />
-          : <ChevronDown className="h-4 w-4 text-cyan-600" />}
-      </button>
+      {/* Header */}
+      <div className="flex items-center gap-2.5 px-6 py-4 border-b border-cyan-500/10">
+        <MessageSquare className="h-4 w-4 text-cyan-600" strokeWidth={1.5} />
+        <span className="font-mono text-[12px] uppercase tracking-[0.25em] text-cyan-600">
+          {t(lang, "suggestions")}{suggestions.length > 0 ? ` (${suggestions.length})` : ""}
+        </span>
+      </div>
 
-      {open && (
-        <div className="px-6 pb-5 flex flex-col gap-4">
+      <div className="px-6 py-5 flex flex-col gap-4">
 
-          {/* Existing suggestions */}
-          {loading ? (
-            <p className="font-mono text-[10px] text-cyan-900 italic">{t(lang, "loading")}</p>
-          ) : suggestions.length > 0 ? (
-            <div className="flex flex-col gap-2 max-h-52 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#0e3045_transparent]">
-              {suggestions.map((s) => (
-                <div
-                  key={s.id}
-                  className="border border-white/5 px-3 py-2"
-                  style={{ background: "rgba(8,8,32,0.7)" }}
-                >
-                  <div className="flex items-baseline gap-2 mb-1">
-                    <span className="font-mono text-[12px] font-bold text-cyan-500 uppercase tracking-wider leading-none">
-                      {s.authorName}
-                    </span>
-                    <span className="font-mono text-[10px] text-slate-600 leading-none">
-                      {timeAgo(s.createdAt)}
-                    </span>
-                  </div>
-                  <p className="font-mono text-[13px] text-slate-300 leading-relaxed whitespace-pre-wrap break-words">
-                    {s.message}
-                  </p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="font-mono text-[10px] text-slate-700 italic">
-              {t(lang, "noSuggestions")}
-            </p>
-          )}
-
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                placeholder={t(lang, "namePlaceholder")}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                maxLength={80}
-                required
-                className="flex-1 bg-[#060620] border border-cyan-500/15 px-3 py-2 font-mono text-[13px] text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500/40 transition-colors"
-              />
-            </div>
-            <textarea
-              placeholder={t(lang, "suggestionPlaceholder")}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              maxLength={1000}
-              required
-              rows={3}
-              className="bg-[#060620] border border-cyan-500/15 px-3 py-2 font-mono text-[13px] text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500/40 transition-colors resize-none"
-            />
-            {error && (
-              <p className="font-mono text-[10px] text-red-500">{error}</p>
-            )}
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-[8px] text-slate-700">{message.length}/1000</span>
-              <button
-                type="submit"
-                disabled={submitting || !name.trim() || !message.trim()}
-                className="flex items-center gap-1.5 px-5 py-2 font-mono text-[12px] uppercase tracking-widest transition-all disabled:opacity-30"
-                style={{
-                  background:   submitting ? "rgba(6,182,212,0.1)" : sent ? "rgba(52,211,153,0.15)" : "rgba(6,182,212,0.12)",
-                  border:       `1px solid ${sent ? "rgba(52,211,153,0.4)" : "rgba(6,182,212,0.25)"}`,
-                  color:        sent ? "#34d399" : "#67e8f9",
-                }}
+        {/* Existing suggestions */}
+        {loading ? (
+          <p className="font-mono text-[10px] text-cyan-900 italic">{t(lang, "loading")}</p>
+        ) : suggestions.length > 0 ? (
+          <div className="flex flex-col gap-2 max-h-64 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#0e3045_transparent]">
+            {suggestions.map((s) => (
+              <div
+                key={s.id}
+                className="border border-white/5 px-3 py-2"
+                style={{ background: "rgba(8,8,32,0.7)" }}
               >
-                {sent ? (
-                  t(lang, "sent")
-                ) : (
-                  <>
-                    <Send className="h-3 w-3" strokeWidth={1.5} />
-                    {submitting ? t(lang, "sending") : t(lang, "send")}
-                  </>
-                )}
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="font-mono text-[12px] font-bold text-cyan-500 uppercase tracking-wider leading-none">
+                    {s.authorName}
+                  </span>
+                  <span className="font-mono text-[10px] text-slate-600 leading-none">
+                    {timeAgo(s.createdAt)}
+                  </span>
+                </div>
+                <p className="font-mono text-[13px] text-slate-300 leading-relaxed whitespace-pre-wrap break-words">
+                  {s.message}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="font-mono text-[10px] text-slate-700 italic">
+            {t(lang, "noSuggestions")}
+          </p>
+        )}
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+          <input
+            type="text"
+            placeholder={t(lang, "namePlaceholder")}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            maxLength={80}
+            required
+            className="bg-[#060620] border border-cyan-500/15 px-3 py-2 font-mono text-[13px] text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500/40 transition-colors"
+          />
+          <textarea
+            placeholder={t(lang, "suggestionPlaceholder")}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            maxLength={1000}
+            required
+            rows={3}
+            className="bg-[#060620] border border-cyan-500/15 px-3 py-2 font-mono text-[13px] text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500/40 transition-colors resize-none"
+          />
+          {error && (
+            <p className="font-mono text-[10px] text-red-500">{error}</p>
+          )}
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-[8px] text-slate-700">{message.length}/1000</span>
+            <button
+              type="submit"
+              disabled={submitting || !name.trim() || !message.trim()}
+              className="flex items-center gap-1.5 px-5 py-2 font-mono text-[12px] uppercase tracking-widest transition-all disabled:opacity-30"
+              style={{
+                background:   submitting ? "rgba(6,182,212,0.1)" : sent ? "rgba(52,211,153,0.15)" : "rgba(6,182,212,0.12)",
+                border:       `1px solid ${sent ? "rgba(52,211,153,0.4)" : "rgba(6,182,212,0.25)"}`,
+                color:        sent ? "#34d399" : "#67e8f9",
+              }}
+            >
+              {sent ? (
+                t(lang, "sent")
+              ) : (
+                <>
+                  <Send className="h-3 w-3" strokeWidth={1.5} />
+                  {submitting ? t(lang, "sending") : t(lang, "send")}
+                </>
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

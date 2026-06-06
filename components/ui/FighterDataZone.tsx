@@ -512,12 +512,6 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                   </div>
                 </div>
 
-                <SuggestionPanel
-                  fighterId={fighterId}
-                  section={gameVer}
-                  label={meta?.short}
-                  lang={lang}
-                />
               </div>
             );
           })}
@@ -529,6 +523,12 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
           )}
         </div>
       </section>
+
+      <SuggestionPanel
+        fighterId={fighterId}
+        section="general"
+        lang={lang}
+      />
     </div>
   );
 }
