@@ -1,7 +1,7 @@
 # SmashCompendium — Contexto do Projeto
 
 > Documento vivo. Fonte única de verdade para todos os assistentes (Claude Code, Antigravity/Gemini).
-> Atualizado em: 2026-06-06 (sessão 15 — Sistema i18n completo, bandeiras reais, sugestões por personagem)
+> Atualizado em: 2026-06-06 (sessão 18 — Sistema de Música Automático, Tips SSBU, Spirits, Fix Dados Captain Falcon)
 
 ---
 
@@ -65,9 +65,15 @@ curatorOverviewEn   String?  — nota curatorial em inglês (fan-made)
 curatorOverviewPt   String?  — nota curatorial em português
 curatorOverviewJp   String?  — nota curatorial em japonês (original)
 curatorOverviewJpEn String?  — tradução EN da nota curatorial JP
+musicYoutubeId      String?  — YouTube video ID da trilha icônica (ex: "OsQEEHUuLGg")
+musicTitle          String?  — título da faixa (ex: "Bein' Friends")
+musicArtist         String?  — compositor/artista (ex: "Shogo Sakai · Melee Remix")
+musicStatus         String?  — "pending_review" | "approved" (padrão: "pending_review")
 tips                FighterTip[]
 suggestions         FighterSuggestion[]
 ```
+**Música:** Todos os 87 lutadores têm `musicYoutubeId` populado via `scrape-fighter-music.ts`.
+Revisar e aprovar em `/admin/music` (teclado: A=aprovar, ←→=navegar).
 
 ### `FighterBio`
 Texto biográfico in-game por versão do Smash.
@@ -95,6 +101,7 @@ releaseMonth   Int?
 releaseRegion  String?   — "JP" | "NA" | "PAL"
 platform       String    — "NES" | "SNES" | "N64" | "GCN" | etc.
 consoleIconUrl String?   — path local ex: /assets/consoles/snes.svg
+boxArtUrl      String?   — URL da capa do jogo
 franchiseId    String
 ```
 
@@ -156,6 +163,24 @@ createdAt   DateTime @default(now())
 
 ### `Stage` / `Music` / `StageMusic`
 Fases e músicas — modelos existem no schema, ingestão ainda pendente.
+**Nota:** A música do lutador agora fica direto em `Fighter.musicYoutubeId` (não via Stage→Music).
+
+### `ChronicleEntry` (Novo na Sessão 16)
+Jogos do Nintendo Chronicle (SmashWiki), unificando variações NTSC, PAL e JP.
+```
+id              String   — CUID
+consoleName     String   — ex: "Nintendo 64"
+titleNtsc       String   — ex: "Star Fox 64" (Ou "JP EXCLUSIVE")
+titlePal        String?  — ex: "Lylat Wars"
+titleJp         String?  — ex: "Star Fox 64" (Japonês)
+titleJpEn       String?  — Tradução EN do título JP Exclusive
+titleJpPt       String?  — Tradução PT do título JP Exclusive
+releaseDateNtsc String?
+releaseDatePal  String?
+releaseDateJp   String?
+unlockCriteria  String?
+wikiUrl         String?  — URL de referência usada para o merge regional
+```
 
 ---
 
@@ -502,30 +527,36 @@ boxArtLandscape?: boolean;  // true = paisagem → container 200×146; false = r
 
 | # | Tarefa | Prioridade | Status |
 |---|---|---|---|
-| 19 | **🔒 Desativar Deployment Protection no Vercel** — visitantes são redirecionados para login. Solução: vercel.com → projeto → Settings → Deployment Protection → None → Save | **URGENTE** | 🔴 Pendente (manual) |
-| 14 | **Página "Coleções"** — grid de cards no estilo SSB Spirit Board, separada por jogo (SSB64 / Melee / Brawl / SSB4 / Ultimate). Ver seção 24. | Alta | 🔴 Pendente |
-| 15 | **Página "Chronicles"** — lista cronológica estilo Nintendo Chronicle, dark theme. Ver seção 24. | Alta | 🔴 Pendente |
-| 18 | **Área de comentários por personagem** — seção em `/fighters/[slug]`, com moderação. Ver seção 25. | Alta | 🔴 Pendente |
-| 1 | **ETL em massa** — bio EN + troféus + imagens para os outros 86 fighters | Alta | 🔴 Pendente |
-| 8 | **Página `/fighters`** — lista geral com filtros por franquia/jogo | Média | 🔴 Pendente |
-| 17 | **Curator notes** EN+PT+JP — script pronto (`generate-curator.ts`), aguarda `ANTHROPIC_API_KEY` no terminal | Média | 🟡 Pronto, não rodado |
-| 6 | **Bio JP** — `contentJp` null para os 86 fighters; fonte: `smashwiki.info` | Média | 🔴 Pendente |
-| 3 | **Box arts** — jogos de origem dos outros franchises (Mario, Zelda, Pokémon...) | Média | 🔴 Pendente |
-| 12 | **Moderação de sugestões** — campo `approved: Boolean` no `FighterSuggestion` | Baixa | 🔴 Pendente |
-| 9 | **Stages + Music** — ETL escrito, não rodado | Baixa | 🔴 Pendente |
-| 2 | ~~Adicionar modelo `FighterTip` ao schema~~ | — | ✅ Resolvido |
-| 4 | ~~Sticker Brawl do Ness~~ — removido do vault (curadoria) | — | ✅ Removido |
-| 5 | ~~Spirit SSBU do Ness~~ — Spirit #563 com imagem e texto OK | — | ✅ Concluído (sessão 14) |
-| 11 | ~~Filtro 3DS~~ — filtro `is3DSTrophy` removido do código (sessão 14); todos os troféus exibidos | — | ✅ Resolvido |
-| 13 | ~~Player de música~~ — `MusicPlayer.tsx`, YouTube IFrame. Ness: "Bein' Friends" | — | ✅ Implementado |
-| 16 | ~~Deploy Vercel~~ — site no ar em **smashcompedium.vercel.app** | — | ✅ Concluído (sessão 14) |
+| 19 | **🔒 Desativar Deployment Protection no Vercel** | — | ✅ Resolvido |
+| 14 | **Página "Coleções"** — grid de cards estilo Spirit Board | Alta | ✅ Concluído (sessão 16) |
+| 15 | **Página "Chronicles"** — lista cronológica dark theme | — | ✅ Concluído (sessão 16) |
+| 20 | **Capas dos Jogos (Box Arts)** | Alta | ✅ Concluído (sessão 16) |
+| CF-1 | **Fix Captain Falcon — Olimar/Falcon Flyer trophies** | Alta | ✅ Concluído (sessão 18) |
+| CF-2 | **SSBU Tips (1.513 tips)** — todos os 87 fighters | Alta | ✅ Concluído (sessão 18) |
+| CF-3 | **Spirit descriptions** — ssbuspirits.com | Alta | ✅ 54/87 salvos (sessão 18) |
+| CF-5 | **F-Zero origin games** — 5 jogos adicionados | Alta | ✅ Concluído (sessão 18) |
+| CF-6 | **Música por personagem** — 87/87 curados + admin page | Alta | ✅ Concluído (sessão 18) |
+| MUSIC | **Revisão de músicas** — aprovar/corrigir no `/admin/music` | Alta | 🟡 Pendente revisão (87 pending_review) |
+| CF-4 | **Media Vault — ordem/fotos** | Alta | 🔴 Pendente |
+| 1 | **ETL em massa** — bio EN + troféus + imagens para os outros 86 fighters | Alta | 🟡 Rodando em Background |
+| 21 | **Mass Downloader de Imagens** — baixar os 4.000 troféus offline | Alta | 🟡 Rodando em Background |
+| 18 | **Área de comentários por personagem** | Alta | 🔴 Pendente |
+| 8 | **Página `/fighters`** — lista geral com filtros | Média | 🔴 Pendente |
+| 17 | **Curator notes** EN+PT+JP — aguarda `ANTHROPIC_API_KEY` | Média | 🟡 Pronto, não rodado |
+| 6 | **Bio JP** — `contentJp` null para 86 fighters | Média | 🟡 Em Background |
+| 12 | **Moderação de sugestões** | — | ✅ Resolvido |
 
-**Resolvidos nesta sessão (sessão 4):**
-- ✅ Layout visual completo da página do lutador (ver seção 15)
-- ✅ Box arts dos 5 jogos Smash na Linha do Tempo
-- ✅ Box arts reais de EarthBound e Mother 3 do Wikipedia
-- ✅ Header sticky compacto (96px), body com showcase
-- ✅ Tipografia mínima 12px em toda EraHeader
+**Resolvidos nesta sessão (sessão 4 a 14):**
+- ✅ Layout visual completo da página do lutador, carrossel deduplicado, moderação, music player.
+
+**Resolvidos nesta sessão (sessão 16 — 2026-06-06):**
+- ✅ **Página Chronicles:** Layout Grid com Capas dinâmicas. Box Arts de SmashWiki injetadas via ETL.
+- ✅ **Página Coleções:** Spirit Board replicado com perfeição.
+- ✅ **Navegação horizontal de consoles (Tab Bar)** usando `searchParams` via URL (Mantém RSC).
+- ✅ **Ordenação Oficial de Jogos:** A ordenação escolhe a data NTSC/JP/PAL mais antiga.
+- ✅ **Script de Tradução:** Bypass no Google Translate para extrair títulos JP EXCLUSIVE para inglês e português.
+- ✅ **Ordenação Global de Troféus:** Captura de `orderIndex` direto das listas-mestras (List of trophies) para organizar os 4.000 itens cronologicamente.
+- ✅ **Mass Image Downloader:** Script construído para baixar o acervo de URLs e persistir tudo no HD local.
 
 **Resolvidos nesta sessão (sessão 11 — 2026-06-05):**
 - ✅ Deduplicação do vault por URL — 27 → 25 artefatos (SSB4 tinha 2 pares de renders idênticos)
@@ -540,6 +571,12 @@ boxArtLandscape?: boolean;  // true = paisagem → container 200×146; false = r
 - ✅ Fontes JP documentadas: `smashwiki.info` (bio JP) + `ssbuspirits.com` (spirit EN)
 - ✅ Player de música implementado (`MusicPlayer.tsx`) — YouTube IFrame API, estilo HUD do site
 - ✅ Ness: "Bein' Friends" (Shogo Sakai, 3:50) funcionando no painel esquerdo
+
+**Resolvidos nesta sessão (sessão 16 — 2026-06-06):**
+- ✅ Página Chronicles: Layout Grid com "Capas" CSS dinâmicas baseadas no logo do console.
+- ✅ Página Chronicles: Navegação horizontal de consoles (Tab Bar) usando `searchParams` via URL para manter a página como RSC.
+- ✅ Ordenação de jogos por data mundial (A ordenação agora escolhe a data NTSC/JP/PAL mais antiga).
+- ✅ Script de Tradução (ETL): Bypass gratuito na API do Google Translate extraindo e traduzindo os títulos `JP EXCLUSIVE` para inglês e português. Adicionado no Schema.
 
 ---
 
@@ -1313,3 +1350,114 @@ Códigos: `gb` (EN), `br` (PT), `jp` (JP), `jp`+`us` (JP_EN).
 - Campo `approved: Boolean @default(false)` — comentários ficam ocultos até aprovação manual
 - Aprovação via Prisma Studio ou futura página de admin
 - Futuramente: campo `approved` pode virar `status: PENDING | APPROVED | REJECTED`
+
+---
+
+## 27. Sessão 18 — Sistema de Música + Tips + Spirits + Fix CF (2026-06-06)
+
+### 27.1 Dados corrigidos — Captain Falcon (e outros)
+
+**Scripts executados:**
+- `scripts/scrapers/fix-cf-db.ts` → desassociou "Captain Olimar" e "Falcon Flyer" (trophies Melee) do fighterId do Captain Falcon; desassociou "Falco Lombardi" (spirit) do Captain Falcon.
+
+### 27.2 SSBU Tips — 1.513 tips scrapeados
+
+**Script:** `scripts/scrapers/scrape-ssbu-tips.ts`
+**Fonte:** `https://www.ssbwiki.com/List_of_tips_(SSBU)/Fighters`
+**Resultado:** 1.513 tips distribuídos entre ~87 fighters.
+**Formato no banco:** `FighterTip.titleEn = "[★★☆] Título"`, `textEn = "Descrição"`
+**NAME_MAP:** inclui `"PAC-MAN": "Pac-Man"` para normalizar o nome na wiki.
+**MULTI_MAP:** `"Pyra/Mythra": ["Pyra", "Mythra"]` (2 fighters separados no banco).
+
+### 27.3 Spirit Descriptions — 54/87 salvos
+
+**Script:** `scripts/scrapers/scrape-spirits.ts`
+**Fonte:** `https://www.ssbuspirits.com/spirits/{slug}`
+**Resultado:** 54 spirits com `descriptionEn` preenchida.
+**Falhas (33):** Personagens 3rd-party (Snake, Sonic, Bayonetta, Cloud, etc.) que não têm página própria no ssbuspirits.com.
+**ID de collectible:** `SPIRIT-SSBU-{name}-{spiritNum}` (ex: `SPIRIT-SSBU-Ness-563`)
+
+### 27.4 F-Zero Origin Games
+
+**Adicionados em `app/fighters/[slug]/page.tsx` na constante `FRANCHISE_ORIGIN_GAMES["F-Zero"]`:**
+- F-Zero (SNES, 1990/JP — 1991/NA)
+- F-Zero X (N64, 1998)
+- F-Zero GX (GCN, 2003)
+- F-Zero GP Legend / ファルコン伝説 (GBA, 2003/JP — 2004/NA)
+- F-Zero Climax / クライマックス (GBA, 2004, JP exclusive)
+
+### 27.5 Sistema de Música por Personagem (NOVO)
+
+#### Schema (adicionado via `ALTER TABLE`)
+```sql
+ALTER TABLE "Fighter"
+ADD COLUMN IF NOT EXISTS "musicYoutubeId" TEXT,
+ADD COLUMN IF NOT EXISTS "musicTitle"     TEXT,
+ADD COLUMN IF NOT EXISTS "musicArtist"    TEXT,
+ADD COLUMN IF NOT EXISTS "musicStatus"    TEXT DEFAULT 'pending_review';
+```
+
+#### Scripts
+- `scripts/scrapers/migrate-music.ts` — aplica a migração SQL raw
+- `scripts/scrapers/scrape-fighter-music.ts` — popula os 87 fighters com trilhas icônicas curadas
+
+**Resultado:** 87/87 fighters com `musicYoutubeId` populado (todos `musicStatus = "pending_review"`).
+
+#### Admin Page: `/admin/music`
+- Lista todos os 87 fighters com indicador de status (verde=aprovado, amarelo=pendente)
+- Embeds YouTube player para ouvir antes de aprovar
+- Editar ID/título/artista inline
+- Tecla **A** = aprovar e avançar, **←→** = navegar
+- Filtros: All / Pending / Approved
+- API: `GET /api/admin/music` + `PATCH /api/admin/music/[id]`
+
+#### page.tsx atualizado
+```tsx
+// Antes: hardcoded FIGHTER_MUSIC
+// Depois: lê do banco, com fallback para o map hardcoded
+music={
+  fighter.musicYoutubeId
+    ? { youtubeId: fighter.musicYoutubeId, musicTitle: fighter.musicTitle, musicArtist: fighter.musicArtist }
+    : FIGHTER_MUSIC_FALLBACK[fighter.name]
+}
+```
+
+#### Mapa curado (principais tracks por personagem — seleção editorial)
+| Personagem | Faixa |
+|---|---|
+| Ness | Bein' Friends (Shogo Sakai · Melee Remix) |
+| Captain Falcon | Mute City (Melee) |
+| Link | The Legend of Zelda Main Theme |
+| Mario | Ground Theme (Super Mario Bros.) |
+| Sonic | Green Hill Zone |
+| Cloud | Main Theme (Final Fantasy VII) |
+| Sephiroth | One-Winged Angel |
+| Joker | Last Surprise |
+| Steve | Minecraft (Sweden / C418) |
+| Sora | Dearly Beloved (Kingdom Hearts) |
+| ... | (todos 87 populados) |
+
+### 27.6 Build Fixes
+
+Erros TypeScript corrigidos em vários scripts scrapers (padrão `noUncheckedIndexedAccess`):
+- `chronicles/page.tsx` — `CONSOLE_ICONS[activeConsole as string]`, `game.titleNtsc`
+- `collectibles/page.tsx` — `ERAS[0]!.id`
+- `scripts/scrapers/chronicle.ts` — `(prev[0] as any).name`
+- `scripts/scrapers/collectibles.ts` — `numMatch[1]!`
+- `scripts/scrapers/download-all-media.ts` — null check + `match[1]!`
+- `scripts/scrapers/fetch-chronicles-boxarts.ts` — null check
+- `scripts/scrapers/scrape-fighter-music.ts` — regex `/s` flag → indexOf approach
+- `scripts/scrapers/scrape-spirits.ts` — `txt[0]` null check
+- `scripts/scrapers/scrape-ssbu-tips.ts` — `starsMatch[1] ?? ""`
+
+### 27.7 .gitignore Atualizado
+```
+public/assets/collectibles/   # 1380+ PNGs de spirits baixados localmente — não commitar
+```
+
+### 27.8 Próximos Passos Imediatos
+
+1. **Revisar músicas** em `http://localhost:3000/admin/music` — aprovar ou corrigir os 87 YouTube IDs
+2. **Fix Media Vault fotos (CF-4)** — order e fotos que não aparecem para personagens além do Ness
+3. **Completar spirits** — os 33 que falharam no ssbuspirits.com precisam de fonte alternativa
+4. **Pyra/Mythra tips** — fix do slash encoding no wiki para salvar tips de Pyra e Mythra separadamente

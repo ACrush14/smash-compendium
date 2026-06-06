@@ -15,6 +15,7 @@ prisma/migrations/
 
 # media gerada (binários grandes)
 public/assets/fighters/
+public/assets/collectibles/
 
 # typescript build cache
 tsconfig.tsbuildinfo

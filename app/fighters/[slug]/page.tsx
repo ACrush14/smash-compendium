@@ -76,9 +76,10 @@ const FIGHTER_GIFS: Record<string, Partial<Record<GifEra, GifEntry[]>>> = {
   },
 };
 
-// ─── Trilha sonora por lutador ────────────────────────────────────────────────
-
-const FIGHTER_MUSIC: Record<string, MusicTrack> = {
+// ─── Trilha sonora hardcoded (fallback enquanto o DB não está populado) ───────
+// A fonte primária é fighter.musicYoutubeId / musicTitle / musicArtist no banco.
+// Esta constante só é usada se o banco não tiver dados para o personagem.
+const FIGHTER_MUSIC_FALLBACK: Record<string, MusicTrack> = {
   "Ness": { youtubeId: "OsQEEHUuLGg", title: "Bein' Friends", artist: "Shogo Sakai · Melee Remix" },
 };
 
@@ -97,7 +98,13 @@ const FRANCHISE_ORIGIN_GAMES: Record<string, OriginGame[]> = {
   "Metroid":             [{ name: "Metroid",                  console: "NES",  year: 1986,              badgeColor: "#e60012" }],
   "Kirby":               [{ name: "Kirby's Dream Land",       console: "GB",   year: 1992,              badgeColor: "#555"   }],
   "Star Fox":            [{ name: "Star Fox",                 console: "SNES", year: 1993,              badgeColor: "#6d3b8e" }],
-  "F-Zero":              [{ name: "F-Zero",                   console: "SNES", year: 1990,              badgeColor: "#6d3b8e" }],
+  "F-Zero": [
+    { name: "F-Zero",           titleJp: "F-ZERO",             console: "SNES", consoleFull: "Super Famicom",     consoleFullEn: "Super Nintendo Entertainment System", year: 1990, month: 11, region: "JP", yearNa: 1991, monthNa: 8,  regionNa: "NA", badgeColor: "#1a6ecc", iconFile: "snes.svg", wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_(video_game)",                   wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO" },
+    { name: "F-Zero X",         titleJp: "F-ZERO X",           console: "N64",  consoleFull: "Nintendo 64",       year: 1998, month: 7,  region: "JP", yearNa: 1998, monthNa: 10, regionNa: "NA", badgeColor: "#1a6ecc", iconFile: "n64.svg",  wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_X",                             wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO_X" },
+    { name: "F-Zero GX",        titleJp: "F-ZERO GX",          console: "GCN",  consoleFull: "Nintendo GameCube", year: 2003, month: 7,  region: "JP", yearNa: 2003, monthNa: 8,  regionNa: "NA", badgeColor: "#1a6ecc", iconFile: "gcn.svg",  wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_GX",                            wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO_GX" },
+    { name: "F-Zero GP Legend",  titleJp: "F-ZERO ファルコン伝説", console: "GBA",  consoleFull: "Game Boy Advance",  year: 2003, month: 8,  region: "JP", yearNa: 2004, monthNa: 9,  regionNa: "NA", badgeColor: "#1a6ecc", iconFile: "gba.svg",  wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_GP_Legend_(video_game)",        wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO_ファルコン伝説" },
+    { name: "F-Zero Climax",     titleJp: "F-ZERO クライマックス", console: "GBA",  consoleFull: "Game Boy Advance",  year: 2004, month: 10, region: "JP", jpExclusive: true,         badgeColor: "#1a6ecc", iconFile: "gba.svg",  wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_Climax",                        wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO_クライマックス" },
+  ],
   "Fire Emblem":         [{ name: "Fire Emblem",              console: "NES",  year: 1990, region: "JP", badgeColor: "#e60012" }],
   "Pikmin":              [{ name: "Pikmin",                   console: "GCN",  year: 2001,              badgeColor: "#1a1a5e" }],
   "Animal Crossing":     [{ name: "Animal Forest",            console: "N64",  year: 2001, region: "JP", badgeColor: "#1a3a7e" }],
@@ -160,6 +167,10 @@ export default async function FighterPage({ params }: PageProps) {
         bios:  { orderBy: { smashGameVersion: "asc" } },
         works: { include: { game: true } },
         tips: true,
+        suggestions: {
+          where: { approved: true },
+          orderBy: { createdAt: "desc" }
+        }
       },
     }),
     db.collectible.findMany({
@@ -404,8 +415,22 @@ export default async function FighterPage({ params }: PageProps) {
       {/* ── Split Body ──────────────────────────────────────────────── */}
       <main className="flex-1 grid grid-cols-12 overflow-hidden min-h-0 relative z-10">
         <FighterPageLayout
+          fighterId={fighter.id}
+          fighterSlug={name}
+          suggestions={fighter.suggestions.map((s: any) => ({
+            id: s.id,
+            authorName: s.authorName,
+            message: s.message,
+            section: s.section,
+            createdAt: s.createdAt.toISOString()
+          }))}
           assets={dedupedVaultAssets}
-          music={FIGHTER_MUSIC[fighter.name]}
+          music={
+            // Prioridade: DB (musicStatus = approved ou pending_review) → fallback hardcoded
+            fighter.musicYoutubeId
+              ? { youtubeId: fighter.musicYoutubeId, title: fighter.musicTitle ?? "", artist: fighter.musicArtist ?? undefined }
+              : FIGHTER_MUSIC_FALLBACK[fighter.name]
+          }
           header={{
             rosterNumber:  Number(fighter.rosterNumber),
             name:          fighter.name,

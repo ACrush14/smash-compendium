@@ -15,6 +15,9 @@ interface FighterHeader {
 }
 
 interface FighterPageLayoutProps {
+  fighterId:   string;
+  fighterSlug: string;
+  suggestions: any[];
   assets:      MediaAsset[];
   music?:      MusicTrack;
   header:      FighterHeader;
@@ -23,7 +26,7 @@ interface FighterPageLayoutProps {
 }
 
 export default function FighterPageLayout({
-  assets, music, header, originGames, dataZone,
+  fighterId, fighterSlug, suggestions, assets, music, header, originGames, dataZone,
 }: FighterPageLayoutProps) {
   const [lang, setLang] = useState<Lang>("EN");
 
@@ -37,6 +40,9 @@ export default function FighterPageLayout({
       {/* ZONA DIREITA — FighterRightPanel */}
       <div className="col-span-7 relative">
         <FighterRightPanel
+          fighterId={fighterId}
+          fighterSlug={fighterSlug}
+          suggestions={suggestions}
           header={header}
           originGames={originGames}
           dataZone={dataZone}

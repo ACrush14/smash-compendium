@@ -3,6 +3,7 @@
 import Link from "next/link";
 import OriginGamesPanel, { type OriginGame } from "./OriginGamesPanel";
 import FighterDataZone, { type FighterDataZoneData, type Lang } from "./FighterDataZone";
+import FighterSuggestions, { type SerializedSuggestion } from "./FighterSuggestions";
 import { GAME_META } from "@/lib/smash-meta";
 import { t } from "@/lib/ui-i18n";
 
@@ -14,6 +15,9 @@ interface FighterHeader {
 }
 
 interface FighterRightPanelProps {
+  fighterId:   string;
+  fighterSlug: string;
+  suggestions: SerializedSuggestion[];
   header:      FighterHeader;
   originGames: OriginGame[];
   dataZone:    FighterDataZoneData;
@@ -21,7 +25,7 @@ interface FighterRightPanelProps {
   setLang:     (l: Lang) => void;
 }
 
-export default function FighterRightPanel({ header, originGames, dataZone, lang, setLang }: FighterRightPanelProps) {
+export default function FighterRightPanel({ fighterId, fighterSlug, suggestions, header, originGames, dataZone, lang, setLang }: FighterRightPanelProps) {
 
   return (
     <div
@@ -108,6 +112,15 @@ export default function FighterRightPanel({ header, originGames, dataZone, lang,
 
       {/* ── Data Zone (controlada pelo idioma do panel) ─────────── */}
       <FighterDataZone {...dataZone} lang={lang} setLang={setLang} />
+
+      {/* ── Sugestões / Comentários ────────────────────────────── */}
+      <FighterSuggestions
+        fighterId={fighterId}
+        fighterSlug={fighterSlug}
+        fighterName={header.name}
+        suggestions={suggestions}
+        validSections={header.appearances}
+      />
 
       {/* ── Footer ─────────────────────────────────────────────── */}
       <footer className="border-t border-cyan-500/10 px-10 py-5">

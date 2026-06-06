@@ -19,7 +19,7 @@ import { db } from "../../lib/db";
 import { fetchHtml, politeDelay, cleanText, log } from "./utils";
 
 const MUSIC_URL =
-  "https://www.ssbwiki.com/Music_(Super_Smash_Bros._Ultimate)";
+  "https://www.ssbwiki.com/Music_(SSBU)";
 
 interface RawTrack {
   title:        string;

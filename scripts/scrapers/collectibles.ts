@@ -29,11 +29,11 @@ import type { Fighter } from "@prisma/client";
 // ─── Fontes EN por tipo e versão ──────────────────────────────────────────────
 
 const SOURCES = [
-  { type: "TROPHY" as const, version: "SSBM", url: "https://www.ssbwiki.com/List_of_trophies_(SSBM)"       },
-  { type: "TROPHY" as const, version: "SSBB", url: "https://www.ssbwiki.com/List_of_trophies_(Brawl)"      },
-  { type: "TROPHY" as const, version: "SSB4", url: "https://www.ssbwiki.com/List_of_trophies_(SSB4-3DS)"   },
-  { type: "SPIRIT" as const, version: "SSBU", url: "https://www.ssbwiki.com/List_of_spirits_(base_game)"   },
-  { type: "STICKER" as const,version: "SSBB", url: "https://www.ssbwiki.com/List_of_stickers_(SSBB)"       },
+  { type: "TROPHY" as const, version: "SSBM", url: "https://www.ssbwiki.com/List_of_trophies_by_unlock_criteria_(SSBM)"       },
+  { type: "TROPHY" as const, version: "SSBB", url: "https://www.ssbwiki.com/List_of_trophies_by_unlock_criteria_(SSBB)"      },
+  { type: "TROPHY" as const, version: "SSB4", url: "https://www.ssbwiki.com/List_of_trophies_by_unlock_criteria_(SSB4-3DS)"   },
+  { type: "SPIRIT" as const, version: "SSBU", url: "https://www.ssbwiki.com/List_of_spirits_(complete_list)"   },
+  { type: "STICKER" as const,version: "SSBB", url: "https://www.ssbwiki.com/List_of_stickers_(complete_list)"       },
 ];
 
 // ─── Raw types ────────────────────────────────────────────────────────────────
@@ -44,6 +44,7 @@ interface RawCollectible {
   imageUrl:     string | null;
   type:         "TROPHY" | "SPIRIT" | "STICKER";
   version:      string;
+  orderIndex:   number;
 }
 
 // ─── EN parser ────────────────────────────────────────────────────────────────
@@ -64,6 +65,7 @@ async function scrapeCollectiblePage(
     let name = "";
     let descriptionEn = "";
     let imageUrl: string | null = null;
+    let explicitNumber: number | null = null;
 
     cells.each((_j, cell) => {
       const img = $("img", cell).first();
@@ -72,7 +74,14 @@ async function scrapeCollectiblePage(
         if (imageUrl?.startsWith("//")) imageUrl = `https:${imageUrl}`;
       }
       const text = cleanText($(cell).text());
-      if (!name && text.length > 0 && text.length < 80 && !/^\d+$/.test(text)) {
+      
+      // Captura explicitamente o número (ex: Spirits SSBU, Trophies SSBM tem o index em algumas cols)
+      const numMatch = text.match(/^#?(\d+)$/);
+      if (numMatch && !explicitNumber && _j <= 1) {
+        explicitNumber = parseInt(numMatch[1]!, 10);
+      }
+
+      if (!name && text.length > 0 && text.length < 80 && !/^\d+$/.test(text) && !text.startsWith("#")) {
         name = text;
       } else if (!descriptionEn && text.length >= 20) {
         descriptionEn = text;
@@ -80,7 +89,11 @@ async function scrapeCollectiblePage(
     });
 
     if (!name) return;
-    results.push({ name, descriptionEn, imageUrl, type, version });
+    
+    // Se não achou um número explícito na tabela, usa a ordem natural da tabela (1-indexed)
+    const orderIndex = explicitNumber ?? (_i + 1);
+    
+    results.push({ name, descriptionEn, imageUrl, type, version, orderIndex });
   });
 
   log.ok(`  ${results.length} itens extraídos de ${type}/${version}`);
@@ -204,6 +217,7 @@ export async function scrapeAndUpsertCollectibles(): Promise<void> {
             descriptionJp:    jpMatch?.description ?? null,
             assetRenderUrl:   item.imageUrl,
             sourceType:       "Official",
+            orderIndex:       item.orderIndex,
             fighterId,
           },
           update: {
@@ -214,6 +228,7 @@ export async function scrapeAndUpsertCollectibles(): Promise<void> {
               descriptionJp: jpMatch.description,
             } : {}),
             assetRenderUrl: item.imageUrl,
+            orderIndex:     item.orderIndex,
             fighterId,
           },
         });
@@ -230,3 +245,17 @@ export async function scrapeAndUpsertCollectibles(): Promise<void> {
 
   log.ok(`Collectibles: ${totalProcessed} itens no total.`);
 }
+
+// ─── Execução Standalone ──────────────────────────────────────────────────────
+if (require.main === module) {
+  scrapeAndUpsertCollectibles()
+    .then(() => {
+      log.ok("ETL Massivo de Collectibles Finalizado.");
+      process.exit(0);
+    })
+    .catch((err) => {
+      log.error(`Falha no ETL de Collectibles: ${err}`);
+      process.exit(1);
+    });
+}
+

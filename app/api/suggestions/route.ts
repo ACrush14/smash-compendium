@@ -51,7 +51,7 @@ export async function GET(req: NextRequest) {
   }
 
   const suggestions = await db.fighterSuggestion.findMany({
-    where:   { fighterId, section },
+    where:   { fighterId, section, approved: true },
     orderBy: { createdAt: "desc" },
     take:    50,
     select:  { id: true, authorName: true, message: true, createdAt: true },

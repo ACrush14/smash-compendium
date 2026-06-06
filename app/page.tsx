@@ -101,10 +101,11 @@ export default async function VaultPage({ searchParams }: PageProps) {
   const query = (q ?? "").trim();
 
   // Queries paralelas ao banco
-  const [fighterCount, franchiseCount, gameCount, searchResults] = await Promise.all([
+  const [fighterCount, franchiseCount, gameCount, collectibleCount, searchResults] = await Promise.all([
     db.fighter.count(),
     db.franchise.count(),
     db.game.count(),
+    db.collectible.count({ where: { type: { not: "SPRITE" } } }),
     query
       ? db.fighter.findMany({
           where: {
@@ -308,7 +309,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
               <p className="text-sm leading-relaxed text-slate-500">Trofeus, Spirits e Stickers catalogados por jogo, franquia e raridade com renders em alta resolucao.</p>
             </div>
             <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-4">
-              <span className="font-mono text-xs font-bold text-amber-500/80">Em breve</span>
+              <span className="font-mono text-xs text-slate-600">{collectibleCount} itens</span>
               <ChevronRight className="h-4 w-4 text-slate-600 transition-all duration-200 group-hover:translate-x-1 group-hover:text-amber-400" />
             </div>
           </a>

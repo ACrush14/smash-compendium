@@ -29,6 +29,11 @@ model Fighter {
   curatorOverviewPt   String?       @db.Text
   curatorOverviewJp   String?       @db.Text
   curatorOverviewJpEn String?       @db.Text
+  // Música icônica do personagem
+  musicYoutubeId      String?
+  musicTitle          String?
+  musicArtist         String?
+  musicStatus         String?       @default("pending_review") // pending_review | approved
   franchise           Franchise          @relation(fields: [franchiseId], references: [id])
   bios               FighterBio[]
   works              FighterWork[]
@@ -63,6 +68,7 @@ model Game {
   releaseRegion  String?       // "JP" | "NA" | "PAL" — região do lançamento desta entrada
   platform       String        // Console (ex: "SNES", "N64", "GCN")
   consoleIconUrl String?       // URL do ícone local (ex: /assets/consoles/snes.png)
+  boxArtUrl      String?       // URL da capa do jogo
   franchiseId    String
   franchise      Franchise     @relation(fields: [franchiseId], references: [id])
   fighterWorks   FighterWork[]
@@ -94,6 +100,7 @@ model Collectible {
   descriptionJpEn  String?  @db.Text
   sourceType       String   @default("Official")
   assetRenderUrl   String?
+  orderIndex       Int?     // Número oficial da galeria/spirit board
   fighter          Fighter? @relation(fields: [fighterId], references: [id], onDelete: SetNull)
 
   @@index([type, smashGameVersion])
@@ -150,8 +157,27 @@ model FighterSuggestion {
   section     String   // ex: "SSB64" | "SSBM" | "SSBB" | "SSB4" | "SSBU" | "general"
   authorName  String
   message     String   @db.Text
+  approved    Boolean  @default(false)
   createdAt   DateTime @default(now())
   fighter     Fighter  @relation(fields: [fighterId], references: [id], onDelete: Cascade)
 
   @@index([fighterId, section])
+}
+
+model ChronicleEntry {
+  id              String   @id @default(cuid())
+  consoleName     String   // ex: "Nintendo 64"
+  titleNtsc       String   // ex: "Star Fox 64" (Ou "JP EXCLUSIVE")
+  titlePal        String?  // ex: "Lylat Wars"
+  titleJp         String?  // ex: "Star Fox 64" (Japonês)
+  titleJpEn       String?
+  titleJpPt       String?
+  releaseDateNtsc String?  // Strings pois formatos variam (ex: "1982" ou "1989/07/27")
+  releaseDatePal  String?
+  releaseDateJp   String?
+  unlockCriteria  String?  @db.Text
+  wikiUrl         String?  // URL de referência usada para o merge
+  boxArtUrl       String?  // Capa oficial do jogo retirada do SmashWiki
+
+  @@index([consoleName])
 }
