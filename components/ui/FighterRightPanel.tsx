@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import OriginGamesPanel, { type OriginGame } from "./OriginGamesPanel";
 import FighterDataZone, { type FighterDataZoneData, type Lang } from "./FighterDataZone";
 import { GAME_META } from "@/lib/smash-meta";
+import { t } from "@/lib/ui-i18n";
 
 interface FighterHeader {
   rosterNumber:  number;
@@ -17,10 +17,11 @@ interface FighterRightPanelProps {
   header:      FighterHeader;
   originGames: OriginGame[];
   dataZone:    FighterDataZoneData;
+  lang:        Lang;
+  setLang:     (l: Lang) => void;
 }
 
-export default function FighterRightPanel({ header, originGames, dataZone }: FighterRightPanelProps) {
-  const [lang, setLang] = useState<Lang>("EN");
+export default function FighterRightPanel({ header, originGames, dataZone, lang, setLang }: FighterRightPanelProps) {
 
   return (
     <div
@@ -85,7 +86,7 @@ export default function FighterRightPanel({ header, originGames, dataZone }: Fig
           return (
             <div className="flex flex-col gap-1.5">
               <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-cyan-700">
-                Também em
+                {t(lang, "alsoIn")}
               </span>
               <div className="flex items-center gap-1.5 flex-wrap">
                 {rest.map((ver) => {
@@ -114,7 +115,7 @@ export default function FighterRightPanel({ header, originGames, dataZone }: Fig
           <Link href="/" className="font-black italic text-[10px] tracking-tight text-slate-700 hover:text-slate-500 transition-colors">
             SMASH<span className="text-amber-900">COMPENDIUM</span>
           </Link>
-          <span className="font-mono text-[9px] text-slate-800">Fan-made. Não oficial.</span>
+          <span className="font-mono text-[9px] text-slate-800">{t(lang, "fanMade")}</span>
         </div>
       </footer>
     </div>

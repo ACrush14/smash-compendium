@@ -3,9 +3,9 @@ import Link from "next/link";
 import { ChevronRight, Zap } from "lucide-react";
 import { db } from "@/lib/db";
 import { GAME_META, GAME_ORDER, type GameVersion } from "@/lib/smash-meta";
-import MediaVaultViewer, { type MediaAsset } from "@/components/ui/MediaVaultViewer";
+import { type MediaAsset } from "@/components/ui/MediaVaultViewer";
 import { type MusicTrack } from "@/components/ui/MusicPlayer";
-import FighterRightPanel from "@/components/ui/FighterRightPanel";
+import FighterPageLayout from "@/components/ui/FighterPageLayout";
 import {
   type FighterDataZoneData,
   type SerializedBio,
@@ -403,26 +403,18 @@ export default async function FighterPage({ params }: PageProps) {
 
       {/* ── Split Body ──────────────────────────────────────────────── */}
       <main className="flex-1 grid grid-cols-12 overflow-hidden min-h-0 relative z-10">
-
-        {/* ZONA ESQUERDA — MediaVault (5 cols) */}
-        <aside className="col-span-5 relative border-r border-cyan-500/10">
-          <MediaVaultViewer assets={dedupedVaultAssets} music={FIGHTER_MUSIC[fighter.name]} />
-        </aside>
-
-        {/* ZONA DIREITA — FighterRightPanel gerencia idioma + header + data zone */}
-        <div className="col-span-7 relative">
-          <FighterRightPanel
-            header={{
-              rosterNumber:  Number(fighter.rosterNumber),
-              name:          fighter.name,
-              franchiseName: fighter.franchise.name,
-              appearances,
-            }}
-            originGames={rawOriginGames}
-            dataZone={dataZoneData}
-          />
-        </div>
-
+        <FighterPageLayout
+          assets={dedupedVaultAssets}
+          music={FIGHTER_MUSIC[fighter.name]}
+          header={{
+            rosterNumber:  Number(fighter.rosterNumber),
+            name:          fighter.name,
+            franchiseName: fighter.franchise.name,
+            appearances,
+          }}
+          originGames={rawOriginGames}
+          dataZone={dataZoneData}
+        />
       </main>
     </div>
   );

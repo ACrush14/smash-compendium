@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { GAME_META } from "@/lib/smash-meta";
 import SuggestionPanel from "@/components/ui/SuggestionPanel";
+import { t } from "@/lib/ui-i18n";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export type Lang = "EN" | "PT" | "JP" | "JP_EN";
@@ -147,7 +148,7 @@ function LangSelector({
   return (
     <div className="flex items-center gap-3 justify-end">
       <span className="font-mono text-[13px] uppercase tracking-[0.25em] text-cyan-800">
-        Idioma global:
+        {t(lang, "globalLanguage")}
       </span>
       <div
         className="inline-flex border border-cyan-500/15 overflow-hidden"
@@ -309,7 +310,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
         <div className="flex items-center gap-2 mb-4">
           <span className="h-px w-5 bg-cyan-500/35" />
           <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-cyan-700 text-glow-cyan">
-            Ficha Catalográfica
+            {t(lang, "profile")}
           </span>
         </div>
 
@@ -323,10 +324,10 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
           <div className="p-6 flex flex-col gap-5">
             <div className="grid grid-cols-4 gap-4">
               {[
-                { label: "Eras",     value: fichaCounters.eras     },
-                { label: "Troféus",  value: fichaCounters.trophies },
-                { label: "Stickers", value: fichaCounters.stickers },
-                { label: "Spirits",  value: fichaCounters.spirits  },
+                { label: t(lang, "eras"),     value: fichaCounters.eras     },
+                { label: t(lang, "trophies"), value: fichaCounters.trophies },
+                { label: t(lang, "stickers"), value: fichaCounters.stickers },
+                { label: t(lang, "spirits"),  value: fichaCounters.spirits  },
               ].map((s) => (
                 <div key={s.label} className="flex flex-col gap-1">
                   <span className="font-mono text-[11px] uppercase tracking-widest text-cyan-700">{s.label}</span>
@@ -339,9 +340,9 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
               <div className="border-t border-cyan-500/10 pt-5">
                 <div className="flex gap-4 items-center">
                   <span className="text-xl font-bold uppercase tracking-widest text-cyan-400">
-                    {lang === "JP_EN" && curatorOverviewJpEn ? "NOTA CURATORIAL (LITERAL TRANSLATION)" :
-                     lang === "PT" ? "NOTA CURATORIAL" :
-                     "CURATOR'S OVERVIEW"}
+                    {lang === "JP_EN" && curatorOverviewJpEn
+                      ? t(lang, "curatorLiteral")
+                      : t(lang, "curatorOverview")}
                   </span>
                 </div>
                 <div className="flex flex-col gap-3">
@@ -364,7 +365,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
         <div className="flex items-center gap-2 mb-4">
           <span className="h-px w-5 bg-cyan-500/35" />
           <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-cyan-700 text-glow-cyan">
-            Linha do Tempo
+            {t(lang, "timeline")}
           </span>
         </div>
 
@@ -388,7 +389,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                 <div className="px-6 pt-5 pb-4">
                   {gameVer === "SSB64" && (
                     <span className="font-mono text-[11px] uppercase tracking-[0.25em] block mb-3" style={{ color: `${meta?.eraTextColor}80` }}>
-                      Bios
+                      {t(lang, "bios")}
                     </span>
                   )}
                   {gameVer === "SSBU" && fightersTips && fightersTips.length > 0 ? (
@@ -417,7 +418,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                 {(eraTrophy.length > 0 || eraStic.length > 0) && (
                   <div className="px-6 pb-5 flex flex-col gap-4 border-t border-white/5 pt-4">
                     <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-700">
-                      {lang === "JP" || lang === "JP_EN" ? "フィギュア" : lang === "PT" ? "Troféus" : "Trophies"}
+                      {t(lang, "trophies")}
                     </span>
 
                     {eraTrophy.map((t) => {
@@ -454,7 +455,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
 
                 <div className="px-6 pb-4 border-t border-white/5 pt-3 flex flex-col gap-3">
                   {/* Label Works */}
-                  <span className="font-mono text-[13px] uppercase tracking-[0.2em] text-cyan-800">Works:</span>
+                  <span className="font-mono text-[13px] uppercase tracking-[0.2em] text-cyan-800">{t(lang, "works")}</span>
 
                   {/* Jogos de origem com capa + data */}
                   {originWorkGames && originWorkGames.length > 0 && (
@@ -500,12 +501,12 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                   <div className="flex items-center gap-2 flex-wrap">
                     {eraTrophy.length > 0 && (
                       <span className={`border px-2 py-0.5 font-mono text-[10px] opacity-80 ${meta?.color ?? ""}`}>
-                        {eraTrophy.length} troféu{eraTrophy.length > 1 ? "s" : ""}
+                        {eraTrophy.length} {eraTrophy.length > 1 ? t(lang, "trophyPlural") : t(lang, "trophy")}
                       </span>
                     )}
                     {eraStic.length > 0 && (
                       <span className="border border-purple-900/30 bg-purple-950/20 px-2 py-0.5 font-mono text-[10px] text-purple-500/80">
-                        {eraStic.length} sticker{eraStic.length > 1 ? "s" : ""}
+                        {eraStic.length} {eraStic.length > 1 ? t(lang, "stickerPlural") : t(lang, "sticker")}
                       </span>
                     )}
                   </div>
@@ -515,6 +516,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                   fighterId={fighterId}
                   section={gameVer}
                   label={meta?.short}
+                  lang={lang}
                 />
               </div>
             );
@@ -522,7 +524,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
 
           {erasToShow.length === 0 && (
             <p className="font-mono text-xs text-slate-700 italic">
-              Nenhuma era catalogada — execute o ETL para popular este lutador.
+              {t(lang, "noEras")}
             </p>
           )}
         </div>

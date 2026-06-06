@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import { ImageIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
 import MusicPlayer, { type MusicTrack } from "@/components/ui/MusicPlayer";
+import { t, type UILang } from "@/lib/ui-i18n";
 
 export interface MediaAsset {
   url:       string | null;
@@ -17,6 +18,7 @@ export interface MediaAsset {
 interface MediaVaultViewerProps {
   assets: MediaAsset[];
   music?: MusicTrack;
+  lang?:  UILang;
 }
 
 const IS_PLACEHOLDER = (t: MediaAsset["assetType"]) => t.startsWith("placeholder-");
@@ -54,7 +56,7 @@ const PLACEHOLDER_TAG: Partial<Record<MediaAsset["assetType"], { label: string; 
   "video": { label: "VIDEO", color: "#f87171" },
 };
 
-export default function MediaVaultViewer({ assets, music }: MediaVaultViewerProps) {
+export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVaultViewerProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = assets[activeIndex] ?? null;
   const stripRef = useRef<HTMLDivElement>(null);
@@ -115,7 +117,7 @@ export default function MediaVaultViewer({ assets, music }: MediaVaultViewerProp
           ) : (
             <div className="flex flex-col items-center gap-3 text-slate-700 z-10">
               <ImageIcon className="h-16 w-16" strokeWidth={0.75} />
-              <span className="font-mono text-[10px] uppercase tracking-widest">Sem imagem</span>
+              <span className="font-mono text-[10px] uppercase tracking-widest">{t(lang, "noImage")}</span>
             </div>
           )}
         </div>
@@ -147,7 +149,7 @@ export default function MediaVaultViewer({ assets, music }: MediaVaultViewerProp
         {/* Contador + nav buttons */}
         <div className="shrink-0 flex items-center justify-between mb-2">
           <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-800">
-            Acervo · {assets.length} artefatos
+            {t(lang, "collection")} · {assets.length} {t(lang, "artifacts")}
           </span>
           {assets.length > 4 && (
             <div className="flex gap-1">
@@ -243,7 +245,7 @@ export default function MediaVaultViewer({ assets, music }: MediaVaultViewerProp
 
           {assets.length === 0 && (
             <p className="font-mono text-[10px] text-slate-700 italic self-center">
-              Nenhum artefato catalogado
+              {t(lang, "noArtifacts")}
             </p>
           )}
         </div>

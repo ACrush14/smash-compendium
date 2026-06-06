@@ -1,5 +1,7 @@
 "use client";
 
+import { t } from "@/lib/ui-i18n";
+
 export type OriginGame = {
   name:             string;
   titleJp?:         string;
@@ -81,7 +83,7 @@ export default function OriginGamesPanel({ games, lang = "EN" }: { games: Origin
 
       <div className="px-4 pt-3.5 pb-4">
         <p className="font-mono text-[12px] uppercase tracking-[0.25em] text-cyan-700 pb-2 mb-3 border-b border-white/5">
-          Jogos de Origem
+          {t(lang as "EN" | "PT" | "JP" | "JP_EN", "originGames")}
         </p>
 
         <div className="flex flex-row flex-wrap gap-x-6 gap-y-3">
@@ -163,7 +165,7 @@ export default function OriginGamesPanel({ games, lang = "EN" }: { games: Origin
                   >
                     <span className="font-mono text-[8px] uppercase tracking-widest opacity-25 text-center leading-tight"
                           style={{ color: game.badgeColor }}>
-                      Arte<br />Em breve
+                      {t(lang as "EN" | "PT" | "JP" | "JP_EN", "artComingSoon")}
                     </span>
                   </div>
                 );
