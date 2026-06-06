@@ -1,7 +1,7 @@
 # SmashCompendium — Contexto do Projeto
 
 > Documento vivo. Fonte única de verdade para todos os assistentes (Claude Code, Antigravity/Gemini).
-> Atualizado em: 2026-06-06 (sessão 14 — Deploy smashcompedium.vercel.app, 404 customizada, comentários documentados)
+> Atualizado em: 2026-06-06 (sessão 15 — Sistema i18n completo, bandeiras reais, sugestões por personagem)
 
 ---
 
@@ -152,7 +152,7 @@ createdAt   DateTime @default(now())
 ```
 - Tabela criada via `prisma db push` em 2026-06-05
 - API: `GET /api/suggestions?fighterId=X&section=Y` (últimas 50) | `POST /api/suggestions` (cria)
-- UI: `SuggestionPanel` (acordeão colapsável) ao final de cada era na Linha do Tempo
+- UI: `SuggestionPanel` (painel fixo, sempre aberto) no final da página do personagem, abaixo de toda a Linha do Tempo. Usa `section="general"` — sugestões são por personagem, não por era.
 
 ### `Stage` / `Music` / `StageMusic`
 Fases e músicas — modelos existem no schema, ingestão ainda pendente.
@@ -873,7 +873,7 @@ upload.wikimedia.org     → logos SVG de consoles
 | Labels descritivos no Vault | `MediaVaultViewer.tsx` | ✅ 13px label + 11px sublabel com plataforma e ano |
 | Deduplicação vault por URL | `page.tsx` → `dedupedVaultAssets` | ✅ Filter Set<url> no final do assembly — sessão 11 |
 | Sublabel GIFs EarthBound | `page.tsx` → `pushMedia` | ✅ "Gameplay de origem · EarthBound (SNES, 1995)" — sessão 11 |
-| SuggestionPanel por era | `SuggestionPanel.tsx` + `FighterDataZone.tsx` | ✅ Acordeão colapsável ao fim de cada era — sessão 11 |
+| SuggestionPanel por personagem | `SuggestionPanel.tsx` + `FighterDataZone.tsx` | ✅ Painel único, sempre aberto, no final da página — `section="general"` — sessão 15 |
 | API sugestões | `app/api/suggestions/route.ts` | ✅ GET + POST, tabela `FighterSuggestion` no banco — sessão 11 |
 
 ### Arquitetura do FIGHTER_GIFS (page.tsx)
@@ -1033,20 +1033,20 @@ Claude Code → Antigravity (Gemini) → Claude Code → ...
 Visitantes podem deixar sugestões de conteúdo por era/seção na página de cada lutador.
 
 **Fluxo:**
-1. Visitante abre o acordeão "Sugestões · [Era]" ao final de cada bloco de era
+1. Visitante vê o painel "SUGGESTIONS" já aberto no final da página do personagem
 2. Preenche nome (máx 80 chars) + mensagem (máx 1000 chars)
-3. `POST /api/suggestions` → salva no banco
-4. Lista de sugestões existentes carregada por `GET /api/suggestions?fighterId=X&section=Y` ao abrir o acordeão
+3. `POST /api/suggestions` → salva no banco com `section="general"`
+4. Lista de sugestões existentes carregada por `GET /api/suggestions?fighterId=X&section=general` no mount
 
 ### 20.2 Componentes
 
 **`components/ui/SuggestionPanel.tsx`** (client component)
-- Props: `fighterId: string`, `section: string`, `label?: string`
-- Acordeão colapsável com `useState(false)` — fechado por padrão
-- Carrega sugestões ao abrir (`useEffect` dependente de `open`)
-- Form: `input[name]` + `textarea[message]` + botão "Enviar"
-- Estados: loading | enviando | enviado (feedback "Enviado!" por 3s) | erro
-- Sugestões exibidas com timestamp relativo (`timeAgo()`: "agora / Xmin / Xh / Xd`)
+- Props: `fighterId: string`, `section: string`, `lang?: UILang`
+- Sempre visível — sem acordeão. Carrega sugestões no mount (`useEffect` sem dependência de estado aberto)
+- Form: `input[name]` + `textarea[message]` + botão "Send" (i18n)
+- Estados: loading | enviando | enviado (feedback "Sent!" por 3s) | erro
+- Sugestões exibidas com timestamp relativo (`timeAgo()`: "agora / Xmin / Xh / Xd")
+- Totalmente i18n via `t(lang, key)` — responde ao idioma global selecionado
 
 **`app/api/suggestions/route.ts`** (server route)
 - `GET ?fighterId&section` → últimas 50 sugestões ordenadas por `createdAt DESC`
@@ -1055,10 +1055,10 @@ Visitantes podem deixar sugestões de conteúdo por era/seção na página de ca
 
 ### 20.3 Integração no FighterDataZone
 
-- `FighterDataZoneProps` agora inclui `fighterId: string`
-- `FighterDataZoneData` (tipo Omit sem lang/setLang) também inclui `fighterId`
-- `SuggestionPanel` renderizado ao final de cada bloco de era (dentro do `erasToShow.map(...)`)
-- Label exibido: "Sugestões · SSB 64", "Sugestões · Melee", etc. (usando `meta?.short`)
+- `FighterDataZoneProps` inclui `fighterId: string`
+- `SuggestionPanel` renderizado UMA vez, após a `<section>` da Linha do Tempo, fora do `erasToShow.map(...)`
+- `section="general"` — todas as sugestões do personagem ficam em uma só lista
+- Prop `lang={lang}` repassada para que os labels mudem com o idioma global
 
 ### 20.4 Sugestões Visíveis Publicamente
 
@@ -1261,6 +1261,52 @@ model FighterComment {
 - Formulário simples: campo `Nome` + campo `Comentário` + botão "Assinar"
 - Confirmação: "Seu comentário aguarda aprovação."
 - Paginação: mostrar os 5 mais recentes, botão "ver mais"
+
+---
+
+## 26. Sessão 15 — i18n Completo + Sugestões por Personagem (2026-06-06)
+
+### 26.1 Sistema de i18n (lib/ui-i18n.ts)
+
+Criado `lib/ui-i18n.ts` com tradução de ~35 strings de UI para 4 idiomas:
+- `EN` — inglês
+- `PT` — português do Brasil
+- `JP` — japonês
+- `JP_EN` — japonês → inglês (modo leitura dupla)
+
+Helper: `t(lang: UILang, key: UIKey): string`
+
+### 26.2 FighterPageLayout (novo componente)
+
+`components/ui/FighterPageLayout.tsx` — client wrapper que **detém** o estado `lang` e passa para os dois painéis:
+- `MediaVaultViewer` (esquerda) recebe `lang`
+- `FighterRightPanel` (direita) recebe `lang` + `setLang`
+
+Isso resolve o problema de `MediaVaultViewer` e `FighterRightPanel` serem siblings num Server Component — a solução é encapsulá-los num Client Component pai.
+
+### 26.3 Componentes i18n-izados
+
+| Componente | Labels traduzidos |
+|---|---|
+| `FighterDataZone` | globalLanguage, profile, timeline, eras, trophies, stickers, spirits, bios, works, curatorOverview, curatorLiteral, noEras |
+| `MediaVaultViewer` | collection, artifacts, noImage, noArtifacts |
+| `OriginGamesPanel` | originGames, artComingSoon |
+| `SuggestionPanel` | suggestions, loading, noSuggestions, namePlaceholder, suggestionPlaceholder, sending, sent, send, errorSend, errorConnection |
+| `FighterRightPanel` | alsoIn, fanMade |
+
+### 26.4 Bandeiras Reais (flagcdn.com)
+
+Substituídos emoji de bandeira (que no Windows renderizam como texto "GB/BR/JP") por `<img>` do `flagcdn.com`:
+```tsx
+<img src={`https://flagcdn.com/w40/${code}.png`} alt={code.toUpperCase()} />
+```
+Códigos: `gb` (EN), `br` (PT), `jp` (JP), `jp`+`us` (JP_EN).
+
+### 26.5 Sugestões — Refactor
+
+- **Antes:** `SuggestionPanel` por era, acordeão fechado por padrão, `section=gameVer`
+- **Agora:** Único painel por personagem, sempre aberto, `section="general"`, após toda a Linha do Tempo
+- Prop `label` removida. Props atuais: `fighterId`, `section`, `lang`
 
 ### 25.5 Moderação
 
