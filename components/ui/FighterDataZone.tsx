@@ -95,19 +95,55 @@ function getBioText(
 
 // ─── Language Selector ────────────────────────────────────────────────────────
 
+// Flag image component using flagcdn.com
+function Flag({ code, size = 24 }: { code: string; size?: number }) {
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={`https://flagcdn.com/w40/${code}.png`}
+      alt={code.toUpperCase()}
+      width={size}
+      height={size * 0.667}
+      style={{ objectFit: "cover", borderRadius: 2, display: "block" }}
+    />
+  );
+}
+
+const TABS: Array<{ id: Lang; flags: React.ReactNode; title: string }> = [
+  {
+    id: "EN",
+    flags: <Flag code="gb" size={26} />,
+    title: "English",
+  },
+  {
+    id: "PT",
+    flags: <Flag code="br" size={26} />,
+    title: "Português (Brasil)",
+  },
+  {
+    id: "JP",
+    flags: <Flag code="jp" size={26} />,
+    title: "日本語",
+  },
+  {
+    id: "JP_EN",
+    flags: (
+      <span className="flex items-center gap-0.5">
+        <Flag code="jp" size={22} />
+        <span className="font-mono text-[9px] text-slate-500">→</span>
+        <Flag code="us" size={22} />
+      </span>
+    ),
+    title: "JP → English",
+  },
+];
+
 function LangSelector({
   lang, setLang,
 }: {
   lang:         Lang;
   setLang:      (l: Lang) => void;
 }) {
-  const TABS: Array<{ id: Lang; label: string; title: string }> = [
-    { id: "EN",    label: "🇬🇧",       title: "English"              },
-    { id: "PT",    label: "🇧🇷",       title: "Português (Brasil)"   },
-    { id: "JP",    label: "🇯🇵",       title: "日本語"                },
-    { id: "JP_EN", label: "🇯🇵→🇺🇸",   title: "JP → English"         },
-  ];
-
   return (
     <div className="flex items-center gap-3 justify-end">
       <span className="font-mono text-[13px] uppercase tracking-[0.25em] text-cyan-800">
@@ -117,26 +153,24 @@ function LangSelector({
         className="inline-flex border border-cyan-500/15 overflow-hidden"
         style={{ background: "rgba(5,5,24,0.9)" }}
       >
-        {TABS.map((tab) => {
-          return (
-            <button
-              key={tab.id}
-              title={tab.title}
-              onClick={() => setLang(tab.id)}
-              className={[
-                "px-4 py-2 font-mono text-[18px] transition-all border-r border-cyan-500/10 last:border-r-0 leading-none",
-                lang === tab.id
-                  ? "bg-cyan-500/15"
-                  : "opacity-40 hover:opacity-70 hover:bg-white/4",
-              ].join(" ")}
-            >
-              {tab.label}
-              {lang === tab.id && (
-                <span className="block h-0.5 w-full bg-cyan-400 mt-1.5 -mb-1" />
-              )}
-            </button>
-          );
-        })}
+        {TABS.map((tab) => (
+          <button
+            key={tab.id}
+            title={tab.title}
+            onClick={() => setLang(tab.id)}
+            className={[
+              "px-3 py-2 flex flex-col items-center gap-1 transition-all border-r border-cyan-500/10 last:border-r-0 leading-none",
+              lang === tab.id
+                ? "bg-cyan-500/15"
+                : "opacity-40 hover:opacity-80 hover:bg-white/4",
+            ].join(" ")}
+          >
+            {tab.flags}
+            {lang === tab.id && (
+              <span className="block h-0.5 w-full bg-cyan-400" />
+            )}
+          </button>
+        ))}
       </div>
     </div>
   );
