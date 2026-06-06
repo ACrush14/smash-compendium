@@ -23,3 +23,14 @@ tsconfig.tsbuildinfo
 .DS_Store
 *.log
 Thumbs.db
+
+# temp / scraping local
+images/
+ness_data.json
+ness_strings.json
+temp.txt
+figma-plugin-smash.js
+scripts/append-context.js
+scripts/append-context-2.js
+
+.vercel

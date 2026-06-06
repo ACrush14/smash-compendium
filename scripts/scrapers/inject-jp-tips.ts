@@ -27,9 +27,9 @@ async function main() {
 
   let curr = $(nessHeading).next();
   while (curr.length > 0) {
-    if (curr[0].name === "h3") break; // Parar no próximo lutador
+    if (curr[0]?.name === "h3") break; // Parar no próximo lutador
 
-    if (curr[0].name === "dl" && curr.hasClass("list1")) {
+    if (curr[0]?.name === "dl" && curr.hasClass("list1")) {
       const titleJp = curr.find("dt").text().trim();
       const textJp = curr.find("dd").text().trim();
       if (titleJp && textJp) {
@@ -55,6 +55,7 @@ async function main() {
   for (let i = 0; i < Math.min(dbTips.length, tips.length); i++) {
     const dbTip = dbTips[i];
     const jpTip = tips[i];
+    if (!dbTip || !jpTip) continue;
 
     console.log(`Updating Tip [${dbTip.titleEn}] -> JP: [${jpTip.titleJp}]`);
     await db.fighterTip.update({

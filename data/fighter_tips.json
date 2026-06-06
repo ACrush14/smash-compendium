@@ -1,0 +1,27 @@
+[
+  {
+    "fighter": "Ness",
+    "tips": [
+      {
+        "titleEn": "Ness's Origins",
+        "textEn": "Ness first appeared in the SNES title EarthBound, released in North America in 1995. He might look like your average kid, but he can use a variety of PSI powers. He's also got a younger sister."
+      },
+      {
+        "titleEn": "In His Series",
+        "textEn": "Ness is the main character of EarthBound. In that game, a messenger from the future entrusts him with the fate of the world, and Ness heads out to stop the evil plans of an invader named Giygas."
+      },
+      {
+        "titleEn": "Homesickness",
+        "textEn": "In EarthBound, Ness occasionally gets homesick, which weakens him in battle. This can be cured by his going home or by just phoning his mom!"
+      },
+      {
+        "titleEn": "Ness's Little Sister",
+        "textEn": "Ness has a little sister named Tracy. She works part-time at Escargo Express, answering Ness's calls when he needs to have items delivered."
+      },
+      {
+        "titleEn": "Ness's PSI Powers",
+        "textEn": "Ness always had a variety of PSI powers, but he couldn't actually use PK Fire or PK Thunder in EarthBound. His friend Paula could, though."
+      }
+    ]
+  }
+]

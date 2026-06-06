@@ -25,13 +25,16 @@ model Fighter {
   imageUrl           String?
   selectAnimationUrl String?       @db.Text
   // i18n curadoria
-  curatorOverviewEn  String?       @db.Text
-  curatorOverviewPt  String?       @db.Text
-  curatorOverviewJp  String?       @db.Text
-  franchise          Franchise     @relation(fields: [franchiseId], references: [id])
+  curatorOverviewEn   String?       @db.Text
+  curatorOverviewPt   String?       @db.Text
+  curatorOverviewJp   String?       @db.Text
+  curatorOverviewJpEn String?       @db.Text
+  franchise           Franchise          @relation(fields: [franchiseId], references: [id])
   bios               FighterBio[]
   works              FighterWork[]
   collectibles       Collectible[]
+  tips               FighterTip[]
+  suggestions        FighterSuggestion[]
 
   @@index([franchiseId])
 }
@@ -51,14 +54,18 @@ model FighterBio {
 }
 
 model Game {
-  id           String        @id @default(cuid())
-  titleEn      String
-  titleJp      String?
-  releaseDate  DateTime?
-  platform     String
-  franchiseId  String
-  franchise    Franchise     @relation(fields: [franchiseId], references: [id])
-  fighterWorks FighterWork[]
+  id             String        @id @default(cuid())
+  titleEn        String
+  titleJp        String?       // Título original japonês (ex: "MOTHER2 ギーグの逆襲")
+  releaseDate    DateTime?     // Data completa quando disponível
+  releaseYear    Int?          // Ano explícito para query fácil
+  releaseMonth   Int?          // Mês explícito (1-12)
+  releaseRegion  String?       // "JP" | "NA" | "PAL" — região do lançamento desta entrada
+  platform       String        // Console (ex: "SNES", "N64", "GCN")
+  consoleIconUrl String?       // URL do ícone local (ex: /assets/consoles/snes.png)
+  franchiseId    String
+  franchise      Franchise     @relation(fields: [franchiseId], references: [id])
+  fighterWorks   FighterWork[]
 }
 
 model FighterWork {
@@ -119,4 +126,32 @@ model StageMusic {
   music   Music @relation(fields: [musicId], references: [id], onDelete: Cascade)
 
   @@id([stageId, musicId])
+}
+
+model FighterTip {
+  id          String   @id @default(cuid())
+  fighterId   String
+  titleEn     String
+  textEn      String   @db.Text
+  titlePt     String?
+  textPt      String?  @db.Text
+  titleJp     String?
+  textJp      String?  @db.Text
+  titleJpEn   String?
+  textJpEn    String?  @db.Text
+  fighter     Fighter  @relation(fields: [fighterId], references: [id], onDelete: Cascade)
+
+  @@index([fighterId])
+}
+
+model FighterSuggestion {
+  id          String   @id @default(cuid())
+  fighterId   String
+  section     String   // ex: "SSB64" | "SSBM" | "SSBB" | "SSB4" | "SSBU" | "general"
+  authorName  String
+  message     String   @db.Text
+  createdAt   DateTime @default(now())
+  fighter     Fighter  @relation(fields: [fighterId], references: [id], onDelete: Cascade)
+
+  @@index([fighterId, section])
 }

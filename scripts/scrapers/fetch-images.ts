@@ -255,18 +255,19 @@ async function fetchFandomImages(name: string): Promise<FandomImage[]> {
 
   log.step(`Fandom — ${pageUrl}`);
 
-  const $ = await fetchHtml(pageUrl);
-  const results: FandomImage[] = [];
-  const seen = new Set<string>();
+  try {
+    const $ = await fetchHtml(pageUrl);
+    const results: FandomImage[] = [];
+    const seen = new Set<string>();
 
-  // Cabeçalhos que identificam seções de interesse
-  const SECTION_KEYWORDS = [
-    { re: /render|artwork|art/i,    section: "renders"  },
-    { re: /sprite/i,               section: "sprites"  },
-    { re: /victory|win/i,          section: "victory"  },
-    { re: /screenshot|in.game/i,   section: "ingame"   },
-    { re: /gallery/i,              section: "gallery"  },
-  ];
+    // Cabeçalhos que identificam seções de interesse
+    const SECTION_KEYWORDS = [
+      { re: /render|artwork|art/i,    section: "renders"  },
+      { re: /sprite/i,               section: "sprites"  },
+      { re: /victory|win/i,          section: "victory"  },
+      { re: /screenshot|in.game/i,   section: "ingame"   },
+      { re: /gallery/i,              section: "gallery"  },
+    ];
 
   let currentSection = "other";
 
@@ -305,6 +306,10 @@ async function fetchFandomImages(name: string): Promise<FandomImage[]> {
 
   log.ok(`  Fandom: ${results.length} imagens encontradas`);
   return results;
+  } catch (err: any) {
+    log.warn(`  Fandom extra failed: ${err.message}`);
+    return [];
+  }
 }
 
 // ─── Terminal output ──────────────────────────────────────────────────────────

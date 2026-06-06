@@ -1,7 +1,7 @@
 # SmashCompendium — Contexto do Projeto
 
 > Documento vivo. Fonte única de verdade para todos os assistentes (Claude Code, Antigravity/Gemini).
-> Atualizado em: 2026-06-05 (sessão 6 — UI de idioma, capa JP Mother 2, Debut no EraHeader)
+> Atualizado em: 2026-06-06 (sessão 14 — Bandeiras no LangSelector, JP curator notes, demandas Chronicles/Coleções documentadas)
 
 ---
 
@@ -55,15 +55,18 @@ musicTracks Music[]
 ### `Fighter`
 Os 87 lutadores do SSBU.
 ```
-id                 String   — CUID
-rosterNumber       String   — número no roster (ex: "01", "14")
-name               String   — único (ex: "Ness")
-franchiseId        String
-imageUrl           String?  — render principal (URL externa ssbwiki)
-selectAnimationUrl String?  — GIF de seleção
-curatorOverviewEn  String?  — nota curatorial em inglês (fan-made)
-curatorOverviewPt  String?  — nota curatorial em português
-curatorOverviewJp  String?  — nota curatorial em japonês
+id                  String   — CUID
+rosterNumber        String   — número no roster (ex: "01", "14")
+name                String   — único (ex: "Ness")
+franchiseId         String
+imageUrl            String?  — render principal (URL externa ssbwiki)
+selectAnimationUrl  String?  — GIF de seleção
+curatorOverviewEn   String?  — nota curatorial em inglês (fan-made)
+curatorOverviewPt   String?  — nota curatorial em português
+curatorOverviewJp   String?  — nota curatorial em japonês (original)
+curatorOverviewJpEn String?  — tradução EN da nota curatorial JP
+tips                FighterTip[]
+suggestions         FighterSuggestion[]
 ```
 
 ### `FighterBio`
@@ -71,13 +74,14 @@ Texto biográfico in-game por versão do Smash.
 ```
 id                  String  — CUID
 fighterId           String
-smashGameVersion    String  — "SSB64" | "MELEE" | "BRAWL" | "SSB4" | "SSBU"
+smashGameVersion    String  — "SSB64" | "SSBM" | "SSBB" | "SSB4" | "SSBU"
 contentEn           String  — texto oficial em inglês (obrigatório)
 contentPt           String? — tradução PT-BR (curadoria)
 contentJp           String? — texto original japonês
 contentJpEn         String? — tradução EN do texto JP
 @@unique([fighterId, smashGameVersion])
 ```
+**ATENÇÃO:** Os valores reais no banco são `"SSBM"` e `"SSBB"` (NÃO "MELEE"/"BRAWL"). Usar sempre as siglas corretas.
 
 ### `Game`
 Jogos de origem dos personagens (não os jogos do Smash).
@@ -123,9 +127,32 @@ assetRenderUrl   String? — URL da imagem do coletável
 @@index([type, smashGameVersion])
 ```
 
+**Valores válidos para `type`:**
+- `"TROPHY"` — troféus (Melee, Brawl, SSB4, SSBU)
+- `"SPIRIT"` — spirits (SSBU)
+- `"STICKER"` — adesivos (Brawl)
+- `"SPRITE"` — pixel art do jogo de origem
+- `"MEDIA"` — mídias variadas: clay model, artworks, GIFs de origem
+
 **Convenções de tipo especial:**
 - `type = "SPRITE"` + `smashGameVersion = "ORIGIN"` → sprite do jogo de origem (ex: NessSprite.gif)
 - `type = "SPIRIT"` + `smashGameVersion = "SSBU"` → spirit do Ultimate
+- `type = "MEDIA"` → qualquer mídia não-coletável; nome identifica o asset ("Clay Model", "GIF - PK Magnet", etc.)
+
+### `FighterSuggestion`
+Sugestões de visitantes por seção/era de cada lutador. Sistema de feedback público.
+```
+id          String   — CUID
+fighterId   String
+section     String   — "SSB64" | "SSBM" | "SSBB" | "SSB4" | "SSBU" | "general"
+authorName  String   — nome do visitante (máx 80 chars)
+message     String   — sugestão em texto livre (máx 1000 chars)
+createdAt   DateTime @default(now())
+@@index([fighterId, section])
+```
+- Tabela criada via `prisma db push` em 2026-06-05
+- API: `GET /api/suggestions?fighterId=X&section=Y` (últimas 50) | `POST /api/suggestions` (cria)
+- UI: `SuggestionPanel` (acordeão colapsável) ao final de cada era na Linha do Tempo
 
 ### `Stage` / `Music` / `StageMusic`
 Fases e músicas — modelos existem no schema, ingestão ainda pendente.
@@ -147,13 +174,18 @@ Fases e músicas — modelos existem no schema, ingestão ainda pendente.
 │   │   └── page.tsx
 │   ├── games/
 │   └── api/
+│       ├── suggestions/
+│       │   └── route.ts         # GET + POST /api/suggestions (NEW sessão 11)
+│       ├── collectibles/ fighters/ games/ translate/
 │
 ├── components/
 │   ├── fighter/
-│   │   ├── BioTranslator.tsx   # Tabs EN/JP/PT-BR por era
-│   │   ├── FighterDataZone.tsx # Zona direita — header + ficha + timeline
-│   │   ├── MediaVaultViewer.tsx# Zona esquerda — render + carrossel
-│   │   ├── OriginGamesPanel.tsx# Painel de jogos de origem do personagem
+│   │   ├── BioTranslator.tsx    # Tabs EN/JP/PT-BR por era
+│   │   ├── FighterDataZone.tsx  # Zona direita — header + ficha + timeline
+│   │   ├── FighterRightPanel.tsx# Wrapper cliente do painel direito (controla lang state)
+│   │   ├── MediaVaultViewer.tsx # Zona esquerda — render + carrossel
+│   │   ├── OriginGamesPanel.tsx # Painel de jogos de origem do personagem
+│   │   ├── SuggestionPanel.tsx  # Acordeão de sugestões por era (NEW sessão 11)
 │   │   └── SearchBar.tsx
 │   ├── vault/                  # Componentes de acervo/galeria
 │   └── ui/                     # Componentes base (botões, badges, etc)
@@ -210,6 +242,18 @@ Fases e músicas — modelos existem no schema, ingestão ainda pendente.
 │           │
 │           │  — Pendentes (não encontrados no Wikimedia) —
 │           │    Game & Watch, MSX, Sega Mega Drive (JP)
+│
+│       └── gifs/               # GIFs animados por era (9 arquivos ativos — sessão 10)
+│           ├── ness-melee-pk.gif        ← Melee (SSBM) — PK Fire
+│           ├── ness-melee-2.gif         ← Melee (SSBM) — Entrada em cena
+│           ├── ness-mother2-1.gif       ← Brawl (SSBB) — Troféu animado
+│           ├── ness-smash-anim.gif      ← Brawl (SSBB) — Gameplay
+│           ├── ness-mother2-2.gif       ← Smash 4 (SSB4) — Card troféu
+│           ├── ness-smash4.gif          ← Smash 4 (SSB4) — Gameplay Wii U
+│           ├── jeff-mother2.gif         ← Ultimate (SSBU) — Assist Trophy Jeff
+│           ├── ness-ultimate-1.gif      ← Ultimate (SSBU) — Gameplay
+│           └── ness-ultimate-2.gif      ← Ultimate (SSBU) — PK Thunder
+│           (paula/poo removidos — eram troféus Melee irrelevantes)
 │
 │       └── games/              # Box art dos jogos Smash (12 arquivos — adicionados 2026-06-05)
 │           ├── SSB64_USA_BOX.jpg
@@ -298,9 +342,10 @@ npx tsx scripts/scrapers/fetch-images.ts
 ### Fontes de Dados Aprovadas
 | Fonte | Uso |
 |---|---|
-| `ssbwiki.com` | Fonte principal — textos, imagens, troféus, stickers, bios |
+| `ssbwiki.com` | Fonte principal EN — textos, imagens, troféus, stickers, bios |
 | `ssb.wiki.gallery` | CDN de imagens do SSBWiki |
-| `ssbuspirits.com` | Spirits do SSBU (pendente implementação) |
+| `smashwiki.info` | **Fonte de bios em japonês (JP)** — sob demanda, por personagem. URL: `smashwiki.info/<nome-em-JP>`. Estrutura: `<dl>` com pares `<dt>/<dd>` — igual ao ssbwiki EN. Usar `character-article.ts` adaptado para JP. |
+| `ssbuspirits.com/spirits/<slug-en>` | **Descrição dos Spirits em inglês**. Texto no campo `span.wixui-rich-text__text` ou `div` correspondente. Ex: Ness = Spirit #563, texto EN inserido no banco como `Collectible.descriptionEn`. |
 | `ssbinfo.com` | Fonte adicional, ainda não explorada |
 | `upload.wikimedia.org` | Logos SVG de consoles |
 
@@ -392,12 +437,15 @@ Bordas:         slate-700 / slate-800
 
 ### Ness (lutador piloto — completo)
 - Bio SSB64 in-game ✓
-- 3 troféus Melee com imagens ✓
+- 3 troféus Melee com imagens ✓ (3 URLs únicas)
 - 1 troféu Brawl com imagem ✓
-- 10 troféus SSB4 com imagens (3DS, Wii U, variantes regionais NA/EU) ✓
-- 1 sticker Brawl (sem imagem — bug pendente) ✗
+- 5 troféus SSB4 no banco — **3DS excluídos do vault e da ficha** (só Wii U exibido: 2 URLs únicas) ✓
+- Sticker Brawl — **removido do vault e da ficha catalográfica** (STICKERS: 0) ✓
 - Render SSBU ✓
 - Sprite EarthBound (NessSprite.gif, type=SPRITE) ✓
+- Clay Model + Melee Artwork + 3 GIFs de moveset (type=MEDIA) ✓
+- **Spirit SSBU inserido** (id=SPIRIT-SSBU-Ness-563, Spirit #563, descriptionEn preenchida, sem imagem ainda) ✓
+- **Vault total: 23 artefatos únicos** (ordem cronológica — sessão 12)
 
 ### Outros 86 fighters
 - Cadastrados no banco (sem imagens) ✓
@@ -452,18 +500,25 @@ boxArtLandscape?: boolean;  // true = paisagem → container 200×146; false = r
 
 ## 12. Pendências Prioritárias
 
-| # | Tarefa | Prioridade |
-|---|---|---|
-| 1 | **ETL Ultimate:** Rate Limit fix + Spirits (ssbuspirits.com) + Fighter Tips (JSON) | Alta |
-| 2 | Adicionar modelo `FighterTip` ao schema + `npx prisma db push` | Alta |
-| 3 | Box arts dos jogos de origem dos outros franchises (Mario, Zelda, Pokémon...) | Média |
-| 4 | Sticker Brawl do Ness — bug de imagem no scraper | Média |
-| 5 | Spirit SSBU do Ness — seção "Spirit" não encontrada na página, verificar URL | Média |
-| 6 | Bio JP — campos null para todos os fighters | Média |
-| 7 | ETL em massa para os outros 86 fighters | Baixa |
-| 8 | Página `/fighters` (lista geral com filtros) | Baixa |
-| 9 | Stages + Music + StageMusic — ETL escrito, não rodado | Baixa |
-| 10 | Nota curatorial — substituir Lorem Ipsum por texto fan-made | Baixa |
+| # | Tarefa | Prioridade | Status |
+|---|---|---|---|
+| 1 | **ETL em massa para os outros 86 fighters** (bio EN + troféus + imagens) — última grande demanda | Alta | 🔴 Pendente |
+| 2 | ~~Adicionar modelo `FighterTip` ao schema~~ | ~~Alta~~ | ✅ Resolvido |
+| 3 | Box arts dos jogos de origem dos outros franchises (Mario, Zelda, Pokémon...) | Média | 🔴 Pendente |
+| 4 | ~~Sticker Brawl do Ness~~ — **removido do vault** (decisão de curadoria, sessão 12) | ~~Média~~ | ✅ Removido |
+| 5 | Spirit SSBU do Ness — **texto inserido** (Spirit #563, via ssbuspirits.com). Imagem ainda null | Média | 🟡 Texto OK, imagem ✗ |
+| 6 | Bio JP — campos null para os outros 86 fighters — fonte: **smashwiki.info** | Média | 🔴 Pendente |
+| 7 | ~~ETL em massa~~ — agora é a tarefa #1 acima | Alta | 🔴 Pendente |
+| 8 | Página `/fighters` (lista geral com filtros) | Média | 🔴 Pendente |
+| 9 | Stages + Music + StageMusic — ETL escrito, não rodado | Baixa | 🔴 Pendente |
+| 10 | Nota curatorial — Ness tem texto EN+JP; outros 86 null | Baixa | 🟡 Ness OK, outros ✗ |
+| 11 | ~~DB cleanup — rows duplicadas SSB4~~ — 3DS **filtrado no código** (is3DSTrophy); limpeza no banco ainda pendente | Baixa | 🟡 Filtrado, não deletado |
+| 12 | Moderação de sugestões — campo `approved: Boolean` no `FighterSuggestion` | Baixa | 🔴 Pendente |
+| 13 | ~~Player de música por lutador~~ — `MusicPlayer.tsx`, YouTube IFrame API, estilo HUD. Ness: "Bein' Friends" (3:50) | ~~Alta~~ | ✅ Implementado (sessão 12) |
+| 14 | **Página "Coleções"** — grid de cards no estilo SSB Spirit Board, separada por jogo (SSB64 / Melee / Brawl / SSB4 / Ultimate). Ver seção 24. | Alta | 🔴 Pendente |
+| 15 | **Página "Chronicles"** — lista cronológica estilo Nintendo Chronicle (data + nome), adaptada ao estilo dark do site, separada por jogo. Ver seção 24. | Alta | 🔴 Pendente |
+| 16 | **Deploy na Vercel + push para GitHub** — após estabilizar Coleções e Chronicles | Alta | 🔴 Pendente |
+| 17 | Nota curatorial JP — script `generate-curator.ts` atualizado para gerar `curatorOverviewJp` (学芸員コメント). Aguardando execução com `ANTHROPIC_API_KEY`. | Média | 🟡 Script pronto, não rodado |
 
 **Resolvidos nesta sessão (sessão 4):**
 - ✅ Layout visual completo da página do lutador (ver seção 15)
@@ -471,6 +526,20 @@ boxArtLandscape?: boolean;  // true = paisagem → container 200×146; false = r
 - ✅ Box arts reais de EarthBound e Mother 3 do Wikipedia
 - ✅ Header sticky compacto (96px), body com showcase
 - ✅ Tipografia mínima 12px em toda EraHeader
+
+**Resolvidos nesta sessão (sessão 11 — 2026-06-05):**
+- ✅ Deduplicação do vault por URL — 27 → 25 artefatos (SSB4 tinha 2 pares de renders idênticos)
+- ✅ Sublabel dos GIFs EarthBound corrigido: "Gameplay de origem · EarthBound (SNES, 1995)" em vez de "Moveset em ação · SSBU"
+- ✅ Sistema de sugestões completo: schema `FighterSuggestion`, API `/api/suggestions`, componente `SuggestionPanel` por era
+
+**Resolvidos nesta sessão (sessão 12 — 2026-06-05):**
+- ✅ Vault reordenado cronologicamente (ORIGIN → SSBM → SSBB → SSB4 → SSBU)
+- ✅ Sticker Brawl removido do vault e da ficha
+- ✅ Troféus 3DS filtrados (`is3DSTrophy`) — vault exibe só Wii U
+- ✅ Spirit SSBU inserido no banco (Spirit #563, texto EN via ssbuspirits.com)
+- ✅ Fontes JP documentadas: `smashwiki.info` (bio JP) + `ssbuspirits.com` (spirit EN)
+- ✅ Player de música implementado (`MusicPlayer.tsx`) — YouTube IFrame API, estilo HUD do site
+- ✅ Ness: "Bein' Friends" (Shogo Sakai, 3:50) funcionando no painel esquerdo
 
 ---
 
@@ -794,15 +863,107 @@ upload.wikimedia.org     → logos SVG de consoles
 | Nota curatorial | `FighterDataZone.tsx` | ✅ text-slate-100 |
 | Tipografia Localizada | `FighterDataZone.tsx` | ✅ Labels "WORKS" e "Idioma Global" em 13px, Trophies/Troféus/フィギュア dinâmico |
 | GIFs no MediaVault | `MediaVaultViewer.tsx` | ✅ `unoptimized` + `pixelated` para .gif |
-| PT-BR degradação graceful | `FighterDataZone.tsx` | ✅ tab mostra ✕ quando API key ausente |
+| Traduções Estáticas (PT & JP_EN) | `DB` + `FighterDataZone.tsx` | ✅ Traduções estáticas carregadas do DB; Ness pilotado |
+| Localização de propriedades JP | `FighterDataZone.tsx` | ✅ Esconde textos null/em inglês na tab JP |
+| Injeção Smash Tips JP | `inject-jp-tips.ts` | ✅ Scraping do wikiwiki.jp extraindo `<dt>` e `<dd>` para `titleJp` e `textJp` da era SSBU |
 | Ícones de console | `public/assets/consoles/` | ✅ 25 arquivos (SVG+PNG), mapeados em `smash-meta.ts` |
 | Box arts dos jogos Smash | `public/assets/games/` | ✅ 15 imagens (USA+JP para 5 jogos + EarthBound + Mother 3 + Mother 2 JP) |
+| GIFs por era no MediaVault | `public/assets/gifs/` | ✅ 9 GIFs ativos (2 Melee + 2 Brawl + 2 SSB4 + 3 Ultimate) |
+| Ordem definitiva do Vault | `page.tsx` → `vaultAssets` | ✅ Clay → Sprite → Melee → Brawl → SSB4 → Ultimate (**25 artefatos**, dedup ativo) |
+| Labels descritivos no Vault | `MediaVaultViewer.tsx` | ✅ 13px label + 11px sublabel com plataforma e ano |
+| Deduplicação vault por URL | `page.tsx` → `dedupedVaultAssets` | ✅ Filter Set<url> no final do assembly — sessão 11 |
+| Sublabel GIFs EarthBound | `page.tsx` → `pushMedia` | ✅ "Gameplay de origem · EarthBound (SNES, 1995)" — sessão 11 |
+| SuggestionPanel por era | `SuggestionPanel.tsx` + `FighterDataZone.tsx` | ✅ Acordeão colapsável ao fim de cada era — sessão 11 |
+| API sugestões | `app/api/suggestions/route.ts` | ✅ GET + POST, tabela `FighterSuggestion` no banco — sessão 11 |
+
+### Arquitetura do FIGHTER_GIFS (page.tsx)
+
+```ts
+type GifEra   = "ORIGIN" | "SSB64" | "SSBM" | "SSBB" | "SSB4" | "SSBU";
+type GifEntry = { url: string; label: string; sublabel: string };
+const FIGHTER_GIFS: Record<string, Partial<Record<GifEra, GifEntry[]>>>
+```
+
+- Definido em `app/fighters/[slug]/page.tsx` junto com `FIGHTER_ORIGIN_GAMES`
+- `pushGifs(era)` injeta os GIFs no ponto certo do `vaultAssets`
+- `pushMedia(filter, assetType, sublabelFn)` injeta MEDIA assets do banco em posições específicas
+- Para adicionar GIFs de outro lutador: adicionar entrada em `FIGHTER_GIFS[fighterName]`
+
+### Mapeamento correto dos GIFs do Ness (após reclassificação sessão 10)
+
+| Arquivo | Era real | Conteúdo |
+|---|---|---|
+| `ness-melee-pk.gif` | SSBM | Ataque PK Fire em batalha |
+| `ness-melee-2.gif` | SSBM | Entrada em cena / movimentação |
+| `ness-mother2-1.gif` | SSBB | Troféu 3D animado do Brawl |
+| `ness-smash-anim.gif` | SSBB | Gameplay Brawl |
+| `ness-mother2-2.gif` | SSB4 | Card de troféu Smash 4 |
+| `ness-smash4.gif` | SSB4 | Gameplay Wii U |
+| `ness-ultimate-1.gif` | SSBU | Gameplay Ultimate |
+| `ness-ultimate-2.gif` | SSBU | Ataque PK Thunder |
+| `jeff-mother2.gif` | SSBU | Cena com Jeff (Assist Trophy) |
+| ~~`paula-mother2.gif`~~ | removido | Era troféu Melee da Paula (irrelevante) |
+| ~~`poo-mother2.gif`~~ | removido | Era troféu Melee do Poo (irrelevante) |
+
+### Ordem definitiva do vaultAssets (23 artefatos para Ness — sessão 12)
+
+**Regra de ouro: ordem cronológica estrita por ano de lançamento.**
+
+```
+ORIGIN (1994 — EarthBound/SNES)
+  1   🕹️ Sprite EarthBound       SPRITE DB — pixel art original (Super Famicom, 1994)
+  2   🎬 GIF - PK Magnet         MEDIA DB — gameplay de origem (EarthBound)
+  3   🎬 GIF - Yo-Yo             MEDIA DB — gameplay de origem (EarthBound)
+  4   🎬 GIF - Bat               MEDIA DB — gameplay de origem (EarthBound)
+
+SSBM (2001 — GameCube)
+  5   🧱 Clay Model              MEDIA DB — modelo de argila Melee
+  6   🖼️ Melee Artwork           MEDIA DB — arte oficial
+  7   🏆 Troféu Melee            TROPHY DB — NessTrophy.png
+  8   🏆 Troféu Melee            TROPHY DB — NessTrophy2.png
+  9   🏆 Troféu Melee            TROPHY DB — (3ª URL única)
+ 10   🎬 Ness · PK Fire          GIF FIGHTER_GIFS
+ 11   🎬 Ness · Entrada em cena  GIF FIGHTER_GIFS
+
+SSBB (2008 — Wii)
+ 12   🏆 Troféu Brawl            TROPHY DB
+ 13   🎬 Ness · Troféu Brawl     GIF FIGHTER_GIFS
+ 14   🎬 Ness · Animação Brawl   GIF FIGHTER_GIFS
+
+SSB4 (2014 — Wii U) ← 3DS EXCLUÍDOS (is3DSTrophy)
+ 15   🏆 NessTrophyWiiU.png      TROPHY DB — Wii U padrão
+ 16   🏆 NessAltTrophyWiiU.png   TROPHY DB — Wii U alternativo
+ 17   🎬 Ness · Troféu Smash 4   GIF FIGHTER_GIFS
+ 18   🎬 Ness · Gameplay Smash 4 GIF FIGHTER_GIFS
+
+SSBU (2018 — Switch)
+ 19   🎨 Ness — Render Oficial   RENDER — Ness_SSBU.png
+ 20   👻 Ness — Spirit           SPIRIT DB — Spirit #563 (sem imagem ainda)
+ 21   🎬 Ness · Ultimate         GIF FIGHTER_GIFS
+ 22   🎬 Ness · PK Thunder       GIF FIGHTER_GIFS
+ 23   🎬 Ness + Jeff · Cena      GIF FIGHTER_GIFS
+```
+
+**Regras do vault (imutáveis):**
+- Stickers: **removidos do vault** (decisão de curadoria — sessão 12)
+- Troféus 3DS: **filtrados por `is3DSTrophy(url)`** — URLs com "3ds" na string excluídas
+- Spirits sem imagem: incluídos no vault (mostram placeholder até imagem ser adicionada)
+- Deduplicação: `dedupedVaultAssets` filtra por `Set<url>`; itens com `url === null` sempre passam
+
+### Labels no MediaVaultViewer (sessão 10)
+- **Label** (nome do asset): `text-[13px] font-semibold uppercase` — era `text-[10px]`
+- **Sublabel** (descrição): `text-[11px] leading-snug` — era `text-[9px] truncate`
+- Sublabels agora incluem plataforma e ano: ex. *"Troféu 3D oficial · Super Smash Bros. Melee (GameCube, 2001)"*
+- `truncate` removido do sublabel — texto quebra em múltiplas linhas
 
 ### O que fazer na próxima sessão (ordem sugerida)
 
-1. **ETL: Spirits** → criar scraper para `ssbuspirits.com/spirits/ness`
-2. **Fix: sticker Brawl do Ness** sem imagem
-3. **Box arts de outros franchises** → Mario, Zelda, Kirby, etc. para o OriginGamesPanel
+1. **ETL em massa** → rodar scrapers para os outros 86 fighters (bio EN + troféus + imagens) — ÚLTIMA GRANDE DEMANDA
+2. **Bio JP** → adaptar `character-article.ts` para scraping do `smashwiki.info` por lutador (JP)
+3. **Spirit — imagem** → buscar URL da imagem do Spirit do Ness (ssb.wiki.gallery ou ssbwiki)
+4. **Box arts de outros franchises** → Mario, Zelda, Kirby, etc. para o OriginGamesPanel
+5. **Página `/fighters`** → lista geral com filtros por franquia/era
+6. **DB cleanup** → deletar rows 3DS do SSB4 do banco (IDs: `TROPHY-SSB4-Ness-Ness-4`, `TROPHY-SSB4-Ness-Ness`, `TROPHY-SSB4-Ness-Ness (Alt.)`)
 
 ### Regras de ouro que nunca mudam
 
@@ -843,3 +1004,220 @@ Claude Code → Antigravity (Gemini) → Claude Code → ...
 - **Ambas** → podem implementar qualquer coisa; o importante é documentar aqui
 
 ---
+
+## 19. Traduções Estáticas e Acervo Extra (Sessão 7 - 2026-06-05)
+### 19.1 Remoção do Fallback de Tradução Dinâmica
+- Foi removido o uso do `/api/translate` no client-side em `FighterDataZone.tsx`.
+- Todo o sistema de tradução PT-BR e JP_EN agora é estático, alimentado pelos campos criados no Prisma (`curatorOverviewEn`, `curatorOverviewPt`, `titleJpEn`, `textJpEn`, etc).
+- `Ness` foi utilizado como piloto, com todas as suas strings traduzidas manualmente no banco de dados.
+
+### 19.2 UI e Localização JP_EN
+- Quando a aba de tradução literal (JP_EN) está ativa, o sistema de UI agora substitui a string "ネス" diretamente por "Ness" nas strings de cabeçalho.
+- Tamanho das fontes padronizado: descrições (`text-sm`), títulos das Tips (`text-xs`), títulos de Troféus/Stickers (`text-[11px]`).
+- Retirado o itálico (italic) que estava em todas as descrições de Melee, Brawl e SSB4, uniformizando com as descrições de Ultimate e 64.
+
+### 19.3 Fundo Dinâmico (Franchise)
+- A propriedade `svgIconUrl` de `Franchise` passou a ser consumida pela tela do `FighterDataZone`.
+- Adicionada imagem em fundo translúcido (`opacity-10 scale-[1.5] invert`) usando o SVG do logo da franquia associada (ex: `EarthboundSymbol.svg`).
+
+### 19.4 MediaVaultViewer e Giphy
+- Modificado o `MediaVaultViewer.tsx` para suportar formalmente as tipagens de `clay`, `art` e `gif`, substituindo os `placeholder-X` temporários.
+- Os gifs (como PK Magnet, Bat e Yo-yo de Giphy), modelos Clay e artes originais foram salvos fisicamente em `public/assets/media/ness` e adicionados ao Prisma na tabela `Collectible` (com `type: "MEDIA"`), sendo renderizados pela "Galeria".
+
+---
+
+## 20. Sistema de Sugestões de Visitantes (Sessão 11 — 2026-06-05)
+
+### 20.1 Arquitetura
+
+Visitantes podem deixar sugestões de conteúdo por era/seção na página de cada lutador.
+
+**Fluxo:**
+1. Visitante abre o acordeão "Sugestões · [Era]" ao final de cada bloco de era
+2. Preenche nome (máx 80 chars) + mensagem (máx 1000 chars)
+3. `POST /api/suggestions` → salva no banco
+4. Lista de sugestões existentes carregada por `GET /api/suggestions?fighterId=X&section=Y` ao abrir o acordeão
+
+### 20.2 Componentes
+
+**`components/ui/SuggestionPanel.tsx`** (client component)
+- Props: `fighterId: string`, `section: string`, `label?: string`
+- Acordeão colapsável com `useState(false)` — fechado por padrão
+- Carrega sugestões ao abrir (`useEffect` dependente de `open`)
+- Form: `input[name]` + `textarea[message]` + botão "Enviar"
+- Estados: loading | enviando | enviado (feedback "Enviado!" por 3s) | erro
+- Sugestões exibidas com timestamp relativo (`timeAgo()`: "agora / Xmin / Xh / Xd`)
+
+**`app/api/suggestions/route.ts`** (server route)
+- `GET ?fighterId&section` → últimas 50 sugestões ordenadas por `createdAt DESC`
+- `POST` → valida campos, verifica fighter existe, insere `FighterSuggestion`
+- Validações: campos obrigatórios, nome ≤ 80 chars, mensagem ≤ 1000 chars
+
+### 20.3 Integração no FighterDataZone
+
+- `FighterDataZoneProps` agora inclui `fighterId: string`
+- `FighterDataZoneData` (tipo Omit sem lang/setLang) também inclui `fighterId`
+- `SuggestionPanel` renderizado ao final de cada bloco de era (dentro do `erasToShow.map(...)`)
+- Label exibido: "Sugestões · SSB 64", "Sugestões · Melee", etc. (usando `meta?.short`)
+
+### 20.4 Sugestões Visíveis Publicamente
+
+As sugestões são públicas — todos os visitantes podem ver o que os outros deixaram.
+Sem moderação por enquanto (pode adicionar campo `approved: Boolean` futuramente).
+
+---
+
+## 21. Player de Música por Lutador (implementado — sessão 12)
+
+### 21.1 Arquitetura (implementada)
+
+**Granularidade:** 1 música por lutador (global para o vault inteiro).
+
+**Componente:** `components/ui/MusicPlayer.tsx`
+- Props: `youtubeId: string`, `title: string`, `artist?: string`
+- Carrega YouTube IFrame API dinamicamente via `<script>` tag
+- Controla o player via `window.YT.Player` (API oficial)
+- Hidden iframe (1×1px, `opacity: 0`) — apenas áudio
+
+**Posição:** entre o label do asset ativo e o carrossel de thumbnails, dentro do `MediaVaultViewer`.
+
+**Estilo HUD:**
+- Fundo: `rgba(10,8,32,0.95)` → `rgba(5,5,20,0.98)` (gradiente)
+- Border-top: `1px solid rgba(64,180,255,0.07)` (idêntico ao carousel)
+- Botão play: borda `amber-400/40`, clipPath hexagonal, hover `amber-400/10`
+- Progress bar: fill `amber-400/80` sobre `rgba(255,255,255,0.06)`
+- Thumb: diamante amber-400 (visible on hover)
+- Timestamps: `font-mono text-[9px] tabular-nums`
+- Track title: `font-mono text-[11px] text-slate-200`
+
+**Mapa de músicas em `page.tsx`:**
+```ts
+const FIGHTER_MUSIC: Record<string, MusicTrack> = {
+  "Ness": { youtubeId: "OsQEEHUuLGg", title: "Bein' Friends", artist: "Shogo Sakai · EarthBound (SNES, 1994)" },
+  // Para adicionar outro lutador: "Marth": { youtubeId: "...", title: "...", artist: "..." },
+};
+```
+
+**Para adicionar música de outro lutador:** apenas adicionar entrada em `FIGHTER_MUSIC[fighterName]` em `page.tsx`.
+
+### 21.2 Ness — Trilha sonora
+
+| ID YouTube | Título | Artista | Duração |
+|---|---|---|---|
+| `OsQEEHUuLGg` | Bein' Friends | Shogo Sakai | 3:50 |
+
+## 22. Refinamentos da Sessão 13 (2026-06-05)
+
+### 22.1 Music Player (Volume e Estética)
+- Adicionado controle deslizante de volume no `MusicPlayer.tsx`.
+- **Volume Inicial Padrão:** Setado para **10%** via API do YouTube (`e.target.setVolume(10)`) para evitar sustos de áudio.
+- Largura da barra de volume aumentada (`w-24` ou 96px) para melhorar a usabilidade e precisão do mouse.
+- Tamanho das fontes da trilha sonora aumentado: Título da música (`text-[13px]`) e Artista (`text-[11px]`).
+- A string da música do Ness no `FIGHTER_MUSIC` foi alterada de *"EarthBound (SNES, 1994)"* para **"Shogo Sakai · Melee Remix"**.
+
+### 22.2 Acervo: Spirit Image do Ness Resolvido
+- A URL antiga usada para tentar extrair a arte do Spirit (`Ness_Spirit.png`) retornava um redirecionamento HTML 302 da wiki.
+- Isso causou um erro silencioso onde o `spirit.png` local era um arquivo HTML, resultando em 404 no `next/image`.
+- O problema foi resolvido usando a URL direta da CDN para Spirits do Ultimate: `https://ssb.wiki.gallery/images/7/71/SSBU_spirit_Ness.png`.
+- O arquivo foi baixado validamente como PNG (`89504e47`) para `public/assets/media/ness/spirit.png` e a propriedade `assetRenderUrl` do `SPIRIT-SSBU-Ness-563` no Prisma foi atualizada. O Spirit agora é perfeitamente exibido no Media Vault.
+
+### 22.3 Cuidado com o Cache `.next`
+- **Alerta de Ambiente Local:** Nunca deletar a pasta `.next` forçadamente via terminal sem antes encerrar o servidor local (`npm run dev`). Fazer isso enquanto o server roda causa corrupção nas manifest lists (`server-reference-manifest.json`), gerando falhas catastróficas 404/500 silenciosas. Em caso de quebra, o usuário deve dar `Ctrl+C` no processo e reiniciá-lo.
+
+## 23. Extração Global e Padronização Padrão Ness (2026-06-05 - Madrugada)
+
+### 23.1 Sucesso na Raspagem de Textos (Opção 1)
+- O script `fighters.ts` foi executado em massa para todos os 89 lutadores.
+- Extraídas as franquias de origem, aparições em jogos (Debut), e as Biografias originais em Inglês (SmashWiki) e Japonês (smashwiki.info).
+- Todos os 89 lutadores agora constam corretamente na tabela `Fighter`, `FighterBio` e `FighterWork`.
+
+### 23.2 Bloqueios nas Raspagens de Mídia e Música (Opção 2)
+- Durante a execução da Opção 2, descobrimos que os scrapers `music.ts` e `collectibles.ts` retornam erro HTTP 404.
+- Motivo: A SmashWiki reestruturou suas listas. A página única "List of trophies (SSBM)" não existe mais, tendo sido dividida por franquias (ex: "List of SSBM trophies (EarthBound series)"). O mesmo ocorreu com as músicas.
+- **Ação Pendente:** Refatorar os scrapers de música e colecionáveis para iterar sobre as novas rotas de franquias da wiki.
+
+### 23.3 Novo Pipeline de Tradução Massiva (Pendente de API)
+- Criado o script `generate-curator.ts` para redigir "Curator Notes" personalizadas via API (Claude Haiku) para todo o elenco.
+- **Status:** Aguardando execução. O script foi escrito, porém a execução falhou pois a variável de ambiente `ANTHROPIC_API_KEY` não estava carregada na sessão do terminal que executou o script. 
+- Assim que o usuário puder rodar este script (ou injetar a chave), os 88 lutadores restantes ganharão textos idênticos ao padrão curatorial do Ness.
+
+---
+
+## 24. Design: Páginas "Coleções" e "Chronicles" (sessão 14 — 2026-06-06)
+
+### 24.1 Conceito
+
+Duas novas rotas complementares ao museu:
+
+| Rota | Conceito | Inspiração visual |
+|---|---|---|
+| `/colecoes` | Grid de cards de artefatos (troféus, spirits, sprites) com imagem em destaque, organizados por jogo Smash | Grid de personagens do SSB Spirit Board (veja screenshot de referência) |
+| `/chronicles` | Lista cronológica de artefatos com data, tipo e nome — estilo "registro de acervo de museu" | Nintendo Chronicle do Brawl (lista com data + título, separada por console) |
+
+### 24.2 Coleções (`/colecoes`)
+
+**Layout:** Grid de cards (8 colunas desktop, responsivo), com fundo escuro (`slate-950`).
+
+**Estrutura de seções — uma por jogo:**
+```
+── SSB64 (Nintendo 64 · 1999) ──────────────────────
+  [card] [card] [card] [card] ...
+
+── Melee (GameCube · 2002) ──────────────────────────
+  [card] [card] [card] ...
+
+── Brawl (Wii · 2008) ───────────────────────────────
+  ...
+── Smash 4 (3DS/Wii U · 2014) ───────────────────────
+  ...
+── Ultimate (Switch · 2018) ─────────────────────────
+  ...
+```
+
+**Card:**
+- Imagem do artefato (`assetRenderUrl`) preenchendo o card com `object-cover`
+- Nome embaixo (fonte mono, branco/slate, pequeno) — igual ao estilo do Spirit Board
+- Ao clicar → abre página do lutador dono do artefato (`/fighters/[slug]`)
+- Cards sem imagem exibem placeholder com ícone de museu
+
+**Dados:** `Collectible` filtrado por `smashGameVersion` (SSB64, SSBM, SSBB, SSB4, SSBU).
+Tipos incluídos: TROPHY, SPIRIT, SPRITE. Excluir: renders de lutador (eles já estão no `/fighters/[slug]`).
+
+### 24.3 Chronicles (`/chronicles`)
+
+**Layout:** Lista vertical de linhas, separada por jogo (seções com header).
+
+**Inspiração:** Nintendo Chronicle do Brawl — lista com colunas `DATA · TIPO · NOME`.
+**Estilo:** Adaptado ao dark theme do site (fundo `slate-950`, texto `slate-200`, acentos `cyan-400/amber-400`).
+
+**Estrutura de linha:**
+```
+  1999.01   TROPHY    Mario Bros.                        →
+  1999.01   TROPHY    Super Mario Bros.                  →
+  1999.01   SPRITE    Mario (SNES, 1990)                 →
+```
+
+**Colunas:**
+| Coluna | Conteúdo |
+|---|---|
+| Data | `smashGameVersion` + número do roster do dono |
+| Tipo | Badge com cor por tipo: TROPHY = amber, SPIRIT = cyan, SPRITE = slate |
+| Nome | `name` do artefato |
+| Seta → | Link para `/fighters/[slug]` do dono |
+
+**Seções:**
+- Header de seção com logotipo do jogo (usar `boxArtPath` do `GAME_META`) + nome completo + ano
+- Alternância de cor nas linhas (zebra sutil: `odd:bg-slate-900/40 even:bg-transparent`)
+- Scroll infinito ou paginação por jogo
+
+### 24.4 Prioridade de Implementação
+1. Primeiro: `/chronicles` (mais simples, só lista — dados já existem no banco)
+2. Depois: `/colecoes` (requer imagens — só Ness tem imagens no banco agora)
+
+### 24.5 Sessão 14 — Refinamentos
+- `LangSelector` atualizado: bandeiras emoji substituem labels de texto
+  - EN → 🇬🇧, PT-BR → 🇧🇷, JP → 🇯🇵, JP→EN → 🇯🇵→🇺🇸
+  - Botões: `text-[18px]`, `opacity-40` quando inativo, `title` tooltip com nome por extenso
+- `generate-curator.ts`: agora gera EN + PT + JP (学芸員コメント) em uma só chamada
+  - Modelo atualizado: `claude-haiku-4-5` (substituiu `claude-3-5-haiku-20241022` aposentado)
+  - Where: `OR [curatorOverviewEn: null, curatorOverviewJp: null]`

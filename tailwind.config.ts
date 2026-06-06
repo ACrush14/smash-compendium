@@ -41,13 +41,28 @@ const config: Config = {
   },
   // Safelist garante que classes dinâmicas (status log) não sejam purgadas
   safelist: [
-    "bg-emerald-400",
-    "bg-sky-400",
-    "bg-amber-400",
-    "text-emerald-400",
-    "text-sky-400",
-    "text-amber-400",
+    // ETL log status colors
+    "bg-emerald-400", "bg-sky-400", "bg-amber-400",
+    "text-emerald-400", "text-sky-400", "text-amber-400",
     "animate-ping",
+    // Era accent border-left (FighterProfile)
+    "border-l-amber-500", "border-l-sky-400", "border-l-purple-500",
+    "border-l-blue-400", "border-l-red-500",
+    // Era header gradient origins
+    "from-amber-950/50", "from-sky-950/50", "from-purple-950/60",
+    "from-blue-950/50", "from-red-950/50",
+    // Era badge colors (border + bg + text)
+    "border-amber-500/50", "border-sky-500/50", "border-purple-500/50",
+    "border-blue-500/50", "border-red-500/50",
+    "bg-amber-950/30", "bg-sky-950/30", "bg-purple-950/30",
+    "bg-blue-950/30", "bg-red-950/30",
+    "text-amber-300", "text-sky-300", "text-purple-300",
+    "text-blue-300", "text-red-300",
+    // Platform badge BG + border + text
+    "bg-amber-950/60", "bg-sky-950/60", "bg-purple-950/60",
+    "bg-blue-950/60", "bg-red-950/60",
+    "border-amber-600/40", "border-sky-500/40", "border-purple-500/40",
+    "border-blue-500/40", "border-red-500/40",
   ],
   plugins: [],
 };

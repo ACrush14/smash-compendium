@@ -3,42 +3,90 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ImageIcon, Package } from "lucide-react";
+import MusicPlayer, { type MusicTrack } from "@/components/ui/MusicPlayer";
 
 export interface MediaAsset {
-  url: string | null;
-  label: string;
+  url:       string | null;
+  label:     string;
   sublabel?: string;
-  assetType: "render" | "trophy" | "sticker" | "spirit" | "sprite";
+  assetType:
+    | "render" | "trophy" | "sticker" | "spirit" | "sprite"
+    | "clay" | "art" | "gif" | "video";
 }
 
 interface MediaVaultViewerProps {
   assets: MediaAsset[];
+  music?: MusicTrack;
 }
 
-export default function MediaVaultViewer({ assets }: MediaVaultViewerProps) {
+const IS_PLACEHOLDER = (t: MediaAsset["assetType"]) => t.startsWith("placeholder-");
+const IS_GIF = (url: string | null) => !!url && url.toLowerCase().endsWith(".gif");
+
+// Glow class por tipo de asset
+const ASSET_GLOW_CLASS: Partial<Record<MediaAsset["assetType"], string>> = {
+  render:  "thumb-active-glow",
+  trophy:  "thumb-trophy-glow",
+  sticker: "thumb-sticker-glow",
+  spirit:  "thumb-spirit-glow",
+  sprite:  "thumb-sprite-glow",
+  clay:    "thumb-active-glow",
+  art:     "thumb-trophy-glow",
+  gif:     "thumb-sprite-glow",
+};
+
+// Cor de acento do label do asset ativo
+const ASSET_ACCENT: Partial<Record<MediaAsset["assetType"], string>> = {
+  render:  "text-amber-400",
+  trophy:  "text-sky-400",
+  sticker: "text-purple-400",
+  spirit:  "text-red-400",
+  sprite:  "text-emerald-400",
+  clay:    "text-amber-500",
+  art:     "text-sky-300",
+  gif:     "text-pink-400",
+};
+
+// Label exibido nos slots de placeholder no carrossel
+const PLACEHOLDER_TAG: Partial<Record<MediaAsset["assetType"], { label: string; color: string }>> = {
+  "clay":  { label: "CLAY",  color: "#a78bfa" },
+  "art":   { label: "ART",   color: "#fbbf24" },
+  "gif":   { label: "GIF",   color: "#34d399" },
+  "video": { label: "VIDEO", color: "#f87171" },
+};
+
+export default function MediaVaultViewer({ assets, music }: MediaVaultViewerProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = assets[activeIndex] ?? null;
 
   return (
     <div
-      className="absolute inset-0 flex flex-col bg-slate-950"
+      className="absolute inset-0 flex flex-col"
       style={{
         background:
-          "radial-gradient(ellipse 130% 45% at 50% 0%, rgba(120,53,15,0.16) 0%, transparent 60%), #020617",
+          "radial-gradient(ellipse 130% 45% at 50% 0%, rgba(120,53,15,0.13) 0%, transparent 60%), #0a0a2a",
       }}
     >
-      {/* ── Main Stage (flex-[3] = ~75% da altura) ─────────────── */}
+      {/* ── Main Stage (flex-[3] ≈ 75% da altura) ─────────────────── */}
       <div className="flex-[3] min-h-0 flex flex-col">
 
-        {/* Área da imagem: expande para todo espaço disponível */}
+        {/* Área da imagem */}
         <div className="flex-1 w-full relative flex items-center justify-center p-4 min-h-0">
 
-          {/* Pedestal shadow */}
+          {/* Sombra de pedestal */}
           <div
             className="absolute bottom-4 left-1/2 -translate-x-1/2 w-3/5 h-6 rounded-full pointer-events-none z-0"
             style={{
-              background: "radial-gradient(ellipse 100% 100%, rgba(0,0,0,0.8) 0%, transparent 70%)",
-              filter: "blur(10px)",
+              background: "radial-gradient(ellipse 100% 100%, rgba(0,0,0,0.85) 0%, transparent 70%)",
+              filter:     "blur(10px)",
+            }}
+          />
+
+          {/* Halo ciano sutil ao redor do render ativo */}
+          <div
+            className="absolute inset-8 pointer-events-none z-0 rounded-full opacity-20"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 60% at 50% 50%, rgba(64,180,255,0.1) 0%, transparent 70%)",
             }}
           />
 
@@ -51,9 +99,11 @@ export default function MediaVaultViewer({ assets }: MediaVaultViewerProps) {
               className="w-full h-full object-contain object-center relative z-10"
               style={{
                 filter:
-                  "drop-shadow(0 24px 48px rgba(0,0,0,0.85)) drop-shadow(0 6px 20px rgba(245,158,11,0.07))",
+                  "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))",
+                imageRendering: IS_GIF(active.url) ? "pixelated" : undefined,
               }}
               priority
+              unoptimized={IS_GIF(active.url)}
             />
           ) : (
             <div className="flex flex-col items-center gap-3 text-slate-700 z-10">
@@ -65,22 +115,34 @@ export default function MediaVaultViewer({ assets }: MediaVaultViewerProps) {
 
         {/* Label do asset ativo */}
         {active && (
-          <div className="shrink-0 text-center pb-3 px-4">
-            <p className="font-mono text-[10px] uppercase tracking-widest text-slate-500 leading-tight truncate">
+          <div className="shrink-0 text-center pb-4 px-6">
+            <p className={`font-mono text-[13px] font-semibold uppercase tracking-widest leading-tight ${ASSET_ACCENT[active.assetType]}`}>
               {active.label}
             </p>
             {active.sublabel && (
-              <p className="mt-0.5 font-mono text-[9px] text-slate-700 truncate">{active.sublabel}</p>
+              <p className="mt-1.5 font-mono text-[11px] text-slate-500 leading-snug">{active.sublabel}</p>
             )}
           </div>
         )}
       </div>
 
-      {/* ── Gallery Carousel (flex-[1] = ~25% da altura) ────────── */}
-      <div className="flex-[1] min-h-0 border-t border-white/5 flex flex-col justify-center px-4 py-3 overflow-hidden">
-        <span className="shrink-0 block mb-2 font-mono text-[9px] uppercase tracking-[0.2em] text-slate-700">
+      {/* ── Music Player ─────────────────────────────────────────── */}
+      {music && <MusicPlayer {...music} />}
+
+      {/* ── Gallery Carousel (flex-[1] ≈ 25% da altura) ───────────── */}
+      <div
+        className="flex-[1] min-h-0 flex flex-col justify-center px-4 py-3 overflow-hidden"
+        style={{
+          borderTop:  "1px solid rgba(64,180,255,0.07)",
+          background: "rgba(5,5,24,0.5)",
+        }}
+      >
+        {/* Contador */}
+        <span className="shrink-0 block mb-2 font-mono text-[9px] uppercase tracking-[0.2em] text-cyan-900">
           Acervo · {assets.length} artefatos
         </span>
+
+        {/* Strip de thumbnails */}
         <div className="flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {assets.map((asset, i) => {
             const isActive = i === activeIndex;
@@ -90,25 +152,61 @@ export default function MediaVaultViewer({ assets }: MediaVaultViewerProps) {
                 title={asset.label}
                 onClick={() => setActiveIndex(i)}
                 className={[
-                  "shrink-0 relative flex items-center justify-center w-14 h-14 border transition-all duration-100 overflow-hidden",
+                  "shrink-0 relative flex items-center justify-center w-14 h-14 transition-all duration-150 overflow-hidden",
+                  // border base
                   isActive
-                    ? "border-amber-500/60 bg-amber-950/30 shadow-[0_0_14px_rgba(245,158,11,0.14)]"
-                    : "border-white/5 bg-slate-900/50 hover:border-white/15 hover:bg-slate-800/40",
+                    ? "border border-transparent"       // border transparente pois o glow já delimita
+                    : "border border-white/5 bg-[#080820]/60 hover:border-cyan-500/15 hover:bg-[#0a0a28]/80",
                 ].join(" ")}
+                style={isActive ? {
+                  transform:  "scale(1.10)",
+                  zIndex:     1,
+                  background: "rgba(5,5,24,0.9)",
+                } : undefined}
               >
-                {asset.url ? (
+                {/* Classe de glow via CSS (definida em globals.css) */}
+                {isActive && (
+                  <span
+                    className={`absolute inset-0 pointer-events-none ${ASSET_GLOW_CLASS[asset.assetType]}`}
+                  />
+                )}
+
+                {IS_PLACEHOLDER(asset.assetType) ? (
+                  /* Slot reservado — pipeline futuro */
+                  <div className="flex flex-col items-center justify-center gap-0.5 z-10">
+                    <span
+                      className="font-mono font-bold leading-none"
+                      style={{ fontSize: 7, color: PLACEHOLDER_TAG[asset.assetType]?.color ?? "#555" }}
+                    >
+                      {PLACEHOLDER_TAG[asset.assetType]?.label ?? "?"}
+                    </span>
+                    <div className="w-3 h-px opacity-30" style={{ background: PLACEHOLDER_TAG[asset.assetType]?.color }} />
+                  </div>
+                ) : asset.url ? (
                   <Image
                     src={asset.url}
                     alt={asset.label}
                     width={44}
                     height={44}
-                    className="object-contain h-11 w-11"
+                    className="object-contain h-11 w-11 relative z-10"
+                    unoptimized={IS_GIF(asset.url)}
                   />
                 ) : (
-                  <Package className="h-4 w-4 text-slate-700" strokeWidth={1} />
+                  <Package className="h-4 w-4 text-slate-700 relative z-10" strokeWidth={1} />
                 )}
+
+                {/* Linha de seleção no fundo — estilo cursor do Smash */}
                 {isActive && (
-                  <span className="absolute inset-x-0 bottom-0 h-px bg-amber-500/60" />
+                  <span
+                    className="absolute inset-x-0 bottom-0 h-[2px] z-20"
+                    style={{
+                      background: asset.assetType === "render"  ? "rgba(250,204,21,0.9)"  :
+                                  asset.assetType === "trophy"  ? "rgba(56,189,248,0.9)"  :
+                                  asset.assetType === "sticker" ? "rgba(192,132,252,0.9)" :
+                                  asset.assetType === "spirit"  ? "rgba(239,68,68,0.9)"   :
+                                                                  "rgba(52,211,153,0.9)",
+                    }}
+                  />
                 )}
               </button>
             );
