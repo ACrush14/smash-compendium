@@ -517,8 +517,9 @@ boxArtLandscape?: boolean;  // true = paisagem → container 200×146; false = r
 | 13 | ~~Player de música por lutador~~ — `MusicPlayer.tsx`, YouTube IFrame API, estilo HUD. Ness: "Bein' Friends" (3:50) | ~~Alta~~ | ✅ Implementado (sessão 12) |
 | 14 | **Página "Coleções"** — grid de cards no estilo SSB Spirit Board, separada por jogo (SSB64 / Melee / Brawl / SSB4 / Ultimate). Ver seção 24. | Alta | 🔴 Pendente |
 | 15 | **Página "Chronicles"** — lista cronológica estilo Nintendo Chronicle (data + nome), adaptada ao estilo dark do site, separada por jogo. Ver seção 24. | Alta | 🔴 Pendente |
-| 16 | **Deploy na Vercel + push para GitHub** — após estabilizar Coleções e Chronicles | Alta | 🔴 Pendente |
+| 16 | ~~Deploy na Vercel + push para GitHub~~ — site no ar em smashcompedium.vercel.app | ~~Alta~~ | ✅ Concluído (sessão 14) |
 | 17 | Nota curatorial JP — script `generate-curator.ts` atualizado para gerar `curatorOverviewJp` (学芸員コメント). Aguardando execução com `ANTHROPIC_API_KEY`. | Média | 🟡 Script pronto, não rodado |
+| 18 | **Área de comentários por personagem** — seção na página `/fighters/[slug]` onde visitantes podem deixar comentários. Ver seção 25. | Alta | 🔴 Pendente |
 
 **Resolvidos nesta sessão (sessão 4):**
 - ✅ Layout visual completo da página do lutador (ver seção 15)
@@ -1221,3 +1222,49 @@ Tipos incluídos: TROPHY, SPIRIT, SPRITE. Excluir: renders de lutador (eles já 
 - `generate-curator.ts`: agora gera EN + PT + JP (学芸員コメント) em uma só chamada
   - Modelo atualizado: `claude-haiku-4-5` (substituiu `claude-3-5-haiku-20241022` aposentado)
   - Where: `OR [curatorOverviewEn: null, curatorOverviewJp: null]`
+- Deploy concluído: **smashcompedium.vercel.app** (alias Vercel)
+- 404 customizada: `app/not-found.tsx` → "PAGE IN CONSTRUCTION"
+
+---
+
+## 25. Design: Área de Comentários por Personagem (sessão 14 — 2026-06-06)
+
+### 25.1 Conceito
+
+Seção na página `/fighters/[slug]` onde visitantes podem deixar comentários sobre o lutador — memórias, opiniões, curiosidades. Tom de "livro de visitas de museu".
+
+### 25.2 Schema (a adicionar ao Prisma)
+
+```prisma
+model FighterComment {
+  id         String   @id @default(cuid())
+  fighterId  String
+  fighter    Fighter  @relation(fields: [fighterId], references: [id])
+  author     String   // nome do visitante (obrigatório, max 40 chars)
+  body       String   @db.Text  // conteúdo do comentário (max 500 chars)
+  approved   Boolean  @default(false)  // moderação manual
+  createdAt  DateTime @default(now())
+}
+```
+
+### 25.3 API
+
+- `GET  /api/comments?fighterId=<id>` — lista comentários `approved: true`
+- `POST /api/comments` — cria comentário com `approved: false`
+
+### 25.4 UI
+
+**Localização:** Abaixo das sugestões (`SuggestionPanel`) no painel direito, fora das eras.
+
+**Visual:** Estilo "livro de assinaturas de museu":
+- Fundo `slate-900/40`, borda `cyan-500/10`
+- Cada comentário: nome do autor em `amber-400` + data + corpo em `slate-300`
+- Formulário simples: campo `Nome` + campo `Comentário` + botão "Assinar"
+- Confirmação: "Seu comentário aguarda aprovação."
+- Paginação: mostrar os 5 mais recentes, botão "ver mais"
+
+### 25.5 Moderação
+
+- Campo `approved: Boolean @default(false)` — comentários ficam ocultos até aprovação manual
+- Aprovação via Prisma Studio ou futura página de admin
+- Futuramente: campo `approved` pode virar `status: PENDING | APPROVED | REJECTED`
