@@ -502,24 +502,22 @@ boxArtLandscape?: boolean;  // true = paisagem → container 200×146; false = r
 
 | # | Tarefa | Prioridade | Status |
 |---|---|---|---|
-| 1 | **ETL em massa para os outros 86 fighters** (bio EN + troféus + imagens) — última grande demanda | Alta | 🔴 Pendente |
-| 2 | ~~Adicionar modelo `FighterTip` ao schema~~ | ~~Alta~~ | ✅ Resolvido |
-| 3 | Box arts dos jogos de origem dos outros franchises (Mario, Zelda, Pokémon...) | Média | 🔴 Pendente |
-| 4 | ~~Sticker Brawl do Ness~~ — **removido do vault** (decisão de curadoria, sessão 12) | ~~Média~~ | ✅ Removido |
-| 5 | Spirit SSBU do Ness — **texto inserido** (Spirit #563, via ssbuspirits.com). Imagem ainda null | Média | 🟡 Texto OK, imagem ✗ |
-| 6 | Bio JP — campos null para os outros 86 fighters — fonte: **smashwiki.info** | Média | 🔴 Pendente |
-| 7 | ~~ETL em massa~~ — agora é a tarefa #1 acima | Alta | 🔴 Pendente |
-| 8 | Página `/fighters` (lista geral com filtros) | Média | 🔴 Pendente |
-| 9 | Stages + Music + StageMusic — ETL escrito, não rodado | Baixa | 🔴 Pendente |
-| 10 | Nota curatorial — Ness tem texto EN+JP; outros 86 null | Baixa | 🟡 Ness OK, outros ✗ |
-| 11 | ~~DB cleanup — rows duplicadas SSB4~~ — 3DS **filtrado no código** (is3DSTrophy); limpeza no banco ainda pendente | Baixa | 🟡 Filtrado, não deletado |
-| 12 | Moderação de sugestões — campo `approved: Boolean` no `FighterSuggestion` | Baixa | 🔴 Pendente |
-| 13 | ~~Player de música por lutador~~ — `MusicPlayer.tsx`, YouTube IFrame API, estilo HUD. Ness: "Bein' Friends" (3:50) | ~~Alta~~ | ✅ Implementado (sessão 12) |
 | 14 | **Página "Coleções"** — grid de cards no estilo SSB Spirit Board, separada por jogo (SSB64 / Melee / Brawl / SSB4 / Ultimate). Ver seção 24. | Alta | 🔴 Pendente |
-| 15 | **Página "Chronicles"** — lista cronológica estilo Nintendo Chronicle (data + nome), adaptada ao estilo dark do site, separada por jogo. Ver seção 24. | Alta | 🔴 Pendente |
-| 16 | ~~Deploy na Vercel + push para GitHub~~ — site no ar em smashcompedium.vercel.app | ~~Alta~~ | ✅ Concluído (sessão 14) |
-| 17 | Nota curatorial JP — script `generate-curator.ts` atualizado para gerar `curatorOverviewJp` (学芸員コメント). Aguardando execução com `ANTHROPIC_API_KEY`. | Média | 🟡 Script pronto, não rodado |
-| 18 | **Área de comentários por personagem** — seção na página `/fighters/[slug]` onde visitantes podem deixar comentários. Ver seção 25. | Alta | 🔴 Pendente |
+| 15 | **Página "Chronicles"** — lista cronológica estilo Nintendo Chronicle, dark theme. Ver seção 24. | Alta | 🔴 Pendente |
+| 18 | **Área de comentários por personagem** — seção em `/fighters/[slug]`, com moderação. Ver seção 25. | Alta | 🔴 Pendente |
+| 1 | **ETL em massa** — bio EN + troféus + imagens para os outros 86 fighters | Alta | 🔴 Pendente |
+| 8 | **Página `/fighters`** — lista geral com filtros por franquia/jogo | Média | 🔴 Pendente |
+| 17 | **Curator notes** EN+PT+JP — script pronto (`generate-curator.ts`), aguarda `ANTHROPIC_API_KEY` no terminal | Média | 🟡 Pronto, não rodado |
+| 6 | **Bio JP** — `contentJp` null para os 86 fighters; fonte: `smashwiki.info` | Média | 🔴 Pendente |
+| 3 | **Box arts** — jogos de origem dos outros franchises (Mario, Zelda, Pokémon...) | Média | 🔴 Pendente |
+| 12 | **Moderação de sugestões** — campo `approved: Boolean` no `FighterSuggestion` | Baixa | 🔴 Pendente |
+| 9 | **Stages + Music** — ETL escrito, não rodado | Baixa | 🔴 Pendente |
+| 2 | ~~Adicionar modelo `FighterTip` ao schema~~ | — | ✅ Resolvido |
+| 4 | ~~Sticker Brawl do Ness~~ — removido do vault (curadoria) | — | ✅ Removido |
+| 5 | ~~Spirit SSBU do Ness~~ — Spirit #563 com imagem e texto OK | — | ✅ Concluído (sessão 14) |
+| 11 | ~~Filtro 3DS~~ — filtro `is3DSTrophy` removido do código (sessão 14); todos os troféus exibidos | — | ✅ Resolvido |
+| 13 | ~~Player de música~~ — `MusicPlayer.tsx`, YouTube IFrame. Ness: "Bein' Friends" | — | ✅ Implementado |
+| 16 | ~~Deploy Vercel~~ — site no ar em **smashcompedium.vercel.app** | — | ✅ Concluído (sessão 14) |
 
 **Resolvidos nesta sessão (sessão 4):**
 - ✅ Layout visual completo da página do lutador (ver seção 15)

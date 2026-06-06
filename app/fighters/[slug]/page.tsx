@@ -227,9 +227,6 @@ export default async function FighterPage({ params }: PageProps) {
     }
   };
 
-  // Detecta troféus do 3DS pela URL (qualidade inferior — excluídos do vault)
-  const is3DSTrophy = (url: string | null) => !!url && url.toLowerCase().includes("3ds");
-
   const originGameEntry = (FIGHTER_ORIGIN_GAMES[fighter.name] ?? FRANCHISE_ORIGIN_GAMES[fighter.franchise.name] ?? [])[0];
   const originGameLabel = originGameEntry
     ? `${originGameEntry.name} (${originGameEntry.console}, ${originGameEntry.yearNa ?? originGameEntry.year})`
@@ -254,25 +251,22 @@ export default async function FighterPage({ params }: PageProps) {
   pushMedia((n) => n.toLowerCase().includes("artwork"), "art",
     () => "Arte oficial · Super Smash Bros. Melee (GameCube, 2001)");
   for (const t of trophiesByGame.get("SSBM") ?? []) {
-    if (!is3DSTrophy(t.assetRenderUrl))
-      vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
-        sublabel: "Troféu 3D oficial · Super Smash Bros. Melee (GameCube, 2001)", assetType: "trophy" });
+    vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
+      sublabel: "Troféu 3D oficial · Super Smash Bros. Melee (GameCube, 2001)", assetType: "trophy" });
   }
   pushGifs("SSBM");
 
   // 3. SSBB (2008) — troféus → GIFs (stickers removidos)
   for (const t of trophiesByGame.get("SSBB") ?? []) {
-    if (!is3DSTrophy(t.assetRenderUrl))
-      vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
-        sublabel: "Troféu 3D oficial · Super Smash Bros. Brawl (Wii, 2008)", assetType: "trophy" });
+    vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
+      sublabel: "Troféu 3D oficial · Super Smash Bros. Brawl (Wii, 2008)", assetType: "trophy" });
   }
   pushGifs("SSBB");
 
-  // 4. SSB4 (2014) — troféus Wii U apenas (3DS excluídos) → GIFs
+  // 4. SSB4 (2014) — troféus → GIFs
   for (const t of trophiesByGame.get("SSB4") ?? []) {
-    if (!is3DSTrophy(t.assetRenderUrl))
-      vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
-        sublabel: "Troféu 3D oficial · Super Smash Bros. for Wii U (Wii U, 2014)", assetType: "trophy" });
+    vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
+      sublabel: "Troféu 3D oficial · Super Smash Bros. for Wii U / 3DS (2014)", assetType: "trophy" });
   }
   pushGifs("SSB4");
 
@@ -319,8 +313,7 @@ export default async function FighterPage({ params }: PageProps) {
 
   const trophiesMapSerialized: Record<string, SerializedCollectible[]> = {};
   for (const [ver, list] of trophiesByGame) {
-    const filtered = list.filter((t) => !is3DSTrophy(t.assetRenderUrl ?? null));
-    if (filtered.length > 0) trophiesMapSerialized[ver] = filtered.map(serializeCollectible);
+    if (list.length > 0) trophiesMapSerialized[ver] = list.map(serializeCollectible);
   }
 
   const stickersMapSerialized: Record<string, SerializedCollectible[]> = {};
@@ -356,7 +349,7 @@ export default async function FighterPage({ params }: PageProps) {
     appearances,
     fichaCounters: {
       eras:     erasToShow.length,
-      trophies: trophies.filter((t) => !is3DSTrophy(t.assetRenderUrl ?? null)).length,
+      trophies: trophies.length,
       stickers: 0,
       spirits:  originAssets.filter((o) => o.type === "SPIRIT").length,
     },
