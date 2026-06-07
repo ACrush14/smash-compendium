@@ -17,7 +17,7 @@ interface CollectibleItem {
   smashGameVersion: string;
   name:             string;
   nameJp:           string | null;
-  descriptionEn:    string | null;
+  description:      string | null;  // EN — campo principal
   descriptionPt:    string | null;
   descriptionJp:    string | null;
   descriptionJpEn:  string | null;
@@ -374,8 +374,8 @@ export default function AdminCollectiblesPage() {
                       <div>
                         <label className="block text-[10px] text-slate-500 mb-1">Descrição EN</label>
                         <textarea
-                          value={e.descriptionEn ?? item.descriptionEn ?? ""}
-                          onChange={ev => setEdit(item.id, "descriptionEn", ev.target.value)}
+                          value={e.description ?? item.description ?? ""}
+                          onChange={ev => setEdit(item.id, "description", ev.target.value)}
                           placeholder="Description..."
                           rows={3}
                           className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[12px] px-3 py-2 focus:outline-none focus:border-cyan-500/20 placeholder:text-slate-700 resize-none"

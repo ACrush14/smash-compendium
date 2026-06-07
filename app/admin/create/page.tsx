@@ -425,7 +425,7 @@ function FormCollectible({
           name: name.trim(),
           fighterId: fighterId || null,
           nameJp: nameJp || null,
-          descriptionEn: descEn || null,
+          description: descEn || null,
           descriptionPt: descPt || null,
           assetRenderUrl: imageUrl || null,
         }),

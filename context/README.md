@@ -3,7 +3,7 @@
 > **Regra:** Antes de trabalhar em qualquer sistema, leia o arquivo correspondente aqui.
 > Estes arquivos são a fonte de verdade sobre cada feature — mais precisos que CONTEXT.md (que é histórico).
 
-**Última atualização:** 2026-06-07 · Sessão 21
+**Última atualização:** 2026-06-07 · Sessão 22
 
 | Arquivo | Sistema | Leia quando... |
 |---|---|---|
@@ -21,7 +21,7 @@
 
 ---
 
-## Estado Atual (2026-06-07 · Sessão 21)
+## Estado Atual (2026-06-07 · Sessão 22)
 
 ```
 FighterWork    ████████████████████  87/87  100%  ✅ COMPLETO
@@ -76,8 +76,14 @@ Collectible.franchiseId  ██████████████████�
 | 🟡 P2 | 684 Chronicles sem capa → rodar fetch após wikiUrl | `chronicles.md` |
 | 🟡 P2 | Spirits não exibidos como conteúdo no timeline | `collectibles.md` |
 | 🟡 P2 | Bug: stickers nunca exibidos (stickersMap vazio) | `collectibles.md` |
-| 🟠 P3 | 87 músicas pending_review → `/admin/music` | `music.md` |
+| 🟠 P3 | Músicas pending_review → aprovar via botão inline em `/admin/fighters` | `music.md` |
 | 🟠 P3 | ANTHROPIC_API_KEY não configurado no Vercel | `i18n.md` |
+
+## ⚠️ Regra de Curadoria
+
+> **Uma página só é aprovada após curadoria manual do usuário.**
+> O processo automatizado (ETL/scraping) não garante qualidade suficiente.
+> Nunca definir `curationStatus = "approved"` via script automatizado.
 
 ## Convenções Globais
 

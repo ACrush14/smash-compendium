@@ -11,7 +11,7 @@ export async function PATCH(
   const body = await req.json() as {
     name?:             string;
     nameJp?:           string | null;
-    descriptionEn?:    string | null;
+    description?:      string | null;  // EN — campo principal
     descriptionPt?:    string | null;
     descriptionJp?:    string | null;
     descriptionJpEn?:  string | null;
@@ -25,7 +25,7 @@ export async function PATCH(
     data: {
       ...(body.name            !== undefined && { name:            body.name            }),
       ...(body.nameJp          !== undefined && { nameJp:          body.nameJp          }),
-      ...(body.descriptionEn   !== undefined && { descriptionEn:   body.descriptionEn   }),
+      ...(body.description     !== undefined && { description:     body.description     }),
       ...(body.descriptionPt   !== undefined && { descriptionPt:   body.descriptionPt   }),
       ...(body.descriptionJp   !== undefined && { descriptionJp:   body.descriptionJp   }),
       ...(body.descriptionJpEn !== undefined && { descriptionJpEn: body.descriptionJpEn }),
@@ -35,7 +35,7 @@ export async function PATCH(
     },
     select: {
       id: true, name: true, nameJp: true, fighterId: true, franchiseId: true,
-      descriptionEn: true, descriptionPt: true,
+      description: true, descriptionPt: true,
       descriptionJp: true, descriptionJpEn: true,
       assetRenderUrl: true,
     },

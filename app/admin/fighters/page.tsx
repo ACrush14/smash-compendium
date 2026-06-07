@@ -33,6 +33,7 @@ type Filter = "all" | "pending_review" | "approved";
 // ─── Completeness ─────────────────────────────────────────────────────────────
 
 function completenessItems(f: FighterCuration) {
+  const hasSsb64Bio = f.bios.some((b) => b.smashGameVersion === "SSB64");
   return [
     {
       label:  "Render 3D",
@@ -41,8 +42,8 @@ function completenessItems(f: FighterCuration) {
     },
     {
       label:  "Bios EN",
-      ok:     f.biosCount > 0 && f.biosCount >= f.worksCount,
-      detail: `${f.biosCount}/${f.worksCount} eras`,
+      ok:     hasSsb64Bio,
+      detail: hasSsb64Bio ? "SSB64 presente" : "SSB64 ausente",
     },
     {
       label:  "Troféus",
@@ -120,6 +121,19 @@ export default function AdminFightersPage() {
     if (status === "approved" && idx < visible.length - 1) setIdx((i) => i + 1);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current, notes, idx, visible.length]);
+
+  const approveMusicInline = useCallback(async () => {
+    if (!current) return;
+    await fetch(`/api/admin/fighters/${current.id}`, {
+      method:  "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ musicStatus: "approved" }),
+    });
+    setFighters((prev) =>
+      prev.map((f) => f.id === current.id ? { ...f, musicStatus: "approved" } : f),
+    );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -306,11 +320,22 @@ export default function AdminFightersPage() {
                           <span className={`text-[11px] ${item.ok ? "text-slate-300" : "text-slate-600"}`}>
                             {item.label}
                           </span>
-                          <span className={`text-[10px] ml-auto font-mono ${
-                            item.ok ? "text-slate-600" : "text-amber-800"
-                          }`}>
-                            {item.detail}
-                          </span>
+                          <div className="flex items-center gap-1.5 ml-auto">
+                            <span className={`text-[10px] font-mono ${
+                              item.ok ? "text-slate-600" : "text-amber-800"
+                            }`}>
+                              {item.detail}
+                            </span>
+                            {item.label === "Música aprovada" && !item.ok && (
+                              <button
+                                onClick={approveMusicInline}
+                                title="Marcar música como aprovada"
+                                className="text-[9px] text-emerald-800 hover:text-emerald-400 border border-emerald-900/50 hover:border-emerald-500/40 px-1.5 py-0.5 transition-all"
+                              >
+                                ✓ aprovar
+                              </button>
+                            )}
+                          </div>
                         </div>
                       ))}
                     </div>

@@ -26,10 +26,10 @@ model Collectible {
   smashGameVersion  String
   name              String
   nameJp            String?
-  description       String?   @db.Text  — legacy (NTSC text)
+  description       String?   @db.Text  — EN principal (campo onde o scraper gravou os textos reais)
   descriptionNa     String?   @db.Text  — NTSC/NA
   descriptionEu     String?   @db.Text  — PAL/EU
-  descriptionEn     String?   @db.Text  — EN unificado
+  descriptionEn     String?   @db.Text  — EN unificado (vazio — dados estão em `description`)
   descriptionPt     String?   @db.Text  — PT-BR
   descriptionJp     String?   @db.Text  — JP original
   descriptionJpEn   String?   @db.Text  — JP romanizado

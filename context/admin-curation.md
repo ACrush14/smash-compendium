@@ -109,6 +109,10 @@ Header tem links rápidos: ← Fighters | Colecionáveis | Franquia ↗ | Ver p�
 - O coletável **desaparece da página do fighter** mas **continua na `/franchise/[name]`**
 - Ideal para troféus de personagens de universo (ex: Boo, Koopa no Mario)
 
+### Completeness Checklist (`/admin/fighters`)
+- **Bios EN**: verifica `bios.some(b => b.smashGameVersion === "SSB64")` — só SSB64 importa
+- **Música aprovada**: linha tem botão inline **✓ aprovar** — um clique chama PATCH `{ musicStatus: "approved" }` sem sair da página
+
 ---
 
 ## Editor de Colecionáveis (`/admin/collectibles`)
@@ -124,6 +128,12 @@ Acesso via link "Colecionáveis" no header de qualquer editor de fighter.
 6. Salvar ou excluir
 
 Ideal para: editar troféus que foram desvinculados dos fighters (aparecem em "Sem fighter").
+
+### ⚠️ Campo de descrição EN — usar `description`, NÃO `descriptionEn`
+O scraper gravou todos os textos no campo `description` (legacy). O campo `descriptionEn` está vazio.
+- Página pública (`/fighters/[slug]`) lê de `description`
+- Admin editor lê/escreve em `description`
+- **Nunca usar `descriptionEn` em código novo** — todos os admins foram corrigidos (Sessão 22)
 
 ---
 

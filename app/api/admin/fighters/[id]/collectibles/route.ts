@@ -19,7 +19,7 @@ export async function GET(
       smashGameVersion: true,
       name: true,
       nameJp: true,
-      descriptionEn: true,
+      description: true,        // EN — campo principal
       descriptionPt: true,
       descriptionJp: true,
       descriptionJpEn: true,

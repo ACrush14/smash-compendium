@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
 }
 
 // POST /api/admin/collectibles → create a new collectible (trophy / spirit / sticker)
-// Body: { type, smashGameVersion, name, fighterId?, nameJp?, descriptionEn?, descriptionPt?,
+// Body: { type, smashGameVersion, name, fighterId?, nameJp?, description?, descriptionPt?,
 //          descriptionJp?, descriptionJpEn?, assetRenderUrl? }
 export async function POST(req: NextRequest) {
   const body = await req.json() as {
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
     name:              string;
     fighterId?:        string | null;
     nameJp?:           string | null;
-    descriptionEn?:    string | null;
+    description?:      string | null;  // EN — campo principal
     descriptionPt?:    string | null;
     descriptionJp?:    string | null;
     descriptionJpEn?:  string | null;
@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
       name:             body.name.trim(),
       fighterId:        body.fighterId   || null,
       nameJp:           body.nameJp      || null,
-      descriptionEn:    body.descriptionEn  || null,
+      description:      body.description    || null,
       descriptionPt:    body.descriptionPt  || null,
       descriptionJp:    body.descriptionJp  || null,
       descriptionJpEn:  body.descriptionJpEn || null,
