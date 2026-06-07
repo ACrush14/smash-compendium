@@ -497,17 +497,27 @@ function FormCollectible({
 
 // ─── Form: Stage Music Track ──────────────────────────────────────────────────
 
+const MUSIC_COMPOSITION_TYPES = [
+  "", "Original", "New Remix", "New Arrangement",
+  "Melee Remix", "Brawl Remix", "SSB4 Remix", "Other Remix",
+];
+
 function FormMusic({
   franchises, onSuccess,
 }: {
   franchises: Franchise[]; onSuccess: (item: RecentItem) => void;
 }) {
-  const [title,       setTitle]       = useState("");
-  const [franchiseId, setFranchiseId] = useState("");
-  const [arranger,    setArranger]    = useState("");
-  const [isRemix,     setIsRemix]     = useState(false);
-  const [loading,     setLoading]     = useState(false);
-  const [error,       setError]       = useState("");
+  const [title,           setTitle]           = useState("");
+  const [franchiseId,     setFranchiseId]     = useState("");
+  const [arranger,        setArranger]        = useState("");
+  const [isRemix,         setIsRemix]         = useState(false);
+  const [youtubeId,       setYoutubeId]       = useState("");
+  const [duration,        setDuration]        = useState("");
+  const [sourceGame,      setSourceGame]      = useState("");
+  const [compositionType, setCompositionType] = useState("");
+  const [notes,           setNotes]           = useState("");
+  const [loading,         setLoading]         = useState(false);
+  const [error,           setError]           = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -521,16 +531,27 @@ function FormMusic({
       const res = await fetch("/api/admin/music-tracks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: title.trim(), franchiseId, arranger: arranger || null, isRemix }),
+        body: JSON.stringify({
+          title:           title.trim(),
+          franchiseId,
+          arranger:        arranger        || null,
+          isRemix,
+          youtubeId:       youtubeId       || null,
+          duration:        duration        || null,
+          sourceGame:      sourceGame      || null,
+          compositionType: compositionType || null,
+          notes:           notes           || null,
+        }),
       });
       if (!res.ok) throw new Error((await res.json()).error ?? "Erro");
       const created = await res.json();
       onSuccess({
         id: created.id,
         label: created.title,
-        subLabel: `${franchises.find(f => f.id === franchiseId)?.name ?? ""} · ${isRemix ? "remix" : "original"}`,
+        subLabel: `${franchises.find(f => f.id === franchiseId)?.name ?? ""} · ${compositionType || (isRemix ? "remix" : "original")}`,
       });
       setTitle(""); setFranchiseId(""); setArranger(""); setIsRemix(false);
+      setYoutubeId(""); setDuration(""); setSourceGame(""); setCompositionType(""); setNotes("");
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -548,8 +569,44 @@ function FormMusic({
         <FranchiseSelect value={franchiseId} onChange={setFranchiseId} franchises={franchises} required />
       </Field>
 
+      <Field label="YouTube ID" hint="ID do vídeo (ex: dQw4w9WgXcQ)">
+        <Input value={youtubeId} onChange={setYoutubeId} placeholder="dQw4w9WgXcQ" />
+      </Field>
+
+      <Field label="Duração" hint="Formato MM:SS">
+        <Input value={duration} onChange={setDuration} placeholder="2:30" />
+      </Field>
+
+      <Field label="Jogo de Origem">
+        <Input value={sourceGame} onChange={setSourceGame} placeholder="Super Mario Bros." />
+      </Field>
+
+      <Field label="Tipo de Composição">
+        <select
+          value={compositionType}
+          onChange={e => {
+            setCompositionType(e.target.value);
+            setIsRemix(e.target.value !== "Original" && e.target.value !== "");
+          }}
+          className="w-full bg-[#050510] border border-white/10 text-slate-300 text-[12px] px-3 py-2 focus:outline-none focus:border-cyan-500/50"
+        >
+          {MUSIC_COMPOSITION_TYPES.map(t => (
+            <option key={t} value={t}>{t || "— selecionar —"}</option>
+          ))}
+        </select>
+      </Field>
+
       <Field label="Arranjador / Compositor" hint="Deixe vazio se desconhecido">
         <Input value={arranger} onChange={setArranger} placeholder="Koji Kondo" />
+      </Field>
+
+      <Field label="Notas" hint="Créditos, supervisores, curiosidades">
+        <textarea
+          value={notes}
+          onChange={e => setNotes(e.target.value)}
+          placeholder="Arranged by... Supervised by..."
+          className="w-full bg-[#050510] border border-white/10 text-slate-200 text-[12px] px-3 py-2 focus:outline-none focus:border-cyan-500/50 resize-y min-h-[64px]"
+        />
       </Field>
 
       <label className="flex items-center gap-2 cursor-pointer">

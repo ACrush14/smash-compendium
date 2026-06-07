@@ -12,7 +12,8 @@
 | `/admin/fighters` | `app/admin/fighters/page.tsx` | Curadoria: aprovar/rejeitar fighters, ver completeness checklist |
 | `/admin/fighters/[id]` | `app/admin/fighters/[id]/page.tsx` | **EDITOR** — bios (só SSB64), curator overview, música, imagens, colecionáveis do fighter |
 | `/admin/collectibles` | `app/admin/collectibles/page.tsx` | **NOVO** — editar troféus/spirits/stickers por franquia (inclusive unlinked) |
-| `/admin/music` | `app/admin/music/page.tsx` | Revisar músicas dos fighters |
+| `/admin/music` | `app/admin/music/page.tsx` | Revisar música icônica por fighter |
+| `/admin/music-tracks` | `app/admin/music-tracks/page.tsx` | **EDITOR** — 1.119 faixas SSBU: editar title/youtubeId/duration/sourceGame/compositionType/notes. Filtros por franquia/tipo/busca. |
 | `/admin/chronicles` | `app/admin/chronicles/page.tsx` | Editar wikiUrl + capa dos Chronicles |
 
 ### `/admin/chronicles` — Como usar
@@ -53,7 +54,10 @@
 | `POST /api/admin/franchises` | POST | **Criar nova franquia** |
 | `GET /api/admin/games/smash` | GET | Os 5 jogos Smash com IDs + era (para FighterWork) |
 | `POST /api/admin/collectibles` | POST | **Criar novo coletável** |
-| `GET/POST /api/admin/music-tracks` | GET/POST | Listar/criar faixas de palco (modelo `Music`) |
+| `GET /api/admin/music-tracks` | GET | Listar faixas com filtros (`franchise`, `compositionType`, `q`, `page`, `limit`) |
+| `POST /api/admin/music-tracks` | POST | Criar faixa com todos os campos (incluindo youtubeId, duration, sourceGame, compositionType, notes) |
+| `PATCH /api/admin/music-tracks/[id]` | PATCH | Atualizar qualquer campo da faixa |
+| `DELETE /api/admin/music-tracks/[id]` | DELETE | Deletar faixa (remove StageMusic primeiro) |
 | `GET/POST /api/admin/stages` | GET/POST | Listar/criar palcos |
 | `POST /api/admin/chronicles` | POST | **Criar nova entrada de crônica** |
 
@@ -79,7 +83,7 @@ Página unificada para criar qualquer entidade. Sidebar com 8 tipos:
 | **Troféu** | `Collectible` type=TROPHY | smashGameVersion, name, fighter (search), descriptions |
 | **Spirit** | `Collectible` type=SPIRIT | smashGameVersion, name, fighter (search), descriptions |
 | **Sticker** | `Collectible` type=STICKER | smashGameVersion, name, fighter (search) |
-| **Música** | `Music` (faixa de palco) | title, franchiseId, arranger, isRemix |
+| **Música** | `Music` (faixa de palco) | title, franchiseId, youtubeId, duration, sourceGame, compositionType, arranger, isRemix, notes |
 | **Palco** | `Stage` | name, franchiseId, smashDebutVersion, description |
 | **Crônica** | `ChronicleEntry` | consoleName, titleNtsc, titlePal/JP, releaseDates, wikiUrl, boxArtUrl |
 | **Franquia** | `Franchise` | name, svgIconUrl |

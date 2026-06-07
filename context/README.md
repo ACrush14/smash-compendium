@@ -3,7 +3,7 @@
 > **Regra:** Antes de trabalhar em qualquer sistema, leia o arquivo correspondente aqui.
 > Estes arquivos são a fonte de verdade sobre cada feature — mais precisos que CONTEXT.md (que é histórico).
 
-**Última atualização:** 2026-06-07 · Sessão 22
+**Última atualização:** 2026-06-07 · Sessão 23
 
 | Arquivo | Sistema | Leia quando... |
 |---|---|---|
@@ -37,15 +37,16 @@ Chronicles wiki ████████░░░░░░░░░░░░ 389
 > Demais eras (Melee, Brawl, 4, Ultimate) usam Curator Overview na Visão Geral.
 > Bios wiki-scraped de outras eras ainda existem no banco — rodar `cleanup-non-64-bios.ts` para limpar.
 
-## Admin Tools Disponíveis (Sessão 21)
+## Admin Tools Disponíveis (Sessão 23)
 
 | URL | Função |
 |---|---|
 | `/admin/create` | **CONSTRUTOR** — criar Fighter/Troféu/Spirit/Sticker/Música/Palco/Crônica/Franquia |
 | `/admin/fighters` | Curadoria: lista + aprovar fighters (completeness checklist) |
 | `/admin/fighters/[id]` | **EDITOR** — editar bios (só SSB64), curator overview, música, imagens, colecionáveis |
-| `/admin/collectibles` | **NOVO** — editar troféus/spirits/stickers por franquia (inclusive sem fighter) |
-| `/admin/music` | Revisar músicas dos fighters |
+| `/admin/collectibles` | Editar troféus/spirits/stickers por franquia (inclusive sem fighter) |
+| `/admin/music` | Revisar música icônica dos fighters |
+| `/admin/music-tracks` | **EDITOR** — 1.119 faixas SSBU: filtrar/editar/deletar, YouTube preview |
 | `/admin/chronicles` | Editar wikiUrl + capa dos chronicles |
 | `/franchise` | **PÚBLICO** — índice de todas as franquias com stats |
 | `/franchise/[name]` | **PÚBLICO** — página do universo: fighters + colecionáveis + palcos + músicas |

@@ -727,13 +727,13 @@ function TabCollectibles({
                     </div>
 
                     <div className="col-span-2">
-                      <label className="block text-[9px] text-slate-500 mb-1">Descrição PT</label>
+                      <label className="block text-[9px] text-slate-500 mb-1">Descrição JP</label>
                       <textarea
-                        value={(e.descriptionPt ?? item.descriptionPt) ?? ""}
-                        onChange={ev => setEdit(item.id, "descriptionPt", ev.target.value)}
+                        value={(e.descriptionJp ?? item.descriptionJp) ?? ""}
+                        onChange={ev => setEdit(item.id, "descriptionJp", ev.target.value)}
                         rows={3}
                         className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[11px] px-2.5 py-2 focus:outline-none focus:border-cyan-500/30 resize-none"
-                        placeholder="Descrição em português…"
+                        placeholder="Descrição original em japonês…"
                       />
                     </div>
 
