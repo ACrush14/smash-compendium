@@ -127,13 +127,21 @@ model Stage {
 }
 
 model Music {
-  id          String     @id @default(cuid())
-  title       String
-  franchiseId String
-  arranger    String?
-  isRemix     Boolean    @default(false)
-  franchise   Franchise  @relation(fields: [franchiseId], references: [id])
-  stages      StageMusic[]
+  id              String     @id @default(cuid())
+  title           String
+  franchiseId     String
+  arranger        String?
+  isRemix         Boolean    @default(false)
+  // SSBWiki SSBU data (adicionado Sessão 22):
+  youtubeId       String?    // ID do vídeo YouTube (extraído do link da wiki)
+  duration        String?    // "MM:SS"
+  sourceGame      String?    // jogo de origem (ex: "Super Mario Bros.")
+  compositionType String?    // "Original", "New Remix", "Melee Remix", "SSB4 Remix", etc.
+  notes           String?    // texto de Notes da wiki (arrangers, supervisors, etc.)
+  franchise       Franchise  @relation(fields: [franchiseId], references: [id])
+  stages          StageMusic[]
+
+  @@index([franchiseId])
 }
 
 model StageMusic {
