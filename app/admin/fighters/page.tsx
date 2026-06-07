@@ -158,6 +158,7 @@ export default function AdminFightersPage() {
           <span className="px-2 py-0.5 text-[10px] border border-cyan-500/30 bg-cyan-500/10 text-cyan-400">Fighters</span>
           <Link href="/admin/chronicles" className="px-2 py-0.5 text-[10px] border border-white/10 text-slate-500 hover:text-slate-300 transition-all">Chronicles</Link>
           <Link href="/admin/music"      className="px-2 py-0.5 text-[10px] border border-white/10 text-slate-500 hover:text-slate-300 transition-all">Music</Link>
+          <Link href="/admin/create"     className="px-2 py-0.5 text-[10px] border border-emerald-500/20 text-emerald-600 hover:text-emerald-400 transition-all">+ Construtor</Link>
         </div>
 
         <div className="flex-1" />

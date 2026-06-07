@@ -28,3 +28,43 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({ total, page, perPage, entries });
 }
+
+// POST /api/admin/chronicles → create a new ChronicleEntry
+export async function POST(req: NextRequest) {
+  const body = await req.json() as {
+    consoleName:      string;
+    titleNtsc:        string;
+    titlePal?:        string | null;
+    titleJp?:         string | null;
+    titleJpEn?:       string | null;
+    titleJpPt?:       string | null;
+    releaseDateNtsc?: string | null;
+    releaseDatePal?:  string | null;
+    releaseDateJp?:   string | null;
+    unlockCriteria?:  string | null;
+    wikiUrl?:         string | null;
+    boxArtUrl?:       string | null;
+  };
+
+  if (!body.consoleName?.trim()) return NextResponse.json({ error: "consoleName is required" }, { status: 400 });
+  if (!body.titleNtsc?.trim())   return NextResponse.json({ error: "titleNtsc is required" }, { status: 400 });
+
+  const entry = await db.chronicleEntry.create({
+    data: {
+      consoleName:      body.consoleName.trim(),
+      titleNtsc:        body.titleNtsc.trim(),
+      titlePal:         body.titlePal         || null,
+      titleJp:          body.titleJp          || null,
+      titleJpEn:        body.titleJpEn        || null,
+      titleJpPt:        body.titleJpPt        || null,
+      releaseDateNtsc:  body.releaseDateNtsc  || null,
+      releaseDatePal:   body.releaseDatePal   || null,
+      releaseDateJp:    body.releaseDateJp    || null,
+      unlockCriteria:   body.unlockCriteria   || null,
+      wikiUrl:          body.wikiUrl          || null,
+      boxArtUrl:        body.boxArtUrl        || null,
+    },
+  });
+
+  return NextResponse.json(entry, { status: 201 });
+}

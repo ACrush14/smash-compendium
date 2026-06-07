@@ -1,0 +1,46 @@
+import { NextRequest, NextResponse } from "next/server";
+import { db } from "@/lib/db";
+
+// POST /api/admin/collectibles → create a new collectible (trophy / spirit / sticker)
+// Body: { type, smashGameVersion, name, fighterId?, nameJp?, descriptionEn?, descriptionPt?,
+//          descriptionJp?, descriptionJpEn?, assetRenderUrl? }
+export async function POST(req: NextRequest) {
+  const body = await req.json() as {
+    type:              string;
+    smashGameVersion:  string;
+    name:              string;
+    fighterId?:        string | null;
+    nameJp?:           string | null;
+    descriptionEn?:    string | null;
+    descriptionPt?:    string | null;
+    descriptionJp?:    string | null;
+    descriptionJpEn?:  string | null;
+    assetRenderUrl?:   string | null;
+  };
+
+  if (!body.type?.trim())             return NextResponse.json({ error: "type is required" }, { status: 400 });
+  if (!body.smashGameVersion?.trim()) return NextResponse.json({ error: "smashGameVersion is required" }, { status: 400 });
+  if (!body.name?.trim())             return NextResponse.json({ error: "name is required" }, { status: 400 });
+
+  // Build deterministic ID matching existing convention: "TYPE-VER-Fighter-Name"
+  const safeName = body.name.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_\-]/g, "");
+  const autoId = `${body.type}-${body.smashGameVersion}-${safeName}`;
+
+  const item = await db.collectible.create({
+    data: {
+      id:               autoId,
+      type:             body.type.trim(),
+      smashGameVersion: body.smashGameVersion.trim(),
+      name:             body.name.trim(),
+      fighterId:        body.fighterId   || null,
+      nameJp:           body.nameJp      || null,
+      descriptionEn:    body.descriptionEn  || null,
+      descriptionPt:    body.descriptionPt  || null,
+      descriptionJp:    body.descriptionJp  || null,
+      descriptionJpEn:  body.descriptionJpEn || null,
+      assetRenderUrl:   body.assetRenderUrl || null,
+    },
+  });
+
+  return NextResponse.json(item, { status: 201 });
+}
