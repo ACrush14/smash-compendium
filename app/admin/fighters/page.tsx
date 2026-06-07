@@ -246,13 +246,21 @@ export default function AdminFightersPage() {
                       <h2 className="text-lg font-bold text-cyan-200 leading-tight">{current.name}</h2>
                       <p className="text-[10px] text-slate-500 mt-0.5">{current.franchise} · #{current.rosterNumber}</p>
                     </div>
-                    <Link
-                      href={`/fighters/${encodeURIComponent(current.name)}`}
-                      target="_blank"
-                      className="shrink-0 flex items-center gap-1 text-[9px] text-slate-600 hover:text-cyan-400 border border-white/5 hover:border-cyan-500/20 px-2 py-1 transition-all"
-                    >
-                      <ExternalLink size={9} /> Ver página
-                    </Link>
+                    <div className="flex gap-1 shrink-0">
+                      <Link
+                        href={`/admin/fighters/${current.id}`}
+                        className="flex items-center gap-1 text-[9px] text-slate-600 hover:text-cyan-400 border border-white/5 hover:border-cyan-500/20 px-2 py-1 transition-all"
+                      >
+                        ✎ Editar
+                      </Link>
+                      <Link
+                        href={`/fighters/${encodeURIComponent(current.name)}`}
+                        target="_blank"
+                        className="flex items-center gap-1 text-[9px] text-slate-600 hover:text-cyan-400 border border-white/5 hover:border-cyan-500/20 px-2 py-1 transition-all"
+                      >
+                        <ExternalLink size={9} /> Ver página
+                      </Link>
+                    </div>
                   </div>
 
                   <span className={`mt-2 inline-flex items-center gap-1.5 text-[10px] px-2 py-0.5 border uppercase tracking-widest ${
