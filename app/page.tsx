@@ -101,11 +101,12 @@ export default async function VaultPage({ searchParams }: PageProps) {
   const query = (q ?? "").trim();
 
   // Queries paralelas ao banco
-  const [fighterCount, franchiseCount, gameCount, collectibleCount, searchResults] = await Promise.all([
+  const [fighterCount, franchiseCount, gameCount, collectibleCount, approvedCount, searchResults] = await Promise.all([
     db.fighter.count(),
     db.franchise.count(),
     db.game.count(),
     db.collectible.count({ where: { type: { not: "SPRITE" } } }),
+    db.fighter.count({ where: { curationStatus: "approved" } }),
     query
       ? db.fighter.findMany({
           where: {
@@ -120,6 +121,8 @@ export default async function VaultPage({ searchParams }: PageProps) {
         })
       : Promise.resolve([]),
   ]);
+
+  const curationPct = fighterCount > 0 ? Math.round((approvedCount / fighterCount) * 100) : 0;
 
   const filteredLog = filterLog(ETL_LOG, query);
 
@@ -153,6 +156,65 @@ export default async function VaultPage({ searchParams }: PageProps) {
           </div>
         </div>
       </header>
+
+      {/* BARRA DE CURADORIA */}
+      <div className="border-b border-white/[0.06] bg-[#020510]">
+        <div className="mx-auto max-w-7xl px-6 py-2.5 flex items-center gap-4">
+
+          {/* Label */}
+          <div className="flex items-center gap-1.5 shrink-0">
+            <span className={`h-1.5 w-1.5 rounded-full ${
+              curationPct === 100 ? "bg-emerald-400 animate-pulse" : "bg-amber-500/50"
+            }`} />
+            <span className="font-mono text-[10px] uppercase tracking-widest text-slate-600">
+              Curadoria do Acervo
+            </span>
+          </div>
+
+          {/* Bar */}
+          <div className="flex-1 h-1 bg-white/[0.04] rounded-full overflow-hidden">
+            <div
+              className={`h-full rounded-full transition-all duration-700 ${
+                curationPct === 100
+                  ? "bg-gradient-to-r from-emerald-500 to-emerald-300"
+                  : curationPct >= 50
+                  ? "bg-gradient-to-r from-cyan-700 to-emerald-500"
+                  : "bg-gradient-to-r from-amber-800 to-amber-500"
+              }`}
+              style={{ width: curationPct === 0 ? "0%" : `${curationPct}%` }}
+            />
+          </div>
+
+          {/* Numbers */}
+          <div className="font-mono shrink-0 flex items-center gap-1.5 text-[11px]">
+            <span className={
+              curationPct === 100 ? "text-emerald-400 font-bold" :
+              curationPct > 0    ? "text-slate-300 font-bold" : "text-slate-600"
+            }>
+              {approvedCount}
+            </span>
+            <span className="text-slate-700">/</span>
+            <span className="text-slate-600">{fighterCount} fighters</span>
+            <span className="text-slate-700 mx-1">·</span>
+            <span className={`font-bold ${
+              curationPct === 100 ? "text-emerald-400" :
+              curationPct >= 50  ? "text-cyan-400"    : "text-slate-500"
+            }`}>
+              {curationPct}%
+            </span>
+            <span className="text-slate-700">curados</span>
+          </div>
+
+          {/* Admin link */}
+          <a
+            href="/admin/fighters"
+            className="shrink-0 font-mono text-[9px] text-slate-700 hover:text-slate-400 border border-white/5 hover:border-white/15 px-2 py-0.5 transition-all"
+          >
+            gerenciar ↗
+          </a>
+
+        </div>
+      </div>
 
       {/* SEARCH RESULTS */}
       {query && (

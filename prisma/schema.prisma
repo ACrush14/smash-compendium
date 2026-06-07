@@ -34,6 +34,8 @@ model Fighter {
   musicTitle          String?
   musicArtist         String?
   musicStatus         String?       @default("pending_review") // pending_review | approved
+  curationStatus      String?       @default("pending_review") // pending_review | approved
+  curationNotes       String?       @db.Text
   franchise           Franchise          @relation(fields: [franchiseId], references: [id])
   bios               FighterBio[]
   works              FighterWork[]
@@ -100,7 +102,11 @@ model Collectible {
   descriptionJpEn  String?  @db.Text
   sourceType       String   @default("Official")
   assetRenderUrl   String?
-  orderIndex       Int?     // Número oficial da galeria/spirit board
+  orderIndex       Int?     // Número oficial da galeria/spirit board (legado genérico)
+  posicaoTrofeuMelee Int?
+  posicaoTrofeuBrawl Int?
+  posicaoTrofeuSsb4  Int?
+  posicaoSpiritSsbu  Int?
   fighter          Fighter? @relation(fields: [fighterId], references: [id], onDelete: SetNull)
 
   @@index([type, smashGameVersion])

@@ -46,6 +46,12 @@ const FIGHTER_ORIGIN_GAMES: Record<string, OriginGame[]> = {
     { name: "EarthBound", titleJp: "MOTHER2 ギーグの逆襲", console: "SNES", consoleFull: "Super Family Computer (Super Famicom)", consoleFullEn: "Super Nintendo Entertainment System", year: 1994, month: 8, region: "JP", yearNa: 1995, monthNa: 6, regionNa: "NA", badgeColor: "#6d3b8e", iconFile: "snes.svg", boxArtPath: "/assets/games/EARTHBOUND_USA_BOX.jpg", boxArtPathJp: "/assets/games/MOTHER2_JP_BOX.png", boxArtLandscape: true, wikiUrl: "https://en.wikipedia.org/wiki/EarthBound", wikiUrlJp: "https://ja.wikipedia.org/wiki/MOTHER2_ギーグの逆襲" },
     { name: "Mother 3",   titleJp: "MOTHER3",              console: "GBA",  consoleFull: "Game Boy Advance", year: 2006, month: 4, region: "JP", badgeColor: "#5c1f8a", iconFile: "gba.svg", jpExclusive: true, boxArtPath: "/assets/games/MOTHER3_JP_BOX.jpg", boxArtLandscape: true, wikiUrl: "https://ja.wikipedia.org/wiki/MOTHER3", wikiUrlJp: "https://ja.wikipedia.org/wiki/MOTHER3" },
   ],
+  // Xenoblade Chronicles 2 — Pyra e Mythra compartilham a mesma página
+  "Pyra":  [{ name: "Xenoblade Chronicles 2", console: "NSW", year: 2017, badgeColor: "#2a2a8e", wikiUrl: "https://en.wikipedia.org/wiki/Xenoblade_Chronicles_2" }],
+  "Mythra":[{ name: "Xenoblade Chronicles 2", console: "NSW", year: 2017, badgeColor: "#2a2a8e", wikiUrl: "https://en.wikipedia.org/wiki/Xenoblade_Chronicles_2" }],
+  // Cloud e Sephiroth compartilham Final Fantasy VII
+  "Cloud":     [{ name: "Final Fantasy VII", console: "PS", year: 1997, badgeColor: "#1a1a7e", wikiUrl: "https://en.wikipedia.org/wiki/Final_Fantasy_VII" }],
+  "Sephiroth": [{ name: "Final Fantasy VII", console: "PS", year: 1997, badgeColor: "#1a1a7e", wikiUrl: "https://en.wikipedia.org/wiki/Final_Fantasy_VII" }],
 };
 
 // ─── GIFs por lutador e por era ─────────────────────────────────────────────
@@ -88,44 +94,59 @@ const FRANCHISE_ORIGIN_GAMES: Record<string, OriginGame[]> = {
     { name: "EarthBound", titleJp: "MOTHER2 ギーグの逆襲", console: "SNES", consoleFull: "Super Famicom",   year: 1994, month: 8, region: "JP", badgeColor: "#6d3b8e", iconFile: "snes.svg", boxArtPath: "/assets/games/EARTHBOUND_USA_BOX.jpg", boxArtLandscape: true, wikiUrl: "https://en.wikipedia.org/wiki/EarthBound", wikiUrlJp: "https://ja.wikipedia.org/wiki/MOTHER2_ギーグの逆襲" },
     { name: "Mother 3",   titleJp: "MOTHER3",              console: "GBA",  consoleFull: "Game Boy Advance", year: 2006, month: 4, region: "JP", badgeColor: "#5c1f8a", iconFile: "gba.svg", jpExclusive: true, boxArtPath: "/assets/games/MOTHER3_JP_BOX.jpg", boxArtLandscape: true, wikiUrl: "https://ja.wikipedia.org/wiki/MOTHER3", wikiUrlJp: "https://ja.wikipedia.org/wiki/MOTHER3" },
   ],
-  "Mario":               [{ name: "Donkey Kong",              console: "ARC",  year: 1981,              badgeColor: "#b02020" },
-                          { name: "Super Mario Bros.",         console: "NES",  year: 1985,              badgeColor: "#e60012" }],
-  "Donkey Kong":         [{ name: "Donkey Kong",              console: "ARC",  year: 1981,              badgeColor: "#b02020" },
-                          { name: "Donkey Kong Country",       console: "SNES", year: 1994,              badgeColor: "#6d3b8e" }],
-  "The Legend of Zelda": [{ name: "The Legend of Zelda",      console: "NES",  year: 1986,              badgeColor: "#e60012" }],
-  "Pokémon":             [{ name: "Pocket Monsters R/G",      console: "GB",   year: 1996, region: "JP", badgeColor: "#555"   },
-                          { name: "Pokémon Red / Blue",        console: "GB",   year: 1998,              badgeColor: "#555"   }],
-  "Metroid":             [{ name: "Metroid",                  console: "NES",  year: 1986,              badgeColor: "#e60012" }],
-  "Kirby":               [{ name: "Kirby's Dream Land",       console: "GB",   year: 1992,              badgeColor: "#555"   }],
-  "Star Fox":            [{ name: "Star Fox",                 console: "SNES", year: 1993,              badgeColor: "#6d3b8e" }],
+  "Mario":               [{ name: "Donkey Kong",         console: "ARC",  year: 1981,              badgeColor: "#b02020", boxArtPath: "/assets/games/DONKEY_KONG_ARC_BOX.jpg",    wikiUrl: "https://en.wikipedia.org/wiki/Donkey_Kong_(1981_video_game)" },
+                          { name: "Super Mario Bros.",    console: "NES",  year: 1985,              badgeColor: "#e60012", boxArtPath: "/assets/games/SUPER_MARIO_BROS_NES_BOX.png", wikiUrl: "https://en.wikipedia.org/wiki/Super_Mario_Bros." }],
+  "Donkey Kong":         [{ name: "Donkey Kong",         console: "ARC",  year: 1981,              badgeColor: "#b02020", boxArtPath: "/assets/games/DONKEY_KONG_ARC_BOX.jpg",    wikiUrl: "https://en.wikipedia.org/wiki/Donkey_Kong_(1981_video_game)" },
+                          { name: "Donkey Kong Country", console: "SNES", year: 1994,              badgeColor: "#6d3b8e", boxArtPath: "/assets/games/DKC_SNES_BOX.png",           wikiUrl: "https://en.wikipedia.org/wiki/Donkey_Kong_Country" }],
+  "The Legend of Zelda": [{ name: "The Legend of Zelda", console: "NES",  year: 1986,              badgeColor: "#e60012", boxArtPath: "/assets/games/ZELDA_NES_BOX.png",          wikiUrl: "https://en.wikipedia.org/wiki/The_Legend_of_Zelda_(video_game)" }],
+  "Pokémon":             [{ name: "Pocket Monsters R/G", console: "GB",   year: 1996, region: "JP", badgeColor: "#555",   boxArtPath: "/assets/games/POKEMON_RED_BLUE_GB_BOX.webp", wikiUrl: "https://en.wikipedia.org/wiki/Pok%C3%A9mon_Red_and_Blue" },
+                          { name: "Pokémon Red / Blue",  console: "GB",   year: 1998,              badgeColor: "#555",   boxArtPath: "/assets/games/POKEMON_RED_BLUE_GB_BOX.webp", wikiUrl: "https://en.wikipedia.org/wiki/Pok%C3%A9mon_Red_and_Blue" }],
+  "Metroid":             [{ name: "Metroid",             console: "NES",  year: 1986,              badgeColor: "#e60012", boxArtPath: "/assets/games/METROID_NES_BOX.jpg",         wikiUrl: "https://en.wikipedia.org/wiki/Metroid_(video_game)" }],
+  "Kirby":               [{ name: "Kirby's Dream Land",  console: "GB",   year: 1992,              badgeColor: "#555",   boxArtPath: "/assets/games/KIRBY_DREAMLAND_GB_BOX.png",  wikiUrl: "https://en.wikipedia.org/wiki/Kirby%27s_Dream_Land" }],
+  "Star Fox":            [{ name: "Star Fox",            console: "SNES", year: 1993,              badgeColor: "#6d3b8e", boxArtPath: "/assets/games/STARFOX_SNES_BOX.jpg",        wikiUrl: "https://en.wikipedia.org/wiki/Star_Fox_(SNES)" }],
   "F-Zero": [
-    { name: "F-Zero",           titleJp: "F-ZERO",             console: "SNES", consoleFull: "Super Famicom",     consoleFullEn: "Super Nintendo Entertainment System", year: 1990, month: 11, region: "JP", yearNa: 1991, monthNa: 8,  regionNa: "NA", badgeColor: "#1a6ecc", iconFile: "snes.svg", wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_(video_game)",                   wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO" },
-    { name: "F-Zero X",         titleJp: "F-ZERO X",           console: "N64",  consoleFull: "Nintendo 64",       year: 1998, month: 7,  region: "JP", yearNa: 1998, monthNa: 10, regionNa: "NA", badgeColor: "#1a6ecc", iconFile: "n64.svg",  wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_X",                             wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO_X" },
-    { name: "F-Zero GX",        titleJp: "F-ZERO GX",          console: "GCN",  consoleFull: "Nintendo GameCube", year: 2003, month: 7,  region: "JP", yearNa: 2003, monthNa: 8,  regionNa: "NA", badgeColor: "#1a6ecc", iconFile: "gcn.svg",  wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_GX",                            wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO_GX" },
-    { name: "F-Zero GP Legend",  titleJp: "F-ZERO ファルコン伝説", console: "GBA",  consoleFull: "Game Boy Advance",  year: 2003, month: 8,  region: "JP", yearNa: 2004, monthNa: 9,  regionNa: "NA", badgeColor: "#1a6ecc", iconFile: "gba.svg",  wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_GP_Legend_(video_game)",        wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO_ファルコン伝説" },
-    { name: "F-Zero Climax",     titleJp: "F-ZERO クライマックス", console: "GBA",  consoleFull: "Game Boy Advance",  year: 2004, month: 10, region: "JP", jpExclusive: true,         badgeColor: "#1a6ecc", iconFile: "gba.svg",  wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_Climax",                        wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO_クライマックス" },
+    { name: "F-Zero",           titleJp: "F-ZERO",             console: "SNES", consoleFull: "Super Famicom",     consoleFullEn: "Super Nintendo Entertainment System", year: 1990, month: 11, region: "JP", yearNa: 1991, monthNa: 8,  regionNa: "NA", badgeColor: "#1a6ecc", iconFile: "snes.svg", boxArtPath: "/assets/games/FZERO_SNES_BOX.jpg",        wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_(video_game)",            wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO" },
+    { name: "F-Zero X",         titleJp: "F-ZERO X",           console: "N64",  consoleFull: "Nintendo 64",       year: 1998, month: 7,  region: "JP", yearNa: 1998, monthNa: 10, regionNa: "NA", badgeColor: "#1a6ecc", iconFile: "n64.svg",  boxArtPath: "/assets/games/FZERO_X_N64_BOX.jpg",       wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_X",                       wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO_X" },
+    { name: "F-Zero GX",        titleJp: "F-ZERO GX",          console: "GCN",  consoleFull: "Nintendo GameCube", year: 2003, month: 7,  region: "JP", yearNa: 2003, monthNa: 8,  regionNa: "NA", badgeColor: "#1a6ecc", iconFile: "gcn.svg",  boxArtPath: "/assets/games/FZERO_GX_GCN_BOX.png",      wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_GX",                      wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO_GX" },
+    { name: "F-Zero GP Legend",  titleJp: "F-ZERO ファルコン伝説", console: "GBA",  consoleFull: "Game Boy Advance",  year: 2003, month: 8,  region: "JP", yearNa: 2004, monthNa: 9,  regionNa: "NA", badgeColor: "#1a6ecc", iconFile: "gba.svg",  boxArtPath: "/assets/games/FZERO_GPLEGEND_GBA_BOX.gif",wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_GP_Legend_(video_game)",  wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO_ファルコン伝説" },
+    { name: "F-Zero Climax",     titleJp: "F-ZERO クライマックス", console: "GBA",  consoleFull: "Game Boy Advance",  year: 2004, month: 10, region: "JP", jpExclusive: true,         badgeColor: "#1a6ecc", iconFile: "gba.svg",  boxArtPath: "/assets/games/FZERO_CLIMAX_GBA_BOX.png",  wikiUrl: "https://en.wikipedia.org/wiki/F-Zero_Climax",                  wikiUrlJp: "https://ja.wikipedia.org/wiki/F-ZERO_クライマックス" },
   ],
-  "Fire Emblem":         [{ name: "Fire Emblem",              console: "NES",  year: 1990, region: "JP", badgeColor: "#e60012" }],
-  "Pikmin":              [{ name: "Pikmin",                   console: "GCN",  year: 2001,              badgeColor: "#1a1a5e" }],
-  "Animal Crossing":     [{ name: "Animal Forest",            console: "N64",  year: 2001, region: "JP", badgeColor: "#1a3a7e" }],
-  "Kid Icarus":          [{ name: "Kid Icarus",               console: "NES",  year: 1986,              badgeColor: "#e60012" }],
-  "Ice Climber":         [{ name: "Ice Climber",              console: "NES",  year: 1984,              badgeColor: "#e60012" }],
-  "Wario":               [{ name: "Wario Land",               console: "GB",   year: 1994,              badgeColor: "#555"   }],
-  "Yoshi":               [{ name: "Yoshi's Island",           console: "SNES", year: 1995,              badgeColor: "#6d3b8e" }],
-  "Xenoblade":           [{ name: "Xenoblade Chronicles",     console: "Wii",  year: 2010,              badgeColor: "#2a2a8e" }],
-  "Punch-Out!!":         [{ name: "Punch-Out!!",              console: "NES",  year: 1987,              badgeColor: "#e60012" }],
-  "Duck Hunt":           [{ name: "Duck Hunt",                console: "NES",  year: 1984,              badgeColor: "#e60012" }],
-  "Sonic":               [{ name: "Sonic the Hedgehog",       console: "GEN",  year: 1991,              badgeColor: "#0044aa" }],
-  "Mega Man":            [{ name: "Mega Man",                 console: "NES",  year: 1987,              badgeColor: "#e60012" }],
-  "Pac-Man":             [{ name: "Pac-Man",                  console: "ARC",  year: 1980,              badgeColor: "#b02020" }],
-  "Street Fighter":      [{ name: "Street Fighter II",        console: "ARC",  year: 1991,              badgeColor: "#b02020" }],
-  "Castlevania":         [{ name: "Castlevania",              console: "NES",  year: 1986,              badgeColor: "#e60012" }],
-  "Persona":             [{ name: "Persona 5",                console: "PS4",  year: 2016,              badgeColor: "#aa0000" }],
-  "Dragon Quest":        [{ name: "Dragon Quest",             console: "NES",  year: 1986, region: "JP", badgeColor: "#e60012" }],
-  "Banjo-Kazooie":       [{ name: "Banjo-Kazooie",            console: "N64",  year: 1998,              badgeColor: "#1a3a7e" }],
-  "ARMS":                [{ name: "ARMS",                     console: "NSW",  year: 2017,              badgeColor: "#e60040" }],
-  "Bayonetta":           [{ name: "Bayonetta",                console: "PS3",  year: 2009,              badgeColor: "#2a2a8e" }],
-  "Game & Watch":        [{ name: "Ball",                     console: "G&W",  year: 1980,              badgeColor: "#333"   }],
+  "Fire Emblem":         [{ name: "Fire Emblem",         console: "NES",  year: 1990, region: "JP", badgeColor: "#e60012", boxArtPath: "/assets/games/FIRE_EMBLEM_NES_BOX.jpg",    wikiUrl: "https://en.wikipedia.org/wiki/Fire_Emblem:_Shadow_Dragon_and_the_Blade_of_Light" }],
+  "Pikmin":              [{ name: "Pikmin",              console: "GCN",  year: 2001,              badgeColor: "#1a1a5e", boxArtPath: "/assets/games/PIKMIN_GCN_BOX.jpg",           wikiUrl: "https://en.wikipedia.org/wiki/Pikmin_(video_game)" }],
+  "Animal Crossing":     [{ name: "Animal Forest",       console: "N64",  year: 2001, region: "JP", badgeColor: "#1a3a7e", boxArtPath: "/assets/games/ANIMAL_CROSSING_N64_BOX.png", wikiUrl: "https://en.wikipedia.org/wiki/Animal_Crossing_(video_game)" }],
+  "Kid Icarus":          [{ name: "Kid Icarus",          console: "NES",  year: 1986,              badgeColor: "#e60012", boxArtPath: "/assets/games/KID_ICARUS_NES_BOX.png",      wikiUrl: "https://en.wikipedia.org/wiki/Kid_Icarus" }],
+  "Ice Climber":         [{ name: "Ice Climber",         console: "NES",  year: 1984,              badgeColor: "#e60012", boxArtPath: "/assets/games/ICE_CLIMBER_NES_BOX.jpg",     wikiUrl: "https://en.wikipedia.org/wiki/Ice_Climber" }],
+  "Wario":               [{ name: "Wario Land",          console: "GB",   year: 1994,              badgeColor: "#555",   boxArtPath: "/assets/games/WARIO_LAND_GB_BOX.png",        wikiUrl: "https://en.wikipedia.org/wiki/Wario_Land:_Super_Mario_Land_3" }],
+  "Yoshi":               [{ name: "Yoshi's Island",      console: "SNES", year: 1995,              badgeColor: "#6d3b8e", boxArtPath: "/assets/games/YOSHIS_ISLAND_SNES_BOX.jpg",  wikiUrl: "https://en.wikipedia.org/wiki/Super_Mario_World_2:_Yoshi%27s_Island" }],
+  "Xenoblade":           [{ name: "Xenoblade Chronicles",console: "Wii",  year: 2010,              badgeColor: "#2a2a8e", boxArtPath: "/assets/games/XENOBLADE_WII_BOX.png",       wikiUrl: "https://en.wikipedia.org/wiki/Xenoblade_Chronicles" }],
+  "Punch-Out!!":         [{ name: "Punch-Out!!",         console: "NES",  year: 1987,              badgeColor: "#e60012", boxArtPath: "/assets/games/PUNCHOUT_NES_BOX.jpg",        wikiUrl: "https://en.wikipedia.org/wiki/Punch-Out!!_(NES)" }],
+  "Duck Hunt":           [{ name: "Duck Hunt",           console: "NES",  year: 1984,              badgeColor: "#e60012", boxArtPath: "/assets/games/DUCK_HUNT_NES_BOX.jpg",       wikiUrl: "https://en.wikipedia.org/wiki/Duck_Hunt" }],
+  "Sonic":               [{ name: "Sonic the Hedgehog",  console: "GEN",  year: 1991,              badgeColor: "#0044aa", boxArtPath: "/assets/games/SONIC_GEN_BOX.jpg",           wikiUrl: "https://en.wikipedia.org/wiki/Sonic_the_Hedgehog_(1991_video_game)" }],
+  // Alias para nome do DB ("Sonic the Hedgehog")
+  "Sonic the Hedgehog":  [{ name: "Sonic the Hedgehog",  console: "GEN",  year: 1991,              badgeColor: "#0044aa", boxArtPath: "/assets/games/SONIC_GEN_BOX.jpg",           wikiUrl: "https://en.wikipedia.org/wiki/Sonic_the_Hedgehog_(1991_video_game)" }],
+  "Mega Man":            [{ name: "Mega Man",            console: "NES",  year: 1987,              badgeColor: "#e60012", boxArtPath: "/assets/games/MEGA_MAN_NES_BOX.jpg",        wikiUrl: "https://en.wikipedia.org/wiki/Mega_Man_(video_game)" }],
+  "Pac-Man":             [{ name: "Pac-Man",             console: "ARC",  year: 1980,              badgeColor: "#b02020", boxArtPath: "/assets/games/PAC_MAN_ARC_BOX.png",         wikiUrl: "https://en.wikipedia.org/wiki/Pac-Man" }],
+  "Street Fighter":      [{ name: "Street Fighter II",   console: "ARC",  year: 1991,              badgeColor: "#b02020", boxArtPath: "/assets/games/SF2_ARC_BOX.jpg",             wikiUrl: "https://en.wikipedia.org/wiki/Street_Fighter_II" }],
+  "Castlevania":         [{ name: "Castlevania",         console: "NES",  year: 1986,              badgeColor: "#e60012", boxArtPath: "/assets/games/CASTLEVANIA_NES_BOX.png",     wikiUrl: "https://en.wikipedia.org/wiki/Castlevania_(1986_video_game)" }],
+  "Persona":             [{ name: "Persona 5",           console: "PS4",  year: 2016,              badgeColor: "#aa0000", boxArtPath: "/assets/games/PERSONA5_PS4_BOX.jpg",        wikiUrl: "https://en.wikipedia.org/wiki/Persona_5" }],
+  "Dragon Quest":        [{ name: "Dragon Quest",        console: "NES",  year: 1986, region: "JP", badgeColor: "#e60012", boxArtPath: "/assets/games/DRAGON_QUEST_NES_BOX.jpg",   wikiUrl: "https://en.wikipedia.org/wiki/Dragon_Quest_(video_game)" }],
+  "Banjo-Kazooie":       [{ name: "Banjo-Kazooie",       console: "N64",  year: 1998,              badgeColor: "#1a3a7e", boxArtPath: "/assets/games/BANJO_KAZOOIE_N64_BOX.png",  wikiUrl: "https://en.wikipedia.org/wiki/Banjo-Kazooie" }],
+  "ARMS":                [{ name: "ARMS",                console: "NSW",  year: 2017,              badgeColor: "#e60040", boxArtPath: "/assets/games/ARMS_NSW_BOX.jpg",            wikiUrl: "https://en.wikipedia.org/wiki/ARMS_(video_game)" }],
+  "Bayonetta":           [{ name: "Bayonetta",           console: "PS3",  year: 2009,              badgeColor: "#2a2a8e", boxArtPath: "/assets/games/BAYONETTA_PS3_BOX.png",       wikiUrl: "https://en.wikipedia.org/wiki/Bayonetta_(video_game)" }],
+  "Game & Watch":        [{ name: "Ball",                console: "G&W",  year: 1980,              badgeColor: "#333",   wikiUrl: "https://en.wikipedia.org/wiki/Ball_(Nintendo_Game_%26_Watch)" }],
+  // Xenoblade Chronicles (alias para nome do DB)
+  "Xenoblade Chronicles":[{ name: "Xenoblade Chronicles",console: "Wii",  year: 2010,              badgeColor: "#2a2a8e", boxArtPath: "/assets/games/XENOBLADE_WII_BOX.png",       wikiUrl: "https://en.wikipedia.org/wiki/Xenoblade_Chronicles" }],
+  // 3rd party & DLC
+  "Metal Gear":          [{ name: "Metal Gear Solid",    console: "PS",   year: 1998,              badgeColor: "#3a3a3a", wikiUrl: "https://en.wikipedia.org/wiki/Metal_Gear_Solid" }],
+  "Wii Fit":             [{ name: "Wii Fit",             console: "Wii",  year: 2007,              badgeColor: "#7bc3e2", wikiUrl: "https://en.wikipedia.org/wiki/Wii_Fit" }],
+  "Splatoon":            [{ name: "Splatoon",            console: "WiiU", year: 2015,              badgeColor: "#e75f14", wikiUrl: "https://en.wikipedia.org/wiki/Splatoon_(video_game)" }],
+  "Fatal Fury":          [{ name: "Fatal Fury",          console: "NEO",  year: 1991,              badgeColor: "#cc2200", wikiUrl: "https://en.wikipedia.org/wiki/Fatal_Fury:_King_of_Fighters" }],
+  "Final Fantasy":       [{ name: "Final Fantasy VII",   console: "PS",   year: 1997,              badgeColor: "#1a1a7e", wikiUrl: "https://en.wikipedia.org/wiki/Final_Fantasy_VII" }],
+  "Minecraft":           [{ name: "Minecraft",           console: "PC",   year: 2011,              badgeColor: "#5c9e31", wikiUrl: "https://en.wikipedia.org/wiki/Minecraft" }],
+  "Tekken":              [{ name: "Tekken",              console: "ARC",  year: 1994,              badgeColor: "#1a1a1a", wikiUrl: "https://en.wikipedia.org/wiki/Tekken_(video_game)" }],
+  "Kingdom Hearts":      [{ name: "Kingdom Hearts",      console: "PS2",  year: 2002,              badgeColor: "#1a4db7", wikiUrl: "https://en.wikipedia.org/wiki/Kingdom_Hearts_(video_game)" }],
+  "R.O.B.":              [{ name: "Gyromite",            console: "NES",  year: 1985,              badgeColor: "#e60012", wikiUrl: "https://en.wikipedia.org/wiki/Gyromite" }],
+  "Super Smash Bros.":   [{ name: "Mii",                 console: "Wii",  year: 2006,              badgeColor: "#e60012", wikiUrl: "https://en.wikipedia.org/wiki/Mii" }],
 };
 
 // ─── SVG grid de perspectiva ─────────────────────────────────────────────────
@@ -408,6 +429,25 @@ export default async function FighterPage({ params }: PageProps) {
             <Link href="/fighters" className="hover:text-cyan-500 transition-colors">Lutadores</Link>
             <ChevronRight className="h-3 w-3" />
             <span className="text-cyan-700">{fighter.name}</span>
+          </div>
+
+          {/* Curation status badge */}
+          <div className="ml-auto flex items-center gap-2">
+            {fighter.curationStatus === "approved" ? (
+              <span className="font-mono text-[9px] text-emerald-500/50 border border-emerald-500/15 px-1.5 py-0.5">
+                ✓ CURADO
+              </span>
+            ) : (
+              <span className="font-mono text-[9px] text-amber-500/25 border border-amber-500/10 px-1.5 py-0.5">
+                ● EM REVISÃO
+              </span>
+            )}
+            <Link
+              href="/admin/fighters"
+              className="font-mono text-[9px] text-slate-700 hover:text-slate-400 border border-white/5 hover:border-white/15 px-1.5 py-0.5 transition-all"
+            >
+              ADMIN ↗
+            </Link>
           </div>
         </div>
       </header>
