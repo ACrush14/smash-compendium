@@ -312,6 +312,7 @@ function TabOverview({
 }
 
 // ─── Tab: Bios ────────────────────────────────────────────────────────────────
+// Only SSB64 (1999) has real in-game character bios. Other eras use Curator Overview.
 
 function TabBios({
   fighterId,
@@ -322,11 +323,13 @@ function TabBios({
   worksEras: string[];
   initialBios: FighterBio[];
 }) {
-  const [bios, setBios]   = useState<FighterBio[]>(initialBios);
-  const [era,  setEra]    = useState<string>(worksEras[0] ?? "SSBU");
-  const [lang, setLang]   = useState<BioLang>("EN");
-  const [text, setText]   = useState<string>("");
+  const [bios, setBios] = useState<FighterBio[]>(initialBios);
+  const [lang, setLang] = useState<BioLang>("EN");
+  const [text, setText] = useState<string>("");
   const save = useSaveFeedback();
+
+  const ERA_BIO = "SSB64"; // Only era with real in-game bio text
+  const isIn64  = worksEras.includes("SSB64");
 
   const LANG_FIELD: Record<BioLang, keyof FighterBio> = {
     EN:      "contentEn",
@@ -335,30 +338,30 @@ function TabBios({
     "JP+EN": "contentJpEn",
   };
 
-  const currentBio = bios.find(b => b.smashGameVersion === era);
+  const currentBio = bios.find(b => b.smashGameVersion === ERA_BIO);
+  const legacyBioCount = bios.filter(b => b.smashGameVersion !== ERA_BIO).length;
 
-  // Sync textarea when era/lang changes
+  // Sync textarea when lang or bios changes
   useEffect(() => {
     const field = LANG_FIELD[lang];
     const val = currentBio ? (currentBio[field] as string | null) : null;
     setText(val ?? "");
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [era, lang, bios]);
+  }, [lang, bios]);
 
   const handleSave = async () => {
     save.setSaving();
     try {
       const field = LANG_FIELD[lang];
-      const bodyField = field as string;
       const res = await fetch(`/api/admin/fighters/${fighterId}/bios`, {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({ smashGameVersion: era, [bodyField]: text }),
+        body:    JSON.stringify({ smashGameVersion: ERA_BIO, [field as string]: text }),
       });
       if (!res.ok) throw new Error("Failed");
       const updated: FighterBio = await res.json();
       setBios(prev => {
-        const idx = prev.findIndex(b => b.smashGameVersion === era);
+        const idx = prev.findIndex(b => b.smashGameVersion === ERA_BIO);
         if (idx >= 0) { const n = [...prev]; n[idx] = updated; return n; }
         return [...prev, updated];
       });
@@ -366,52 +369,24 @@ function TabBios({
     } catch { save.setError(); }
   };
 
-  const allEras = ["SSB64", "SSBM", "SSBB", "SSB4", "SSBU"];
-
   return (
     <div className="max-w-3xl mx-auto">
 
-      {/* Era tabs */}
-      <div className="flex gap-1.5 mb-5 flex-wrap">
-        {allEras.map(e => {
-          const inWorks = worksEras.includes(e);
-          const hasBio  = bios.some(b => b.smashGameVersion === e);
-          if (!inWorks && !hasBio) return null;
-          return (
-            <button
-              key={e}
-              onClick={() => setEra(e)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-mono border transition-all ${
-                era === e
-                  ? `border-current bg-current/10 ${ERA_COLOR[e] ?? "text-slate-300 border-slate-500/40"}`
-                  : "border-white/10 text-slate-500 hover:text-slate-300 hover:border-white/20"
-              }`}
-            >
-              {hasBio && era !== e && (
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/70 shrink-0" />
-              )}
-              {ERA_LABEL[e] ?? e}
-              {!inWorks && (
-                <span className="text-[8px] text-slate-700 ml-0.5">ext</span>
-              )}
-            </button>
-          );
-        })}
-        {/* Show all eras button */}
-        {worksEras.length < 5 && (
-          <button
-            onClick={() => { /* show more — just set an era not in works */ }}
-            className="px-3 py-1.5 text-[10px] font-mono border border-dashed border-white/10 text-slate-700 hover:text-slate-500 transition-all"
-          >
-            + outros eras
-          </button>
-        )}
+      {/* Scope note */}
+      <div className="mb-5 px-3 py-2.5 border border-yellow-500/15 bg-yellow-500/[0.04] text-[11px] font-mono text-yellow-700 flex items-start gap-2">
+        <span className="text-yellow-500 shrink-0">★</span>
+        <span>
+          <span className="text-yellow-400">Apenas SSB64</span> possui bio de jogo (texto original do cartucho, 1999).
+          {" "}Melee, Brawl, 4 e Ultimate usam o{" "}
+          <span className="text-cyan-400">Curator Overview</span> na aba Visão Geral.
+        </span>
       </div>
 
-      {/* Selected era state */}
-      {!worksEras.includes(era) && (
-        <div className="mb-3 text-[10px] text-amber-600/70 font-mono border border-amber-500/10 px-3 py-2">
-          ⚠ {ERA_LABEL[era] ?? era} não está nos works deste fighter, mas pode editar mesmo assim.
+      {/* Fighter not in SSB64 */}
+      {!isIn64 && (
+        <div className="mb-4 px-3 py-2 border border-slate-500/15 text-[11px] font-mono text-slate-600">
+          Este fighter não estava no SSB64 — não possui bio de jogo.
+          {" "}Use o <span className="text-cyan-500/70">Curator Overview</span> na aba Visão Geral.
         </div>
       )}
 
@@ -443,49 +418,53 @@ function TabBios({
       <textarea
         value={text}
         onChange={e => setText(e.target.value)}
-        placeholder={`Bio ${ERA_LABEL[era] ?? era} · ${lang}…`}
+        disabled={!isIn64}
+        placeholder={isIn64 ? `Bio SSB64 · ${lang}…` : "Fighter não estava no SSB64 — sem bio de jogo"}
         rows={14}
-        className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[12px] px-4 py-3 focus:outline-none focus:border-cyan-500/20 placeholder:text-slate-700 resize-none leading-relaxed font-mono"
+        className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[12px] px-4 py-3 focus:outline-none focus:border-cyan-500/20 placeholder:text-slate-700 resize-none leading-relaxed font-mono disabled:opacity-40 disabled:cursor-not-allowed"
       />
 
-      {/* Footer */}
       <div className="flex items-center justify-between mt-2">
         <span className="font-mono text-[10px] text-slate-600">{text.length} chars</span>
         <SaveButton
           state={save.state}
           onClick={handleSave}
-          label={`Salvar ${ERA_LABEL[era] ?? era} · ${lang}`}
+          label="Salvar Bio SSB64"
+          disabled={!isIn64}
         />
       </div>
 
-      {/* Bio status grid */}
+      {/* SSB64 bio status (by language) */}
       <div className="mt-6 border border-white/5 p-4 bg-[#05050f]">
-        <p className="text-[9px] uppercase tracking-widest text-slate-600 mb-3">Status das bios</p>
-        <div className="grid grid-cols-5 gap-2 text-[10px]">
-          {["SSB64", "SSBM", "SSBB", "SSB4", "SSBU"].map(e => {
-            const bio = bios.find(b => b.smashGameVersion === e);
-            const langs: BioLang[] = ["EN", "PT", "JP", "JP+EN"];
-            const filled = bio ? langs.filter(l => {
-              const f = LANG_FIELD[l];
-              return !!(bio[f] as string | null);
-            }) : [];
+        <p className="text-[9px] uppercase tracking-widest text-slate-600 mb-3">
+          Status · Bio SSB64
+        </p>
+        <div className="grid grid-cols-4 gap-2 text-[10px]">
+          {(["EN", "PT", "JP", "JP+EN"] as const).map(l => {
+            const field = LANG_FIELD[l];
+            const filled = currentBio ? !!(currentBio[field] as string | null) : false;
             return (
-              <div key={e} className={`p-2 border ${
-                worksEras.includes(e) ? "border-white/10" : "border-white/5 opacity-40"
-              }`}>
-                <p className={`font-mono font-bold mb-1 ${ERA_COLOR[e]?.split(" ")[0] ?? "text-slate-400"}`}>
-                  {ERA_LABEL[e] ?? e}
+              <div key={l} className={`p-2 border ${filled ? "border-white/10" : "border-white/5 opacity-50"}`}>
+                <p className="font-mono font-bold text-amber-400/80 mb-1">{l}</p>
+                <p className={filled ? "text-emerald-400" : "text-slate-700"}>
+                  {filled ? "✓ ok" : "vazio"}
                 </p>
-                {filled.length === 0 ? (
-                  <p className="text-slate-700">sem bio</p>
-                ) : (
-                  <p className="text-slate-500">{filled.join(", ")}</p>
-                )}
               </div>
             );
           })}
         </div>
       </div>
+
+      {/* Legacy bios warning */}
+      {legacyBioCount > 0 && (
+        <div className="mt-4 px-3 py-2 border border-red-500/10 text-[10px] font-mono text-slate-700">
+          ⚠ {legacyBioCount} bio(s) de outras eras existem no banco (provavelmente wiki-scraped).
+          {" "}Para limpar:{" "}
+          <code className="text-red-800/70">
+            npx tsx --env-file=.env.local scripts/admin/cleanup-non-64-bios.ts
+          </code>
+        </div>
+      )}
     </div>
   );
 }
@@ -941,10 +920,11 @@ export default function FighterEditorPage() {
 
         {/* Admin nav */}
         <div className="flex gap-1">
-          <Link href="/admin/fighters"   className="px-2 py-0.5 text-[10px] border border-white/10 text-slate-500 hover:text-slate-300 transition-all">Curadoria</Link>
-          <Link href="/admin/chronicles" className="px-2 py-0.5 text-[10px] border border-white/10 text-slate-500 hover:text-slate-300 transition-all">Chronicles</Link>
-          <Link href="/admin/music"      className="px-2 py-0.5 text-[10px] border border-white/10 text-slate-500 hover:text-slate-300 transition-all">Music</Link>
-          <Link href="/admin/create"     className="px-2 py-0.5 text-[10px] border border-emerald-500/20 text-emerald-600 hover:text-emerald-400 transition-all">+ Construtor</Link>
+          <Link href="/admin/fighters"      className="px-2 py-0.5 text-[10px] border border-white/10 text-slate-500 hover:text-slate-300 transition-all">Curadoria</Link>
+          <Link href="/admin/collectibles" className="px-2 py-0.5 text-[10px] border border-white/10 text-slate-500 hover:text-slate-300 transition-all">Colecionáveis</Link>
+          <Link href="/admin/chronicles"   className="px-2 py-0.5 text-[10px] border border-white/10 text-slate-500 hover:text-slate-300 transition-all">Chronicles</Link>
+          <Link href="/admin/music"        className="px-2 py-0.5 text-[10px] border border-white/10 text-slate-500 hover:text-slate-300 transition-all">Music</Link>
+          <Link href="/admin/create"       className="px-2 py-0.5 text-[10px] border border-emerald-500/20 text-emerald-600 hover:text-emerald-400 transition-all">+ Construtor</Link>
         </div>
 
         <Link

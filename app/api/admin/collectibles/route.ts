@@ -1,6 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
+// GET /api/admin/collectibles?franchiseId=...&type=...&fighterId=null|any&q=...&take=200
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const franchiseId = searchParams.get("franchiseId") ?? undefined;
+  const type        = searchParams.get("type") ?? undefined;
+  const fighterIdParam = searchParams.get("fighterId"); // "null" = unlinked only
+  const q           = searchParams.get("q")?.trim();
+  const take        = Math.min(parseInt(searchParams.get("take") ?? "200", 10), 500);
+
+  const items = await db.collectible.findMany({
+    where: {
+      ...(franchiseId && { franchiseId }),
+      ...(type        && { type        }),
+      ...(fighterIdParam === "null" && { fighterId: null }),
+      ...(q && { name: { contains: q, mode: "insensitive" } }),
+    },
+    include: {
+      fighter: { select: { id: true, name: true } },
+    },
+    orderBy: [{ smashGameVersion: "asc" }, { name: "asc" }],
+    take,
+  });
+
+  return NextResponse.json(items);
+}
+
 // POST /api/admin/collectibles → create a new collectible (trophy / spirit / sticker)
 // Body: { type, smashGameVersion, name, fighterId?, nameJp?, descriptionEn?, descriptionPt?,
 //          descriptionJp?, descriptionJpEn?, assetRenderUrl? }
