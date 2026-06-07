@@ -10,7 +10,8 @@
 |---|---|---|
 | `/admin/create` | `app/admin/create/page.tsx` | **CONSTRUTOR** — criar Fighter/Troféu/Spirit/Sticker/Música/Palco/Crônica/Franquia |
 | `/admin/fighters` | `app/admin/fighters/page.tsx` | Curadoria: aprovar/rejeitar fighters, ver completeness checklist |
-| `/admin/fighters/[id]` | `app/admin/fighters/[id]/page.tsx` | **EDITOR** — editar todo conteúdo de um fighter (bios, overview, música, colecionáveis) |
+| `/admin/fighters/[id]` | `app/admin/fighters/[id]/page.tsx` | **EDITOR** — bios (só SSB64), curator overview, música, imagens, colecionáveis do fighter |
+| `/admin/collectibles` | `app/admin/collectibles/page.tsx` | **NOVO** — editar troféus/spirits/stickers por franquia (inclusive unlinked) |
 | `/admin/music` | `app/admin/music/page.tsx` | Revisar músicas dos fighters |
 | `/admin/chronicles` | `app/admin/chronicles/page.tsx` | Editar wikiUrl + capa dos Chronicles |
 
@@ -40,7 +41,10 @@
 | `GET /api/admin/fighters/[id]/bios` | GET | Todas as bios do fighter |
 | `POST /api/admin/fighters/[id]/bios` | POST | Upsert bio (cria ou atualiza) para era + idioma |
 | `GET /api/admin/fighters/[id]/collectibles` | GET | Colecionáveis do fighter (`?type=TROPHY\|SPIRIT\|STICKER`) |
-| `PATCH /api/admin/collectibles/[id]` | PATCH | Atualizar name/nameJp/description*/assetRenderUrl de coletável |
+| `GET /api/admin/collectibles` | GET | Listar coletáveis por franquia/type/fighterId (`?franchiseId=&type=&fighterId=null&q=`) |
+| `POST /api/admin/collectibles` | POST | **Criar novo coletável** |
+| `PATCH /api/admin/collectibles/[id]` | PATCH | Atualizar name/nameJp/description*/assetRenderUrl/fighterId/franchiseId |
+| `DELETE /api/admin/collectibles/[id]` | DELETE | Excluir permanentemente |
 
 ### Construtor
 | Endpoint | Método | Função |
@@ -90,13 +94,36 @@ Página unificada para criar qualquer entidade. Sidebar com 8 tipos:
 ## Editor de Fighter (`/admin/fighters/[id]`)
 
 Acesso via "✎ Editar" na curadoria ou "Abrir" no construtor.
+Header tem links rápidos: ← Fighters | Colecionáveis | Franquia ↗ | Ver página ↗
 
 ### Tabs:
 | Tab | Conteúdo |
 |---|---|
 | **Visão Geral** | Render 3D (URL + preview), Curator Overview (4 idiomas), Música (YT ID/título/artista/status + player) |
-| **Bios** | Era selector + Language selector + textarea grande + status grid (qual era/lang tem conteúdo) |
-| **Colecionáveis** | Filter Troféus/Spirits/Stickers, lista expansível com campos de edição inline por item |
+| **Bios** | **Apenas SSB64** — fighters não presentes no 64 veem campo desabilitado. Status grid por idioma (EN/PT/JP/JP+EN). |
+| **Colecionáveis** | Filter Troféus/Spirits/Stickers, lista expansível com edição inline. ⇥ desvincular (mantém franchiseId). ✕ excluir. |
+
+### ⇥ Desvincular Colecionável
+- Botão ⇥ em cada linha do tab Colecionáveis
+- Define `fighterId = null` + mantém `franchiseId` do fighter
+- O coletável **desaparece da página do fighter** mas **continua na `/franchise/[name]`**
+- Ideal para troféus de personagens de universo (ex: Boo, Koopa no Mario)
+
+---
+
+## Editor de Colecionáveis (`/admin/collectibles`)
+
+Acesso via link "Colecionáveis" no header de qualquer editor de fighter.
+
+### Como usar:
+1. Selecionar **Franquia** no dropdown
+2. Filtrar por **tipo** (Todos/Troféus/Spirits/Stickers)
+3. Filtrar por **vinculação** (Todos / Sem fighter)
+4. Buscar por nome
+5. Clicar em um item para expandir e editar nome EN/JP, descrições, URL de imagem
+6. Salvar ou excluir
+
+Ideal para: editar troféus que foram desvinculados dos fighters (aparecem em "Sem fighter").
 
 ---
 

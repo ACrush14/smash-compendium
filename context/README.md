@@ -21,11 +21,11 @@
 
 ---
 
-## Estado Atual (2026-06-06)
+## Estado Atual (2026-06-07 · Sessão 21)
 
 ```
 FighterWork    ████████████████████  87/87  100%  ✅ COMPLETO
-Com bio        ████████████████████  87/87  100%  ✅
+Com bio SSB64  ████████░░░░░░░░░░░░  ~12/87  14%  (só fighters que estavam no 64 têm bio)
 Com troféus    ████████████████░░░░  71/87   82%
 Com spirits    ███████████████████░  84/87   97%
 Com imageUrl   ████████████████████  87/87  100%  ✅
@@ -33,34 +33,46 @@ Chronicles art ██████░░░░░░░░░░░░░░ 263/
 Chronicles wiki ████████░░░░░░░░░░░░ 389/947  41%
 ```
 
-## Admin Tools Disponíveis (Sessão 20)
+> **Bio SSB64**: apenas os 12 fighters originais (SSB64) têm bio de jogo real.
+> Demais eras (Melee, Brawl, 4, Ultimate) usam Curator Overview na Visão Geral.
+> Bios wiki-scraped de outras eras ainda existem no banco — rodar `cleanup-non-64-bios.ts` para limpar.
+
+## Admin Tools Disponíveis (Sessão 21)
 
 | URL | Função |
 |---|---|
 | `/admin/create` | **CONSTRUTOR** — criar Fighter/Troféu/Spirit/Sticker/Música/Palco/Crônica/Franquia |
 | `/admin/fighters` | Curadoria: lista + aprovar fighters (completeness checklist) |
-| `/admin/fighters/[id]` | **EDITOR** — editar bios, curator overview, música, imagens, colecionáveis |
+| `/admin/fighters/[id]` | **EDITOR** — editar bios (só SSB64), curator overview, música, imagens, colecionáveis |
+| `/admin/collectibles` | **NOVO** — editar troféus/spirits/stickers por franquia (inclusive sem fighter) |
 | `/admin/music` | Revisar músicas dos fighters |
 | `/admin/chronicles` | Editar wikiUrl + capa dos chronicles |
 | `/franchise` | **PÚBLICO** — índice de todas as franquias com stats |
-| `/franchise/[name]` | **PÚBLICO** — página do universo: fighters + todos os colecionáveis + palcos + músicas |
+| `/franchise/[name]` | **PÚBLICO** — página do universo: fighters + colecionáveis + palcos + músicas |
 
 ## Estado do Schema (Sessão 21)
 
 ```
-Collectible.franchiseId  ████████████████████  NOVO — migração rodada
-  1395 collectibles com franchiseId (de fighters)
-  1838 collectibles sem franchiseId (nunca tiveram fighter, ex: spirits avulsos)
-  Ação: ao desvincular um trophy/spirit de um fighter via ⇥, ele ganha franchiseId automaticamente
+Collectible.franchiseId  ████████████████████  NOVO — migração rodada 2026-06-07
+  1395 collectibles com franchiseId (herdado dos fighters)
+  1838 collectibles sem franchiseId (spirits avulsos, nunca tiveram fighter)
+
+  Lógica Option 2:
+  - fighterId preenchido → aparece na página do fighter
+  - fighterId null + franchiseId preenchido → aparece na página da franquia
+  - ⇥ Desvincular no editor: fighterId=null + mantém franchiseId automaticamente
 ```
 
 ## Pendências (por prioridade)
 
 | Prioridade | Tarefa | Arquivo de context |
 |---|---|---|
+| 🔴 P1 | ETL em massa: bios SSB64 EN/JP para os 12 fighters do original | `etl-scrapers.md` |
+| 🔴 P1 | ETL em massa: troféus + imagens para os 16 fighters sem troféus | `etl-scrapers.md` |
 | 🔴 P1 | 11 fighters sem capa de jogo de origem | `origin-games.md` |
-| 🔴 P1 | ETL em massa: 86 fighters sem bios/troféus completos | `etl-scrapers.md` |
-| 🟡 P2 | 558 Chronicles sem wikiUrl → preencher no admin | `chronicles.md` + `admin-curation.md` |
+| 🟡 P2 | Limpar bios wiki-scraped de Melee/Brawl/4/Ultimate: `cleanup-non-64-bios.ts` | `admin-curation.md` |
+| 🟡 P2 | Curar troféus de universo (ex: Boo no Mario) via ⇥ desvincular → `/franchise/Mario` | `collectibles.md` |
+| 🟡 P2 | 558 Chronicles sem wikiUrl → preencher no admin | `chronicles.md` |
 | 🟡 P2 | 684 Chronicles sem capa → rodar fetch após wikiUrl | `chronicles.md` |
 | 🟡 P2 | Spirits não exibidos como conteúdo no timeline | `collectibles.md` |
 | 🟡 P2 | Bug: stickers nunca exibidos (stickersMap vazio) | `collectibles.md` |
