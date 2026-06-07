@@ -36,7 +36,32 @@ model Collectible {
   assetRenderUrl    String?             — URL da imagem
   orderIndex        Int?                — posição na galeria
   posicaoSpiritSsbu Int?               — número oficial do spirit
+  franchiseId       String?             — NOVO (Sessão 21): franquia dona do coletável
 }
+```
+
+## Atribuição de Franquia (Sessão 21 — Opção 2)
+
+| Campo | Quando preenchido | Efeito |
+|---|---|---|
+| `fighterId` | Collectible pertence a um fighter específico | Aparece na página `/fighters/[name]` |
+| `franchiseId` | Collectible pertence ao universo de uma franquia | Aparece na página `/franchise/[name]` |
+
+### Regras de atribuição:
+- **Fighter-specific** (e.g. troféu do Mario): `fighterId = mario.id` + `franchiseId = mario.franchiseId`
+- **Universe-only** (e.g. troféu do Boo, Koopa): `fighterId = null` + `franchiseId = mario.franchiseId`
+- **Sem atribuição** (e.g. spirits avulsos sem fighter): `fighterId = null` + `franchiseId = null`
+
+### Como desvincular de fighter sem perder franchiseId:
+No editor `/admin/fighters/[id]` → Tab Colecionáveis → botão ⇥ (Desvincular)
+→ automaticamente define `fighterId = null` + `franchiseId = fighter.franchiseId`
+→ resultado: some da página do fighter, mas aparece na página da franquia
+
+### Estado atual (pós-migração):
+- 1395 collectibles com `franchiseId` (de fighters ativos)
+- 1838 collectibles sem `franchiseId` (nunca tiveram fighter — spirits avulsos, etc.)
+
+```prisma
 ```
 
 ## Estado Atual

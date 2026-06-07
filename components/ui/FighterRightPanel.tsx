@@ -45,9 +45,13 @@ export default function FighterRightPanel({ fighterId, fighterSlug, suggestions,
                 #{String(header.rosterNumber).padStart(2, "0")}
               </span>
               <span className="font-mono text-[9px] text-cyan-900">·</span>
-              <span className="font-mono text-[9px] uppercase tracking-wider text-cyan-700">
+              <Link
+                href={`/franchise/${encodeURIComponent(header.franchiseName)}`}
+                className="font-mono text-[9px] uppercase tracking-wider text-cyan-700 hover:text-cyan-400 transition-colors"
+                title={`Ver universo ${header.franchiseName}`}
+              >
                 {header.franchiseName}
-              </span>
+              </Link>
             </div>
             <h1
               className="font-black italic uppercase leading-none tracking-tight text-white fighter-title-glow"

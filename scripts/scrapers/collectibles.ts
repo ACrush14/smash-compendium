@@ -218,6 +218,10 @@ export async function scrapeAndUpsertCollectibles(): Promise<void> {
             assetRenderUrl:   item.imageUrl,
             sourceType:       "Official",
             orderIndex:       item.orderIndex,
+            posicaoTrofeuMelee: source.version === "SSBM" ? item.orderIndex : null,
+            posicaoTrofeuBrawl: source.version === "SSBB" ? item.orderIndex : null,
+            posicaoTrofeuSsb4:  source.version === "SSB4" ? item.orderIndex : null,
+            posicaoSpiritSsbu:  source.version === "SSBU" && source.type === "SPIRIT" ? item.orderIndex : null,
             fighterId,
           },
           update: {
@@ -229,6 +233,10 @@ export async function scrapeAndUpsertCollectibles(): Promise<void> {
             } : {}),
             assetRenderUrl: item.imageUrl,
             orderIndex:     item.orderIndex,
+            posicaoTrofeuMelee: source.version === "SSBM" ? item.orderIndex : undefined,
+            posicaoTrofeuBrawl: source.version === "SSBB" ? item.orderIndex : undefined,
+            posicaoTrofeuSsb4:  source.version === "SSB4" ? item.orderIndex : undefined,
+            posicaoSpiritSsbu:  source.version === "SSBU" && source.type === "SPIRIT" ? item.orderIndex : undefined,
             fighterId,
           },
         });

@@ -15,11 +15,12 @@ const downloadFile = (url: string, dest: string, retryCount = 0): Promise<boolea
       }
       
       if (res.statusCode !== 200) {
-        if (res.statusCode === 429 && retryCount < 3) {
-          log.warn(`Rate limit hit for ${url}. Retrying in 3 seconds...`);
+        if (res.statusCode === 429 && retryCount < 5) {
+          const delay = Math.pow(2, retryCount) * 3000;
+          log.warn(`Rate limit hit for ${url}. Retrying in ${delay}ms (attempt ${retryCount + 1})...`);
           setTimeout(() => {
             downloadFile(url, dest, retryCount + 1).then(resolve);
-          }, 3000);
+          }, delay);
           return;
         }
         log.warn(`Failed to download ${url}: HTTP ${res.statusCode}`);

@@ -25,6 +25,8 @@ interface FighterDetail {
   name: string;
   rosterNumber: string;
   franchise: string;
+  franchiseId: string;      // direct FK on the Fighter
+  franchiseObjId: string;   // populated by detail API (same as franchiseId)
   imageUrl: string | null;
   curationStatus: string | null;
   musicYoutubeId: string | null;
@@ -490,7 +492,15 @@ function TabBios({
 
 // ─── Tab: Collectibles ────────────────────────────────────────────────────────
 
-function TabCollectibles({ fighterId }: { fighterId: string }) {
+function TabCollectibles({
+  fighterId,
+  franchiseId,
+  franchiseName,
+}: {
+  fighterId: string;
+  franchiseId: string;
+  franchiseName: string;
+}) {
   const [type, setType]       = useState<CollectibleType>("TROPHY");
   const [items, setItems]     = useState<CollectibleItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -546,14 +556,16 @@ function TabCollectibles({ fighterId }: { fighterId: string }) {
     }
   };
 
-  // Desvincular: mantém o coletável mas remove fighterId
+  // Desvincular: remove fighterId mas mantém franchiseId → coletável some da página
+  // do fighter mas continua visível na página da franquia /franchise/[name]
   const unlinkItem = async (item: CollectibleItem) => {
     setSaving(prev => new Set(prev).add(item.id));
     try {
       await fetch(`/api/admin/collectibles/${item.id}`, {
         method:  "PATCH",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({ fighterId: null }),
+        // null fighterId + keep franchiseId → shows on franchise page, not on fighter page
+        body:    JSON.stringify({ fighterId: null, franchiseId }),
       });
       setItems(prev => prev.filter(c => c.id !== item.id));
       setExpanded(prev => { const n = new Set(prev); n.delete(item.id); return n; });
@@ -660,7 +672,7 @@ function TabCollectibles({ fighterId }: { fighterId: string }) {
                     <div className="flex gap-1 shrink-0" onClick={e => e.stopPropagation()}>
                       <button
                         type="button"
-                        title="Desvincular deste fighter"
+                        title={`Desvincular deste fighter → mover para franquia ${franchiseName}`}
                         onClick={() => unlinkItem(item)}
                         disabled={isSaving}
                         className="px-2 py-0.5 text-[9px] font-mono border border-amber-500/20 text-amber-800 hover:text-amber-400 hover:border-amber-500/40 transition-all disabled:opacity-40"
@@ -936,6 +948,14 @@ export default function FighterEditorPage() {
         </div>
 
         <Link
+          href={`/franchise/${encodeURIComponent(fighter.franchise)}`}
+          target="_blank"
+          className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-purple-400 border border-white/5 hover:border-purple-500/20 px-2.5 py-1 transition-all"
+          title={`Ver universo ${fighter.franchise}`}
+        >
+          <ExternalLink size={10} /> Franquia
+        </Link>
+        <Link
           href={`/fighters/${encodeURIComponent(fighter.name)}`}
           target="_blank"
           className="flex items-center gap-1 text-[10px] text-slate-600 hover:text-cyan-400 border border-white/5 hover:border-cyan-500/20 px-2.5 py-1 transition-all"
@@ -975,7 +995,11 @@ export default function FighterEditorPage() {
           />
         )}
         {tab === "collectibles" && (
-          <TabCollectibles fighterId={fighter.id} />
+          <TabCollectibles
+            fighterId={fighter.id}
+            franchiseId={fighter.franchiseId ?? fighter.franchiseObjId}
+            franchiseName={fighter.franchise}
+          />
         )}
       </div>
     </div>

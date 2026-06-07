@@ -31,7 +31,7 @@ export async function GET(
   const fighter = await db.fighter.findUnique({
     where: { id },
     include: {
-      franchise: { select: { name: true } },
+      franchise: { select: { id: true, name: true } },
       bios:      { orderBy: { smashGameVersion: "asc" } },
       works: {
         include: { game: { select: { titleEn: true } } },
@@ -52,6 +52,7 @@ export async function GET(
   return NextResponse.json({
     ...rest,
     franchise: franchise.name,
+    franchiseObjId: franchise.id,  // explicit franchise ID for admin use
     worksEras,
   });
 }

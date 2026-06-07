@@ -201,7 +201,7 @@ export default async function ChroniclesPage({ searchParams }: Props) {
                       <span className="text-sm font-semibold text-slate-200 leading-tight">
                         {game.titleNtsc}
                       </span>
-                      <span className="text-sm font-mono font-semibold text-amber-400/90 shrink-0 mt-0.5">
+                      <span className="text-base font-mono font-bold text-amber-400 shrink-0 mt-0.5 tracking-wider">
                         {game.releaseDateNtsc || "—"}
                       </span>
                     </div>
@@ -215,11 +215,11 @@ export default async function ChroniclesPage({ searchParams }: Props) {
                   
                   {/* JP */}
                   {game.titleJp && (
-                    <div className="flex justify-between items-start gap-2">
-                      <span className="text-xs text-slate-400 leading-tight">
+                    <div className="flex justify-between items-start gap-2 mt-1">
+                      <span className="text-sm text-slate-400 leading-tight">
                         {game.titleJp}
                       </span>
-                      <span className="text-xs font-mono font-medium text-slate-500 shrink-0 mt-0.5">
+                      <span className="text-sm font-mono font-bold text-slate-400 shrink-0 mt-0.5 tracking-wider">
                         {game.releaseDateJp || "—"}
                       </span>
                     </div>

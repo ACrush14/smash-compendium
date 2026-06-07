@@ -8,13 +8,14 @@ datasource db {
 }
 
 model Franchise {
-  id          String    @id @default(cuid())
-  name        String    @unique
-  svgIconUrl  String?
-  fighters    Fighter[]
-  games       Game[]
-  stages      Stage[]
-  musicTracks Music[]
+  id           String        @id @default(cuid())
+  name         String        @unique
+  svgIconUrl   String?
+  fighters     Fighter[]
+  games        Game[]
+  stages       Stage[]
+  musicTracks  Music[]
+  collectibles Collectible[] @relation("CollectibleFranchise")
 }
 
 model Fighter {
@@ -107,9 +108,12 @@ model Collectible {
   posicaoTrofeuBrawl Int?
   posicaoTrofeuSsb4  Int?
   posicaoSpiritSsbu  Int?
-  fighter          Fighter? @relation(fields: [fighterId], references: [id], onDelete: SetNull)
+  franchiseId      String?
+  fighter          Fighter?   @relation(fields: [fighterId], references: [id], onDelete: SetNull)
+  franchise        Franchise? @relation("CollectibleFranchise", fields: [franchiseId], references: [id])
 
   @@index([type, smashGameVersion])
+  @@index([franchiseId])
 }
 
 model Stage {

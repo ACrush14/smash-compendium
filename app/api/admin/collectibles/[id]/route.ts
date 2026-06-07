@@ -17,6 +17,7 @@ export async function PATCH(
     descriptionJpEn?:  string | null;
     assetRenderUrl?:   string | null;
     fighterId?:        string | null;  // null = unlink from fighter
+    franchiseId?:      string | null;  // assign/unassign from franchise
   };
 
   const updated = await db.collectible.update({
@@ -30,9 +31,10 @@ export async function PATCH(
       ...(body.descriptionJpEn !== undefined && { descriptionJpEn: body.descriptionJpEn }),
       ...(body.assetRenderUrl  !== undefined && { assetRenderUrl:  body.assetRenderUrl  }),
       ...(body.fighterId       !== undefined && { fighterId:       body.fighterId       }),
+      ...(body.franchiseId     !== undefined && { franchiseId:     body.franchiseId     }),
     },
     select: {
-      id: true, name: true, nameJp: true, fighterId: true,
+      id: true, name: true, nameJp: true, fighterId: true, franchiseId: true,
       descriptionEn: true, descriptionPt: true,
       descriptionJp: true, descriptionJpEn: true,
       assetRenderUrl: true,

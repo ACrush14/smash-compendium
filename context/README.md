@@ -3,7 +3,7 @@
 > **Regra:** Antes de trabalhar em qualquer sistema, leia o arquivo correspondente aqui.
 > Estes arquivos são a fonte de verdade sobre cada feature — mais precisos que CONTEXT.md (que é histórico).
 
-**Última atualização:** 2026-06-06 · Sessão 20
+**Última atualização:** 2026-06-07 · Sessão 21
 
 | Arquivo | Sistema | Leia quando... |
 |---|---|---|
@@ -42,6 +42,17 @@ Chronicles wiki ████████░░░░░░░░░░░░ 389
 | `/admin/fighters/[id]` | **EDITOR** — editar bios, curator overview, música, imagens, colecionáveis |
 | `/admin/music` | Revisar músicas dos fighters |
 | `/admin/chronicles` | Editar wikiUrl + capa dos chronicles |
+| `/franchise` | **PÚBLICO** — índice de todas as franquias com stats |
+| `/franchise/[name]` | **PÚBLICO** — página do universo: fighters + todos os colecionáveis + palcos + músicas |
+
+## Estado do Schema (Sessão 21)
+
+```
+Collectible.franchiseId  ████████████████████  NOVO — migração rodada
+  1395 collectibles com franchiseId (de fighters)
+  1838 collectibles sem franchiseId (nunca tiveram fighter, ex: spirits avulsos)
+  Ação: ao desvincular um trophy/spirit de um fighter via ⇥, ele ganha franchiseId automaticamente
+```
 
 ## Pendências (por prioridade)
 

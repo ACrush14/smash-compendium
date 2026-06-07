@@ -1,7 +1,7 @@
 # SmashCompendium — Contexto do Projeto
 
 > Documento vivo. Fonte única de verdade para todos os assistentes (Claude Code, Antigravity/Gemini).
-> Atualizado em: 2026-06-06 (sessão 18 — Sistema de Música Automático, Tips SSBU, Spirits, Fix Dados Captain Falcon)
+> Atualizado em: 2026-06-06 (sessão 20 — Conclusão do Master ETL, Troféus, Spirits e UI)
 
 ---
 
@@ -131,6 +131,11 @@ descriptionJp    String? — descrição japonesa
 descriptionJpEn  String? — tradução EN da descrição JP
 sourceType       String  — default "Official"
 assetRenderUrl   String? — URL da imagem do coletável
+orderIndex       Int?    — legado genérico
+posicaoTrofeuMelee Int?  — posição oficial (Melee)
+posicaoTrofeuBrawl Int?  — posição oficial (Brawl)
+posicaoTrofeuSsb4  Int?  — posição oficial (SSB4)
+posicaoSpiritSsbu  Int?  — número do Spirit (Ultimate)
 @@index([type, smashGameVersion])
 ```
 
@@ -538,13 +543,19 @@ boxArtLandscape?: boolean;  // true = paisagem → container 200×146; false = r
 | CF-6 | **Música por personagem** — 87/87 curados + admin page | Alta | ✅ Concluído (sessão 18) |
 | MUSIC | **Revisão de músicas** — aprovar/corrigir no `/admin/music` | Alta | 🟡 Pendente revisão (87 pending_review) |
 | CF-4 | **Media Vault — ordem/fotos** | Alta | 🔴 Pendente |
-| 1 | **ETL em massa** — bio EN + troféus + imagens para os outros 86 fighters | Alta | 🟡 Rodando em Background |
-| 21 | **Mass Downloader de Imagens** — baixar os 4.000 troféus offline | Alta | 🟡 Rodando em Background |
+| 1 | **ETL em massa** — bio EN + troféus + imagens para os outros 86 fighters | Alta | 🟡 Rodando no Background |
+| 21 | **Mass Downloader de Imagens** — baixar os 4.000 troféus offline | Alta | 🟡 Rodando no Background |
 | 18 | **Área de comentários por personagem** | Alta | 🔴 Pendente |
 | 8 | **Página `/fighters`** — lista geral com filtros | Média | 🔴 Pendente |
 | 17 | **Curator notes** EN+PT+JP — aguarda `ANTHROPIC_API_KEY` | Média | 🟡 Pronto, não rodado |
-| 6 | **Bio JP** — `contentJp` null para 86 fighters | Média | 🟡 Em Background |
+| 6 | **Bio JP** — `contentJp` null para 86 fighters | Média | 🟡 Rodando no Background |
 | 12 | **Moderação de sugestões** | — | ✅ Resolvido |
+
+**Resolvidos nesta sessão (sessão 20 — 2026-06-06):**
+- ✅ **Schema Collectible:** Adicionados campos nominais de posição (`posicaoTrofeuMelee`, `posicaoTrofeuBrawl`, `posicaoTrofeuSsb4`, `posicaoSpiritSsbu`).
+- ✅ **Scrapers SmashWiki:** Corrigidos erros 404 (novas URLs) e 429 (`politeDelay` aumentado para 3s + backoff) e em andamento para todo o banco.
+- ✅ **UI Chronicles:** Fontes das datas foram aumentadas (`text-base` para NTSC e `text-sm` para JP).
+- ✅ **Chronicles Boxarts:** Scraper atualizado para filtrar melhor SVGs, ícones wiki e lidar com URLs com backoff. Em andamento no background.
 
 **Resolvidos nesta sessão (sessão 4 a 14):**
 - ✅ Layout visual completo da página do lutador, carrossel deduplicado, moderação, music player.
@@ -1461,3 +1472,100 @@ public/assets/collectibles/   # 1380+ PNGs de spirits baixados localmente — n�
 2. **Fix Media Vault fotos (CF-4)** — order e fotos que não aparecem para personagens além do Ness
 3. **Completar spirits** — os 33 que falharam no ssbuspirits.com precisam de fonte alternativa
 4. **Pyra/Mythra tips** — fix do slash encoding no wiki para salvar tips de Pyra e Mythra separadamente
+
+---
+
+## 28. Sessão 19 — Box Arts para Origin Games + Chronicles (2026-06-06)
+
+### 28.1 Box Arts dos Origin Games
+
+**Problema:** `FRANCHISE_ORIGIN_GAMES` em `app/fighters/[slug]/page.tsx` não tinha `boxArtPath` para nenhum jogo além de EarthBound e MOTHER3.
+
+**Solução:** Scripts de scraping via Wikipedia + Wikimedia Commons.
+
+**Scripts criados:**
+- `scripts/scrapers/fetch-all-boxarts.ts` — scraper principal (origens + chronicles)
+- `scripts/scrapers/fix-failed-boxarts.ts` — fallback via Wikipedia REST API
+- `scripts/scrapers/fix-failed-boxarts2.ts` — fallback via HTML scraping agressivo
+- `scripts/scrapers/fix-failed-boxarts3.ts` — fallback via MediaWiki prop=images API
+- `scripts/scrapers/fetch-chronicles-boxarts-v2.ts` — scraper Chronicles v2 (URL bug corrigido)
+
+**Resultado: 36/37 origin games com box art baixada em `public/assets/games/`**
+
+| Arquivo | Jogo |
+|---|---|
+| `DONKEY_KONG_ARC_BOX.jpg` | Donkey Kong (1981, flyer) |
+| `SUPER_MARIO_BROS_NES_BOX.png` | Super Mario Bros. |
+| `DKC_SNES_BOX.png` | Donkey Kong Country |
+| `ZELDA_NES_BOX.png` | The Legend of Zelda |
+| `METROID_NES_BOX.jpg` | Metroid |
+| `KIRBY_DREAMLAND_GB_BOX.png` | Kirby's Dream Land |
+| `STARFOX_SNES_BOX.jpg` | Star Fox |
+| `POKEMON_RED_BLUE_GB_BOX.webp` | Pokémon Red / Blue + Pocket Monsters R/G |
+| `FZERO_SNES_BOX.jpg` | F-Zero |
+| `FZERO_X_N64_BOX.jpg` | F-Zero X |
+| `FZERO_GX_GCN_BOX.png` | F-Zero GX |
+| `FZERO_GPLEGEND_GBA_BOX.gif` | F-Zero GP Legend |
+| `FZERO_CLIMAX_GBA_BOX.png` | F-Zero Climax |
+| `FIRE_EMBLEM_NES_BOX.jpg` | Fire Emblem |
+| `PIKMIN_GCN_BOX.jpg` | Pikmin |
+| `ANIMAL_CROSSING_N64_BOX.png` | Animal Forest (N64) |
+| `KID_ICARUS_NES_BOX.png` | Kid Icarus |
+| `ICE_CLIMBER_NES_BOX.jpg` | Ice Climber |
+| `WARIO_LAND_GB_BOX.png` | Wario Land |
+| `YOSHIS_ISLAND_SNES_BOX.jpg` | Yoshi's Island |
+| `XENOBLADE_WII_BOX.png` | Xenoblade Chronicles |
+| `PUNCHOUT_NES_BOX.jpg` | Punch-Out!! |
+| `DUCK_HUNT_NES_BOX.jpg` | Duck Hunt |
+| `SONIC_GEN_BOX.jpg` | Sonic the Hedgehog (Mega Drive) |
+| `MEGA_MAN_NES_BOX.jpg` | Mega Man |
+| `PAC_MAN_ARC_BOX.png` | Pac-Man |
+| `SF2_ARC_BOX.jpg` | Street Fighter II |
+| `CASTLEVANIA_NES_BOX.png` | Castlevania |
+| `PERSONA5_PS4_BOX.jpg` | Persona 5 |
+| `DRAGON_QUEST_NES_BOX.jpg` | Dragon Quest |
+| `BANJO_KAZOOIE_N64_BOX.png` | Banjo-Kazooie |
+| `ARMS_NSW_BOX.jpg` | ARMS |
+| `BAYONETTA_PS3_BOX.png` | Bayonetta |
+| `EARTHBOUND_USA_BOX.jpg` | EarthBound (pré-existente) |
+| `MOTHER3_JP_BOX.jpg` | MOTHER3 (pré-existente) |
+| — | Ball (G&W) — sem imagem no Wikipedia |
+
+**`page.tsx` atualizado:** todas as entradas de `FRANCHISE_ORIGIN_GAMES` agora têm:
+- `boxArtPath: "/assets/games/{FILENAME}"` para todos os jogos encontrados
+- `wikiUrl` adicionado onde não existia
+
+### 28.2 Bug Corrigido — Chronicles Box Art
+
+**Bug original:** `fetch-chronicles-boxarts.ts` construía URL como `https://www.ssbwiki.com${wikiUrl}`, mas os wikiUrls no banco já são URLs completas (ex: `https://en.wikipedia.org/wiki/...`, `https://www.mariowiki.com/...`).
+
+**Fix:** `fetch-chronicles-boxarts-v2.ts` usa `entry.wikiUrl` diretamente quando começa com `http`.
+
+**CDNs suportadas:** `upload.wikimedia.org` (Wikipedia) e `mario.wiki.gallery` (MarioWiki).
+
+**Resultado da primeira rodada (pass 1):** 227 salvos / 124 falhas de 351 entradas processadas.
+
+**Fix-false-positives:** `scripts/scrapers/fix-chronicles-false-positives.ts` limpou 7 falsos positivos:
+- `poweredby_mediawiki_88x31.png` (GAME & WATCH — Parachute, NES — Wario's Woods)
+- `cc-by-sa.png` (GAME & WATCH — Donkey Kong Junior ×2)
+- `Supermarioland2logo.jpg` (GAME BOY — Super Mario Land 2)
+- `Big_Brain_Academy_Logo.png` (Nintendo DS)
+- `Pictochat_logo.png` (Nintendo DS — PictoChat)
+
+**Resultado final (sessão 19):**
+- Box arts válidas: **258** de 351 entradas com wikiUrl (~73%)
+- Ainda sem box art: **131** entradas (maioria Pokémon/Zelda/Kirby/Metroid — lazy loading no Wikipedia)
+- Pass 2 pendente: rodar `fetch-chronicles-boxarts-v2.ts` novamente para as 131 restantes
+
+**`next.config.mjs` atualizado:** adicionado `mario.wiki.gallery` em `remotePatterns` para suportar imagens MarioWiki via `next/image`.
+
+### 28.3 Diagnóstico de Cobertura
+- **Total ChronicleEntry:** 947
+- **Com boxArt (pré-sessão 19):** 26
+- **Com boxArt (pós-sessão 19):** 258
+- **Sem boxArt + com wikiUrl:** 131 (pass 2 pendente)
+- **Sem boxArt + sem wikiUrl:** ~558 (necessitam wikiUrl manual ou outra fonte)
+
+### 28.4 Nota sobre .gitignore
+- `public/assets/games/` NÃO está no `.gitignore` — as 36 capas SERÃO commitadas
+- `public/assets/fighters/` e `public/assets/collectibles/` continuam ignorados

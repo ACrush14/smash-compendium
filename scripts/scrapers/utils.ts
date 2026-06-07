@@ -2,8 +2,8 @@ import * as cheerio from "cheerio";
 
 // ─── Rate limiter ─────────────────────────────────────────────────────────────
 
-const BASE_DELAY_MS = 1_500;
-const JITTER_MS     = 500;
+const BASE_DELAY_MS = 3_000;
+const JITTER_MS     = 1_000;
 
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
