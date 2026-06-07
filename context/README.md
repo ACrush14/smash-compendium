@@ -3,7 +3,7 @@
 > **Regra:** Antes de trabalhar em qualquer sistema, leia o arquivo correspondente aqui.
 > Estes arquivos são a fonte de verdade sobre cada feature — mais precisos que CONTEXT.md (que é histórico).
 
-**Última atualização:** 2026-06-06 · Sessão 19 (final)
+**Última atualização:** 2026-06-06 · Sessão 20
 
 | Arquivo | Sistema | Leia quando... |
 |---|---|---|
@@ -33,12 +33,22 @@ Chronicles art ██████░░░░░░░░░░░░░░ 263/
 Chronicles wiki ████████░░░░░░░░░░░░ 389/947  41%
 ```
 
+## Admin Tools Disponíveis (Sessão 20)
+
+| URL | Função |
+|---|---|
+| `/admin/create` | **CONSTRUTOR** — criar Fighter/Troféu/Spirit/Sticker/Música/Palco/Crônica/Franquia |
+| `/admin/fighters` | Curadoria: lista + aprovar fighters (completeness checklist) |
+| `/admin/fighters/[id]` | **EDITOR** — editar bios, curator overview, música, imagens, colecionáveis |
+| `/admin/music` | Revisar músicas dos fighters |
+| `/admin/chronicles` | Editar wikiUrl + capa dos chronicles |
+
 ## Pendências (por prioridade)
 
 | Prioridade | Tarefa | Arquivo de context |
 |---|---|---|
 | 🔴 P1 | 11 fighters sem capa de jogo de origem | `origin-games.md` |
-| 🔴 P1 | ETL em massa: 86 fighters sem troféus/imagens completos | `etl-scrapers.md` |
+| 🔴 P1 | ETL em massa: 86 fighters sem bios/troféus completos | `etl-scrapers.md` |
 | 🟡 P2 | 558 Chronicles sem wikiUrl → preencher no admin | `chronicles.md` + `admin-curation.md` |
 | 🟡 P2 | 684 Chronicles sem capa → rodar fetch após wikiUrl | `chronicles.md` |
 | 🟡 P2 | Spirits não exibidos como conteúdo no timeline | `collectibles.md` |

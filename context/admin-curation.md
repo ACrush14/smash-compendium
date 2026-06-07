@@ -8,6 +8,9 @@
 
 | Rota | Arquivo | Função |
 |---|---|---|
+| `/admin/create` | `app/admin/create/page.tsx` | **CONSTRUTOR** — criar Fighter/Troféu/Spirit/Sticker/Música/Palco/Crônica/Franquia |
+| `/admin/fighters` | `app/admin/fighters/page.tsx` | Curadoria: aprovar/rejeitar fighters, ver completeness checklist |
+| `/admin/fighters/[id]` | `app/admin/fighters/[id]/page.tsx` | **EDITOR** — editar todo conteúdo de um fighter (bios, overview, música, colecionáveis) |
 | `/admin/music` | `app/admin/music/page.tsx` | Revisar músicas dos fighters |
 | `/admin/chronicles` | `app/admin/chronicles/page.tsx` | Editar wikiUrl + capa dos Chronicles |
 
@@ -27,6 +30,30 @@
 
 ## API Routes (admin)
 
+### Fighters / Editor
+| Endpoint | Método | Função |
+|---|---|---|
+| `GET /api/admin/fighters` | GET | Listar fighters com completeness |
+| `POST /api/admin/fighters` | POST | **Criar novo fighter** (+ FighterWork) |
+| `PATCH /api/admin/fighters/[id]` | PATCH | Atualizar campos: curationStatus, imageUrl, curatorOverview*, musicYoutubeId/Title/Artist, musicStatus |
+| `GET /api/admin/fighters/[id]/detail` | GET | Detalhes completos do fighter (bios + worksEras) |
+| `GET /api/admin/fighters/[id]/bios` | GET | Todas as bios do fighter |
+| `POST /api/admin/fighters/[id]/bios` | POST | Upsert bio (cria ou atualiza) para era + idioma |
+| `GET /api/admin/fighters/[id]/collectibles` | GET | Colecionáveis do fighter (`?type=TROPHY\|SPIRIT\|STICKER`) |
+| `PATCH /api/admin/collectibles/[id]` | PATCH | Atualizar name/nameJp/description*/assetRenderUrl de coletável |
+
+### Construtor
+| Endpoint | Método | Função |
+|---|---|---|
+| `GET /api/admin/franchises` | GET | Listar todas as franquias (para dropdowns) |
+| `POST /api/admin/franchises` | POST | **Criar nova franquia** |
+| `GET /api/admin/games/smash` | GET | Os 5 jogos Smash com IDs + era (para FighterWork) |
+| `POST /api/admin/collectibles` | POST | **Criar novo coletável** |
+| `GET/POST /api/admin/music-tracks` | GET/POST | Listar/criar faixas de palco (modelo `Music`) |
+| `GET/POST /api/admin/stages` | GET/POST | Listar/criar palcos |
+| `POST /api/admin/chronicles` | POST | **Criar nova entrada de crônica** |
+
+### Chronicles / Music
 | Endpoint | Método | Função |
 |---|---|---|
 | `GET /api/admin/chronicles` | GET | Listar entradas com filtros/paginação |
@@ -35,6 +62,41 @@
 | `GET /api/admin/chronicles/consoles` | GET | Lista de consoles distintos |
 | `GET /api/admin/music` | GET | Listar fighters com dados de música |
 | `PATCH /api/admin/music/[id]` | PATCH | Atualizar dados de música |
+
+---
+
+## Construtor (`/admin/create`)
+
+Página unificada para criar qualquer entidade. Sidebar com 8 tipos:
+
+| Tipo | O que cria | Campos chave |
+|---|---|---|
+| **Fighter** | `Fighter` + `FighterWork` | rosterNumber, name, franchiseId, imageUrl, works (checkboxes dos 5 jogos), músicas opcionais |
+| **Troféu** | `Collectible` type=TROPHY | smashGameVersion, name, fighter (search), descriptions |
+| **Spirit** | `Collectible` type=SPIRIT | smashGameVersion, name, fighter (search), descriptions |
+| **Sticker** | `Collectible` type=STICKER | smashGameVersion, name, fighter (search) |
+| **Música** | `Music` (faixa de palco) | title, franchiseId, arranger, isRemix |
+| **Palco** | `Stage` | name, franchiseId, smashDebutVersion, description |
+| **Crônica** | `ChronicleEntry` | consoleName, titleNtsc, titlePal/JP, releaseDates, wikiUrl, boxArtUrl |
+| **Franquia** | `Franchise` | name, svgIconUrl |
+
+- **FighterSearch**: autocomplete com delay 300ms sobre `GET /api/admin/fighters?q=`
+- **Success banner**: aparece após criar, com "Criar outro" + link para editar
+- **Recent creations**: lista em memória das últimas 20 criações da sessão
+- **Atualização automática**: após criar Franquia, o dropdown atualiza em todos os formulários
+
+---
+
+## Editor de Fighter (`/admin/fighters/[id]`)
+
+Acesso via "✎ Editar" na curadoria ou "Abrir" no construtor.
+
+### Tabs:
+| Tab | Conteúdo |
+|---|---|
+| **Visão Geral** | Render 3D (URL + preview), Curator Overview (4 idiomas), Música (YT ID/título/artista/status + player) |
+| **Bios** | Era selector + Language selector + textarea grande + status grid (qual era/lang tem conteúdo) |
+| **Colecionáveis** | Filter Troféus/Spirits/Stickers, lista expansível com campos de edição inline por item |
 
 ---
 
