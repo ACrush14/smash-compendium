@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
 // PATCH /api/admin/collectibles/[id]
-// Body: any subset of { name, nameJp, descriptionEn, descriptionPt, descriptionJp, descriptionJpEn, assetRenderUrl }
+// Body: any subset of editable fields, including fighterId (null = unlink)
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
@@ -16,6 +16,7 @@ export async function PATCH(
     descriptionJp?:    string | null;
     descriptionJpEn?:  string | null;
     assetRenderUrl?:   string | null;
+    fighterId?:        string | null;  // null = unlink from fighter
   };
 
   const updated = await db.collectible.update({
@@ -28,9 +29,10 @@ export async function PATCH(
       ...(body.descriptionJp   !== undefined && { descriptionJp:   body.descriptionJp   }),
       ...(body.descriptionJpEn !== undefined && { descriptionJpEn: body.descriptionJpEn }),
       ...(body.assetRenderUrl  !== undefined && { assetRenderUrl:  body.assetRenderUrl  }),
+      ...(body.fighterId       !== undefined && { fighterId:       body.fighterId       }),
     },
     select: {
-      id: true, name: true, nameJp: true,
+      id: true, name: true, nameJp: true, fighterId: true,
       descriptionEn: true, descriptionPt: true,
       descriptionJp: true, descriptionJpEn: true,
       assetRenderUrl: true,
@@ -38,4 +40,15 @@ export async function PATCH(
   });
 
   return NextResponse.json(updated);
+}
+
+// DELETE /api/admin/collectibles/[id]
+// Permanently deletes the collectible from the database.
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
+  await db.collectible.delete({ where: { id } });
+  return NextResponse.json({ ok: true });
 }

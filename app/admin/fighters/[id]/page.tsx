@@ -498,6 +498,7 @@ function TabCollectibles({ fighterId }: { fighterId: string }) {
   const [edits, setEdits]     = useState<Record<string, Partial<CollectibleItem>>>({});
   const [saving, setSaving]   = useState<Set<string>>(new Set());
   const [saved,  setSaved]    = useState<Set<string>>(new Set());
+  const [confirmDelete, setConfirmDelete] = useState<string | null>(null); // id do item aguardando confirmação
 
   const loadItems = useCallback(async (t: CollectibleType) => {
     setLoading(true);
@@ -542,6 +543,35 @@ function TabCollectibles({ fighterId }: { fighterId: string }) {
       });
     } finally {
       setSaving(prev => { const n = new Set(prev); n.delete(item.id); return n; });
+    }
+  };
+
+  // Desvincular: mantém o coletável mas remove fighterId
+  const unlinkItem = async (item: CollectibleItem) => {
+    setSaving(prev => new Set(prev).add(item.id));
+    try {
+      await fetch(`/api/admin/collectibles/${item.id}`, {
+        method:  "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({ fighterId: null }),
+      });
+      setItems(prev => prev.filter(c => c.id !== item.id));
+      setExpanded(prev => { const n = new Set(prev); n.delete(item.id); return n; });
+    } finally {
+      setSaving(prev => { const n = new Set(prev); n.delete(item.id); return n; });
+    }
+  };
+
+  // Excluir permanentemente
+  const deleteItem = async (id: string) => {
+    setSaving(prev => new Set(prev).add(id));
+    try {
+      await fetch(`/api/admin/collectibles/${id}`, { method: "DELETE" });
+      setItems(prev => prev.filter(c => c.id !== id));
+      setExpanded(prev => { const n = new Set(prev); n.delete(id); return n; });
+      setConfirmDelete(null);
+    } finally {
+      setSaving(prev => { const n = new Set(prev); n.delete(id); return n; });
     }
   };
 
@@ -625,6 +655,49 @@ function TabCollectibles({ fighterId }: { fighterId: string }) {
                     <span className="text-[9px] text-emerald-400 font-mono shrink-0">✓</span>
                   )}
 
+                  {/* Quick-action buttons visible without expanding */}
+                  {!isOpen && (
+                    <div className="flex gap-1 shrink-0" onClick={e => e.stopPropagation()}>
+                      <button
+                        type="button"
+                        title="Desvincular deste fighter"
+                        onClick={() => unlinkItem(item)}
+                        disabled={isSaving}
+                        className="px-2 py-0.5 text-[9px] font-mono border border-amber-500/20 text-amber-800 hover:text-amber-400 hover:border-amber-500/40 transition-all disabled:opacity-40"
+                      >
+                        ⇥
+                      </button>
+                      {confirmDelete === item.id ? (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => deleteItem(item.id)}
+                            disabled={isSaving}
+                            className="px-2 py-0.5 text-[9px] font-mono border border-red-500/50 text-red-400 bg-red-500/15 transition-all"
+                          >
+                            {isSaving ? "…" : "OK?"}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setConfirmDelete(null)}
+                            className="px-2 py-0.5 text-[9px] font-mono border border-white/10 text-slate-600 hover:text-slate-400 transition-all"
+                          >
+                            ✕
+                          </button>
+                        </>
+                      ) : (
+                        <button
+                          type="button"
+                          title="Excluir permanentemente"
+                          onClick={() => setConfirmDelete(item.id)}
+                          className="px-2 py-0.5 text-[9px] font-mono border border-red-500/15 text-red-900 hover:text-red-500 hover:border-red-500/40 transition-all"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
+                  )}
+
                   {isOpen ? <ChevronUp size={12} className="text-slate-600 shrink-0" /> : <ChevronDown size={12} className="text-slate-600 shrink-0" />}
                 </button>
 
@@ -693,7 +766,52 @@ function TabCollectibles({ fighterId }: { fighterId: string }) {
                       </div>
                     </div>
 
-                    <div className="col-span-2 flex justify-end">
+                    {/* ── Ações destrutivas ── */}
+                    <div className="col-span-2 flex items-center justify-between pt-1 border-t border-white/5">
+                      <div className="flex gap-2">
+                        {/* Desvincular */}
+                        <button
+                          type="button"
+                          onClick={() => unlinkItem(item)}
+                          disabled={isSaving}
+                          className="flex items-center gap-1.5 px-3 py-1 text-[10px] font-mono border border-amber-500/30 text-amber-600 hover:text-amber-400 hover:bg-amber-500/10 transition-all disabled:opacity-40"
+                          title="Remove a associação com este fighter mas mantém o coletável no banco"
+                        >
+                          ⇥ Desvincular
+                        </button>
+
+                        {/* Excluir (com confirmação) */}
+                        {confirmDelete === item.id ? (
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[10px] text-red-400 font-mono">Confirmar exclusão?</span>
+                            <button
+                              type="button"
+                              onClick={() => deleteItem(item.id)}
+                              disabled={isSaving}
+                              className="px-2.5 py-1 text-[10px] font-mono border border-red-500/60 text-red-400 bg-red-500/15 hover:bg-red-500/25 transition-all disabled:opacity-40"
+                            >
+                              {isSaving ? "…" : "✕ Excluir"}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setConfirmDelete(null)}
+                              className="px-2.5 py-1 text-[10px] font-mono border border-white/10 text-slate-500 hover:text-slate-300 transition-all"
+                            >
+                              Cancelar
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => setConfirmDelete(item.id)}
+                            className="flex items-center gap-1.5 px-3 py-1 text-[10px] font-mono border border-red-500/20 text-red-800 hover:text-red-500 hover:border-red-500/40 transition-all"
+                            title="Apaga permanentemente do banco de dados"
+                          >
+                            ✕ Excluir
+                          </button>
+                        )}
+                      </div>
+
                       <SaveButton
                         state={isSaving ? "saving" : isSaved ? "saved" : "idle"}
                         onClick={() => saveItem(item)}
