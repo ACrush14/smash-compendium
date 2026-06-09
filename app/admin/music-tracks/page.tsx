@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import {
   Search, RefreshCw, Save, Trash2, Loader2, Music2,
-  ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Youtube,
+  ChevronLeft, ChevronRight, ChevronDown, ChevronUp, ExternalLink,
 } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -231,7 +231,7 @@ function TrackRow({
                 className="flex-shrink-0 p-1.5 border border-white/10 text-red-500 hover:border-red-500/50 hover:bg-red-950/20 transition-all"
                 title="Abrir no YouTube"
               >
-                <Youtube size={13} />
+                <ExternalLink size={13} />
               </a>
             )}
           </div>
