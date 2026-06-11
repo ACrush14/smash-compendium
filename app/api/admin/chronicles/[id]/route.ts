@@ -6,20 +6,28 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id }   = await params;
-  const body     = await req.json();
-  const { wikiUrl, boxArtUrl } = body;
+  try {
+    const { id }   = await params;
+    const body     = await req.json();
+    const { wikiUrl, boxArtUrl } = body;
 
-  const data: any = {};
-  if (wikiUrl    !== undefined) data.wikiUrl    = wikiUrl    || null;
-  if (boxArtUrl  !== undefined) data.boxArtUrl  = boxArtUrl  || null;
+    const data: Record<string, string | null> = {};
+    if (wikiUrl   !== undefined) data.wikiUrl   = wikiUrl   || null;
+    if (boxArtUrl !== undefined) data.boxArtUrl = boxArtUrl || null;
 
-  const updated = await db.chronicleEntry.update({
-    where: { id },
-    data,
-  });
+    const updated = await db.chronicleEntry.update({
+      where: { id },
+      data,
+    });
 
-  return NextResponse.json(updated);
+    return NextResponse.json(updated);
+  } catch (e) {
+    console.error("PATCH /chronicles/[id]:", e);
+    return NextResponse.json(
+      { error: e instanceof Error ? e.message : String(e) },
+      { status: 500 }
+    );
+  }
 }
 
 // DELETE /api/admin/chronicles/[id]/boxart  — limpa só o boxArtUrl

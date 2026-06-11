@@ -17,8 +17,9 @@ export type OriginGame = {
   badgeColor:       string;
   iconFile?:        string;
   jpExclusive?:     boolean;
-  boxArtPath?:      string;   // /assets/games/... capa NA/EN
-  boxArtPathJp?:    string;   // /assets/games/... capa JP
+  boxArtPath?:      string;   // /assets/games/... capa NA/EN (local)
+  boxArtPathJp?:    string;   // /assets/games/... capa JP (local)
+  boxArtUrl?:       string;   // URL externa (fallback via ChronicleEntry)
   boxArtLandscape?: boolean;  // true = paisagem, false/undefined = retrato
   wikiUrl?:         string;
   wikiUrlJp?:       string;
@@ -144,7 +145,7 @@ export default function OriginGamesPanel({ games, lang = "EN" }: { games: Origin
 
                 {/* Box art do jogo de origem */}
                 {(() => {
-                  const artSrc = (useJpMode && game.boxArtPathJp) ? game.boxArtPathJp : game.boxArtPath;
+                  const artSrc = (useJpMode && game.boxArtPathJp) ? game.boxArtPathJp : (game.boxArtPath ?? game.boxArtUrl);
                   return artSrc ? (
                   <div className="overflow-hidden border border-white/15 shadow-lg shadow-black/50 self-start">
                     {/* eslint-disable-next-line @next/next/no-img-element */}

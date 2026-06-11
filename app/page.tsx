@@ -376,7 +376,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
             </div>
           </a>
 
-          <a href="/games"
+          <a href="/chronicles"
             className="group relative flex flex-col justify-between overflow-hidden border border-white/10 p-7 transition-all duration-300 hover:scale-[1.03] hover:border-emerald-900/50 hover:shadow-[0_0_40px_rgba(6,78,59,0.25)]"
             style={{ background: "linear-gradient(135deg, rgba(6,78,59,0.3) 0%, rgba(4,47,35,0.45) 40%, #010d08 100%)", clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)" }}
           >

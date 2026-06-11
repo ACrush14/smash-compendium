@@ -29,8 +29,9 @@ type OriginGame = {
   regionNa?:      string;   // região NA
   badgeColor:       string;
   iconFile?:        string;   // ex: "snes.png" → /assets/consoles/snes.png
-  boxArtPath?:      string;   // capa NA/EN
-  boxArtPathJp?:    string;   // capa JP
+  boxArtPath?:      string;   // capa NA/EN (local)
+  boxArtPathJp?:    string;   // capa JP (local)
+  boxArtUrl?:       string;   // URL externa via ChronicleEntry (fallback)
   boxArtLandscape?: boolean;
   jpExclusive?:     boolean;
   wikiUrl?:         string;   // Link Wikipedia EN/NA
@@ -350,10 +351,26 @@ export default async function FighterPage({ params }: PageProps) {
 
   const stickersMapSerialized: Record<string, SerializedCollectible[]> = {};
 
-  const rawOriginGames =
+  const rawOriginGamesBase =
     FIGHTER_ORIGIN_GAMES[fighter.name] ??
     FRANCHISE_ORIGIN_GAMES[fighter.franchise.name] ??
     [];
+
+  // Para jogos sem capa local, busca boxArtUrl no ChronicleEntry
+  const needsArt = rawOriginGamesBase.filter(g => !g.boxArtPath && !g.boxArtPathJp).map(g => g.name);
+  const chronicleArtMap = new Map<string, string>();
+  if (needsArt.length > 0) {
+    const entries = await db.chronicleEntry.findMany({
+      where: { titleNtsc: { in: needsArt }, boxArtUrl: { not: null } },
+      select: { titleNtsc: true, boxArtUrl: true },
+    });
+    for (const e of entries) {
+      if (e.boxArtUrl) chronicleArtMap.set(e.titleNtsc, e.boxArtUrl);
+    }
+  }
+  const rawOriginGames = rawOriginGamesBase.map(g =>
+    chronicleArtMap.has(g.name) ? { ...g, boxArtUrl: chronicleArtMap.get(g.name) } : g
+  );
 
   const originWorkGames: WorkGame[] = rawOriginGames.map((g) => ({
     name:         g.name,

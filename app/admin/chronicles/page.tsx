@@ -89,12 +89,16 @@ function EntryRow({ entry, onSaved }: { entry: Entry; onSaved: (id: string, data
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ wikiUrl: s.wikiUrl || null, boxArtUrl: s.boxArtUrl || null }),
       });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+        throw new Error(err.error ?? `HTTP ${res.status}`);
+      }
       const updated = await res.json();
       setS(p => ({ ...p, saving: false, saved: true, error: null }));
       onSaved(entry.id, { wikiUrl: updated.wikiUrl, boxArtUrl: updated.boxArtUrl });
       setTimeout(() => setS(p => ({ ...p, saved: false })), 2500);
-    } catch {
-      setS(p => ({ ...p, saving: false, error: "Erro ao salvar" }));
+    } catch (e) {
+      setS(p => ({ ...p, saving: false, error: e instanceof Error ? e.message : "Erro ao salvar" }));
     }
   }, [entry.id, s.wikiUrl, s.boxArtUrl, onSaved]);
 
