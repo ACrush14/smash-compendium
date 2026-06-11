@@ -149,12 +149,11 @@ export default async function ChroniclesPage({ searchParams }: Props) {
                   className={`relative block aspect-[3/4] w-full bg-gradient-to-br from-slate-800 to-slate-950 border-2 border-vault-border rounded-sm overflow-hidden group-hover:border-vault-accent transition-colors shadow-lg${game.wikiUrl ? " cursor-pointer" : " cursor-default"}`}
                 >
                   {game.boxArtUrl ? (
-                    <Image
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
                       src={game.boxArtUrl}
                       alt={game.titleNtsc}
-                      fill
-                      className="object-cover object-top"
-                      sizes="(max-width: 768px) 50vw, 20vw"
+                      className="absolute inset-0 w-full h-full object-cover object-top"
                     />
                   ) : (
                     <>
