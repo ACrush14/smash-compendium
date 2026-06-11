@@ -140,31 +140,36 @@ export default async function ChroniclesPage({ searchParams }: Props) {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
             {games.map(game => (
               <div key={game.id} className="flex flex-col group">
-                
-                {/* Capa do Jogo */}
-                <div className="relative aspect-[3/4] w-full bg-gradient-to-br from-slate-800 to-slate-950 border-2 border-vault-border rounded-sm overflow-hidden mb-3 group-hover:border-vault-accent transition-colors shadow-lg">
+
+                {/* Capa clicável → Wiki */}
+                <a
+                  href={game.wikiUrl ?? undefined}
+                  target={game.wikiUrl ? "_blank" : undefined}
+                  rel={game.wikiUrl ? "noopener noreferrer" : undefined}
+                  className={`relative block aspect-[3/4] w-full bg-gradient-to-br from-slate-800 to-slate-950 border-2 border-vault-border rounded-sm overflow-hidden group-hover:border-vault-accent transition-colors shadow-lg${game.wikiUrl ? " cursor-pointer" : " cursor-default"}`}
+                >
                   {game.boxArtUrl ? (
-                    <Image 
-                      src={game.boxArtUrl} 
+                    <Image
+                      src={game.boxArtUrl}
                       alt={game.titleNtsc}
-                      fill 
-                      className="object-cover object-top" 
-                      sizes="(max-width: 768px) 50vw, 20vw" 
+                      fill
+                      className="object-cover object-top"
+                      sizes="(max-width: 768px) 50vw, 20vw"
                     />
                   ) : (
                     <>
                       {/* Padrão de fundo */}
                       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '16px 16px' }} />
-                      
+
                       {/* Ícone central do console */}
                       {iconPath && (
                         <div className="absolute inset-0 flex items-center justify-center opacity-10 mix-blend-screen pointer-events-none p-4">
-                          <Image 
-                            src={iconPath} 
-                            alt="Console Logo" 
-                            width={120} 
-                            height={120} 
-                            className="object-contain brightness-0 invert" 
+                          <Image
+                            src={iconPath}
+                            alt="Console Logo"
+                            width={120}
+                            height={120}
+                            className="object-contain brightness-0 invert"
                           />
                         </div>
                       )}
@@ -177,7 +182,7 @@ export default async function ChroniclesPage({ searchParams }: Props) {
                       </div>
                     </>
                   )}
-                  
+
                   {/* Exclusivos Badges Overlay */}
                   {(game.titleNtsc === "JP EXCLUSIVE" || game.titleNtsc === "PAL EXCLUSIVE") && (
                     <div className="absolute top-2 right-2 bg-amber-500 text-slate-900 text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
@@ -185,12 +190,42 @@ export default async function ChroniclesPage({ searchParams }: Props) {
                     </div>
                   )}
 
-                  {/* Nome estilizado se for único / Título NTSC grande na capa pra quebrar galho */}
+                  {/* Título na base da capa */}
                   <div className="absolute bottom-0 w-full p-3 bg-gradient-to-t from-black/90 via-black/50 to-transparent">
                     <p className="font-display font-bold text-white text-sm line-clamp-2 leading-tight drop-shadow-md">
                       {game.titleNtsc !== "JP EXCLUSIVE" ? game.titleNtsc : game.titleJp || "TÍTULO DESCONHECIDO"}
                     </p>
                   </div>
+                </a>
+
+                {/* Botões de ação */}
+                <div className="flex gap-1 mt-2 mb-1">
+                  {game.wikiUrl ? (
+                    <a
+                      href={game.wikiUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 text-center text-[9px] font-mono font-bold uppercase tracking-widest py-1.5 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors rounded-sm"
+                    >
+                      WIKI
+                    </a>
+                  ) : (
+                    <span className="flex-1 text-center text-[9px] font-mono font-bold uppercase tracking-widest py-1.5 border border-slate-800 text-slate-700 rounded-sm">
+                      WIKI
+                    </span>
+                  )}
+                  <span
+                    className="flex-1 text-center text-[9px] font-mono font-bold uppercase tracking-widest py-1.5 border border-slate-800/60 text-slate-800 rounded-sm cursor-not-allowed select-none"
+                    title="Em breve"
+                  >
+                    GAMEPLAY
+                  </span>
+                  <span
+                    className="flex-1 text-center text-[9px] font-mono font-bold uppercase tracking-widest py-1.5 border border-slate-800/60 text-slate-800 rounded-sm cursor-not-allowed select-none"
+                    title="Em breve"
+                  >
+                    JOGAR
+                  </span>
                 </div>
 
                 {/* Metadados: Lançamento US / Lançamento JP */}

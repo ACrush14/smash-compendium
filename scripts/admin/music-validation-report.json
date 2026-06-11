@@ -1,0 +1,6178 @@
+{
+  "generatedAt": "2026-06-11T20:41:03.707Z",
+  "summary": {
+    "ok": 137,
+    "restricted": 0,
+    "dead": 1018,
+    "errors": 8
+  },
+  "dead": [
+    {
+      "source": "music",
+      "id": "music-1780872000296-byhmf",
+      "title": "Menu",
+      "youtubeId": "QCmMRCBuuPc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872000817-m3ml9",
+      "title": "Battlefield",
+      "youtubeId": "dOxZ6zt0Dds"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872001333-gvdzd",
+      "title": "Final Destination",
+      "youtubeId": "2gVy95FE7mQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872001852-gpu0u",
+      "title": "Mob Smash",
+      "youtubeId": "rVsQBgH2CH8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872002368-y5tbn",
+      "title": "Classic Mode: Mural",
+      "youtubeId": "YaPUju2K4yI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872002886-281rb",
+      "title": "Classic Mode: Defeat",
+      "youtubeId": "eksDf2M2_1k"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872003407-io8px",
+      "title": "Classic Mode: Final Results",
+      "youtubeId": "vz8uCa_GRlA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872003926-vaofr",
+      "title": "Classic Mode: Bonus Stage",
+      "youtubeId": "ZF7Q6RRtxmw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872004444-w4bkk",
+      "title": "Master Hand",
+      "youtubeId": "Eu9VRwsE8U8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872004962-fxgdp",
+      "title": "Crazy Hand",
+      "youtubeId": "OjVS3tVDqtg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872005481-kfavm",
+      "title": "Master Hand / Crazy Hand",
+      "youtubeId": "U9M5-ocJkSI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872005998-zl60x",
+      "title": "The Light Realm: Prologue",
+      "youtubeId": "rA7k4LIkLd8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872006513-wvoo4",
+      "title": "The Light Realm: March",
+      "youtubeId": "Z7rwNT2Dxfw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872026580-i4jp6",
+      "title": "Battlefield Ver. 2 - Super Smash Bros. Brawl",
+      "youtubeId": "Tstsr3eAPps"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872007032-peyuc",
+      "title": "The Light Realm: Base",
+      "youtubeId": "A6_skBLxiLY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872008067-1firw",
+      "title": "The Dark Realm: The Mysterious Space",
+      "youtubeId": "kN6HvqbLOdU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872008610-ffw2q",
+      "title": "The Final Battle",
+      "youtubeId": "i-_J0hC5tr4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872009125-dc1nj",
+      "title": "The Final Battle: After the Transformation",
+      "youtubeId": "YlnBnBG19RM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872011193-rqozj",
+      "title": "Main Theme Piano Solo",
+      "youtubeId": "l46aZE669nM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872011709-he76e",
+      "title": "Free the Spirit!",
+      "youtubeId": "-d5LqvdBtJ0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872012226-p7qh9",
+      "title": "Spirits: Collection",
+      "youtubeId": "E2hAVnmPXjI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872012745-ks0cu",
+      "title": "Spirits: Inventory/Items",
+      "youtubeId": "LAUxwBAaRmE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872013264-acrok",
+      "title": "Tourney: Battle List",
+      "youtubeId": "INLz5TJbbAk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872013831-zdhcp",
+      "title": "Tourney: Winner Announcement",
+      "youtubeId": "6k9ITdV3dH4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872014349-yw43r",
+      "title": "Training",
+      "youtubeId": "06dcAhIfzx0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872014865-cztla",
+      "title": "Vault",
+      "youtubeId": "CW5xVfQMtNI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872015384-hogl3",
+      "title": "Shop",
+      "youtubeId": "Qk50ocIMmdQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872015904-3huq0",
+      "title": "Practice Fights",
+      "youtubeId": "GWkHACLayz0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872016423-7okdq",
+      "title": "Spectate",
+      "youtubeId": "B8O3qQubikg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872016943-slgu6",
+      "title": "Opening - Super Smash Bros. Melee",
+      "youtubeId": "cYefxrEw1ok"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872017465-vex6i",
+      "title": "Opening - Super Smash Bros. Melee (Brawl)",
+      "youtubeId": "oBSgahxmRww"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872017981-poupl",
+      "title": "Main Theme - Super Smash Bros. Brawl",
+      "youtubeId": "8sJfOOz7f6k"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872018500-32q7c",
+      "title": "How to Play - Super Smash Bros.",
+      "youtubeId": "XesLSGRTwxM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872019017-58qs7",
+      "title": "How to Play - Super Smash Bros. Melee",
+      "youtubeId": "ux6BhYB6-cs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872020349-3b0v7",
+      "title": "Menu - Super Smash Bros.",
+      "youtubeId": "omS360U3g6Y"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872020868-r5epw",
+      "title": "Menu - Super Smash Bros. Melee",
+      "youtubeId": "kaXGfHXl-q8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872021389-l9wcs",
+      "title": "Menu - Super Smash Bros. Melee (Brawl)",
+      "youtubeId": "8ELAXYXaz_k"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872021908-d3xqg",
+      "title": "Menu 2 - Super Smash Bros. Melee",
+      "youtubeId": "75Nxud1kDn0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872022427-ou1yy",
+      "title": "Boss Battle - Super Smash Bros. Brawl",
+      "youtubeId": "nDbo8HfURKg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872022946-8k00d",
+      "title": "Menu - Super Smash Bros. Brawl",
+      "youtubeId": "btfCABrqDDs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872023464-d2f1l",
+      "title": "Menu - Super Smash Bros. for 3DS / Wii U",
+      "youtubeId": "eZZCTXfFFqo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872023997-b9op1",
+      "title": "Fighter Selection - Super Smash Bros.",
+      "youtubeId": "oBRuOu5KrQw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872024512-sq80p",
+      "title": "Results Screen - Super Smash Bros. for 3DS / Wii U",
+      "youtubeId": "uSgHdAzdeTc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872025029-39lml",
+      "title": "Battlefield - Super Smash Bros. Melee",
+      "youtubeId": "FEYCRs5vDpM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872025546-dcj6b",
+      "title": "Battlefield - Super Smash Bros. Melee (for 3DS / Wii U)",
+      "youtubeId": "zur7ftKOi3c"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872026063-g4xhl",
+      "title": "Battlefield - Super Smash Bros. Brawl",
+      "youtubeId": "YgcqUgAFDCg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872027098-3t4t1",
+      "title": "Battlefield - Super Smash Bros. for 3DS / Wii U",
+      "youtubeId": "pd5PTURSuJE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872027619-lizz8",
+      "title": "Final Destination - Super Smash Bros.",
+      "youtubeId": "WbaTu_SIj38"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872028136-32db8",
+      "title": "Final Destination - Super Smash Bros. Melee",
+      "youtubeId": "92rFsdumNwA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872028706-lx1se",
+      "title": "Giga Bowser",
+      "youtubeId": "mG5WS0bckwE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872029222-bhpyb",
+      "title": "Final Destination - Super Smash Bros. Brawl",
+      "youtubeId": "qBJnBeWJE70"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872029742-y417w",
+      "title": "Final Destination - Super Smash Bros. for 3DS / Wii U",
+      "youtubeId": "vAh9kIJGohw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872030258-9niwk",
+      "title": "Final Destination Ver. 2",
+      "youtubeId": "L7ko5mZ87IE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872030778-2eiz7",
+      "title": "Multi-Man Smash",
+      "youtubeId": "p7N6nwCyxEw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872031296-5ur7k",
+      "title": "Multi-Man Melee",
+      "youtubeId": "OQS-fIQpYaM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872031812-66h40",
+      "title": "Multi-Man Melee 2",
+      "youtubeId": "-ZdvmO9ymuA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872032331-6rnz0",
+      "title": "Cruel Smash",
+      "youtubeId": "jD_x2uY8C-8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872032849-u09bt",
+      "title": "Credits - Super Smash Bros.",
+      "youtubeId": "YpJJL6_monI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872033367-a4y8x",
+      "title": "Credits - Super Smash Bros. (Brawl)",
+      "youtubeId": "CWIwrylJ0J0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872033885-14ajx",
+      "title": "Credits - Super Smash Bros. (for 3DS / Wii U)",
+      "youtubeId": "jy0TTsLuPNQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872034400-9wz5e",
+      "title": "Credits - Super Smash Bros. Brawl",
+      "youtubeId": "iHOtwUGtQTY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872034915-zmbxy",
+      "title": "Credits - Super Smash Bros. for 3DS / Wii U",
+      "youtubeId": "xQLuephtWPI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872035438-rd3yn",
+      "title": "Bonus Game - Super Smash Bros.",
+      "youtubeId": "NxUOlRNwrxE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872035955-7yyd1",
+      "title": "Meta Crystal",
+      "youtubeId": "r_SsmTVo7xU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872036471-srp75",
+      "title": "Duel Zone",
+      "youtubeId": "QOAmCWF985o"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872036991-c1ltj",
+      "title": "Training Mode",
+      "youtubeId": "HZemKQaTn8A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872037510-iqgub",
+      "title": "Targets!",
+      "youtubeId": "v3k9wSae7lE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872038028-c9c30",
+      "title": "Metal Battle",
+      "youtubeId": "zUE-whbshxo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872038547-l92ts",
+      "title": "Trophies",
+      "youtubeId": "N480Ogy1_Go"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872039063-5s7nx",
+      "title": "Tournament",
+      "youtubeId": "nVXkaDCwg84"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872039581-igokf",
+      "title": "Tournament 2",
+      "youtubeId": "gh5jF5XVWzQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872040096-x8fop",
+      "title": "All-Star Intro",
+      "youtubeId": "f_AZduTV8rg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872040614-hjx6w",
+      "title": "Target Smash!",
+      "youtubeId": "267qTYHHlxA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872041133-4s3hp",
+      "title": "Adventure Map",
+      "youtubeId": "UP4FeoeCxF0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872041648-yxlcd",
+      "title": "Step: The Plain",
+      "youtubeId": "S3iL4faPVaA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872042167-vedb3",
+      "title": "Step: Subspace",
+      "youtubeId": "nyMjkg5Vfrw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872042683-oxd30",
+      "title": "Step: Subspace Ver. 3",
+      "youtubeId": "GYDPSo8hJSs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872043201-aheqa",
+      "title": "Boss Battle Song 1",
+      "youtubeId": "i6mNAFloe6E"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872043769-x42ow",
+      "title": "Boss Battle Song 2",
+      "youtubeId": "nQMfKcBAU7E"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872044288-3pb70",
+      "title": "Home-Run Contest",
+      "youtubeId": "SRDznzUf0iY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872044807-hmeju",
+      "title": "Trophy Gallery",
+      "youtubeId": "Ns_ce1hIGrE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872045325-ibq9i",
+      "title": "Sticker Album / Album / Chronicle",
+      "youtubeId": "uTGI_u91E0A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872045841-9gmkg",
+      "title": "Coin Launcher",
+      "youtubeId": "0nJp7cP_RxM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872046362-m34wc",
+      "title": "Stage Builder",
+      "youtubeId": "lC9TYf1nSKk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872046881-abbyi",
+      "title": "Tournament Registration",
+      "youtubeId": "hnY3q-dEAic"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872047396-g8ps0",
+      "title": "Tournament Grid",
+      "youtubeId": "9JYycABcYWo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872047915-4ocww",
+      "title": "Tournament Match End",
+      "youtubeId": "ory9-4RYZQk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872048444-imtiq",
+      "title": "All-Star Rest Area - Super Smash Bros. Brawl",
+      "youtubeId": "islUc17HhBA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872048959-b43mf",
+      "title": "Online Practice Stage - Super Smash Bros. Brawl",
+      "youtubeId": "rduqjZbAHqY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872049476-pypxs",
+      "title": "Classic: Results Screen",
+      "youtubeId": "xiK5EboOzbc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872049996-sj2qr",
+      "title": "Classic: Final Results",
+      "youtubeId": "N0zmul9mkJI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872050512-vfnb3",
+      "title": "Classic: Fail",
+      "youtubeId": "6-f7CW9-uCc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872051031-8zwqa",
+      "title": "Master Hand - Super Smash Bros. for 3DS / Wii U",
+      "youtubeId": "KVP50nCVtBU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872051552-djev5",
+      "title": "Master Core",
+      "youtubeId": "V-Rv7HvLopU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872052068-ns5cg",
+      "title": "Master Fortress: First Wave",
+      "youtubeId": "S2P6Unzn2aA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872052586-10je6",
+      "title": "Master Fortress: Second Wave",
+      "youtubeId": "wpZgHrZYiF4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872053106-1zmw1",
+      "title": "Master Orders: Ticket Selection",
+      "youtubeId": "XYND7Tkb0fE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872053630-o3jt1",
+      "title": "Trophy Rush",
+      "youtubeId": "xvyH7VKUvcs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872054148-5pjfy",
+      "title": "Trophy Shop",
+      "youtubeId": "KmsHxQlVoSk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872054666-gt1ll",
+      "title": "Gallery/Hoard",
+      "youtubeId": "IAID3poNFHY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872055183-ahkap",
+      "title": "Replay/Album/Records",
+      "youtubeId": "HRcb6MEYpvc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872055702-jhzro",
+      "title": "All-Star Rest Area - Super Smash Bros. for 3DS / Wii U",
+      "youtubeId": "iAzBjV6Q_Tk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872056222-j2utu",
+      "title": "Online Practice Stage - Super Smash Bros. for 3DS / Wii U",
+      "youtubeId": "WPSJsFPT3P0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872056743-7yxan",
+      "title": "StreetSmash",
+      "youtubeId": "Y8hIp8ynb_Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872057262-6uljz",
+      "title": "Events",
+      "youtubeId": "CN8KJerprqc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872057776-4yxad",
+      "title": "Smash Tour: Map",
+      "youtubeId": "rstunmUgVrw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872059147-e1dee",
+      "title": "Ground Theme - Super Mario Bros.",
+      "youtubeId": "YVJjTSQEgOo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872059665-ry2hi",
+      "title": "Ground Theme - Super Mario Bros. (64)",
+      "youtubeId": "ymq8wM6DQoo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872060183-8vfa1",
+      "title": "Ground Theme - Super Mario Bros. (Melee)",
+      "youtubeId": "nEthTFojIus"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872060698-flfdk",
+      "title": "Ground Theme - Super Mario Bros. (Brawl)",
+      "youtubeId": "g-W1bwX7ALA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872061216-56wah",
+      "title": "Ground Theme (Band Performance) - Super Mario Bros.",
+      "youtubeId": "ZCO1QBz3g-Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872061735-g4dis",
+      "title": "Ground Theme / Underground Theme - Super Mario Bros.",
+      "youtubeId": "vI3PaIHoJ8I"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872062253-s1tml",
+      "title": "Underground Theme - Super Mario Bros.",
+      "youtubeId": "YrdtInJv8ug"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872062770-wob3p",
+      "title": "Underwater Theme - Super Mario Bros.",
+      "youtubeId": "l2OUkvh9_Ls"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872063289-l1ewv",
+      "title": "Super Mario Bros. Medley",
+      "youtubeId": "R-C1fXoufLc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872063808-avf2l",
+      "title": "Super Mario Bros.: The Lost Levels Medley",
+      "youtubeId": "hBfCiDVpOdA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872064329-r52fm",
+      "title": "Ground Theme - Super Mario Bros. 2",
+      "youtubeId": "81kcL2j42-c"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872065372-uqm6u",
+      "title": "Rolling Hills A",
+      "youtubeId": "l_BVqf5bYfc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872065894-d2dz8",
+      "title": "Boss Theme - Super Mario Bros. 2",
+      "youtubeId": "IQCSSMj9d1w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872066413-4h8is",
+      "title": "Ground Theme - Super Mario Bros. 3 (Melee)",
+      "youtubeId": "oHikOd9EQic"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872066933-qzf6y",
+      "title": "Ground Theme - Super Mario Bros. 3",
+      "youtubeId": "1tqJR07uRzI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872067452-fo90q",
+      "title": "Super Mario Bros. 3 Medley",
+      "youtubeId": "5Nu6BxCnyE0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872067966-f82v1",
+      "title": "Fortress Boss - Super Mario Bros. 3",
+      "youtubeId": "146Weda5_H0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872068481-3fsgg",
+      "title": "Airship Theme - Super Mario Bros. 3",
+      "youtubeId": "GztjlvuTqNk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872068999-pz91f",
+      "title": "King Bowser - Super Mario Bros. 3",
+      "youtubeId": "-xADN6X37gM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872069517-zv4rr",
+      "title": "Underground Theme - Super Mario Land",
+      "youtubeId": "LOSQ0PbAyhg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872070034-jjswq",
+      "title": "Title/Ending - Super Mario World",
+      "youtubeId": "x73dTP9aEps"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872070555-oh9wr",
+      "title": "Ground Theme - Super Mario World",
+      "youtubeId": "go8pjwUDxpY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872071073-jemx5",
+      "title": "Super Mario World Medley",
+      "youtubeId": "UT-HYvilzSM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872071596-up1dv",
+      "title": "Castle / Boss Fortress - Super Mario World / SMB 3",
+      "youtubeId": "0ay94Dc8GA4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872072115-46k9x",
+      "title": "Fortress Boss - Super Mario World",
+      "youtubeId": "b95P7XC8rvM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872072635-0qu3z",
+      "title": "Main Theme - Super Mario 64",
+      "youtubeId": "dqt1X8ULFOU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872073673-8a6lo",
+      "title": "Slide",
+      "youtubeId": "1Ljr_WajZ80"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872074760-avnuz",
+      "title": "Delfino Plaza",
+      "youtubeId": "mjJ7I9Vuc4w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872075794-r0pkd",
+      "title": "Ricco Harbor",
+      "youtubeId": "qhPkNXChUVE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872076314-dgr5j",
+      "title": "Main Theme - New Super Mario Bros.",
+      "youtubeId": "Pbz-FbR4rPo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872076834-v7zdl",
+      "title": "Super Mario Galaxy",
+      "youtubeId": "XKu99A8r4pc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872077353-p3uf0",
+      "title": "Egg Planet",
+      "youtubeId": "9ulr6v---ik"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872078389-dtx8n",
+      "title": "Rosalina in the Observatory / Luma's Theme",
+      "youtubeId": "NDx23LrRlm8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872078907-2n642",
+      "title": "Gusty Garden Galaxy",
+      "youtubeId": "j0-ABCZAOmE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872079454-axxoo",
+      "title": "Champion Road",
+      "youtubeId": "gaIF0FD1i9g"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872079970-0dg2j",
+      "title": "Theme of SMG2",
+      "youtubeId": "o6YtXgK0RVI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872080487-d2b09",
+      "title": "The Starship Sails",
+      "youtubeId": "Jn3uaJmjpvE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872081003-8mv3o",
+      "title": "Sky Station",
+      "youtubeId": "qKMdapZTkjA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872081520-h8w2e",
+      "title": "Melty Monster",
+      "youtubeId": "FlZPA8D-RZc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872082040-s3imv",
+      "title": "Bowser's Galaxy Generator",
+      "youtubeId": "VlDq9jQcSBY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872082556-3j7p2",
+      "title": "Fated Battle",
+      "youtubeId": "wE-858ZpPJQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872083075-z57of",
+      "title": "Ground Theme / Underwater Theme - Super Mario 3D Land",
+      "youtubeId": "oxRTJ-f2Gk4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872083592-soim3",
+      "title": "Athletic Theme - New Super Mario Bros. 2",
+      "youtubeId": "sal_p0suIok"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872084111-q6yvo",
+      "title": "Ground Theme - New Super Mario Bros. 2",
+      "youtubeId": "Zpm06PHgT1Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872084627-2qwc8",
+      "title": "Ground Theme - New Super Mario Bros. U",
+      "youtubeId": "y8HbwFv2CWI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872085145-fz67b",
+      "title": "Super Bell Hill",
+      "youtubeId": "kz_SwX4ZKHM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872085662-vqnac",
+      "title": "The Great Tower Showdown 2",
+      "youtubeId": "xmdJ2W3J6R8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872086179-a9xnw",
+      "title": "Title Theme - Super Mario Maker",
+      "youtubeId": "K_9jxtQwnX0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872086698-45r8g",
+      "title": "Fossil Falls",
+      "youtubeId": "l3hUYTZT6Kw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872087217-8cvoa",
+      "title": "New Donk City",
+      "youtubeId": "dFlz6mz9UuQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872087734-nx2er",
+      "title": "Jump Up, Super Star!",
+      "youtubeId": "hlfnHxOvLtY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872088253-hf3sf",
+      "title": "Steam Gardens",
+      "youtubeId": "_WVTqb9pmO4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872088774-w0r4n",
+      "title": "Underground Moon Caverns",
+      "youtubeId": "JWagLTdD730"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872089345-yrzlc",
+      "title": "Break Free (Lead The Way)",
+      "youtubeId": "xHrj8L0j_j8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872089862-p5zi8",
+      "title": "Gritzy Desert",
+      "youtubeId": "VG7gGLOxQAw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872090381-t6nc2",
+      "title": "Tough Guy Alert!",
+      "youtubeId": "IvGg0ocFCCQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872090901-h8vg5",
+      "title": "The Grand Finale",
+      "youtubeId": "FiK0H-kD3pI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872091421-7l748",
+      "title": "Paper Mario Medley",
+      "youtubeId": "HCW1_EequTw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872091940-yu7t2",
+      "title": "Try, Try Again",
+      "youtubeId": "axPWGgtq1LQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872092459-71kvg",
+      "title": "Time's Running Out!",
+      "youtubeId": "mwNgmWTQ8pE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872092979-kk7fu",
+      "title": "Mixed-Up Scramble",
+      "youtubeId": "0sg8mB8YJyU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872093499-dm5zf",
+      "title": "Attack and Run!",
+      "youtubeId": "5KWrSI88u2w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872094014-m56y6",
+      "title": "Battle! - Paper Mario: Color Splash",
+      "youtubeId": "XU00vp4A_a0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872094532-jy9cl",
+      "title": "This is Minion Turf!",
+      "youtubeId": "utMjkkbcPNg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872095050-xn464",
+      "title": "Pandemonium",
+      "youtubeId": "0FJwJL9lVpk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872095571-dh7gh",
+      "title": "Title Theme - Mario Party: Island Tour",
+      "youtubeId": "a_taiFkstPU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872096090-lygo9",
+      "title": "Rocket Road",
+      "youtubeId": "CsqPwtcjApg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872096610-c3qo1",
+      "title": "Mario Tennis / Mario Golf",
+      "youtubeId": "-yuzSO8nKhM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872097128-5ts6t",
+      "title": "World Tour",
+      "youtubeId": "5uHmolJEDZ0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872097648-8iqzm",
+      "title": "Stadium Theme - Mario Tennis: Ultra Smash",
+      "youtubeId": "U5Z9QZ_d21k"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872098166-99r74",
+      "title": "Kingdom Stadium: Night",
+      "youtubeId": "o_65Glb40JI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872098687-1e292",
+      "title": "Country Field: away team",
+      "youtubeId": "bl_aqPbbXUs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872099209-qzqv0",
+      "title": "Title Theme - Mario Tennis Aces",
+      "youtubeId": "_qKPt0iGrMA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872099727-xx1jh",
+      "title": "Stadium Theme - Mario Tennis Aces",
+      "youtubeId": "csLewk_jLyA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872100248-fe3dk",
+      "title": "Main Theme - Luigi's Mansion",
+      "youtubeId": "uQoHJqhZIBI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872100766-697yy",
+      "title": "Main Theme - Luigi's Mansion (Brawl)",
+      "youtubeId": "8u57b4Cxb7k"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872101287-k3r6w",
+      "title": "Luigi's Mansion Series Medley",
+      "youtubeId": "bjUDsnuWTr8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872101808-0l6eh",
+      "title": "On the Hunt -Gloomy Manor Ver.- (Instrumental)",
+      "youtubeId": "3v4qdbI9kGw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872102330-dpuon",
+      "title": "Mario Bros.",
+      "youtubeId": "vfmQJqnz8u8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872102853-e23b6",
+      "title": "Fever",
+      "youtubeId": "LLbvehkg8Ls"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872103373-4u7ed",
+      "title": "Chill (Brawl)",
+      "youtubeId": "l33YrUCRasM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872103896-ytv4h",
+      "title": "Chill (for 3DS / Wii U)",
+      "youtubeId": "XNJEBvJ-ds4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872104477-o50a5",
+      "title": "Mario Paint Medley",
+      "youtubeId": "0USx7-hDzlQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872105000-1201m",
+      "title": "Plucky Pass Beginnings",
+      "youtubeId": "duncEGknlOM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872105523-fqoph",
+      "title": "The King of Pyropuff Peak",
+      "youtubeId": "Mu5kG1MlxCI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872106043-651p5",
+      "title": "Title Theme - Mario vs. Donkey Kong: Tipping Stars",
+      "youtubeId": "LKW5sEcmWHk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872107088-hakfo",
+      "title": "Mario Circuit - Super Mario Kart",
+      "youtubeId": "Lwvf-LendfY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872107607-m2uq7",
+      "title": "Luigi Raceway - Mario Kart 64",
+      "youtubeId": "PSOelhO594Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872108127-f49eo",
+      "title": "Rainbow Road - Mario Kart: Double Dash!!",
+      "youtubeId": "xYn8x1nZ07Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872108650-99z34",
+      "title": "Waluigi Pinball - Mario Kart DS",
+      "youtubeId": "8HmOYAIlFQk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872109166-g1fxq",
+      "title": "Mushroom Gorge - Mario Kart Wii",
+      "youtubeId": "ytfkGWh7EYQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872109684-dak6m",
+      "title": "Circuit - Mario Kart 7",
+      "youtubeId": "y0HTXHFs8uM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872110205-ka753",
+      "title": "Rainbow Road - Mario Kart 7",
+      "youtubeId": "xNu-FjuE5eQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872110730-ne73q",
+      "title": "Rainbow Road Medley",
+      "youtubeId": "I4shqrQeIhw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872111247-jevyq",
+      "title": "Mario Kart Stadium - Mario Kart 8",
+      "youtubeId": "MuV-IzolVQM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872111770-sz41x",
+      "title": "Mario Circuit - Mario Kart 8",
+      "youtubeId": "1WFu7xkabN8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872112290-0a9x9",
+      "title": "Cloudtop Cruise - Mario Kart 8",
+      "youtubeId": "AqsBHgiQpLE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872112815-1a73h",
+      "title": "Rainbow Road - Mario Kart 8",
+      "youtubeId": "-kCS19OyTUc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872113343-mkm45",
+      "title": "Excitebike - Mario Kart 8",
+      "youtubeId": "k9g8plbmrLA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872113864-xgbou",
+      "title": "Dragon Driftway",
+      "youtubeId": "mkHportjt7Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872114380-1r4zq",
+      "title": "Ice Ice Outpost",
+      "youtubeId": "ctfeeUYzEgw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872115164-exwtl",
+      "title": "Opening - Donkey Kong",
+      "youtubeId": "AdSjpCraS7Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872115688-90baa",
+      "title": "Donkey Kong Country Returns",
+      "youtubeId": "5F2-Jjz42Mc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872116212-no1qk",
+      "title": "Donkey Kong Country Returns (Vocals)",
+      "youtubeId": "wKa6iDsSyIA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872116751-g7usy",
+      "title": "Donkey Kong",
+      "youtubeId": "S8sK1KGmd3I"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872117272-b776o",
+      "title": "25m Theme",
+      "youtubeId": "joszQrXzm7w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872117796-pv9nd",
+      "title": "Donkey Kong / Donkey Kong Jr. Medley",
+      "youtubeId": "M3Nq4dUjSL8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872483179-4jt3o",
+      "title": "DNA Lab",
+      "youtubeId": "1xVFLnbaxZI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872118323-45o3j",
+      "title": "The Map Page / Bonus Level",
+      "youtubeId": "WpD7A2CT0BQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872119374-fu414",
+      "title": "Jungle Level (64)",
+      "youtubeId": "5cZsEbwqNSs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872119950-jbcd6",
+      "title": "Jungle Level (Melee)",
+      "youtubeId": "7jtdXhqjbck"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872120478-frlnd",
+      "title": "Jungle Level (Brawl)",
+      "youtubeId": "dxqgR3Ev8eo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872121013-q3llo",
+      "title": "Jungle Level Jazz Style (for 3DS / Wii U)",
+      "youtubeId": "9JgOfPmkyNI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872121537-k420f",
+      "title": "Jungle Level Tribal Style (for 3DS / Wii U)",
+      "youtubeId": "-3N4IZGpRdc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872122062-xgfsq",
+      "title": "Jungle Hijinxs",
+      "youtubeId": "YCY70Yt041Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872122596-0632k",
+      "title": "Swinger Flinger",
+      "youtubeId": "3a6oftuqqOk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872123121-d2vrf",
+      "title": "Ice Cave Chant",
+      "youtubeId": "PSyMZBxl8uA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872123636-xsx14",
+      "title": "Funky's Fugue",
+      "youtubeId": "i2vMwI2U50E"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872124169-36za0",
+      "title": "Snakey Chantey",
+      "youtubeId": "pdJemA1GpbQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872125226-cxouq",
+      "title": "King K. Rool / Ship Deck 2",
+      "youtubeId": "nsNyVG-Nls8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872125770-xv9gm",
+      "title": "Stickerbush Symphony",
+      "youtubeId": "2zNh4IX_f6A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872126306-uky5r",
+      "title": "Crocodile Cacophony",
+      "youtubeId": "iCyeiVRbeqw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872126835-m2gfm",
+      "title": "DK Rap",
+      "youtubeId": "QUvLOAmfBwM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872127358-hands",
+      "title": "Battle for Storm Hill",
+      "youtubeId": "wexXLw8rFxQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872127879-0uss7",
+      "title": "Boss 2 - DK: Jungle Climber",
+      "youtubeId": "Qum-BK0ZySA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872128401-twmro",
+      "title": "Mole Patrol",
+      "youtubeId": "yLUAplF7svk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872128920-e1rp8",
+      "title": "Gear Getaway",
+      "youtubeId": "LGBiKnIOokE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872129441-tgd11",
+      "title": "Mangrove Cove",
+      "youtubeId": "JalMxnmuXys"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872130221-74prj",
+      "title": "Title Theme - The Legend of Zelda",
+      "youtubeId": "sbKkaDwD7Hs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872130743-ibm9g",
+      "title": "Overworld Theme - The Legend of Zelda",
+      "youtubeId": "Wa1YJ-pm8eg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872131262-7rfd5",
+      "title": "Overworld Theme - The Legend of Zelda (64)",
+      "youtubeId": "WDSQnp3DSTE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872131794-ypotr",
+      "title": "Overworld Theme - The Legend of Zelda (Melee)",
+      "youtubeId": "wuxbEQfXDUg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872132318-2v4wq",
+      "title": "Overworld Theme - The Legend of Zelda (Brawl)",
+      "youtubeId": "0VPa7qksCmQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872132842-2gup2",
+      "title": "Overworld & Underworld - The Legend of Zelda (for 3DS / Wii U)",
+      "youtubeId": "znI6x1htCpc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872133365-m14wo",
+      "title": "The Legend of Zelda Medley",
+      "youtubeId": "P6umVF5Nq-s"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872133886-hpyba",
+      "title": "Death Mountain",
+      "youtubeId": "e_fIjcR2yWQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872134404-yjezc",
+      "title": "Temple Theme",
+      "youtubeId": "OC6fkLFeMac"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872134983-y6c3w",
+      "title": "Great Temple / Temple",
+      "youtubeId": "Wu13fXGjm4w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872135500-s2aji",
+      "title": "Overworld Theme - The Legend of Zelda: A Link to the Past",
+      "youtubeId": "nZUfQY_hfKc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872136018-uzn3j",
+      "title": "Dark World (Brawl)",
+      "youtubeId": "bmKoOX5LWNc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872136538-p964a",
+      "title": "Dark World (for 3DS / Wii U)",
+      "youtubeId": "47VJ59eNbhY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872137058-yri7v",
+      "title": "Hidden Mountain & Forest",
+      "youtubeId": "RY37i5_iCl4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872137578-3xbzg",
+      "title": "Tal Tal Heights",
+      "youtubeId": "JsoS1Tl-wcE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872138098-1j1df",
+      "title": "Ocarina of Time Medley",
+      "youtubeId": "gUJHa2Rc8dQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872138621-0vrj6",
+      "title": "Hyrule Field Theme",
+      "youtubeId": "UPxYLhzF9SE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872139661-2ay72",
+      "title": "Saria's Theme",
+      "youtubeId": "nqpPcRM1lw0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872140182-u2yjc",
+      "title": "Saria's Song / Middle Boss Battle",
+      "youtubeId": "LKtQ61YPgro"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872140701-td4h1",
+      "title": "Song of Storms",
+      "youtubeId": "tKTgRIuVsV8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872141221-sfy1h",
+      "title": "Gerudo Valley",
+      "youtubeId": "QLlAn7xWeRI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872142262-48g0m",
+      "title": "Termina Field",
+      "youtubeId": "7b10v0m2SJg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872143303-xqo0r",
+      "title": "The Great Sea / Menu Select",
+      "youtubeId": "s2rgzW0vhEU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872143826-ei8yp",
+      "title": "Dragon Roost Island",
+      "youtubeId": "m3c9jes2zqE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872144345-myjr0",
+      "title": "Molgera",
+      "youtubeId": "yQgDwofV300"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872144861-ud7ve",
+      "title": "Village of the Blue Maiden",
+      "youtubeId": "p-YFJR6GrEQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872145385-wu8sf",
+      "title": "Main Theme - The Legend of Zelda: Twilight Princess",
+      "youtubeId": "n3FeR2NWcQc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872145902-770zu",
+      "title": "Midna's Lament",
+      "youtubeId": "aNj1LQ7ZSdY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872146425-xgly9",
+      "title": "The Hidden Village",
+      "youtubeId": "r7m4D0x9_UU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872146942-a3ciu",
+      "title": "Full Steam Ahead",
+      "youtubeId": "Liqvb0Pd87A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872147458-jc8ij",
+      "title": "Ballad of the Goddess",
+      "youtubeId": "HQm12r8z6Fk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872148496-pvlb8",
+      "title": "Hyrule Main Theme",
+      "youtubeId": "67lTkg-9RkY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872149017-qlo7y",
+      "title": "Yuga Battle (Hyrule Castle)",
+      "youtubeId": "Rvgtc7Y1kWA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872149539-xyijk",
+      "title": "Lorule Main Theme",
+      "youtubeId": "g6HVxiUk8VE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872150113-blthk",
+      "title": "Main Theme - The Legend of Zelda: Tri Force Heroes",
+      "youtubeId": "t1g71uC1zLc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872150633-779zp",
+      "title": "Woodlands - The Legend of Zelda: Tri Force Heroes",
+      "youtubeId": "Zwvwrz4GMDE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872151154-hbysa",
+      "title": "Nintendo Switch Presentation 2017 Trailer BGM",
+      "youtubeId": "IqlHvg9FNug"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872151673-6quog",
+      "title": "Main Theme - The Legend of Zelda: Breath of the Wild",
+      "youtubeId": "Lh9VYHe2xtE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872152193-t54p2",
+      "title": "Kass's Theme",
+      "youtubeId": "B-ifnb3Pqzk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872152714-0l4vo",
+      "title": "Hyrule Castle (Outside)",
+      "youtubeId": "dUI3dGZksBQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872153237-0kb58",
+      "title": "Calamity Ganon Battle - Second Form",
+      "youtubeId": "NTZ8acFrPcU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872154019-hvcg3",
+      "title": "Title Theme - Metroid",
+      "youtubeId": "7LUzKdlAj9w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872154543-xji9y",
+      "title": "Brinstar (64)",
+      "youtubeId": "Dskk0HGdBoE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872155062-dvirc",
+      "title": "Brinstar (Melee)",
+      "youtubeId": "f-2MTv-HDFU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872155580-jztjz",
+      "title": "Brinstar (Brawl)",
+      "youtubeId": "G6ZtwLSCc74"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872156103-6sv3a",
+      "title": "Brinstar Depths",
+      "youtubeId": "NMIFX6vndds"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872156624-fsims",
+      "title": "Brinstar Depths (Melee)",
+      "youtubeId": "lOQgZOHWizo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872157141-12iv6",
+      "title": "Norfair",
+      "youtubeId": "sxO8kXvslqw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872157660-szrrn",
+      "title": "Escape",
+      "youtubeId": "o404IktweTU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872158181-2hdh7",
+      "title": "Ending - Metroid",
+      "youtubeId": "ivMNKl6Atz8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872158701-06819",
+      "title": "Vs. Ridley",
+      "youtubeId": "xrl6S-prlks"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872203007-uqgng",
+      "title": "Corneria - Star Fox Zero",
+      "youtubeId": "6HT50u33Occ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872159220-crvbg",
+      "title": "Vs. Ridley (Brawl)",
+      "youtubeId": "XEycdZgdRWE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872159808-nt7ql",
+      "title": "Theme of Samus Aran, Space Warrior",
+      "youtubeId": "mBmTkA-qsIU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872160333-mbfjh",
+      "title": "Sector 1",
+      "youtubeId": "VBz0vy-euqE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872160856-ahnwx",
+      "title": "Opening/Menu - Metroid Prime",
+      "youtubeId": "4okr8wqhcU4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872161375-120o4",
+      "title": "Vs. Parasite Queen",
+      "youtubeId": "PxSL-mVLoUg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872161900-28yfl",
+      "title": "Vs. Meta Ridley",
+      "youtubeId": "ipX_Nh3T5o4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872162421-zp8nn",
+      "title": "Multiplayer - Metroid Prime 02: Echoes",
+      "youtubeId": "wd5cRW6UDpI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872162946-ixdx3",
+      "title": "Psycho Bits",
+      "youtubeId": "Y6jfQ_celW4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872163465-ot3u1",
+      "title": "Lockdown Battle Theme",
+      "youtubeId": "ZsV4t_-RP74"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872163985-xkmy9",
+      "title": "The Burning Lava Fish",
+      "youtubeId": "_LlkuUTpYhQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872164505-hbskn",
+      "title": "Nemesis Ridley",
+      "youtubeId": "RZj-00U5BNE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872165026-hw7hu",
+      "title": "Main Theme - Metroid Prime: Federation Force",
+      "youtubeId": "a691DtPbJHE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872165601-f48dl",
+      "title": "Magmoor Caverns - Metroid: Samus Returns",
+      "youtubeId": "yGswyV8E6fg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872166120-7jwo2",
+      "title": "Boss Battle 4 - Metroid: Samus Returns",
+      "youtubeId": "UpMj0lh4lMU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872166640-arue4",
+      "title": "End Results - Metroid: Samus Returns",
+      "youtubeId": "Tzjd0UjUr-c"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872167422-t1vmx",
+      "title": "Athletic Theme - Super Mario World",
+      "youtubeId": "c0g5Scj01OA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872167951-gml9y",
+      "title": "Yoshi's Island (Brawl)",
+      "youtubeId": "z--Vl8rWcSA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872168471-yaby4",
+      "title": "Yoshi's Island (for 3DS / Wii U)",
+      "youtubeId": "SD_QpYFRUU4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872168993-39gym",
+      "title": "Obstacle Course - Yoshi's Island",
+      "youtubeId": "00lpuvgqLlU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872169512-qej4w",
+      "title": "Yoshi's Story (64)",
+      "youtubeId": "41ywRMTEb_c"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872170032-bo8g2",
+      "title": "Yoshi's Story (Melee)",
+      "youtubeId": "kFlhCwCcELE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872170549-e1ndm",
+      "title": "Yoshi's Tale",
+      "youtubeId": "FOD_23b0XF0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872171067-hwfvu",
+      "title": "Flower Field",
+      "youtubeId": "9mdXA8TnurI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872171587-a7fl5",
+      "title": "Wildlands",
+      "youtubeId": "K9yKwwFQkKg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872172107-a0m0l",
+      "title": "Main Theme - Yoshi's New Island",
+      "youtubeId": "6bkQ19COfNA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872173152-z5em2",
+      "title": "Bandit Valley",
+      "youtubeId": "KxfMxGK35LY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872173673-2bzep",
+      "title": "Main Theme - Yoshi's Woolly World",
+      "youtubeId": "VuMILahLOZk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872174970-1n325",
+      "title": "Green Greens (Melee)",
+      "youtubeId": "g7SshQBpsxQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872175489-jaeex",
+      "title": "Green Greens (for 3DS / Wii U)",
+      "youtubeId": "DoFhJrWpIoU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872176004-911wm",
+      "title": "Kirby Retro Medley",
+      "youtubeId": "lLggnqh-9As"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872176527-n4gaq",
+      "title": "King Dedede's Theme (Brawl)",
+      "youtubeId": "F6dQCKxQ8fs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872177051-8fuxx",
+      "title": "King Dedede's Theme (for 3DS / Wii U)",
+      "youtubeId": "IqdcUL6K0R8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872177570-g9g05",
+      "title": "Staff Credits - Kirby's Dream Land",
+      "youtubeId": "GAHVF4Lj0jE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872178089-9b9hh",
+      "title": "Boss Theme Medley - Kirby Series",
+      "youtubeId": "R6GC8d2iw9M"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872178610-oi8bp",
+      "title": "Ice Cream Island",
+      "youtubeId": "zOF44AAlqR8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872179137-v0lq7",
+      "title": "Butter Building (Brawl)",
+      "youtubeId": "1dMULNQsNG8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872179666-f8bkp",
+      "title": "Butter Building (for 3DS / Wii U)",
+      "youtubeId": "r9tBRJ6mhIA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872180188-lioae",
+      "title": "Gourmet Race (Brawl)",
+      "youtubeId": "-_pjFk0iVBE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872203997-tmds7",
+      "title": "Sector Ω",
+      "youtubeId": "Jupobta0qOY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872180759-u7lne",
+      "title": "Gourmet Race (64)",
+      "youtubeId": "6n9XxyTHBIc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872181285-dzpfi",
+      "title": "Gourmet Race (Melee)",
+      "youtubeId": "YPBk_urSbgg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872181808-8cvi3",
+      "title": "The Great Cave Offensive",
+      "youtubeId": "Os1yKDBex_w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872182330-hbmne",
+      "title": "Meta Knight's Revenge",
+      "youtubeId": "V0Z8B6ElVU8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872182850-rwrcz",
+      "title": "Vs. Marx",
+      "youtubeId": "WIf_S-UZB5s"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872183370-bwkmu",
+      "title": "Planet Popstar",
+      "youtubeId": "vbHXHfA4POM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872183892-knns1",
+      "title": "02 Battle",
+      "youtubeId": "1ATn5qhQ93w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872184423-wpeto",
+      "title": "Forest Stage",
+      "youtubeId": "dxJfsDTkxK4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872184942-8n7hy",
+      "title": "Celestial Valley",
+      "youtubeId": "KXnkuNCSiks"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872185462-8r0x9",
+      "title": "Frozen Hillside",
+      "youtubeId": "z6FZof_7A5Y"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872185981-e83f8",
+      "title": "City Trial",
+      "youtubeId": "YKnb2Kb_d8U"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872186496-azrdi",
+      "title": "The Legendary Air Ride Machine",
+      "youtubeId": "DejJkLHjJ1E"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872187025-omcjp",
+      "title": "Forest/Nature Area",
+      "youtubeId": "EAlVGslLufg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872187555-dl1w5",
+      "title": "Squeak Squad Theme",
+      "youtubeId": "Zt3jV5WztPE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872188078-0ug3n",
+      "title": "The Adventure Begins",
+      "youtubeId": "zyEKLq6IqHQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872188595-8sjf5",
+      "title": "Through the Forest",
+      "youtubeId": "XbUbnLg0Hfk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872189115-2fpzn",
+      "title": "Sky Tower",
+      "youtubeId": "WbcoJt01Tzs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872189640-j8z6h",
+      "title": "Dangerous Dinner",
+      "youtubeId": "kIkFYs5LQ4U"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872190171-9eydt",
+      "title": "CROWNED",
+      "youtubeId": "UwaIHKRPo60"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872190692-moti9",
+      "title": "Floral Fields",
+      "youtubeId": "mgvundBT6S0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872191730-t30jh",
+      "title": "The World to Win",
+      "youtubeId": "bUeQ26KxtPk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872192246-zzrqp",
+      "title": "CROWNED: Ver. 2",
+      "youtubeId": "wZSmImfpTNA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872192768-ji063",
+      "title": "Venturing Into the Mechanized World",
+      "youtubeId": "vYwS6hCE6-g"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872193282-h1oxv",
+      "title": "Pink Ball Activate!",
+      "youtubeId": "MPZCHovVyws"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872193806-5k33f",
+      "title": "Kirby Battle Royale: Main Theme",
+      "youtubeId": "RCFA_cwMbDU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872194327-51gmq",
+      "title": "A Battle of Friends and Bonds 2",
+      "youtubeId": "_N5-qMf5iRk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872195110-scgke",
+      "title": "Main Theme - Star Fox",
+      "youtubeId": "kIJVd4Betco"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872195683-3qb1i",
+      "title": "Corneria - Star Fox",
+      "youtubeId": "6SOllns-gdM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872196204-wv5mh",
+      "title": "Space Armada",
+      "youtubeId": "x2eqowojMYY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872196739-porc0",
+      "title": "Star Fox Medley",
+      "youtubeId": "CKNkZRn6Teg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872197264-u52uz",
+      "title": "Main Theme - Star Fox 64 (64)",
+      "youtubeId": "GobtAx4EvhE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872197782-ph4x6",
+      "title": "Main Theme - Star Fox 64 (Melee)",
+      "youtubeId": "6YhuCSYc_gc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872198299-9f9uj",
+      "title": "Main Theme - Star Fox 64 (Brawl)",
+      "youtubeId": "kYRq-V6SjwA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872198819-0x9t8",
+      "title": "Star Wolf",
+      "youtubeId": "j7alzQbLbV0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872199347-yv6a2",
+      "title": "Star Wolf (Brawl)",
+      "youtubeId": "ce0VkzEj9_g"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872199869-8gspo",
+      "title": "Star Wolf's Theme / Sector Z (for 3DS / Wii U)",
+      "youtubeId": "3ertLmUDQc4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872200387-jandf",
+      "title": "Area 6 - Star Fox 64",
+      "youtubeId": "x65ZcRZaPNQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872200910-n35rx",
+      "title": "Area 6 Ver. 2 - Star Fox 64",
+      "youtubeId": "H-E7O-A5his"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872201433-tlj24",
+      "title": "Theme from Area 6 / Missile Slipstream",
+      "youtubeId": "VI2LfJo8vns"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872201969-0iwlx",
+      "title": "Space Battleground",
+      "youtubeId": "K0eeCLT9vUw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872202490-az442",
+      "title": "Break: Through the Ice",
+      "youtubeId": "Zb3BEZ3RmLI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872204518-50ffd",
+      "title": "Return to Corneria - Star Fox Zero",
+      "youtubeId": "41gltcM-LzA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872205299-13i14",
+      "title": "Main Theme - Pokémon Red & Blue (64)",
+      "youtubeId": "VIQKZyo9qNA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872205819-t0fdg",
+      "title": "Main Theme - Pokémon Red & Blue (Melee)",
+      "youtubeId": "wkDKKLJZdkQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872206344-m4vyw",
+      "title": "Main Theme - Pokémon Red & Blue (Brawl)",
+      "youtubeId": "eMswr_Wvcls"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872206866-brngg",
+      "title": "Road to Viridian City - Pokémon Red / Pokémon Blue",
+      "youtubeId": "GxvDpkPOW6o"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872207385-ah27n",
+      "title": "Pokémon Center - Pokémon Red / Pokémon Blue",
+      "youtubeId": "uSy9wUhQt4M"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872207904-mrzdq",
+      "title": "Pokémon Gym/Evolution - Pokémon Red / Pokémon Blue",
+      "youtubeId": "Eddkrj4YnCE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872208422-xbmkx",
+      "title": "Pokémon Red / Pokémon Blue Medley",
+      "youtubeId": "5QK4oXTfa_A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872208944-c6rns",
+      "title": "Pokémon Gold / Pokémon Silver Medley",
+      "youtubeId": "1Z1qD_eqXjQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872209462-ur3dq",
+      "title": "Battle! (Wild Pokémon) - Pokémon Ruby / Pokémon Sapphire",
+      "youtubeId": "S9BLE-rNW2g"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872209985-2hgbh",
+      "title": "Victory Road - Pokémon Ruby / Pokémon Sapphire",
+      "youtubeId": "dfqkLZ3BURw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872210502-adqjr",
+      "title": "Battle! (Wild Pokémon) - Pokémon Diamond / Pokémon Pearl",
+      "youtubeId": "TVk1oZZUJiM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872211076-0rbpk",
+      "title": "Battle! (Team Galactic)",
+      "youtubeId": "gd4udqHZO3A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872211597-ljgd2",
+      "title": "Route 209 - Pokémon Diamond / Pokémon Pearl",
+      "youtubeId": "GQzoX38VxlY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872212117-en6rz",
+      "title": "Battle! (Dialga/Palkia) / Spear Pillar",
+      "youtubeId": "8Yt_GGbX5KE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872212633-30y3m",
+      "title": "Battle! (Champion) / Champion Cynthia",
+      "youtubeId": "G8ioVYzFCIo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872213153-v11yc",
+      "title": "Route 10 - Pokémon Black / Pokémon White",
+      "youtubeId": "BeQLNl51cJ4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872213670-clf2a",
+      "title": "N's Castle",
+      "youtubeId": "YMxkPguSowo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872214188-t4l17",
+      "title": "Battle! (Reshiram / Zekrom)",
+      "youtubeId": "ApZ3AdBODj4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872214707-tnafq",
+      "title": "Route 23 - Pokémon Black 2 / Pokémon White 2",
+      "youtubeId": "fzg_kmGLzq0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872215224-iaqkt",
+      "title": "Battle! (Wild Pokémon) - Pokémon X / Pokémon Y",
+      "youtubeId": "0Gc0OyNtkiI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872215747-fosn0",
+      "title": "Battle! (Trainer Battle) - Pokémon X / Pokémon Y",
+      "youtubeId": "fb-963tsfOo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872216267-uwwfl",
+      "title": "Battle! (Team Flare)",
+      "youtubeId": "g1V5CGSY1EQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872216785-atwmj",
+      "title": "Lumiose City",
+      "youtubeId": "_FRS-VDWXb0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872217303-jatcn",
+      "title": "Victory Road - Pokémon X / Pokémon Y",
+      "youtubeId": "eRXrjc9y1mo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872217828-br8ts",
+      "title": "Battle! (Champion) - Pokémon X / Pokémon Y",
+      "youtubeId": "Wd1Trm9uvT0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872218345-u0421",
+      "title": "Battle! (Steven)",
+      "youtubeId": "L8PKf4lEq8A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872218862-vgekq",
+      "title": "Battle! (Lorekeeper Zinnia)",
+      "youtubeId": "XERHmuENb6U"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872219382-rasgx",
+      "title": "Battle! (Wild Pokémon) - Pokémon Sun / Pokémon Moon",
+      "youtubeId": "jQinRt-mxgo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872219899-jw2y1",
+      "title": "Battle! (Trainer) - Pokémon Sun / Pokémon Moon",
+      "youtubeId": "nHBTDx61T6I"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872220418-u9h0m",
+      "title": "Battle! (Island Kahuna)",
+      "youtubeId": "ksttOen-88o"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872220939-r5yw1",
+      "title": "Battle! (Gladion)",
+      "youtubeId": "IeLmFNW5BhE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872221456-caqvt",
+      "title": "Battle! (Elite Four) / Battle! (Solgaleo / Lunala)",
+      "youtubeId": "sAvJ86Qz8m4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872313611-bauiz",
+      "title": "Engage the Enemy",
+      "youtubeId": "lkdqkcFHYXE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872221977-tp6dw",
+      "title": "The Battle at the Summit!",
+      "youtubeId": "vxobiZ-hxTk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872222754-aqx7j",
+      "title": "Mute City",
+      "youtubeId": "oqRVGH5dQ-Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872223270-hde44",
+      "title": "Mute City (Melee)",
+      "youtubeId": "_e2kMLkxTns"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872223788-2nesw",
+      "title": "Mute City (Brawl)",
+      "youtubeId": "SfuBJS8Wtpk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872224306-q98du",
+      "title": "Mute City (for 3DS / Wii U)",
+      "youtubeId": "tbhS4W1SpD4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872224825-h2hsd",
+      "title": "Big Blue",
+      "youtubeId": "bqW2KowiKG0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872225916-il50r",
+      "title": "Big Blue (Melee)",
+      "youtubeId": "kuJaG98QWLU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872226435-cqqko",
+      "title": "Sand Ocean",
+      "youtubeId": "VH87TIwsbWU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872227472-999uv",
+      "title": "Death Wind",
+      "youtubeId": "33GiyfG9HAE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872227987-q7t4p",
+      "title": "F-ZERO Medley",
+      "youtubeId": "eM3n7YoVeW0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872228505-hzp4v",
+      "title": "Silence",
+      "youtubeId": "po0o12wUYV0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872229022-34lmr",
+      "title": "Port Town",
+      "youtubeId": "FE-ulWC-JH8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872229539-tulgb",
+      "title": "Red Canyon",
+      "youtubeId": "OrWm7mIgXa8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872230058-f6lip",
+      "title": "White Land",
+      "youtubeId": "pa1w8xPFJnE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872231093-ufssf",
+      "title": "White Land II",
+      "youtubeId": "WzzYq8eizvU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872231611-fqx62",
+      "title": "Fire Field",
+      "youtubeId": "OEIhAMpMcew"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872232651-tqid2",
+      "title": "Car Select",
+      "youtubeId": "lRJbQevVmxw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872233167-vjobi",
+      "title": "Dream Chaser",
+      "youtubeId": "XRzVhh7razc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872233689-k7bbo",
+      "title": "Devil's Call in Your Heart",
+      "youtubeId": "-vH38J3HLd8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872234208-7o3fn",
+      "title": "Climb Up! And Get the Last Chance!",
+      "youtubeId": "NmrcCLmkR1M"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872234724-wae1r",
+      "title": "Brain Cleaner",
+      "youtubeId": "NvyJjL5jPCs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872235244-zytyj",
+      "title": "Shotgun Kiss",
+      "youtubeId": "M1VRDz2Sd5c"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872235763-th1x4",
+      "title": "Planet Colors",
+      "youtubeId": "r4UY-vHBXAg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872236541-60hon",
+      "title": "Pollyanna (I Believe in You)",
+      "youtubeId": "0YdU14g75ok"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872237066-c3gq2",
+      "title": "Humoresque of a Little Dog",
+      "youtubeId": "5nlLtbT8Fkw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872237582-yqx07",
+      "title": "Magicant",
+      "youtubeId": "9kZDBzO2OBY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872238099-g13nq",
+      "title": "Magicant (for 3DS / Wii U)",
+      "youtubeId": "U0eAil_Z-80"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872238616-xa9w8",
+      "title": "Bein' Friends",
+      "youtubeId": "tY-e40hHgR8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872239132-onvo2",
+      "title": "Snowman",
+      "youtubeId": "MZeaiVyl1bY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872239652-qewpr",
+      "title": "Onett Theme / Winters Theme",
+      "youtubeId": "oFv-aWo4vD0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872240168-3z9p1",
+      "title": "Fourside",
+      "youtubeId": "tlJ1VjJr1wc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872240685-17iuc",
+      "title": "Fourside (Melee)",
+      "youtubeId": "epC-ds6o3dQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872241255-1a0jo",
+      "title": "Smiles and Tears",
+      "youtubeId": "FMW_SrIXXrE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872241774-qrae0",
+      "title": "Mother 3 Love Theme",
+      "youtubeId": "oOfD_z4hAgA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872242296-x6xxr",
+      "title": "Unfounded Revenge / Smashing Song of Praise",
+      "youtubeId": "5Z-O1z5Iq2M"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872242815-66zu2",
+      "title": "You Call This a Utopia?!",
+      "youtubeId": "cJk05CE5hmQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872243332-8ncm3",
+      "title": "Porky's Theme",
+      "youtubeId": "XjIvDlapYB8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872244109-qwr0d",
+      "title": "Fire Emblem Theme",
+      "youtubeId": "EgfAIlrtHIg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872244628-rqd77",
+      "title": "Fire Emblem Theme (Heroic Origins)",
+      "youtubeId": "x_b2Hh76tro"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872245148-k326w",
+      "title": "Code Name: F.E.",
+      "youtubeId": "7G5pe8PHsjs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872245666-ak1zq",
+      "title": "Lords-A Chance Encounter",
+      "youtubeId": "bk4kJcTdeAU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872246186-g1kgz",
+      "title": "Story 5 Meeting",
+      "youtubeId": "J-2yt1_zaN4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872246708-gwcv9",
+      "title": "Shadow Dragon Medley",
+      "youtubeId": "ess-qXyd2Co"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872247227-dnz7d",
+      "title": "Coliseum Series Medley",
+      "youtubeId": "LBpLs2_eGzA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872247745-0ctvd",
+      "title": "March to Deliverance",
+      "youtubeId": "SJcuSPyBTuA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872248266-eb99r",
+      "title": "With Mila's Divine Protection (Celica Map 1)",
+      "youtubeId": "9BHFjv6h4H0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872248784-cz2ld",
+      "title": "Fight 1 - Fire Emblem Gaiden",
+      "youtubeId": "5lC_I42CTKU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872249300-28sry",
+      "title": "Lords-Showdown",
+      "youtubeId": "Sq1TawQqThg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872249818-v8685",
+      "title": "Those Who Challenge Gods",
+      "youtubeId": "gt8TsqfnYhE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872250340-qe7sn",
+      "title": "Under This Banner",
+      "youtubeId": "VtxANaYVPLs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872250856-lx7rf",
+      "title": "Advance",
+      "youtubeId": "6vRGHohRvBE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872251374-ahs6w",
+      "title": "Fire Emblem: Mystery of the Emblem Medley",
+      "youtubeId": "Q68vMiH9_bA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872251897-e3mg5",
+      "title": "Meeting Theme Series Medley",
+      "youtubeId": "Uv2iheaYRAc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872252412-vph2o",
+      "title": "Edge of Adversity",
+      "youtubeId": "PKazZ_Uhf5k"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872252929-acqy0",
+      "title": "Beyond Distant Skies - Roy's Departure",
+      "youtubeId": "WB3Yd-_VtMw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872253449-f1v57",
+      "title": "Winning Road - Roy's Hope",
+      "youtubeId": "Gd-Wp2I4FPY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872253967-8hl4i",
+      "title": "Attack - Fire Emblem",
+      "youtubeId": "9yraO0MHhak"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872254484-usa54",
+      "title": "Preparing to Advance",
+      "youtubeId": "DJrMTDQ2z3A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872255001-8m0cx",
+      "title": "Victory is Near",
+      "youtubeId": "h7MhG50hRNk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872255544-yvwpf",
+      "title": "Crimean Army Sortie",
+      "youtubeId": "3VLHR3A3KCI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872256115-rnai1",
+      "title": "Against the Dark Knight",
+      "youtubeId": "i4iaPTB3DsI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872256634-czkzy",
+      "title": "Power-Hungry Fool",
+      "youtubeId": "304DcD78DfU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872257151-p3p3z",
+      "title": "Eternal Bond",
+      "youtubeId": "HsE-Ia7jQX8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872257670-j7l3l",
+      "title": "The Devoted",
+      "youtubeId": "zhTPSZMysJ8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872258185-bzzmc",
+      "title": "Time of Action",
+      "youtubeId": "9eSKUBFhLaM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872258727-8bhhq",
+      "title": "Prelude (Ablaze)",
+      "youtubeId": "76TqiSXOyBA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872259246-ufyjc",
+      "title": "Duty (Ablaze)",
+      "youtubeId": "hBN-PPhOQ0Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872259768-5ilx9",
+      "title": "Destiny (Ablaze)",
+      "youtubeId": "AiAEL5BrKu0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872260287-oi4yp",
+      "title": "Conquest (Ablaze)",
+      "youtubeId": "WwuLGdM9UcU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872260806-ba7e4",
+      "title": "Id (Purpose)",
+      "youtubeId": "iY5WJ4AIKyU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872262358-xtwq3",
+      "title": "Lost in Thoughts All Alone (JP)",
+      "youtubeId": "wAz-oKvPF-Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872261841-jwerh",
+      "title": "Lost in Thoughts All Alone",
+      "youtubeId": "EiQdW9Q0vvg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872263394-hiwe7",
+      "title": "Lost in Thoughts All Alone (for 3DS / Wii U)",
+      "youtubeId": "X1p-E3AoS0w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872263912-v6fq5",
+      "title": "Gear Up For…",
+      "youtubeId": "ojKwn1pXF7o"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872264426-uurqc",
+      "title": "Lord of a Dead Empire",
+      "youtubeId": "2lGXNQ5BTyY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872264943-dk9yl",
+      "title": "The Scions' Dance in Purgatory",
+      "youtubeId": "w91PQhV-9q8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872265459-dq8l7",
+      "title": "Fire Emblem: Three Houses Main Theme (JP)",
+      "youtubeId": "lzc1p7puP5M"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872265978-mkeiu",
+      "title": "Fire Emblem: Three Houses Main Theme",
+      "youtubeId": "FB5y3Zy9pt0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872266495-gkj9p",
+      "title": "Fódlan Winds",
+      "youtubeId": "uw0NJ1vusT0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872267012-z96em",
+      "title": "Blue Skies and a Battle",
+      "youtubeId": "EuZM3hKdIjM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872267529-y1kvy",
+      "title": "Tearing Through Heaven",
+      "youtubeId": "bwVB5O4xUTo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872268046-3xug5",
+      "title": "Chasing Daybreak",
+      "youtubeId": "j8YsJMsSPyA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872268561-hpf08",
+      "title": "Between Heaven and Earth",
+      "youtubeId": "QJoi1bKDwGg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872269079-7pbef",
+      "title": "Paths That Will Never Cross",
+      "youtubeId": "WgCC3DWj5Po"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872269598-sd6se",
+      "title": "The Apex of the World",
+      "youtubeId": "ixy63_8uKq0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872270121-7n76m",
+      "title": "The Edge of Dawn (Seasons of Warfare) (JP)",
+      "youtubeId": "NJVExfBZfnI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872270639-sgloq",
+      "title": "The Edge of Dawn (Seasons of Warfare)",
+      "youtubeId": "KIYhP9iZHss"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872271467-6bx9q",
+      "title": "Flat Zone",
+      "youtubeId": "z-1MuI6FMMY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872271986-3rfpd",
+      "title": "Flat Zone 2",
+      "youtubeId": "U6n2SKxdo0M"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872272765-5uyd6",
+      "title": "Title Theme - Kid Icarus",
+      "youtubeId": "LxgNvDnwhXE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872273284-in9my",
+      "title": "Kid Icarus Retro Medley",
+      "youtubeId": "5c02LveV_Mk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872273802-y533v",
+      "title": "Underworld",
+      "youtubeId": "i6OXmb8Lk5I"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872274322-n9bti",
+      "title": "Overworld",
+      "youtubeId": "DY2GWRCTMDw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872274842-0lwp3",
+      "title": "Boss Fight 1 - Kid Icarus: Uprising",
+      "youtubeId": "J98yJbT-F_U"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872275362-4nrn4",
+      "title": "Magnus's Theme",
+      "youtubeId": "Oyi2RziXOrE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872275881-iw848",
+      "title": "Dark Pit's Theme",
+      "youtubeId": "84KFYyjyULo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872276399-00jg4",
+      "title": "In the Space-Pirate Ship",
+      "youtubeId": "v81Pk7DahOo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872276920-49eyy",
+      "title": "Hades's Infernal Theme",
+      "youtubeId": "3xH7ZeBEMiQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872277437-00mmx",
+      "title": "Wrath of the Reset Bomb",
+      "youtubeId": "QrYpeDFSjw8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872277954-rznsh",
+      "title": "Thunder Cloud Temple",
+      "youtubeId": "AUgflJYbNvQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872278469-nnmty",
+      "title": "Lightning Chariot Base",
+      "youtubeId": "6LWnyEOvCN4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872278990-xftp6",
+      "title": "Destroyed Skyworld",
+      "youtubeId": "wgE7RPue76w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872279766-0gbo4",
+      "title": "WarioWare, Inc.",
+      "youtubeId": "7gPB3pv3Dvk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872280285-71zdf",
+      "title": "WarioWare, Inc. Medley",
+      "youtubeId": "ogtIXiaK17E"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872280799-ey9cn",
+      "title": "Ashley's Song (JP) (Brawl)",
+      "youtubeId": "NnGmUYd_vig"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872281316-etvtt",
+      "title": "Ashley's Song",
+      "youtubeId": "JShrAjK0dsk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872281834-jqww0",
+      "title": "Ashley's Song (JP) (for 3DS / Wii U)",
+      "youtubeId": "PWLaachi994"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872282351-eaje4",
+      "title": "Mike's Song (JP)",
+      "youtubeId": "P5YKCo76ZRo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872282869-fqojn",
+      "title": "Mike's Song",
+      "youtubeId": "O83YUf0nX0k"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872283384-w11p8",
+      "title": "Mona Pizza's Song (JP)",
+      "youtubeId": "aP_8CGOtquI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872283902-d8cjg",
+      "title": "Mona Pizza's Song",
+      "youtubeId": "wnJJpx9DfVo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872284421-1pth3",
+      "title": "Ruins - Wario Land: Shake It!",
+      "youtubeId": "XvX2E9eIlAA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872284939-uui96",
+      "title": "Gamer",
+      "youtubeId": "essNaQnWRzI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872285711-ts1eu",
+      "title": "Main Theme - Pikmin",
+      "youtubeId": "AKtCXqfHT6E"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872286802-99d15",
+      "title": "Forest of Hope",
+      "youtubeId": "WAPqCrqQ6v8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872287319-7ukak",
+      "title": "Stage Clear / Title Theme - Pikmin",
+      "youtubeId": "FQLr2GAQNXQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872287837-yunqo",
+      "title": "Environmental Noises",
+      "youtubeId": "59HMi4s2FH0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872288359-e3vwx",
+      "title": "World Map - Pikmin 2",
+      "youtubeId": "B16h39zS-Zc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872288873-0yu78",
+      "title": "Stage Select - Pikmin 2",
+      "youtubeId": "p3XDfutu8mM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872289391-r33yv",
+      "title": "Garden of Hope",
+      "youtubeId": "t1cgwheKnvg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872290428-hysck",
+      "title": "Mission Mode - Pikmin 3",
+      "youtubeId": "foK3P1wvt84"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872290944-czko8",
+      "title": "The Keeper of the Lake",
+      "youtubeId": "wte2LJnKXpc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872291459-wawke",
+      "title": "Flashes of Fear",
+      "youtubeId": "ZIcruNQqOyo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872291981-1a036",
+      "title": "Over Wintry Mountains",
+      "youtubeId": "ry_NBA_h-Yw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872292496-0qx5x",
+      "title": "Fragment of Hope",
+      "youtubeId": "ZKD1rnFQn58"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872293272-igblr",
+      "title": "Title Theme - Animal Crossing",
+      "youtubeId": "59Umo6xzK0s"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872293791-3dc09",
+      "title": "Go K.K. Rider!",
+      "youtubeId": "eX0mEK8snHU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872294311-qvnvw",
+      "title": "Title Theme - Animal Crossing: Wild World",
+      "youtubeId": "32XlxoZ7BKU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872294827-huw03",
+      "title": "Title Theme - Animal Crossing: Wild World (Brawl)",
+      "youtubeId": "v1vIXibI5cs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872295347-njixb",
+      "title": "2:00 a.m. - Animal Crossing: Wild World",
+      "youtubeId": "zxNG_tF3JgU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872295866-duv5r",
+      "title": "Town Hall and Tom Nook's Store - Animal Crossing: Wild World",
+      "youtubeId": "XSGGgq5tqyA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872296383-wwmvg",
+      "title": "The Roost - Animal Crossing: Wild World",
+      "youtubeId": "0dQ6-U-7l24"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872296902-fvb8w",
+      "title": "Plaza / Title Theme - Animal Crossing: City Folk / Animal Crossing: Wild World",
+      "youtubeId": "K2VPgi_8qQ4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872297426-z02zk",
+      "title": "Outdoors at 7 p.m. (Sunny) / Main Street - Animal Crossing: New Leaf",
+      "youtubeId": "ciRTviRUMU4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872297942-tyktv",
+      "title": "Kapp'n's Song",
+      "youtubeId": "HuOecvCAgBk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872298897-4udda",
+      "title": "Tour - Animal Crossing: New Leaf",
+      "youtubeId": "S_a2e0QxfEE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872299433-19jpd",
+      "title": "Tortimer Island Medley",
+      "youtubeId": "mMWMrhoqJPQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872299971-angbk",
+      "title": "Bubblegum K.K.",
+      "youtubeId": "YRNhyW4DBKM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872300506-akzop",
+      "title": "Title Theme - Animal Crossing: Happy Home Designer",
+      "youtubeId": "CK7bXuUa8_4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872301039-68cj6",
+      "title": "House Preview",
+      "youtubeId": "smuAT-Lu1Ss"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872301573-vw0p7",
+      "title": "K.K. Cruisin'",
+      "youtubeId": "PQkx513d3AY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872302106-6ummw",
+      "title": "K.K. Western",
+      "youtubeId": "ow4vVlLrIus"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872302645-0sdp1",
+      "title": "K.K. Gumbo",
+      "youtubeId": "i0-5Z4YBXMU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872303178-6mbxs",
+      "title": "Rockin' K.K.",
+      "youtubeId": "kAjZb3eY09g"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872303716-ff115",
+      "title": "DJ K.K.",
+      "youtubeId": "eAotVjvC3wg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872304252-zn0by",
+      "title": "K.K. Condor",
+      "youtubeId": "hn_t6Q65WjA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872305059-geeis",
+      "title": "Main Menu - Wii Fit",
+      "youtubeId": "8ai0DWQ6ISI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872305595-sie2c",
+      "title": "Super Hoop",
+      "youtubeId": "K-XzcvsXprw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872306136-m23hs",
+      "title": "Rhythm Boxing",
+      "youtubeId": "uexMDLq9Nnk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872306668-7irwh",
+      "title": "Advanced Step",
+      "youtubeId": "sr0sxzvvoSA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872307201-ty886",
+      "title": "Yoga",
+      "youtubeId": "DV0vof8WRdU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872307737-30tm9",
+      "title": "Skateboard Arena (Free Mode)",
+      "youtubeId": "lcEf1Q9wzes"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872308270-i61b2",
+      "title": "Mischievous Mole-Way",
+      "youtubeId": "f4CiILKBPwI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872308807-2qrvh",
+      "title": "Wii Fit Plus Medley",
+      "youtubeId": "7vhjsYLD3zE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872309338-wqnmy",
+      "title": "Training Menu - Wii Fit U",
+      "youtubeId": "BLB3u_qxLIY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872309875-ryewy",
+      "title": "Core Luge",
+      "youtubeId": "Gd2LRvW47jE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872314202-nab8f",
+      "title": "Time to Fight! - Xenoblade Chronicles",
+      "youtubeId": "0wWOscBxIcs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872314736-3eicv",
+      "title": "Gaur Plain",
+      "youtubeId": "S3J5kz8-xdY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872315274-tzwhl",
+      "title": "Gaur Plain (Night)",
+      "youtubeId": "fhiLD14_UVw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872315812-neqfq",
+      "title": "Xenoblade Chronicles Medley",
+      "youtubeId": "YaygTckpNNk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872316346-zmhzd",
+      "title": "An Obstacle in Our Path - Xenoblade Chronicles",
+      "youtubeId": "Aynvnr0WYLk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872316879-yjnae",
+      "title": "You Will Know Our Names",
+      "youtubeId": "l0cfncRKFME"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872317412-d9r2m",
+      "title": "Mechanical Rhythm",
+      "youtubeId": "89BbyQqlMOA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872317946-db9dx",
+      "title": "Xenoblade Chronicles 2 Medley",
+      "youtubeId": "xbSZeP7aD44"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872318479-6tu86",
+      "title": "Argentum",
+      "youtubeId": "hFmuc_TqkUM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872319014-kvxwg",
+      "title": "A Ship in a Stormy Sea",
+      "youtubeId": "ApixG6pfe1A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872319549-zniyp",
+      "title": "Exploration",
+      "youtubeId": "_Q3li09dFHU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872320376-6ev4w",
+      "title": "Crossing Swords",
+      "youtubeId": "cO3w60qPu7s"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872320908-z7541",
+      "title": "Incoming!",
+      "youtubeId": "RLHIKVqhBg8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872321445-v1kbl",
+      "title": "Gormott",
+      "youtubeId": "9BIj532et0g"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872321982-semas",
+      "title": "Battle!! - Xenoblade Chronicles 2",
+      "youtubeId": "Hi6F1agjy2c"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872322521-i4c6n",
+      "title": "Tiger! Tiger!",
+      "youtubeId": "aD8_cWHpU4k"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872323053-wbpnk",
+      "title": "Death Match with Torna",
+      "youtubeId": "8AmkxsJY0Rs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872323587-j4knh",
+      "title": "Those Who Stand Against Our Path - Xenoblade Chronicles 2",
+      "youtubeId": "4BZF17JgWec"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872324122-8t1jp",
+      "title": "Counterattack",
+      "youtubeId": "zl5nLdvwzLw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872324660-5e1v5",
+      "title": "You Will Recall Our Names",
+      "youtubeId": "OhrRV2qXOoo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872325192-88cje",
+      "title": "Driver Vs",
+      "youtubeId": "nxCNbEcL3Eg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872325724-0br4s",
+      "title": "Mor Ardain - Roaming the Wastes -",
+      "youtubeId": "pzt2VWkCeAc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872326261-536il",
+      "title": "Bringer of Chaos! Ultimate",
+      "youtubeId": "YGn_0OSaZfM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872326793-41qyo",
+      "title": "Still, Move Forward!",
+      "youtubeId": "yOzSEK98ed4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872327334-77c0o",
+      "title": "Praetor Amalthus - The Acting God -",
+      "youtubeId": "fWQBbpgvvyM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872327866-6obth",
+      "title": "Battle!!/Torna",
+      "youtubeId": "k1Ep-WpHzFM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872328668-08igo",
+      "title": "Splattack!",
+      "youtubeId": "lbU-iAT17dQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872329800-tew07",
+      "title": "Ink or Sink",
+      "youtubeId": "ZPeEpB0JUVo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872330335-klk67",
+      "title": "Seaskape",
+      "youtubeId": "2NSX5hcxBbU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872330869-dyb39",
+      "title": "Kraken Up",
+      "youtubeId": "b9bNAsiQwJo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872331401-5qjvh",
+      "title": "Metalopod",
+      "youtubeId": "vjT5Zrm33DY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872331936-ye2t3",
+      "title": "Split & Splat",
+      "youtubeId": "A6LcKxMt_bo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872332475-ux3fn",
+      "title": "Now or Never!",
+      "youtubeId": "pPPIMsl-ANk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872333047-2hso3",
+      "title": "Now or Never! - Splatoon",
+      "youtubeId": "2Rtd3UQbMZ4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872333582-qjgjp",
+      "title": "Now or Never! - Splatoon 2",
+      "youtubeId": "EfhcGmqzIN0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872334117-ufb5x",
+      "title": "Ink Me Up",
+      "youtubeId": "qm0ifqqcxZ8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872334655-c1srq",
+      "title": "Now or Never! (Splatfest Version) - Splatoon",
+      "youtubeId": "3CH7qHsgVLo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872335195-tk2fn",
+      "title": "Now or Never! (Splatfest Version) - Splatoon 2",
+      "youtubeId": "BX0gb3WaGdo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872335730-1j8y2",
+      "title": "Octoweaponry",
+      "youtubeId": "zdqth9t0s40"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872336266-0sxw9",
+      "title": "I Am Octavio",
+      "youtubeId": "KC3jlhDj9yk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872336802-cpb7j",
+      "title": "Calamari Inkantation",
+      "youtubeId": "hNrW1vVmOX8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872337333-96uat",
+      "title": "Bomb Rush Blush",
+      "youtubeId": "zC_qlxcf_oo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872337863-icx3s",
+      "title": "Inkoming!",
+      "youtubeId": "q4qt-LG0H9w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872338398-chy3m",
+      "title": "Rip Entry",
+      "youtubeId": "IyCmQAGYEjQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872338932-66xf1",
+      "title": "Undertow",
+      "youtubeId": "xNNSaQ90eTs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872339467-69hcg",
+      "title": "Don't Slip",
+      "youtubeId": "-wyg9sFlqxk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872340003-h1y9x",
+      "title": "Endolphin Surge",
+      "youtubeId": "bWUbZczCmnw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872340539-udo6r",
+      "title": "Ebb & Flow",
+      "youtubeId": "giEm5oihliY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872341071-0ov0v",
+      "title": "Acid Hues",
+      "youtubeId": "Qz3Ga0bvo4s"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872341610-fum8f",
+      "title": "Muck Warfare",
+      "youtubeId": "48rZM9cFHN4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872342148-78urr",
+      "title": "Deluge Dirge",
+      "youtubeId": "182e0cNnYxs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872349117-omxls",
+      "title": "Green Hill Zone",
+      "youtubeId": "EDA4QTJDE9U"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872349645-qr6if",
+      "title": "Scrap Brain Zone",
+      "youtubeId": "PLfH6-5Isx0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872350178-6hpm9",
+      "title": "Emerald Hill Zone",
+      "youtubeId": "HY0UqSulxFs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872350709-rkeup",
+      "title": "Sonic Boom",
+      "youtubeId": "99zlf3Cs--M"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872351238-sdo1t",
+      "title": "Angel Island Zone",
+      "youtubeId": "4ZQ1HIHK4xU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872351770-4mp8b",
+      "title": "Super Sonic Racing",
+      "youtubeId": "RaYz4DpGiTA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872352304-pqp0g",
+      "title": "Open Your Heart",
+      "youtubeId": "LsRLzCBTYn8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872352835-h19le",
+      "title": "Live & Learn",
+      "youtubeId": "pIP-ZZ_Sh4o"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872353367-2z975",
+      "title": "Escape from the City",
+      "youtubeId": "agGnBsj7xME"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872353900-5fa83",
+      "title": "Sonic Heroes",
+      "youtubeId": "feEhNmp8TZk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872354432-wqd60",
+      "title": "His World (Theme of Sonic the Hedgehog - 2006 E3 Version)",
+      "youtubeId": "lWOJNKEHSiM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872354967-s1syj",
+      "title": "Seven Rings in Hand",
+      "youtubeId": "xkMMdD3_76k"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872355502-nvbvq",
+      "title": "Knight of the Wind",
+      "youtubeId": "9y1hrcDPfHo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872356033-jknbd",
+      "title": "Reach for the Stars",
+      "youtubeId": "f56WjQVuAao"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872356566-j3923",
+      "title": "Rooftop Run",
+      "youtubeId": "cTbCikyRMtI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872357099-fm444",
+      "title": "Wonder World",
+      "youtubeId": "o1Lr40I3Ocw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872357631-mgpme",
+      "title": "Windy Hill - Zone 1",
+      "youtubeId": "ouWykelXLno"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872358160-b1b1p",
+      "title": "Lights, Camera, Action! (Studiopolis Zone Act 1)",
+      "youtubeId": "ekpGL7lqAvU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872358689-pdxr0",
+      "title": "Fist Bump",
+      "youtubeId": "-sPArPNVq5s"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872359221-7k96x",
+      "title": "Sunset Heights",
+      "youtubeId": "WdJG1SOJBmM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872360070-6wq33",
+      "title": "Cut Man Stage",
+      "youtubeId": "LqMtnJ8BbJk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872360603-8nqjp",
+      "title": "Guts Man Stage",
+      "youtubeId": "zS6t6ohxYIk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872361133-lzj7x",
+      "title": "Ice Man Stage",
+      "youtubeId": "aOdAd6yMuL4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872361662-fevlf",
+      "title": "Bomb Man Stage",
+      "youtubeId": "TjISTEHLAYs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872362193-c6mka",
+      "title": "Fire Man Stage",
+      "youtubeId": "nMmgBQbKcU0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872362728-gatbf",
+      "title": "Mega Man 2 Medley",
+      "youtubeId": "IFFNRDbkBXE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872363255-u2ofr",
+      "title": "Metal Man Stage",
+      "youtubeId": "VXMhQcOHrS8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872363785-h70e7",
+      "title": "Air Man Stage",
+      "youtubeId": "vQS-cAoBeqA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872364320-real6",
+      "title": "Quick Man Stage",
+      "youtubeId": "Q0bWIV4Emow"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872364851-bo780",
+      "title": "Crash Man Stage",
+      "youtubeId": "83DU4ArPU_M"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872365382-7r4zj",
+      "title": "Flash Man Stage",
+      "youtubeId": "hIxhJnWqn54"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872365914-yd2dk",
+      "title": "Wood Man Stage",
+      "youtubeId": "2Mjo2-Z3L5A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872366446-eesc9",
+      "title": "Hard Man Stage",
+      "youtubeId": "ASzYtTXBBHs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872366978-czrfw",
+      "title": "Top Man Stage",
+      "youtubeId": "g9kqMCTFT7I"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872367513-3h6e0",
+      "title": "Snake Man Stage",
+      "youtubeId": "jsgORGzHbfs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872368039-hseej",
+      "title": "Spark Man Stage",
+      "youtubeId": "het0BSoWr0s"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872368575-gk90r",
+      "title": "Shadow Man Stage",
+      "youtubeId": "9QnROQ9IUMI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872369103-lfzmj",
+      "title": "Mega Man 4 Medley",
+      "youtubeId": "4C7yzwYhA-E"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872369641-ye5p2",
+      "title": "Gravity Man Stage",
+      "youtubeId": "VUS-R6h_FM0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872370170-jumd5",
+      "title": "Napalm Man Stage",
+      "youtubeId": "e1ZCKZeEst8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872370705-wdvhp",
+      "title": "Dark Man Stage",
+      "youtubeId": "WUzw1SOqFvE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872371237-hc1re",
+      "title": "Flash in the Dark (Dr. Wily Stage 1)",
+      "youtubeId": "M6U1GvPS5Qo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872371772-plamw",
+      "title": "We're Robots (Dr. Wily Stage 2)",
+      "youtubeId": "2_FV3Yh5sIs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872372307-ro7tl",
+      "title": "Mega Man Retro Medley",
+      "youtubeId": "WKgUS50GrVw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872372843-7jv9u",
+      "title": "Mega Man 2 Retro Medley",
+      "youtubeId": "tb3cSG4pGVo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872373373-pj108",
+      "title": "Mega Man 3 Retro Medley",
+      "youtubeId": "WVH1r6bPBxc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872373908-x8h50",
+      "title": "Mega Man 4-6 Retro Medley",
+      "youtubeId": "fBbBMTU18xQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872374438-36l8k",
+      "title": "Opening Stage",
+      "youtubeId": "yzQav3ZMg3s"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872375022-44q6d",
+      "title": "X vs ZERO",
+      "youtubeId": "bUaYWWToEnw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872375551-t4kmh",
+      "title": "Zero (Theme of ZERO (from Mega Man X))",
+      "youtubeId": "luOeIkdkTZs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872376084-5smxy",
+      "title": "Shooting Star",
+      "youtubeId": "wVhgY-lr7Pg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872376879-rn4dt",
+      "title": "PAC-MAN",
+      "youtubeId": "9ZcAIj4Kf3s"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872377413-55j2c",
+      "title": "PAC-MAN (Club Mix)",
+      "youtubeId": "jy79LWjuc-A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872377945-1hrsz",
+      "title": "PAC-MAN'S PARK / BLOCK TOWN",
+      "youtubeId": "O0VlmmICZ3I"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872378478-iybni",
+      "title": "Galaga Medley",
+      "youtubeId": "uXETPPk27SQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872379013-8sq4p",
+      "title": "Mappy Medley",
+      "youtubeId": "GbivMk17IA4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872379550-tcs4l",
+      "title": "Libble Rabble Retro Medley",
+      "youtubeId": "XlCFMcgYmaY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872380083-n7yu0",
+      "title": "Metro-Cross Retro Medley",
+      "youtubeId": "QA84CMW6p5c"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872380618-hr9cm",
+      "title": "Sky Kid Retro Medley",
+      "youtubeId": "BpYX75c1m78"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872381149-rld51",
+      "title": "Area 1 - Dragon Spirit",
+      "youtubeId": "_PsIREfCwZc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872381686-8av5k",
+      "title": "Namco Arcade '80s Retro Medley 1",
+      "youtubeId": "babIqFIn8Rg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872382219-m36xm",
+      "title": "Namco Arcade '80s Retro Medley 2",
+      "youtubeId": "uLcPf75ysYo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872383030-zn5o3",
+      "title": "Ryu Stage",
+      "youtubeId": "eX39ZtXAIak"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872384099-3p83c",
+      "title": "Guile Stage",
+      "youtubeId": "D-KzsxKn5Ho"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872384630-rk22y",
+      "title": "Vega Stage",
+      "youtubeId": "Feiz5xjql_8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872406307-v7s78",
+      "title": "Aerith's Theme",
+      "youtubeId": "jpU1_DACDns"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872406839-37k8z",
+      "title": "Main Theme of FINAL FANTASY VII",
+      "youtubeId": "PpXulAXouLI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872408446-pmzmo",
+      "title": "One-Winged Angel",
+      "youtubeId": "qyRyDDcA48E"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872409776-8l9hi",
+      "title": "Theme of Bayonetta - Mysterious Destiny (Instrumental)",
+      "youtubeId": "3squPDObFFo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872410303-up6bj",
+      "title": "One of a Kind",
+      "youtubeId": "nPPqFMGYzPI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872410834-nxy0z",
+      "title": "Riders of the Light",
+      "youtubeId": "DhglBVzT0hQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872411367-vfikw",
+      "title": "Let's Hit the Climax!",
+      "youtubeId": "UmPkxBIWmOM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872411901-ppayp",
+      "title": "Red & Black",
+      "youtubeId": "0IsxFR5yafI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872412435-5tydc",
+      "title": "After Burner (∞ Climax Mix)",
+      "youtubeId": "eoDo2tXR0iQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872412967-87fd5",
+      "title": "Friendship",
+      "youtubeId": "sHVC0FzGMDU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872413540-tbtp2",
+      "title": "Let's Dance, Boys!",
+      "youtubeId": "aioIMo2JTZg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872414074-tpj9e",
+      "title": "Tomorrow is Mine (Bayonetta 2 Theme) (Instrumental)",
+      "youtubeId": "tUHbxZdiAdc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872414604-yjytq",
+      "title": "The Legend of Aesir",
+      "youtubeId": "Y1fUMAx6Zo0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872415137-ujcoy",
+      "title": "Time for the Climax!",
+      "youtubeId": "0XjrMptmxgk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872415932-0gdxl",
+      "title": "Vampire Killer",
+      "youtubeId": "La08Q_lVyWM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872416993-7p9xh",
+      "title": "Starker / Wicked Child",
+      "youtubeId": "PRoFSu5jUS4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872417529-rqc1h",
+      "title": "Out of Time",
+      "youtubeId": "uGh870kWFzI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872418066-diy53",
+      "title": "Nothing to Lose",
+      "youtubeId": "KdBpVYdvhcA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872418598-zeehw",
+      "title": "Black Night",
+      "youtubeId": "G6UPiEl-EL8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872419135-me1r8",
+      "title": "Bloody Tears / Monster Dance",
+      "youtubeId": "v3kgurupGGI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872419674-6kygf",
+      "title": "Dwelling of Doom",
+      "youtubeId": "XV2eAQbAd6k"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872420209-xtjmr",
+      "title": "Cross Your Heart",
+      "youtubeId": "0Z7S0bzH7sc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872420793-rty3z",
+      "title": "Can't Wait Until Night",
+      "youtubeId": "rw2KKtkpFwM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872421329-tobhr",
+      "title": "Beginning",
+      "youtubeId": "oaKiNVycglc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872421858-kpbpr",
+      "title": "Mad Forest",
+      "youtubeId": "1Q0w1f3AQlw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872422393-6kyf9",
+      "title": "Aquarius",
+      "youtubeId": "BoUcb-Ksn60"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872422924-6kdef",
+      "title": "Simon Belmont Theme",
+      "youtubeId": "yuNqCBs0SRw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872423463-l8b7j",
+      "title": "Simon Belmont Theme (The Arcade)",
+      "youtubeId": "q5H7lo4kC9I"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872423991-epo6e",
+      "title": "Divine Bloodlines",
+      "youtubeId": "ZvSSkyQ-Xes"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872424521-uthr7",
+      "title": "Slash",
+      "youtubeId": "ZsBsS9uBLSA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872425053-95gwd",
+      "title": "Dance of Illusions",
+      "youtubeId": "6HWjO-xzMOE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872425586-tuqt3",
+      "title": "Iron-Blue Intention",
+      "youtubeId": "m26Oypww5yc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872426125-arii8",
+      "title": "Dracula's Castle",
+      "youtubeId": "-3uFzfjPAlI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872426662-014vd",
+      "title": "Dance of Gold",
+      "youtubeId": "8WfGOSJv7FA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872427197-rsf9g",
+      "title": "Lost Painting",
+      "youtubeId": "4wDEILzMxv0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872427736-u7f7q",
+      "title": "The Tragic Prince",
+      "youtubeId": "pdpKBlj_Zic"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872428269-5xwop",
+      "title": "Awake",
+      "youtubeId": "CvhTKxtpDLg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872428798-wcgq5",
+      "title": "Ruined Castle Gallery",
+      "youtubeId": "wjAPoNX4T1E"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872429326-jryyc",
+      "title": "Lament of Innocence",
+      "youtubeId": "X_zPcfiBOD0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872429858-dzpzb",
+      "title": "Jet Black Incursion",
+      "youtubeId": "d_ToWXbiAvc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872430392-r9c4o",
+      "title": "Crash in the Dark Night",
+      "youtubeId": "Or4Ky1l5gWQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872430924-copls",
+      "title": "Ripped Silence",
+      "youtubeId": "6qtAcd-M2CE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872431455-1pqoy",
+      "title": "Hail from the Past",
+      "youtubeId": "FbqWgt36yrM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872431985-np8ae",
+      "title": "Jail of Jewel",
+      "youtubeId": "38FrZIQ9yEk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872432521-8qu9x",
+      "title": "Twilight Stigmata",
+      "youtubeId": "y3LRtmntZ88"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872433052-a4yog",
+      "title": "Jet Black Wings",
+      "youtubeId": "GpVIReFn1tc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872433584-igfb7",
+      "title": "Go! Getsu Fuma",
+      "youtubeId": "xKvLFFT9vY0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872440572-8cmuf",
+      "title": "Adventure - DRAGON QUEST III",
+      "youtubeId": "PywBuf6W8BQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872441108-yx54k",
+      "title": "Fighting Spirits - DRAGON QUEST III",
+      "youtubeId": "E51T4mGNcUo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872441645-1tp97",
+      "title": "Battle for the Glory - DRAGON QUEST IV",
+      "youtubeId": "SVbqNWSC-tE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872442180-uifo1",
+      "title": "Wagon Wheel's March",
+      "youtubeId": "qM716FE4smw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872442712-7z04i",
+      "title": "War Cry",
+      "youtubeId": "Q75m-DFK33E"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872443245-sgk1u",
+      "title": "Marching through the Fields",
+      "youtubeId": "q8OwJ5xNxKA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872443781-o9qz2",
+      "title": "The Hero Goes Forth with a Determination",
+      "youtubeId": "6_7Uw6LwDM0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872444318-rx0q6",
+      "title": "Unflinchable Courage",
+      "youtubeId": "88M4K-yCsnk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872445122-wrqg5",
+      "title": "Main Theme - Banjo-Kazooie",
+      "youtubeId": "FfbGQZbT0bg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872445654-hdghi",
+      "title": "Spiral Mountain",
+      "youtubeId": "uNdDjud2944"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872446186-d7c4r",
+      "title": "Mumbo's Mountain",
+      "youtubeId": "l5YzbQo3y1A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872446719-2f77p",
+      "title": "Treasure Trove Cove",
+      "youtubeId": "kx2eaNB0Olc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872447255-zvhkc",
+      "title": "Freezeezy Peak",
+      "youtubeId": "4ddzGx3Vu6w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872447793-39g5o",
+      "title": "Gobi's Valley",
+      "youtubeId": "lSpH9KgwZ_A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872448333-ipzt2",
+      "title": "Mad Monster Mansion",
+      "youtubeId": "kFAZay1AXQs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872448866-ikl1p",
+      "title": "Vs. Klungo",
+      "youtubeId": "u3hCcwkU6T8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872449401-357yb",
+      "title": "Vs. Mr. Patch",
+      "youtubeId": "e-6UcypmknM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872449937-kbd72",
+      "title": "Vs. Lord Woo Fak Fak",
+      "youtubeId": "5Yc9-Lyy9oE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872450738-2w63d",
+      "title": "Haremar Faith Capoeira School - Song of the Fight (Believers Will Be Saved) - FATAL FURY",
+      "youtubeId": "dcfq_DxAlq8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872451325-kpl8v",
+      "title": "The Sea Knows - FATAL FURY",
+      "youtubeId": "zqm9hy1ulOI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872451857-61uk6",
+      "title": "Kurikinton - FATAL FURY 2",
+      "youtubeId": "n5v4aQlabDA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872452926-lyt4d",
+      "title": "Kuri Kinton Flavor - KOF XIV",
+      "youtubeId": "M-KIZc76xtA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872453463-gqmt1",
+      "title": "Pasta - FATAL FURY 2",
+      "youtubeId": "BQH2iRKD0Do"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872453999-4qlux",
+      "title": "A New Poem That the South Thailand Wants to Tell - FATAL FURY 2",
+      "youtubeId": "_4O8TfuaCnU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872454532-gvwwu",
+      "title": "Tarkun and Kitapy - FATAL FURY 2",
+      "youtubeId": "6HVpmKj14Kc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872455064-5wahe",
+      "title": "Let's Go to Seoul! - FATAL FURY 2",
+      "youtubeId": "y7IngEqSHeg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872455599-o8hb4",
+      "title": "The London March - FATAL FURY 2",
+      "youtubeId": "EaEpZKTv0sk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872456133-kaj49",
+      "title": "The Working Matador - FATAL FURY 2",
+      "youtubeId": "64boI4zxe1E"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872456669-0acws",
+      "title": "Duck Dub Dub(Duck, You Too)- FATAL FURY SPECIAL",
+      "youtubeId": "VkzS5o72Xas"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872457210-j8xgw",
+      "title": "Soy Sauce for Geese - FATAL FURY SPECIAL",
+      "youtubeId": "BpcCXHLA0BA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872457749-pqvla",
+      "title": "Soy Sauce for Geese - KOF XIV",
+      "youtubeId": "fHz7zOVyn1Y"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872458280-xgfcp",
+      "title": "Big Shot! - FATAL FURY 3",
+      "youtubeId": "rR2aQmdqlw0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872458811-rse2m",
+      "title": "11th Street - FATAL FURY WILD AMBITION",
+      "youtubeId": "hQva5MFZnrM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872459345-9f2ri",
+      "title": "176th Street - KOF '99",
+      "youtubeId": "A82wbBAdq3Y"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872459879-aj1nm",
+      "title": "Ne! - KOF '94",
+      "youtubeId": "aXyToc2p_xY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872460411-cgkwd",
+      "title": "DESERT REQUIEM ~Operation02UM~ - KOF 2002 UM",
+      "youtubeId": "JZ_RuQPSuMQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872460944-mjb7n",
+      "title": "ESAKA!! - KOF 2002 UM",
+      "youtubeId": "gqGfGlEx6Nc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872461480-h7gcd",
+      "title": "Stormy Saxophone 2 - KOF '96",
+      "youtubeId": "sJPbzLu9s84"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872462012-dvhzx",
+      "title": "KD-0079+ - KOF 2002 UM",
+      "youtubeId": "VwIzd-yAgis"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872462544-k4wr5",
+      "title": "W.W.III - KOF XIV",
+      "youtubeId": "YS7WLBK1aFk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872463075-1td5i",
+      "title": "Terry115 - KOF 2000",
+      "youtubeId": "GC_oelOs7gU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872463607-9crd7",
+      "title": "Street Dancer - KOF XI",
+      "youtubeId": "X2l0Jwaq4KQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872464138-ftg7m",
+      "title": "New Order - KOF XIV",
+      "youtubeId": "hgJKlBC6g74"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872464672-jsbpz",
+      "title": "Undercover - KOF 2002 UM",
+      "youtubeId": "DbTNlTx2PZM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872465208-bqv81",
+      "title": "Cutting Edge - KOF 2002 UM",
+      "youtubeId": "pEfuWMuHQ9E"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872465739-6i05u",
+      "title": "The Second Joker - KOF XIII",
+      "youtubeId": "aQOQR0why6I"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872466321-pr2vp",
+      "title": "Esaka Continues... - KOF XIII",
+      "youtubeId": "cOlzRILKdAM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872466856-8nfwk",
+      "title": "Wild Street - KOF XIII",
+      "youtubeId": "Ghub1STVCsM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872467394-270ym",
+      "title": "Tame a Bad Boy - KOF XIII",
+      "youtubeId": "GqGk3xVfftE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872467926-ypq8x",
+      "title": "KDD-0063 - KOF XIII",
+      "youtubeId": "ooWrGlr2JFU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872468460-rwsad",
+      "title": "Yappari ESAKA - KOF XIV",
+      "youtubeId": "loli9xYXbhA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872468992-quk7r",
+      "title": "Departure from South Town - KOF XIV",
+      "youtubeId": "JEhSjrRD9ZU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872469527-njl8p",
+      "title": "Theme of SYD - Alpha Mission",
+      "youtubeId": "W74mH_DtkdE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872470061-x1b08",
+      "title": "IKARI - KOF XIV",
+      "youtubeId": "wOiy7482mM0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872470595-ztsj2",
+      "title": "Forest World - Athena",
+      "youtubeId": "eUusEfW1O9U"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872471126-pgs67",
+      "title": "Psycho Soldier Theme",
+      "youtubeId": "CD-89DJ9WHQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872471665-taekk",
+      "title": "Psycho Soldier Theme (Overseas Version)",
+      "youtubeId": "DmQ8KDKaKC8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872472201-89yq7",
+      "title": "ART of FIGHT - Art of Fighting",
+      "youtubeId": "SLFKJYlI4yo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872472733-yda9z",
+      "title": "Art of Fighting Ver.230000000.0 - FATAL FURY SPECIAL",
+      "youtubeId": "y82PPIUedSo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872473265-o9tud",
+      "title": "Tuna - SAMURAI SHODOWN",
+      "youtubeId": "wua5z-RJh6Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872473798-b0ebu",
+      "title": "Banquet of Nature - SAMURAI SHODOWN",
+      "youtubeId": "l68PEoYkNbk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872474334-i7elw",
+      "title": "Gaia - SAMURAI SHODOWN",
+      "youtubeId": "8ucl_Xca7rs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872474871-m33s3",
+      "title": "Main Theme from Metal Slug - METAL SLUG",
+      "youtubeId": "JUkKMQAoPzQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872475407-v8qvm",
+      "title": "Assault Theme - METAL SLUG 1-3",
+      "youtubeId": "V0kPcQ7zTwM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872475945-z1zfm",
+      "title": "Final Attack - METAL SLUG 1-6",
+      "youtubeId": "i3X4qxeBzcc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872476474-p5xzr",
+      "title": "Judgment - METAL SLUG 2",
+      "youtubeId": "pQGV8EbJSng"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872477800-zr7rs",
+      "title": "ARMS Grand Prix Official Theme Song",
+      "youtubeId": "brsmaQ_rvio"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872478335-jg947",
+      "title": "Spring Stadium",
+      "youtubeId": "wqJMVLG6zos"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872478867-u7dtz",
+      "title": "Ramen Bowl",
+      "youtubeId": "iG0rEvPSK2I"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872479399-ljlfn",
+      "title": "Ribbon Ring",
+      "youtubeId": "c4SqvsbiXqg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872479928-fy2ve",
+      "title": "Ninja College",
+      "youtubeId": "3GM_1B9iICI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872480461-iqzhx",
+      "title": "Mausoleum",
+      "youtubeId": "JwzmWK5M960"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872480995-fn9jv",
+      "title": "Scrapyard",
+      "youtubeId": "hvZ-lJmYpjU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872481580-131nu",
+      "title": "Cinema Deux",
+      "youtubeId": "0fydo5uaNAk"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872482115-0ulu8",
+      "title": "Buster Beach",
+      "youtubeId": "pZ5NsbRUrgc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872482651-1wvba",
+      "title": "Snake Park",
+      "youtubeId": "zBcS1fOUBdE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872483715-xycg3",
+      "title": "Sky Arena",
+      "youtubeId": "YvyXtgushO4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872484247-ukn01",
+      "title": "Via Dolce",
+      "youtubeId": "z2AMWW_3hZ8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872484777-l2nio",
+      "title": "Temple Grounds",
+      "youtubeId": "Y5jHyoB8w64"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872485308-x4ss2",
+      "title": "Sparring Ring",
+      "youtubeId": "e_cMAPwbAKM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872485839-xgae2",
+      "title": "[NAME REDACTED]",
+      "youtubeId": "mymq9sYM7cA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872486371-pnp1b",
+      "title": "Vs. Hedlok",
+      "youtubeId": "bno-PpNYEjs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872486906-tvc4y",
+      "title": "ARMS Grand Prix Final Battle",
+      "youtubeId": "jm2pbc9YyVo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872491714-rwi5k",
+      "title": "Marine Stadium, Japan",
+      "youtubeId": "1cAEBEGBMVM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872492248-d6jn9",
+      "title": "Chicago, U.S.A.",
+      "youtubeId": "7j7dZ5o7kJU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872492778-38lzr",
+      "title": "Kyoto, Japan",
+      "youtubeId": "n2vZE62zvmM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872493312-pusek",
+      "title": "Heihachi Mishima, the King of Iron Fist",
+      "youtubeId": "AKD8w2OBv8g"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872493844-941xa",
+      "title": "Kazuya Mishima, Devil Kazuya",
+      "youtubeId": "alOeoXPpTH0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872494912-j1610",
+      "title": "Emotionless Passion",
+      "youtubeId": "Qgr0GdvWo7U"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872495447-k8r7p",
+      "title": "Attract -Embu- / Character Select",
+      "youtubeId": "9DnfdGffJRc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872495979-7sspp",
+      "title": "Hwoarang",
+      "youtubeId": "vU3kVPGtMUA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872496513-dpz71",
+      "title": "Jin Kazama",
+      "youtubeId": "vo9RWpd_JIA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872497101-g9qxl",
+      "title": "Heihachi Mishima",
+      "youtubeId": "y30jEq3UZiw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872497637-r8apo",
+      "title": "Opening Movie",
+      "youtubeId": "OwSpYFxVKuU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872498171-pywf6",
+      "title": "Jin Stage",
+      "youtubeId": "Kvjr6ULxAWM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872498701-7f10z",
+      "title": "Kitsch",
+      "youtubeId": "eX46bEXPLvE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872499233-pdd2b",
+      "title": "Bit Crusher",
+      "youtubeId": "D0sHPK3gv9s"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872499767-fyxcd",
+      "title": "Red Hot Fist",
+      "youtubeId": "le7GnUzab4Y"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872500298-8kj5d",
+      "title": "Moonlit Wilderness",
+      "youtubeId": "3UYp_2iE-mc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872500834-w4qqd",
+      "title": "Poolside",
+      "youtubeId": "zcLrGFKGgJw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872501367-dl3m9",
+      "title": "Snow Castle",
+      "youtubeId": "6ZN9lgkGW2I"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872501900-fsh25",
+      "title": "Into Nirvana",
+      "youtubeId": "IBwUQIt-dbE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872502434-udb39",
+      "title": "RESURRECTION",
+      "youtubeId": "tKoPJSZ4mQo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872502965-68g7z",
+      "title": "Ethno Evening",
+      "youtubeId": "Yy-M2IH0fOE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872503501-896oc",
+      "title": "YUKI",
+      "youtubeId": "JuGVNiFyL2k"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872504033-0k6m4",
+      "title": "Only One Fight",
+      "youtubeId": "EVVVGwslyHo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872508295-7pn1m",
+      "title": "New World Order",
+      "youtubeId": "iA8ex4WMfQA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872508828-1k0ie",
+      "title": "No Easy Way Out",
+      "youtubeId": "Sko237v-wW8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872509360-h77os",
+      "title": "Heat Haze Shadow",
+      "youtubeId": "lNTQAESpbic"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872510425-icmbj",
+      "title": "DUOMO DI SIRIO 1st",
+      "youtubeId": "OrDOarb1qQw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872519003-jk0qi",
+      "title": "Duck Hunt Medley",
+      "youtubeId": "EABIdQspr5c"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872519538-ubh2m",
+      "title": "Duck Hunt Medley (for 3DS / Wii U)",
+      "youtubeId": "0HpN2r9VdT4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872520070-r6i7f",
+      "title": "Balloon Fight Medley",
+      "youtubeId": "NzHXOfQcSPY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872520604-rxtn0",
+      "title": "Balloon Trip (Brawl)",
+      "youtubeId": "TkBwfKNjyEA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872521138-1cll9",
+      "title": "Balloon Trip (for 3DS / Wii U)",
+      "youtubeId": "xrw1sfmiCtw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872521671-mswzn",
+      "title": "Clu Clu Land",
+      "youtubeId": "fvvPG3C1BOw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872522206-gh4ny",
+      "title": "Ice Climber (Melee)",
+      "youtubeId": "Ndrfx6e-Vqs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872522735-tdea8",
+      "title": "Ice Climber (Brawl)",
+      "youtubeId": "Sl1BPnzfXmo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872523264-wfkai",
+      "title": "Wrecking Crew Medley",
+      "youtubeId": "68fku2jNU5c"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872523800-hskn7",
+      "title": "Wrecking Crew Medley (for 3DS / Wii U)",
+      "youtubeId": "XNA3B0DQRgc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872524329-4rb1y",
+      "title": "Wrecking Crew Retro Medley",
+      "youtubeId": "349g74qs7kA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872524859-tfkfw",
+      "title": "Power-Up Music - Wrecking Crew",
+      "youtubeId": "TbSlHpPQ4m8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872525392-sozwe",
+      "title": "Stack-Up/Gyromite",
+      "youtubeId": "zxSy6NnFM4Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872525921-p5i9x",
+      "title": "Mach Rider",
+      "youtubeId": "r0c-Au6pgco"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872526456-meshv",
+      "title": "Famicom Medley",
+      "youtubeId": "PwzuAZyMIt4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872526985-y33c9",
+      "title": "The Mysterious Murasame Castle Medley",
+      "youtubeId": "1yROkJsEKvA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872527571-rm02o",
+      "title": "Douchuumen - The Mysterious Murasame Castle",
+      "youtubeId": "HKuLdPYB5dE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872528110-bwyoi",
+      "title": "Shin Onigashima Medley",
+      "youtubeId": "4H2vF1Tw_J0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872528644-6afkq",
+      "title": "Title Theme - 3D Hot Rally",
+      "youtubeId": "V3Yd05ZFPs0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872529172-8ifak",
+      "title": "Tetris: Type A",
+      "youtubeId": "2RboEpuGKvU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872529707-33gqj",
+      "title": "Tetris: Type B",
+      "youtubeId": "7l24C2bp8O4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872530241-95jpe",
+      "title": "Yūyūki Medley",
+      "youtubeId": "2ymkaKELPYg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872530771-ek3bx",
+      "title": "Light Plane",
+      "youtubeId": "o1oc_iUF9js"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872531837-z05ws",
+      "title": "Light Plane (for 3DS / Wii U)",
+      "youtubeId": "7JcJvwBeD9M"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872532365-2sqjy",
+      "title": "Light Plane (Vocal Mix) (for 3DS / Wii U)",
+      "youtubeId": "PI9mi5XPB-k"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872532896-nt3pr",
+      "title": "Turbo Jet",
+      "youtubeId": "BZ2w13eaiVQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872533426-u0npe",
+      "title": "Pedal Glider",
+      "youtubeId": "LDtQ4j5iepM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872533955-xf9bj",
+      "title": "Tunnel Scene - X",
+      "youtubeId": "HMp0XjuGEvg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872534488-4pt68",
+      "title": "Tunnel Theme - X-Scape",
+      "youtubeId": "z0TbNBXLafg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872535018-tej4p",
+      "title": "Lip's Theme - Panel de Pon",
+      "youtubeId": "luNaK2B4qKM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872535547-7hdib",
+      "title": "Culdcept",
+      "youtubeId": "KVcpgN0jg1w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872536079-5fug0",
+      "title": "Revolt -Striving for Hope-",
+      "youtubeId": "sIDLA3gqSoo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872536610-cjvfr",
+      "title": "Worthy Rival Battle",
+      "youtubeId": "KhQYP7EW7MI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872537141-7gzam",
+      "title": "Golden Forest",
+      "youtubeId": "NPa64iIjci0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872537670-2gywq",
+      "title": "Battle Scene / Final Boss - Golden Sun",
+      "youtubeId": "b9HyzIVO7d4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872538201-6c2a6",
+      "title": "Weyard",
+      "youtubeId": "4AGxC4d4Hwo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872538736-lj6pn",
+      "title": "Proof of a Hero ~ 4Version",
+      "youtubeId": "gl4zM9QZz4w"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872539269-sek1l",
+      "title": "Roar/Rathalos",
+      "youtubeId": "_Gr4Andx8pc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872539804-7kspu",
+      "title": "PictoChat",
+      "youtubeId": "8GZwWy4Jgb8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872540337-54vyt",
+      "title": "Electroplankton",
+      "youtubeId": "BqadDoMhjbc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872541402-t8qxe",
+      "title": "Bathtime Theme",
+      "youtubeId": "gvbYBavC7o4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872541927-bwdei",
+      "title": "Bathtime Theme (for 3DS / Wii U)",
+      "youtubeId": "cjsMS-ohBtE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872542512-ajei5",
+      "title": "Bathtime Theme (Vocal Mix) (for 3DS / Wii U)",
+      "youtubeId": "BoJLK4gjUkw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872543042-ae8fh",
+      "title": "Brain Age: Train Your Brain in Minutes a Day!",
+      "youtubeId": "SBlCbdG0n_4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872543573-cj64k",
+      "title": "Menu - Brain Age 2: More Training in Minutes a Day!",
+      "youtubeId": "-U8EOi9lTyw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872544104-py84b",
+      "title": "Title Theme - Big Brain Academy",
+      "youtubeId": "HQSIcx1xAHI"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872544637-zyxh2",
+      "title": "The Valedictory Elegy",
+      "youtubeId": "RDczOzlj8ms"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872545166-elmn5",
+      "title": "Personal Trainer: Cooking",
+      "youtubeId": "14CqhLsOhmQ"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872545700-11lsw",
+      "title": "Marionation Gear",
+      "youtubeId": "j27ylh-x3HE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872546229-2zox3",
+      "title": "Wii Shop Channel",
+      "youtubeId": "ifCUx_UaAjU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872547291-zyrhz",
+      "title": "Mii Plaza",
+      "youtubeId": "O9AmPFQqHgA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872547826-sv1x8",
+      "title": "Mii Channel",
+      "youtubeId": "r-lzCku_mGo"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872548359-tsjsc",
+      "title": "Charge! - Wii Play",
+      "youtubeId": "o3LpStYWIo4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872548891-pv0xn",
+      "title": "Title Theme - Wii Sports",
+      "youtubeId": "pGcjLvf2h-U"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872549422-zogiu",
+      "title": "Wii Sports Series Medley",
+      "youtubeId": "vk_Fmfe44ZU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872549951-fdnhx",
+      "title": "Title Theme - Wii Sports Resort",
+      "youtubeId": "PcMVepMfwMw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872550481-6tkeh",
+      "title": "Wii Sports Resort",
+      "youtubeId": "dUo8arLj-KY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872551014-82h5h",
+      "title": "Wii Sports Resort Ver. 2",
+      "youtubeId": "sf-VSRbZAys"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872551552-f42wz",
+      "title": "Title Theme - Wii Sports Club",
+      "youtubeId": "kWNFZSxAf24"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872552083-by7s9",
+      "title": "Tennis (Training)",
+      "youtubeId": "0W6r4m3BU0o"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872552614-cnceo",
+      "title": "Baseball (Training)",
+      "youtubeId": "oM_EQ1T54o4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872553149-6pp5q",
+      "title": "Excite Truck",
+      "youtubeId": "CsA2gPdqqBU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872553685-p3oeh",
+      "title": "Attack - Soma Bringer",
+      "youtubeId": "5VBtjtHHI2U"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872554218-qdyn0",
+      "title": "Glory of Heracles",
+      "youtubeId": "zkj3NRgm_cc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872554749-qpy8n",
+      "title": "PERFORMANCE",
+      "youtubeId": "4bGhF08uXPc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872555281-31pms",
+      "title": "Blue Birds",
+      "youtubeId": "6tEr9Mxbel8"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872555811-g7hra",
+      "title": "Monkey Watch",
+      "youtubeId": "sZmPV6L0s6Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872556344-7tvka",
+      "title": "Fruit Basket",
+      "youtubeId": "UZX4yEgIRTA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872556877-si6gi",
+      "title": "Tomorrow's Passion",
+      "youtubeId": "b7BT-sIQAWA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872557408-sl2h9",
+      "title": "Afternoon on the Island",
+      "youtubeId": "2UijvkVWocE"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872558009-sk3ud",
+      "title": "Afternoon on the Island (for 3DS / Wii U)",
+      "youtubeId": "Fk_uSFHOX4A"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872558540-2gg2w",
+      "title": "Swan Lesson",
+      "youtubeId": "WPS_jBWcgMY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872559075-se3i1",
+      "title": "Dragon Battle",
+      "youtubeId": "4oUxnbn805Q"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872559608-ex3rf",
+      "title": "Find Mii / Find Mii IIMedley",
+      "youtubeId": "2s2owiadDUM"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872560138-3lwn8",
+      "title": "Save The World, Heroes!",
+      "youtubeId": "dm87JoTZ0CY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872560668-stb9f",
+      "title": "Dark Lord",
+      "youtubeId": "ULRmx9Ue-II"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872561204-a1rr4",
+      "title": "Filled with Hope",
+      "youtubeId": "jl95-cQHCao"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872561732-fge3h",
+      "title": "Freakyforms: Your Creations, Alive! Medley",
+      "youtubeId": "0aJI_m5JTY4"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872562266-jngkf",
+      "title": "Boss 1 - Sakura Samurai: Art of the Sword",
+      "youtubeId": "4ydD77iTS8Y"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872562796-2e8lu",
+      "title": "Dillon's Rolling Western: The Last Ranger",
+      "youtubeId": "Jo_q60n-n8U"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872563331-j27do",
+      "title": "Frontier Battle",
+      "youtubeId": "CAOWfzqOgLY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872563862-ok1f9",
+      "title": "Style Savvy: Trendsetters",
+      "youtubeId": "c8Y-WBOSIIw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872564392-8qu3m",
+      "title": "Pop Fashion Show",
+      "youtubeId": "_ap9VVpO70U"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872564924-0g8lg",
+      "title": "Ring a Ding",
+      "youtubeId": "qUgzLaOLghw"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872565454-ycxn0",
+      "title": "Title Theme - Nintendo Land",
+      "youtubeId": "PgG4kTrKYPc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872565988-83s89",
+      "title": "Nintendo Land Medley",
+      "youtubeId": "_gMkr0JE2ts"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872566517-55cu4",
+      "title": "ST001: Roll Out, Wonderful 100!",
+      "youtubeId": "VmlTR4Voo7c"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872567051-zeg19",
+      "title": "Jergingha: Planet Destruction Form",
+      "youtubeId": "-_v3TndVZTs"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872567583-ggi27",
+      "title": "Final Results - Wii Party U",
+      "youtubeId": "7eCbeXsKftc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872568115-h98vt",
+      "title": "Title Theme - NES Remix 2",
+      "youtubeId": "mnbzUkAfu0c"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872568645-w8q85",
+      "title": "Battle Start - Fossil Fighters: Frontier",
+      "youtubeId": "xFuozqS6jGA"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872569175-sh8qo",
+      "title": "Title Theme - Nintendo Badge Arcade",
+      "youtubeId": "YMBcoXeRFSY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872569709-1llpt",
+      "title": "Arcade Bunny's Theme",
+      "youtubeId": "y2PIqv3-U30"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872570241-4sfa7",
+      "title": "Welcome Center",
+      "youtubeId": "CWcpifQKf84"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872570773-s3q0n",
+      "title": "Trouble Brewing II",
+      "youtubeId": "FwpYDTUrgs0"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872571306-2t7bq",
+      "title": "Boss Battle",
+      "youtubeId": "dZOvL2PmNVg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872571835-l43r4",
+      "title": "Boss: The Darkest Lord",
+      "youtubeId": "WDNtCUgxDzc"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872572423-oxqw3",
+      "title": "Garage",
+      "youtubeId": "FYZJaslHI8I"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872573009-zjhlm",
+      "title": "Noisy Notebook",
+      "youtubeId": "ndIGv5FVdPg"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872573543-x2wyq",
+      "title": "Dawn in the Desert",
+      "youtubeId": "6cSYeiqkAOY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872574072-a2ueu",
+      "title": "Struggle Against Chaos",
+      "youtubeId": "PdC3s4w-vkY"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872574604-w0fz7",
+      "title": "MEGALOVANIA",
+      "youtubeId": "3APGNHk3Y8M"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872575135-3lmft",
+      "title": "Floral Fury",
+      "youtubeId": "rRRj0ayTWoU"
+    },
+    {
+      "source": "music",
+      "id": "music-1780872575667-d8cpt",
+      "title": "Burning Town",
+      "youtubeId": "WYw3FeoqY6w"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyil4fb000dh7vnbvgl74h2",
+      "title": "The Legend of Zelda Main Theme",
+      "youtubeId": "3MJpjHfEMLE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyil6dp000ih7vn9ie2mylq",
+      "title": "Brinstar (Metroid)",
+      "youtubeId": "6CRJNirqkHY"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyil89s000nh7vne9l9d2xc",
+      "title": "Brinstar (Metroid)",
+      "youtubeId": "6CRJNirqkHY"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyila7s000sh7vn3v0sgzk8",
+      "title": "Yoshi's Story",
+      "youtubeId": "bbbaaJBB9yI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyile9o0012h7vntx19jieg",
+      "title": "Corneria",
+      "youtubeId": "FBBU0TPlHnk"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyilg3k0017h7vnwj1sevmp",
+      "title": "Main Theme (Pokémon Red / Blue)",
+      "youtubeId": "P9Jb5WzrB4k"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyilvup002bh7vnc0v3ey0q",
+      "title": "Ice Climber",
+      "youtubeId": "TlcHnSFSEoA"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyin6vb005nh7vnxhgca768",
+      "title": "Green Hill Zone",
+      "youtubeId": "nU5pCRiNLws"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyinrom0076h7vno23wib3s",
+      "title": "World Circuit Theme (Punch-Out!!)",
+      "youtubeId": "dF5NTv0JTUI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyio8yv008ah7vnsutuj4e5",
+      "title": "Gaur Plain",
+      "youtubeId": "WQK0vVE5PFw"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyiocjf008kh7vn7ouv31uz",
+      "title": "Duck Hunt Medley",
+      "youtubeId": "aH5fGVZ_5Vc"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyiotfo009th7vnap3irdtp",
+      "title": "Vampire Killer",
+      "youtubeId": "D5dBcFjkHyc"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyipelx00bch7vn8iyavhri",
+      "title": "Minecraft (Sweden)",
+      "youtubeId": "OQ4Tq1R5mxo"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyiltsj0026h7vn28pl0onp",
+      "title": "Ground Theme (Super Mario Bros.)",
+      "youtubeId": "CDBB4vSZAyE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyilzxq002lh7vnrnu8pj20",
+      "title": "The Legend of Zelda Main Theme",
+      "youtubeId": "3MJpjHfEMLE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyim7ly0035h7vnd28u9mjx",
+      "title": "Fire Emblem Main Theme",
+      "youtubeId": "bHCRIMjMiUI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimbs1003fh7vnce69ypxw",
+      "title": "The Legend of Zelda Main Theme",
+      "youtubeId": "3MJpjHfEMLE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimds0003kh7vnsbzhw6b8",
+      "title": "The Legend of Zelda Main Theme",
+      "youtubeId": "3MJpjHfEMLE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimjup003zh7vn742kypfy",
+      "title": "Fire Emblem Main Theme",
+      "youtubeId": "bHCRIMjMiUI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimptv004eh7vnxpfsrv30",
+      "title": "Underworld Theme (Kid Icarus)",
+      "youtubeId": "JPTJ_oTF1wE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimvoy004th7vn7owsx86t",
+      "title": "Wario Land (Main Theme)",
+      "youtubeId": "9AE4pOhOy3k"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyin31x005dh7vnkgx3c2eo",
+      "title": "DK Rap",
+      "youtubeId": "3fGTiMTGsKI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyin8tv005sh7vnbfhejkah",
+      "title": "Green Greens",
+      "youtubeId": "IiVN0qXiIqg"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyingdv006ch7vnn2ubqz84",
+      "title": "The Legend of Zelda Main Theme",
+      "youtubeId": "3MJpjHfEMLE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyinnt1006wh7vnaxhtol70",
+      "title": "Wii Fit Main Theme",
+      "youtubeId": "yXwn4OEWwQo"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyio1ct007vh7vnaq9hn4rr",
+      "title": "Palutena's Temple (Kid Icarus)",
+      "youtubeId": "JPTJ_oTF1wE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyioe95008ph7vnzaejenkk",
+      "title": "Ryu Stage (Street Fighter II)",
+      "youtubeId": "B-kjF85QQPM"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyiojxk0094h7vn9nv0vdv9",
+      "title": "Fire Emblem Main Theme",
+      "youtubeId": "bHCRIMjMiUI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyionjw009eh7vnesrw7lbx",
+      "title": "Splattack! (Splatoon)",
+      "youtubeId": "5_NJ3RxstVw"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyiov89009yh7vn5col62no",
+      "title": "Gang-Plank Galleon",
+      "youtubeId": "3fGTiMTGsKI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyip53600anh7vnpcdi5wn9",
+      "title": "Battle! (Dragon Quest IV)",
+      "youtubeId": "BEIusmOq1N4"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyip8sj00axh7vnnlobmwa9",
+      "title": "Kurikinton (King of Fighters)",
+      "youtubeId": "LS0sPfBW-kU"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyipi7d00bmh7vnpctl8uud",
+      "title": "Counterattack (Xenoblade Chronicles 2)",
+      "youtubeId": "WQK0vVE5PFw"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyilq6z001wh7vnsndbudqr",
+      "title": "Ground Theme (Super Mario Bros.)",
+      "youtubeId": "CDBB4vSZAyE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyipno900c1h7vne3xhbxyx",
+      "title": "Dearly Beloved (Kingdom Hearts)",
+      "youtubeId": "P3BTfnx5tUA"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyil2g70008h7vnhd6yqka6",
+      "title": "DK Rap",
+      "youtubeId": "3fGTiMTGsKI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyim5jv0030h7vn8ojkofx1",
+      "title": "Corneria",
+      "youtubeId": "FBBU0TPlHnk"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyil0ae0003h7vn5xhxd3dv",
+      "title": "Ground Theme (Super Mario Bros.)",
+      "youtubeId": "CDBB4vSZAyE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyilo50001rh7vnudh53x1m",
+      "title": "Main Theme (Pokémon Red / Blue)",
+      "youtubeId": "P9Jb5WzrB4k"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyim9p5003ah7vnt67ldfhb",
+      "title": "Fire Emblem Main Theme",
+      "youtubeId": "bHCRIMjMiUI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimnzb0049h7vnu2urg6h6",
+      "title": "Green Greens",
+      "youtubeId": "IiVN0qXiIqg"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyin18n0058h7vn3e50ewsa",
+      "title": "Main Theme (Pokémon Red / Blue)",
+      "youtubeId": "P9Jb5WzrB4k"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyinawe005xh7vnties2l4u",
+      "title": "Ai No Uta (Pikmin Love Song)",
+      "youtubeId": "VVbPyMFm6_A"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyinviu007gh7vnht1rk46p",
+      "title": "Ground Theme (Super Mario Bros.)",
+      "youtubeId": "CDBB4vSZAyE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyioarq008fh7vn21a8y1ns",
+      "title": "Ground Theme (Super Mario Bros.)",
+      "youtubeId": "CDBB4vSZAyE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyiore4009oh7vne4m5d531",
+      "title": "Vampire Killer",
+      "youtubeId": "D5dBcFjkHyc"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyip6u100ash7vnaib2w6cw",
+      "title": "Main Theme (Banjo-Kazooie)",
+      "youtubeId": "bXCpIlQeHlM"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyils0t0021h7vnzh7macmn",
+      "title": "Ground Theme (Super Mario Bros.)",
+      "youtubeId": "CDBB4vSZAyE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyilxxg002gh7vnzwcbkaa2",
+      "title": "The Legend of Zelda Main Theme",
+      "youtubeId": "3MJpjHfEMLE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyim1rr002qh7vnl1fjitkl",
+      "title": "Dr. Mario (Fever)",
+      "youtubeId": "CDBB4vSZAyE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimfsf003ph7vn5qu6bwsm",
+      "title": "Main Theme (Pokémon Red / Blue)",
+      "youtubeId": "P9Jb5WzrB4k"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimlw20044h7vnd6y401vo",
+      "title": "Flat Zone 2",
+      "youtubeId": "9RwOqoMBZxo"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimtvn004oh7vn538o2y98",
+      "title": "Brinstar (Metroid)",
+      "youtubeId": "6CRJNirqkHY"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimxpf004yh7vn26dmjver",
+      "title": "Snake Eater",
+      "youtubeId": "y_TDf1rDBAo"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyineml0067h7vnqdx2od5a",
+      "title": "ROB Gyromite / Stack-Up",
+      "youtubeId": "TlcHnSFSEoA"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyini64006hh7vnyfaqwxam",
+      "title": "Corneria",
+      "youtubeId": "FBBU0TPlHnk"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyink01006mh7vnhhq0m23u",
+      "title": "Title Theme (Animal Crossing)",
+      "youtubeId": "oHy5Oi0Dxf4"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyinpw30071h7vn22xmu149",
+      "title": "Rosalina in the Observatory",
+      "youtubeId": "CDBB4vSZAyE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyinxgl007lh7vnhzh5p3kl",
+      "title": "Fire Emblem Main Theme",
+      "youtubeId": "bHCRIMjMiUI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyinze7007qh7vnofgg62jw",
+      "title": "Brinstar (Metroid)",
+      "youtubeId": "6CRJNirqkHY"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyio6zy0085h7vntm43jw4c",
+      "title": "Fire Emblem Main Theme",
+      "youtubeId": "bHCRIMjMiUI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyiog2m008uh7vn4ouofgqs",
+      "title": "Ken Stage (Street Fighter II)",
+      "youtubeId": "B-kjF85QQPM"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyioln20099h7vnntx5hnz3",
+      "title": "Fly Me To The Moon (SSBU)",
+      "youtubeId": "VCW3dDM1-mM"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyioz4v00a8h7vn6gblt5nr",
+      "title": "Main Theme (Pokémon Sun / Moon)",
+      "youtubeId": "P9Jb5WzrB4k"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyip30g00aih7vnsldb8ahp",
+      "title": "Last Surprise",
+      "youtubeId": "XncDBVBm8CM"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyipgf600bhh7vnw4mbr2c7",
+      "title": "One-Winged Angel",
+      "youtubeId": "RGiQc87XBPM"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyipk3b00brh7vnbj8gsq30",
+      "title": "Counterattack (Xenoblade Chronicles 2)",
+      "youtubeId": "WQK0vVE5PFw"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyilm0n001mh7vn6tk5plhq",
+      "title": "Mute City (Melee)",
+      "youtubeId": "l-8MNdL9m-8"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyilc3j000xh7vna9qwtu9a",
+      "title": "Green Greens",
+      "youtubeId": "IiVN0qXiIqg"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyim3oo002vh7vnvjvglmrr",
+      "title": "Main Theme (Pokémon Red / Blue)",
+      "youtubeId": "P9Jb5WzrB4k"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimhsl003uh7vnp0fbuow6",
+      "title": "Fire Emblem Main Theme",
+      "youtubeId": "bHCRIMjMiUI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimruo004jh7vn32cepxqq",
+      "title": "Underworld Theme (Kid Icarus)",
+      "youtubeId": "JPTJ_oTF1wE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyimzhl0053h7vnff5avqep",
+      "title": "Fire Emblem Main Theme",
+      "youtubeId": "bHCRIMjMiUI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyincsr0062h7vn6x7npf1j",
+      "title": "Main Theme (Pokémon Diamond / Pearl)",
+      "youtubeId": "P9Jb5WzrB4k"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyinm0u006rh7vnyjbz0kbs",
+      "title": "Stage Select (Mega Man 2)",
+      "youtubeId": "eoiSBE0mEJA"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyintis007bh7vn2c5yprzy",
+      "title": "Main Theme (Pokémon X / Y)",
+      "youtubeId": "P9Jb5WzrB4k"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyio5820080h7vnk6edy01v",
+      "title": "PAC-MAN (Original)",
+      "youtubeId": "VrFXmU1vIC4"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyiohx3008zh7vn9xdtgpmc",
+      "title": "Main Theme (Final Fantasy VII)",
+      "youtubeId": "RGiQc87XBPM"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyiopgx009jh7vnea0mgput",
+      "title": "Vs. Ridley",
+      "youtubeId": "6CRJNirqkHY"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyiox5800a3h7vn8xkiye3z",
+      "title": "Title Theme (Animal Crossing: New Leaf)",
+      "youtubeId": "oHy5Oi0Dxf4"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyip19000adh7vn6l86upqz",
+      "title": "Ground Theme (Super Mario Bros.)",
+      "youtubeId": "CDBB4vSZAyE"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyipal400b2h7vnfb00p0bm",
+      "title": "Fire Emblem Main Theme",
+      "youtubeId": "bHCRIMjMiUI"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyipcmc00b7h7vn4hf2s2vf",
+      "title": "Main Theme (ARMS)",
+      "youtubeId": "5_NJ3RxstVw"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyiplxf00bwh7vnlbfqakx7",
+      "title": "Mishima Dojo (Tekken)",
+      "youtubeId": "ey_8AElqkIs"
+    },
+    {
+      "source": "fighter",
+      "id": "cmpyilhzc001ch7vn41anwea1",
+      "title": "Ground Theme (Super Mario Bros.)",
+      "youtubeId": "CDBB4vSZAyE"
+    }
+  ],
+  "restricted": [],
+  "errors": [
+    {
+      "source": "music",
+      "id": "music-1780872007549-qgi02",
+      "title": "The Dark Realm",
+      "youtubeId": "ipvGned1GrA",
+      "status": 403
+    },
+    {
+      "source": "music",
+      "id": "music-1780872009640-ksri0",
+      "title": "Galeem",
+      "youtubeId": "tO8Htk8wMZ4",
+      "status": 403
+    },
+    {
+      "source": "music",
+      "id": "music-1780872010158-ld31n",
+      "title": "Dharkon",
+      "youtubeId": "KOSl4BAcsH8",
+      "status": 403
+    },
+    {
+      "source": "music",
+      "id": "music-1780872010675-z13ar",
+      "title": "Galeem / Dharkon",
+      "youtubeId": "-FKKCJrhUUg",
+      "status": 403
+    },
+    {
+      "source": "music",
+      "id": "music-1780872191208-g4jmb",
+      "title": "Fatal Blooms in Moonlight",
+      "youtubeId": "SDUhjGYyuWY",
+      "status": 403
+    },
+    {
+      "source": "music",
+      "id": "music-1780872477006-bpo2d",
+      "title": "Blue Water Fangs (The Island of Dr. Moreau) - METAL SLUG 3",
+      "youtubeId": "p3PK5nK4K9U",
+      "status": 403
+    },
+    {
+      "source": "music",
+      "id": "music-1780872577266-m80tv",
+      "title": "Ground Theme (Hurry Up!) - Super Mario Bros.",
+      "youtubeId": "36WvKKFXOlo",
+      "status": 403
+    },
+    {
+      "source": "music",
+      "id": "music-1780872578863-sns7w",
+      "title": "Golden Hammer",
+      "youtubeId": "MFqnVrqOHZU",
+      "status": 403
+    }
+  ]
+}

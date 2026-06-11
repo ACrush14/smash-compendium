@@ -1,0 +1,866 @@
+[
+  {
+    "source": "music",
+    "id": "music-1780872000296-byhmf",
+    "title": "Menu",
+    "oldId": "QCmMRCBuuPc",
+    "newId": "6znq-EYa8C0",
+    "newTitle": "Super Smash Bros. Ultimate - Menu Theme"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872000817-m3ml9",
+    "title": "Battlefield",
+    "oldId": "dOxZ6zt0Dds",
+    "newId": "GflpseDXY-U",
+    "newTitle": "Battlefield - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872001333-gvdzd",
+    "title": "Final Destination",
+    "oldId": "2gVy95FE7mQ",
+    "newId": "YPyGQARCsfI",
+    "newTitle": "Final Destination (stage) - Super Smash Bros. Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872001852-gpu0u",
+    "title": "Mob Smash",
+    "oldId": "rVsQBgH2CH8",
+    "newId": "O3ypt0q9aa4",
+    "newTitle": "Mob Smash - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872002368-y5tbn",
+    "title": "Classic Mode: Mural",
+    "oldId": "YaPUju2K4yI",
+    "newId": "7kDD_ZEWeqg",
+    "newTitle": "Super Smash Bros Ultimate Classic Mode Mural"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872002886-281rb",
+    "title": "Classic Mode: Defeat",
+    "oldId": "eksDf2M2_1k",
+    "newId": "nii4GLhN8qg",
+    "newTitle": "Classic Mode: Defeat - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872003407-io8px",
+    "title": "Classic Mode: Final Results",
+    "oldId": "vz8uCa_GRlA",
+    "newId": "iQUCHjo28Z8",
+    "newTitle": "Classic Mode: Final Results - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872003926-vaofr",
+    "title": "Classic Mode: Bonus Stage",
+    "oldId": "ZF7Q6RRtxmw",
+    "newId": "0-I2nlZlQy0",
+    "newTitle": "Super Smash Bros. Ultimate - Classic Mode: Bonus Game - Perfect Score"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872004444-w4bkk",
+    "title": "Master Hand",
+    "oldId": "Eu9VRwsE8U8",
+    "newId": "gXRhUL1vf34",
+    "newTitle": "Super Smash Bros Ultimate - Play as Master Hand Boss Character World of Light"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872004962-fxgdp",
+    "title": "Crazy Hand",
+    "oldId": "OjVS3tVDqtg",
+    "newId": "xo2SoRdwLvQ",
+    "newTitle": "Super Smash Bros. Ultimate Boss 11 - Master Hand &amp; Crazy Hand"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872005481-kfavm",
+    "title": "Master Hand / Crazy Hand",
+    "oldId": "U9M5-ocJkSI",
+    "newId": "xo2SoRdwLvQ",
+    "newTitle": "Super Smash Bros. Ultimate Boss 11 - Master Hand &amp; Crazy Hand"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872005998-zl60x",
+    "title": "The Light Realm: Prologue",
+    "oldId": "rA7k4LIkLd8",
+    "newId": "5F2GA0dp7_Q",
+    "newTitle": "The Light Realm: Prologue - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872006513-wvoo4",
+    "title": "The Light Realm: March",
+    "oldId": "Z7rwNT2Dxfw",
+    "newId": "bImkTfbuUp4",
+    "newTitle": "The Light Realm: March - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872026580-i4jp6",
+    "title": "Battlefield Ver. 2 - Super Smash Bros. Brawl",
+    "oldId": "Tstsr3eAPps",
+    "newId": "oXEqHnl5bNQ",
+    "newTitle": "Battlefield Ver. 2 - Super Smash Bros. Brawl Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872007032-peyuc",
+    "title": "The Light Realm: Base",
+    "oldId": "A6_skBLxiLY",
+    "newId": "3cyeNHu-BD4",
+    "newTitle": "The Light Realm: Base - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872008067-1firw",
+    "title": "The Dark Realm: The Mysterious Space",
+    "oldId": "kN6HvqbLOdU",
+    "newId": "Eak_BZix5BQ",
+    "newTitle": "The Dark Realm: The Mysterious Space - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872008610-ffw2q",
+    "title": "The Final Battle",
+    "oldId": "i-_J0hC5tr4",
+    "newId": "uTCBkgwWAeo",
+    "newTitle": "The Final Battle - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872009125-dc1nj",
+    "title": "The Final Battle: After the Transformation",
+    "oldId": "YlnBnBG19RM",
+    "newId": "4fS6iiPeG_0",
+    "newTitle": "The Final Battle: After the Transformation - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872011193-rqozj",
+    "title": "Main Theme Piano Solo",
+    "oldId": "l46aZE669nM",
+    "newId": "vT_fTtmyQ2c",
+    "newTitle": "Main Theme Piano Solo - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872011709-he76e",
+    "title": "Free the Spirit!",
+    "oldId": "-d5LqvdBtJ0",
+    "newId": "Ei2i0dOmLW0",
+    "newTitle": "How to Make the STRONGEST Spirit in Super Smash Bros. Ultimate!"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872012226-p7qh9",
+    "title": "Spirits: Collection",
+    "oldId": "E2hAVnmPXjI",
+    "newId": "yW4hHPBJw6M",
+    "newTitle": "Spirits: Collection - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872012745-ks0cu",
+    "title": "Spirits: Inventory/Items",
+    "oldId": "LAUxwBAaRmE",
+    "newId": "FlepWzY0iTA",
+    "newTitle": "Spirits: Inventory/Items - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872013264-acrok",
+    "title": "Tourney: Battle List",
+    "oldId": "INLz5TJbbAk",
+    "newId": "nTe5byooewk",
+    "newTitle": "Tourney: Battle List - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872013831-zdhcp",
+    "title": "Tourney: Winner Announcement",
+    "oldId": "6k9ITdV3dH4",
+    "newId": "hI9gPuGN07c",
+    "newTitle": "UAS: Finale GRAND FINALS - MkLeo (Pyra Mythra, Byleth) Vs. Kurama (Mario) Smash Ultimate - SSBU"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872014349-yw43r",
+    "title": "Training",
+    "oldId": "06dcAhIfzx0",
+    "newId": "s9_lwtNNbH8",
+    "newTitle": "How to PROPERLY Practice in Smash Ultimate."
+  },
+  {
+    "source": "music",
+    "id": "music-1780872014865-cztla",
+    "title": "Vault",
+    "oldId": "CW5xVfQMtNI",
+    "newId": "fgHiW-qTMUM",
+    "newTitle": "Vault - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872015384-hogl3",
+    "title": "Shop",
+    "oldId": "Qk50ocIMmdQ",
+    "newId": "HcLhtQ2OPxw",
+    "newTitle": "Shop - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872015904-3huq0",
+    "title": "Practice Fights",
+    "oldId": "GWkHACLayz0",
+    "newId": "s9_lwtNNbH8",
+    "newTitle": "How to PROPERLY Practice in Smash Ultimate."
+  },
+  {
+    "source": "music",
+    "id": "music-1780872016423-7okdq",
+    "title": "Spectate",
+    "oldId": "B8O3qQubikg",
+    "newId": "a96lXAziqdU",
+    "newTitle": "A SMASH ULTIMATE SPECTATING FUNNY COMPILATION"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872016943-slgu6",
+    "title": "Opening - Super Smash Bros. Melee",
+    "oldId": "cYefxrEw1ok",
+    "newId": "RXs4-M-ZiOg",
+    "newTitle": "Super Smash Bros. Melee - Opening HD"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872017465-vex6i",
+    "title": "Opening - Super Smash Bros. Melee (Brawl)",
+    "oldId": "oBSgahxmRww",
+    "newId": "WVLcB7ccFko",
+    "newTitle": "Stage 11 (SSBM Opening) - Super Smash Bros Brawl Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872017981-poupl",
+    "title": "Main Theme - Super Smash Bros. Brawl",
+    "oldId": "8sJfOOz7f6k",
+    "newId": "zeKE0NHUtUw",
+    "newTitle": "Main Theme - Super Smash Bros: Brawl"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872018500-32q7c",
+    "title": "How to Play - Super Smash Bros.",
+    "oldId": "XesLSGRTwxM",
+    "newId": "ta3L35wsE6o",
+    "newTitle": "Art of Smash: Beginner - Part 1"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872019017-58qs7",
+    "title": "How to Play - Super Smash Bros. Melee",
+    "oldId": "ux6BhYB6-cs",
+    "newId": "7aF797E9b0Y",
+    "newTitle": "How to play Smash Melee ONLINE 🎮"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872020349-3b0v7",
+    "title": "Menu - Super Smash Bros.",
+    "oldId": "omS360U3g6Y",
+    "newId": "6znq-EYa8C0",
+    "newTitle": "Super Smash Bros. Ultimate - Menu Theme"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872020868-r5epw",
+    "title": "Menu - Super Smash Bros. Melee",
+    "oldId": "kaXGfHXl-q8",
+    "newId": "L-tEDMMPVYg",
+    "newTitle": "Menu (Melee) - Super Smash Bros. for Wii U OST"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872021389-l9wcs",
+    "title": "Menu - Super Smash Bros. Melee (Brawl)",
+    "oldId": "8ELAXYXaz_k",
+    "newId": "B9xGacjxuMw",
+    "newTitle": "Super Smash Bros: Brawl | Menu Theme Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872021908-d3xqg",
+    "title": "Menu 2 - Super Smash Bros. Melee",
+    "oldId": "75Nxud1kDn0",
+    "newId": "Q64qaTQqv2M",
+    "newTitle": "Menu 2 Melee (Brawl x Melee) Mashup Ver."
+  },
+  {
+    "source": "music",
+    "id": "music-1780872022427-ou1yy",
+    "title": "Boss Battle - Super Smash Bros. Brawl",
+    "oldId": "nDbo8HfURKg",
+    "newId": "6ldDeX7RBc8",
+    "newTitle": "Super Smash Bros. Brawl - Final Boss: Tabuu (No Damage)"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872022946-8k00d",
+    "title": "Menu - Super Smash Bros. Brawl",
+    "oldId": "btfCABrqDDs",
+    "newId": "B9xGacjxuMw",
+    "newTitle": "Super Smash Bros: Brawl | Menu Theme Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872023464-d2f1l",
+    "title": "Menu - Super Smash Bros. for 3DS / Wii U",
+    "oldId": "eZZCTXfFFqo",
+    "newId": "qDnaIfiH37w",
+    "newTitle": "Menu - Super Smash Bros. for Wii U OST"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872023997-b9op1",
+    "title": "Fighter Selection - Super Smash Bros.",
+    "oldId": "oBRuOu5KrQw",
+    "newId": "hjY2ZrauRX4",
+    "newTitle": "Super Smash Bros. Ultimate - All Characters"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872024512-sq80p",
+    "title": "Results Screen - Super Smash Bros. for 3DS / Wii U",
+    "oldId": "uSgHdAzdeTc",
+    "newId": "wn7YqyMV5dA",
+    "newTitle": "Final Results - Super Smash Bros. WiiU &amp; 3DS Orchestra"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872025029-39lml",
+    "title": "Battlefield - Super Smash Bros. Melee",
+    "oldId": "FEYCRs5vDpM",
+    "newId": "jAjvVOmipdI",
+    "newTitle": "Battlefield Super Smash Bros Melee Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872025546-dcj6b",
+    "title": "Battlefield - Super Smash Bros. Melee (for 3DS / Wii U)",
+    "oldId": "zur7ftKOi3c",
+    "newId": "jAjvVOmipdI",
+    "newTitle": "Battlefield Super Smash Bros Melee Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872026063-g4xhl",
+    "title": "Battlefield - Super Smash Bros. Brawl",
+    "oldId": "YgcqUgAFDCg",
+    "newId": "SihUj7ikZCk",
+    "newTitle": "Battlefield  - Super Smash Bros Brawl Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872027098-3t4t1",
+    "title": "Battlefield - Super Smash Bros. for 3DS / Wii U",
+    "oldId": "pd5PTURSuJE",
+    "newId": "se3hV-bfR8Q",
+    "newTitle": "Battlefield - Super Smash Bros. for Wii U OST"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872027619-lizz8",
+    "title": "Final Destination - Super Smash Bros.",
+    "oldId": "WbaTu_SIj38",
+    "newId": "YPyGQARCsfI",
+    "newTitle": "Final Destination (stage) - Super Smash Bros. Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872028136-32db8",
+    "title": "Final Destination - Super Smash Bros. Melee",
+    "oldId": "92rFsdumNwA",
+    "newId": "52i7DhGWO8Q",
+    "newTitle": "Final Destination (stage) - Super Smash Bros. Brawl"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872028706-lx1se",
+    "title": "Giga Bowser",
+    "oldId": "mG5WS0bckwE",
+    "newId": "SEq2lfj9-OY",
+    "newTitle": "Giga Bowser vs All Bosses in Super Smash Bros Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872029222-bhpyb",
+    "title": "Final Destination - Super Smash Bros. Brawl",
+    "oldId": "qBJnBeWJE70",
+    "newId": "52i7DhGWO8Q",
+    "newTitle": "Final Destination (stage) - Super Smash Bros. Brawl"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872029742-y417w",
+    "title": "Final Destination - Super Smash Bros. for 3DS / Wii U",
+    "oldId": "vAh9kIJGohw",
+    "newId": "3zG4WLpGW8g",
+    "newTitle": "Final Destination - Super Smash Bros. for Wii U OST"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872030258-9niwk",
+    "title": "Final Destination Ver. 2",
+    "oldId": "L7ko5mZ87IE",
+    "newId": "YPyGQARCsfI",
+    "newTitle": "Final Destination (stage) - Super Smash Bros. Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872030778-2eiz7",
+    "title": "Multi-Man Smash",
+    "oldId": "p7N6nwCyxEw",
+    "newId": "NWxDvAwCjU8",
+    "newTitle": "Multi-Man Smash - Super Smash Bros. for Wii U OST"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872031296-5ur7k",
+    "title": "Multi-Man Melee",
+    "oldId": "OQS-fIQpYaM",
+    "newId": "gcmhJRYbcnU",
+    "newTitle": "Multi Man Melee Super Smash Bros. Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872031812-66h40",
+    "title": "Multi-Man Melee 2",
+    "oldId": "-ZdvmO9ymuA",
+    "newId": "2twMuVP_6mE",
+    "newTitle": "Super smash bros. Melee Game Music - Multi man melee 2"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872032331-6rnz0",
+    "title": "Cruel Smash",
+    "oldId": "jD_x2uY8C-8",
+    "newId": "D8OEFOmxLqw",
+    "newTitle": "Easy KOs in Cruel Smash | Super Smash Bros. Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872032849-u09bt",
+    "title": "Credits - Super Smash Bros.",
+    "oldId": "YpJJL6_monI",
+    "newId": "t5HS1d84Gss",
+    "newTitle": "Super Smash Bros. Ultimate - 84 - World of Light (True Ending &amp; Credits)"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872033367-a4y8x",
+    "title": "Credits - Super Smash Bros. (Brawl)",
+    "oldId": "CWIwrylJ0J0",
+    "newId": "GX6w6el5oI4",
+    "newTitle": "Credits - Super Smash Bros. Brawl Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872033885-14ajx",
+    "title": "Credits - Super Smash Bros. (for 3DS / Wii U)",
+    "oldId": "jy0TTsLuPNQ",
+    "newId": "rKSMHyDtxFE",
+    "newTitle": "Credits - Super Smash Bros. for Wii U (w/ Announcer saying &quot;Congratulations!&quot;)"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872034400-9wz5e",
+    "title": "Credits - Super Smash Bros. Brawl",
+    "oldId": "iHOtwUGtQTY",
+    "newId": "GX6w6el5oI4",
+    "newTitle": "Credits - Super Smash Bros. Brawl Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872034915-zmbxy",
+    "title": "Credits - Super Smash Bros. for 3DS / Wii U",
+    "oldId": "xQLuephtWPI",
+    "newId": "rKSMHyDtxFE",
+    "newTitle": "Credits - Super Smash Bros. for Wii U (w/ Announcer saying &quot;Congratulations!&quot;)"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872035438-rd3yn",
+    "title": "Bonus Game - Super Smash Bros.",
+    "oldId": "NxUOlRNwrxE",
+    "newId": "0-I2nlZlQy0",
+    "newTitle": "Super Smash Bros. Ultimate - Classic Mode: Bonus Game - Perfect Score"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872035955-7yyd1",
+    "title": "Meta Crystal",
+    "oldId": "r_SsmTVo7xU",
+    "newId": "KmLrcb5mDG0",
+    "newTitle": "Metal Mario Fight   Super Smash Bros  Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872036471-srp75",
+    "title": "Duel Zone",
+    "oldId": "QOAmCWF985o",
+    "newId": "SHdJoAWa-MQ",
+    "newTitle": "Battlefield Duel Zone   Super Smash Bros  Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872036991-c1ltj",
+    "title": "Training Mode",
+    "oldId": "HZemKQaTn8A",
+    "newId": "s9_lwtNNbH8",
+    "newTitle": "How to PROPERLY Practice in Smash Ultimate."
+  },
+  {
+    "source": "music",
+    "id": "music-1780872037510-iqgub",
+    "title": "Targets!",
+    "oldId": "v3k9wSae7lE",
+    "newId": "BT6_VRhLzNY",
+    "newTitle": "Break the Targets (Melee) - Super Smash Bros. Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872038028-c9c30",
+    "title": "Metal Battle",
+    "oldId": "zUE-whbshxo",
+    "newId": "KmLrcb5mDG0",
+    "newTitle": "Metal Mario Fight   Super Smash Bros  Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872038547-l92ts",
+    "title": "Trophies",
+    "oldId": "N480Ogy1_Go",
+    "newId": "BOrPHHQF6Wo",
+    "newTitle": "All Assist Trophies in Super Smash Bros. Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872039063-5s7nx",
+    "title": "Tournament",
+    "oldId": "nVXkaDCwg84",
+    "newId": "e4yIvqQT10Y",
+    "newTitle": "SSC 2023 Winners Quarters - acola (Steve) Vs. Riddles (Kazuya) Smash Ultimate Tournament"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872039581-igokf",
+    "title": "Tournament 2",
+    "oldId": "gh5jF5XVWzQ",
+    "newId": "e4yIvqQT10Y",
+    "newTitle": "SSC 2023 Winners Quarters - acola (Steve) Vs. Riddles (Kazuya) Smash Ultimate Tournament"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872040096-x8fop",
+    "title": "All-Star Intro",
+    "oldId": "f_AZduTV8rg",
+    "newId": "WShCN-AYHqA",
+    "newTitle": "Super Smash Bros. Ultimate - World of Light - Nintendo Switch"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872040614-hjx6w",
+    "title": "Target Smash!",
+    "oldId": "267qTYHHlxA",
+    "newId": "BT6_VRhLzNY",
+    "newTitle": "Break the Targets (Melee) - Super Smash Bros. Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872041133-4s3hp",
+    "title": "Adventure Map",
+    "oldId": "UP4FeoeCxF0",
+    "newId": "ohG_Yr2u2TQ",
+    "newTitle": "I 100%&#39;d Super Smash Bros Ultimate, Here&#39;s What Happened"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872041648-yxlcd",
+    "title": "Step: The Plain",
+    "oldId": "S3iL4faPVaA",
+    "newId": "SECpQQBXUXE",
+    "newTitle": "Step: The Plain - Super Smash Bros. Brawl Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872042167-vedb3",
+    "title": "Step: Subspace",
+    "oldId": "nyMjkg5Vfrw",
+    "newId": "blNs2Q3ti2I",
+    "newTitle": "Step: Subspace - Super Smash Bros. Brawl Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872042683-oxd30",
+    "title": "Step: Subspace Ver. 3",
+    "oldId": "GYDPSo8hJSs",
+    "newId": "9__EDSMOEMw",
+    "newTitle": "Step: Subspace Ver. 3 - Super Smash Bros. Brawl Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872043201-aheqa",
+    "title": "Boss Battle Song 1",
+    "oldId": "i6mNAFloe6E",
+    "newId": "mQMSC6imuBY",
+    "newTitle": "Super Smash Bros. Ultimate SoundTrack Boss Battle Song 1"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872043769-x42ow",
+    "title": "Boss Battle Song 2",
+    "oldId": "nQMfKcBAU7E",
+    "newId": "4NHuDWRgrw0",
+    "newTitle": "Super Smash Bros. - Galeem/Dharkon - With Lyrics ft. @ianmartynmusic3310 and @DylanWilliamvandeWal"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872044288-3pb70",
+    "title": "Home-Run Contest",
+    "oldId": "SRDznzUf0iY",
+    "newId": "soriF9HdJsY",
+    "newTitle": "Super Smash Bros. Ultimate Home Run Contest - Over 1,000km (Ganondorf)"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872044807-hmeju",
+    "title": "Trophy Gallery",
+    "oldId": "Ns_ce1hIGrE",
+    "newId": "PCAjipTpk3k",
+    "newTitle": "Trophy Gallery (Super Smash Bros Brawl) ~ 1 Hour Deep Ambience Loop"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872045325-ibq9i",
+    "title": "Sticker Album / Album / Chronicle",
+    "oldId": "uTGI_u91E0A",
+    "newId": "WUmYS7hoV5M",
+    "newTitle": "Sticker Album/Album/Chronicle Super Smash Bros Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872045841-9gmkg",
+    "title": "Coin Launcher",
+    "oldId": "0nJp7cP_RxM",
+    "newId": "i4opBKmJ7HM",
+    "newTitle": "Super Smash Bros. Brawl - Coin Launcher Gameplay"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872046362-m34wc",
+    "title": "Stage Builder",
+    "oldId": "lC9TYf1nSKk",
+    "newId": "izYhCsg_mbs",
+    "newTitle": "The Biggest Stage Builder Project Ever Attempted"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872046881-abbyi",
+    "title": "Tournament Registration",
+    "oldId": "hnY3q-dEAic",
+    "newId": "e4yIvqQT10Y",
+    "newTitle": "SSC 2023 Winners Quarters - acola (Steve) Vs. Riddles (Kazuya) Smash Ultimate Tournament"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872047396-g8ps0",
+    "title": "Tournament Grid",
+    "oldId": "9JYycABcYWo",
+    "newId": "rA_rbP92-fE",
+    "newTitle": "MomoCon 2026 - Spargo (Cloud) Vs. E_01 (Byleth) Smash Ultimate - SSBU"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872047915-4ocww",
+    "title": "Tournament Match End",
+    "oldId": "ory9-4RYZQk",
+    "newId": "hI9gPuGN07c",
+    "newTitle": "UAS: Finale GRAND FINALS - MkLeo (Pyra Mythra, Byleth) Vs. Kurama (Mario) Smash Ultimate - SSBU"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872048444-imtiq",
+    "title": "All-Star Rest Area - Super Smash Bros. Brawl",
+    "oldId": "islUc17HhBA",
+    "newId": "zh-8padWIJI",
+    "newTitle": "All Star Rest Area (Brawl) -  Super Smash Bros. Ultimate OST"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872048959-b43mf",
+    "title": "Online Practice Stage - Super Smash Bros. Brawl",
+    "oldId": "rduqjZbAHqY",
+    "newId": "QCWdIQPQwtk",
+    "newTitle": "Online Practice Stage-Super Smash Bros.Brawl [OST]"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872049476-pypxs",
+    "title": "Classic: Results Screen",
+    "oldId": "xiK5EboOzbc",
+    "newId": "FIV4jXtg6-s",
+    "newTitle": "Results Display Screen Super Smash Bros. Ultimate OST"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872049996-sj2qr",
+    "title": "Classic: Final Results",
+    "oldId": "N0zmul9mkJI",
+    "newId": "iQUCHjo28Z8",
+    "newTitle": "Classic Mode: Final Results - Super Smash Bros. Ultimate Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872050512-vfnb3",
+    "title": "Classic: Fail",
+    "oldId": "6-f7CW9-uCc",
+    "newId": "qnItXKX8DOo",
+    "newTitle": "Super Smash Bros Brawl - Classic Mode [Intense - Link - Fail]"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872051031-8zwqa",
+    "title": "Master Hand - Super Smash Bros. for 3DS / Wii U",
+    "oldId": "KVP50nCVtBU",
+    "newId": "0c8UOugiZRI",
+    "newTitle": "Unlocking Master Hand In Smash Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872051552-djev5",
+    "title": "Master Core",
+    "oldId": "V-Rv7HvLopU",
+    "newId": "ap68eqr6GIs",
+    "newTitle": "Mewtwo Classic 9.0 Master Core  No Damage"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872052068-ns5cg",
+    "title": "Master Fortress: First Wave",
+    "oldId": "S2P6Unzn2aA",
+    "newId": "MjNFavbAueA",
+    "newTitle": "Smash Wii U - Master Fortress First Wave (Normal 1.25x, 1.5x, 1.75x, &amp; 2x speeds w/increased pitch)"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872052586-10je6",
+    "title": "Master Fortress: Second Wave",
+    "oldId": "wpZgHrZYiF4",
+    "newId": "BLEZlnsZQ70",
+    "newTitle": "Master Fortress: Second Wave - Super Smash Bros. for Wii U Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872053106-1zmw1",
+    "title": "Master Orders: Ticket Selection",
+    "oldId": "XYND7Tkb0fE",
+    "newId": "5Fix5OSw554",
+    "newTitle": "Master Orders  Ticket Selection   Super Smash Bros  3DS &amp; Wii U Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872053630-o3jt1",
+    "title": "Trophy Rush",
+    "oldId": "xvyH7VKUvcs",
+    "newId": "BOrPHHQF6Wo",
+    "newTitle": "All Assist Trophies in Super Smash Bros. Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872054148-5pjfy",
+    "title": "Trophy Shop",
+    "oldId": "KmsHxQlVoSk",
+    "newId": "yLZ4px9DeXw",
+    "newTitle": "Trophy Shop - Super Smash Bros. for Wii U Music Extended"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872054666-gt1ll",
+    "title": "Gallery/Hoard",
+    "oldId": "IAID3poNFHY",
+    "newId": "4SlZYZR0rqI",
+    "newTitle": "Super Smash Bros. Ultimate OST - Gallery / Hoard"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872055183-ahkap",
+    "title": "Replay/Album/Records",
+    "oldId": "HRcb6MEYpvc",
+    "newId": "sebSVU3vZR4",
+    "newTitle": "Replay/Album/Records Super Smash Bros Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872056222-j2utu",
+    "title": "Online Practice Stage - Super Smash Bros. for 3DS / Wii U",
+    "oldId": "WPSJsFPT3P0",
+    "newId": "r3lxv2T3xUA",
+    "newTitle": "Practice Stage - Super Smash Bros. for 3DS / Wii U"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872056743-7yxan",
+    "title": "StreetSmash",
+    "oldId": "Y8hIp8ynb_Q",
+    "newId": "1odQfSYbMlY",
+    "newTitle": "Smash Ultimate Echo Fighters Transitions 👊💥"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872057776-4yxad",
+    "title": "Smash Tour: Map",
+    "oldId": "rstunmUgVrw",
+    "newId": "EHGXoo2qSKM",
+    "newTitle": "All Smash Tour Boards (2 players, 25 turns) - Super Smash Bros. for Wii U"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872059665-ry2hi",
+    "title": "Ground Theme - Super Mario Bros. (64)",
+    "oldId": "ymq8wM6DQoo",
+    "newId": "XvXzyR_gdlM",
+    "newTitle": "Ground Theme - Super Mario Bros. (64) | Super Smash Bros. Ultimate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872062770-wob3p",
+    "title": "Underwater Theme - Super Mario Bros.",
+    "oldId": "l2OUkvh9_Ls",
+    "newId": "MQR8yv9h1Fc",
+    "newTitle": "Underwater Theme - Super Mario bros- Super Smash Bros Ultímate"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872063808-avf2l",
+    "title": "Super Mario Bros.: The Lost Levels Medley",
+    "oldId": "hBfCiDVpOdA",
+    "newId": "KRqtN0gtPrE",
+    "newTitle": "Super Mario Bros.: The Lost Levels Medley - Super Smash Bros. for Wii U OST"
+  },
+  {
+    "source": "music",
+    "id": "music-1780872073673-8a6lo",
+    "title": "Slide",
+    "oldId": "1Ljr_WajZ80",
+    "newId": "TDh9uvl7EC4",
+    "newTitle": "Slide - Super Mario Bros. [Melee] [Remix] - Super Smash Bros Ultímate"
+  }
+]

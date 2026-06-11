@@ -113,23 +113,32 @@ Todas as franquias do banco estão cobertas, incluindo:
 | `ARMS_NSW_BOX.jpg` | ARMS |
 | `BAYONETTA_PS3_BOX.png` | Bayonetta |
 
-## Capas Faltantes (adicionar manualmente)
+## Capas Faltantes
 
-| Fighter(s) | Jogo | Arquivo sugerido |
-|---|---|---|
-| Snake | Metal Gear Solid (PS, 1998) | `METAL_GEAR_SOLID_PS_BOX.jpg` |
-| Wii Fit Trainer | Wii Fit (Wii, 2007) | `WII_FIT_WII_BOX.jpg` |
-| Inkling | Splatoon (Wii U, 2015) | `SPLATOON_WIIU_BOX.jpg` |
-| Terry | Fatal Fury (Neo Geo, 1991) | `FATAL_FURY_NEO_BOX.jpg` |
-| Cloud + Sephiroth | Final Fantasy VII (PS, 1997) | `FF7_PS_BOX.jpg` |
-| Steve + Alex | Minecraft (PC, 2011) | `MINECRAFT_PC_BOX.jpg` |
-| Kazuya | Tekken (ARC, 1994) | `TEKKEN_ARC_BOX.jpg` |
-| Sora | Kingdom Hearts (PS2, 2002) | `KINGDOM_HEARTS_PS2_BOX.jpg` |
-| R.O.B. | Gyromite (NES, 1985) | `GYROMITE_NES_BOX.jpg` |
-| Mii Fighters | Mii Channel (Wii, 2006) | `MII_WII_BOX.jpg` |
-| Pyra + Mythra | Xenoblade Chronicles 2 (NSW, 2017) | `XC2_NSW_BOX.jpg` |
+Desde sessão 24, fighters sem `boxArtPath` local buscam `boxArtUrl` automaticamente do `ChronicleEntry` no banco.
+**Fluxo:** adicionar boxArtUrl na entrada do Chronicle via `/admin/chronicles` → o fighter já exibe a capa.
 
-**Como adicionar:**
+| Fighter(s) | Jogo | Chronicle existe? | boxArtUrl no banco? |
+|---|---|---|---|
+| Snake | Metal Gear Solid (PS, 1998) | ✅ | ✅ (buscar no admin) |
+| Wii Fit Trainer | Wii Fit (Wii, 2007) | ✅ adicionado sessão 24 | ❌ preencher |
+| Inkling | Splatoon (Wii U, 2015) | ✅ | ✅ |
+| Terry | Fatal Fury (Neo Geo, 1991) | ✅ adicionado sessão 24 | ❌ preencher |
+| Cloud + Sephiroth | Final Fantasy VII (PS, 1997) | ✅ | ✅ |
+| Steve + Alex | Minecraft (NSW, 2018) | ✅ adicionado sessão 24 | ❌ preencher |
+| Kazuya | Tekken (ARC, 1994) | ✅ | ✅ |
+| Sora | Kingdom Hearts (PS2, 2002) | ✅ | ✅ |
+| R.O.B. | Gyromite (NES, 1985) | ✅ | ✅ |
+| Mii Fighters | Mii (Wii, 2006) | ✅ adicionado sessão 24 | ❌ preencher |
+| Pyra + Mythra | Xenoblade Chronicles 2 (NSW, 2017) | ✅ | ✅ |
+
+**Para preencher capas via Chronicle:**
+1. Ir em `/admin/chronicles`
+2. Buscar o título do jogo
+3. Adicionar a URL da imagem no campo boxArtUrl e salvar
+4. A capa aparece automaticamente na página do fighter
+
+**Alternativa (capa local):**
 1. Colocar a imagem em `public/assets/games/ARQUIVO.jpg`
 2. Adicionar `boxArtPath: "/assets/games/ARQUIVO.jpg"` na entrada em `page.tsx`
 

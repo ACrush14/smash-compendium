@@ -3,7 +3,7 @@
 > **Regra:** Antes de trabalhar em qualquer sistema, leia o arquivo correspondente aqui.
 > Estes arquivos são a fonte de verdade sobre cada feature — mais precisos que CONTEXT.md (que é histórico).
 
-**Última atualização:** 2026-06-07 · Sessão 23
+**Última atualização:** 2026-06-11 · Sessão 25
 
 | Arquivo | Sistema | Leia quando... |
 |---|---|---|
@@ -21,23 +21,25 @@
 
 ---
 
-## Estado Atual (2026-06-07 · Sessão 22)
+## Estado Atual (2026-06-11 · Sessão 24)
 
 ```
 FighterWork    ████████████████████  87/87  100%  ✅ COMPLETO
-Com bio SSB64  ████████░░░░░░░░░░░░  ~12/87  14%  (só fighters que estavam no 64 têm bio)
+Com bio SSB64  ████████░░░░░░░░░░░░  ~12/87  14%  (só fighters do SSB64 têm bio)
 Com troféus    ████████████████░░░░  71/87   82%
 Com spirits    ███████████████████░  84/87   97%
 Com imageUrl   ████████████████████  87/87  100%  ✅
-Chronicles art ██████░░░░░░░░░░░░░░ 263/947  28%
-Chronicles wiki ████████░░░░░░░░░░░░ 389/947  41%
+Chronicles art ████████░░░░░░░░░░░░ ~547/947+  ~57% (284 Libretro + manuais + existentes)
+Chronicles wiki ████████░░░░░░░░░░░░ ~389/947   ~41%
 ```
 
 > **Bio SSB64**: apenas os 12 fighters originais (SSB64) têm bio de jogo real.
-> Demais eras (Melee, Brawl, 4, Ultimate) usam Curator Overview na Visão Geral.
-> Bios wiki-scraped de outras eras ainda existem no banco — rodar `cleanup-non-64-bios.ts` para limpar.
+> Demais eras usam Curator Overview. Bios wiki-scraped de outras eras — rodar `cleanup-non-64-bios.ts` para limpar.
+>
+> **BoxArt fighters**: fighters sem `boxArtPath` local agora buscam `boxArtUrl` do `ChronicleEntry` (sessão 24).
+> Jogos adicionados ao Chronicles nesta sessão: Wii Fit, Fatal Fury, Minecraft, Mii.
 
-## Admin Tools Disponíveis (Sessão 23)
+## Admin Tools Disponíveis (Sessão 24)
 
 | URL | Função |
 |---|---|
@@ -66,19 +68,25 @@ Collectible.franchiseId  ██████████████████�
 
 ## Pendências (por prioridade)
 
+> **Roadmap completo:** ver `context/roadmap.md` (36 itens com estratégia de resolução)
+
 | Prioridade | Tarefa | Arquivo de context |
 |---|---|---|
 | 🔴 P1 | ETL em massa: bios SSB64 EN/JP para os 12 fighters do original | `etl-scrapers.md` |
 | 🔴 P1 | ETL em massa: troféus + imagens para os 16 fighters sem troféus | `etl-scrapers.md` |
-| 🔴 P1 | 11 fighters sem capa de jogo de origem | `origin-games.md` |
+| 🔴 P1 | 11 fighters sem boxArtPath local (podem ter boxArtUrl via Chronicle) | `origin-games.md` |
 | 🟡 P2 | Limpar bios wiki-scraped de Melee/Brawl/4/Ultimate: `cleanup-non-64-bios.ts` | `admin-curation.md` |
 | 🟡 P2 | Curar troféus de universo (ex: Boo no Mario) via ⇥ desvincular → `/franchise/Mario` | `collectibles.md` |
-| 🟡 P2 | 558 Chronicles sem wikiUrl → preencher no admin | `chronicles.md` |
-| 🟡 P2 | 684 Chronicles sem capa → rodar fetch após wikiUrl | `chronicles.md` |
+| 🟡 P2 | ~558 Chronicles sem wikiUrl → preencher no admin | `chronicles.md` |
+| 🟡 P2 | ~684 Chronicles sem capa → rodar fetch após wikiUrl | `chronicles.md` |
 | 🟡 P2 | Spirits não exibidos como conteúdo no timeline | `collectibles.md` |
-| 🟡 P2 | Bug: stickers nunca exibidos (stickersMap vazio) | `collectibles.md` |
+| 🟡 P2 | Bug: stickers nunca exibidos (stickersMapSerialized vazio em fighters/[slug]/page.tsx) | `collectibles.md` |
+| 🟡 P2 | Bug: algumas imagens de sticker incorretas (ETL mal-matched) | `collectibles.md` |
+| 🟡 P2 | Music tracks com vídeos mortos — **918 restantes** (rodar replace-dead-music-urls.ts 1x/dia) | `music.md` |
 | 🟠 P3 | Músicas pending_review → aprovar via botão inline em `/admin/fighters` | `music.md` |
 | 🟠 P3 | ANTHROPIC_API_KEY não configurado no Vercel | `i18n.md` |
+| 🟠 P3 | Chronicles: mood visual estilo Brawl | `roadmap.md` |
+| 🟠 P3 | Chronicles: botões GAMEPLAY e JOGAR (Em breve) | `chronicles.md` |
 
 ## ⚠️ Regra de Curadoria
 
