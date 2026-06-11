@@ -63,22 +63,63 @@ export default async function ChroniclesPage({ searchParams }: Props) {
     where: { consoleName: activeConsole },
   });
 
-  // Sort chronologically by the earliest worldwide release date
-  const parseDate = (d: string | null) => {
+  const parseDate = (d: string | null): number => {
     if (!d || d === "—") return Infinity;
     const t = new Date(d).getTime();
     if (!isNaN(t)) return t;
     const m = d.match(/\d{4}/);
-    if (m) return new Date(`${m[0]}-01-01`).getTime();
-    return Infinity;
+    return m ? new Date(`${m[0]}-01-01`).getTime() : Infinity;
   };
 
-  games.sort((a, b) => {
-    const ta = Math.min(parseDate(a.releaseDateNtsc), parseDate(a.releaseDateJp), parseDate(a.releaseDatePal));
-    const tb = Math.min(parseDate(b.releaseDateNtsc), parseDate(b.releaseDateJp), parseDate(b.releaseDatePal));
-    if (ta !== tb) return ta - tb;
-    return a.titleNtsc.localeCompare(b.titleNtsc);
+  type GameEntry = (typeof games)[0];
+
+  const earliestDate = (g: GameEntry) =>
+    Math.min(parseDate(g.releaseDateNtsc), parseDate(g.releaseDateJp), parseDate(g.releaseDatePal));
+
+  // Separa entradas JP EXCLUSIVE das demais
+  const jpEntries = games.filter(g => g.titleNtsc === "JP EXCLUSIVE" || g.titleNtsc === "PAL EXCLUSIVE");
+  const intlEntries = games.filter(g => g.titleNtsc !== "JP EXCLUSIVE" && g.titleNtsc !== "PAL EXCLUSIVE");
+
+  // Tenta parear cada versão internacional com sua contraparte JP/PAL via titleJpEn
+  const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+  const usedJpIds = new Set<string>();
+  const groups: GameEntry[][] = [];
+
+  for (const intl of intlEntries) {
+    const key = normalize(intl.titleNtsc);
+    const pair = jpEntries.find(jp => {
+      if (usedJpIds.has(jp.id)) return false;
+      const jpKey = normalize(jp.titleJpEn ?? "");
+      return jpKey.length > 3 && (jpKey === key || jpKey.includes(key) || key.includes(jpKey));
+    });
+    if (pair) {
+      usedJpIds.add(pair.id);
+      groups.push([intl, pair]);
+    } else {
+      groups.push([intl]);
+    }
+  }
+
+  // JP/PAL exclusivos sem par internacional ficam como grupo solo
+  for (const jp of jpEntries) {
+    if (!usedJpIds.has(jp.id)) groups.push([jp]);
+  }
+
+  // Dentro de cada grupo: data mais antiga primeiro
+  for (const group of groups) {
+    group.sort((a, b) => earliestDate(a) - earliestDate(b));
+  }
+
+  // Ordena grupos pela data mais antiga do grupo
+  groups.sort((a, b) => {
+    const minA = Math.min(...a.map(earliestDate));
+    const minB = Math.min(...b.map(earliestDate));
+    if (minA !== minB) return minA - minB;
+    return (a[0]?.titleNtsc ?? "").localeCompare(b[0]?.titleNtsc ?? "");
   });
+
+  const sortedGames = groups.flat();
 
   const iconPath = CONSOLE_ICONS[activeConsole as string];
 
@@ -93,7 +134,7 @@ export default async function ChroniclesPage({ searchParams }: Props) {
               Nintendo Chronicle
             </h1>
             <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded">
-              {games.length} REGISTROS
+              {sortedGames.length} REGISTROS
             </span>
           </div>
 
@@ -134,11 +175,11 @@ export default async function ChroniclesPage({ searchParams }: Props) {
 
       {/* Galeria de Jogos */}
       <div className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-8 w-full">
-        {games.length === 0 ? (
+        {sortedGames.length === 0 ? (
           <div className="text-center text-vault-muted py-20">Nenhum registro encontrado para este console.</div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-            {games.map(game => (
+            {sortedGames.map(game => (
               <div key={game.id} className="flex flex-col group">
 
                 {/* Capa clicável → Wiki */}

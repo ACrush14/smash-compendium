@@ -116,6 +116,27 @@ GET https://en.wikipedia.org/w/api.php?action=query&titles=Wind_Waker&prop=image
 GET https://en.wikipedia.org/w/api.php?action=query&titles=File:WindWaker_GCN.jpg&prop=imageinfo&iiprop=url&format=json
 ```
 
+## Grouping de Versões do Mesmo Jogo (pendente — sessão 25)
+
+A página `/chronicles` precisa exibir versões JP e NTSC do mesmo jogo **lado a lado**, ordenadas pela data mais antiga.
+
+**Problema diagnosticado:** todas as versões NTSC têm `titleJp = null`. A tentativa atual de agrupar por `titleJp` não funciona — as versões NTSC caem no `noJpGroup` e aparecem separadas.
+
+**Dados reais (N64):**
+- NTSC "Super Mario 64": `titleJp = null`, `releaseDateNtsc = "09/29/1996"`
+- JP EXCLUSIVE: `titleJp = "スーパーマリオ64"`, `titleJpEn = "super mario 64"`, `releaseDateJp = "1996/06/23"`
+
+**Estratégia de fix:**
+1. Para cada versão NTSC, normalizar `titleNtsc.toLowerCase()` e buscar um JP EXCLUSIVE cujo `titleJpEn.toLowerCase()` faça match parcial ou exato.
+2. Se encontrar par JP, colocá-los no mesmo grupo (JP + NTSC), ordenados pela data mais antiga do grupo.
+3. Se não encontrar par (US exclusive, sem versão JP correspondente), tratar como grupo solo.
+
+**Atenção:** `titleJpEn` é tradução automática (AI), pode ter variações — ex: "wave lace 64" em vez de "wave race 64". Usar `.includes()` ou distância de string se match exato falhar.
+
+**Arquivo:** `app/chronicles/page.tsx` — seção de grouping (~linhas 79-111).
+
+---
+
 ## Entradas sem wikiUrl (558)
 
 Precisam de `wikiUrl` populada antes de qualquer scraping. Opções:
