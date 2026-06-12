@@ -23,29 +23,48 @@ const TYPE_LABELS: Record<string, string> = {
   STICKER: "Stickers",
 };
 
+const SPIRIT_PAGE_SIZE = 100;
+
 interface Props {
-  searchParams: { game?: string; type?: string };
+  searchParams: { game?: string; type?: string; page?: string; all?: string };
 }
 
 export default async function CollectiblesPage({ searchParams }: Props) {
-  const typeFilter = searchParams.type?.toUpperCase();
-  const isTypeView = typeFilter === "TROPHY" || typeFilter === "SPIRIT" || typeFilter === "STICKER";
+  const typeFilter   = searchParams.type?.toUpperCase();
+  const isTypeView   = typeFilter === "TROPHY" || typeFilter === "SPIRIT" || typeFilter === "STICKER";
+  const isSpiritView = typeFilter === "SPIRIT";
+  const showAll      = searchParams.all === "1";
+  const currentPage  = Math.max(1, parseInt(searchParams.page ?? "1", 10) || 1);
+  const activeGame   = searchParams.game || ERAS[0]!.id;
 
-  const activeGame = searchParams.game || ERAS[0]!.id;
+  const where = isTypeView
+    ? { type: typeFilter as "TROPHY" | "SPIRIT" | "STICKER" }
+    : { smashGameVersion: activeGame, type: { not: "SPRITE" as const } };
+
+  const orderBy = [
+    { posicaoSpiritSsbu: "asc" as const },
+    { orderIndex: "asc" as const },
+    { name: "asc" as const },
+  ];
+
+  // For spirits: paginate unless showAll
+  const totalCount = isSpiritView
+    ? await db.collectible.count({ where })
+    : 0;
+
+  const totalPages = isSpiritView && !showAll
+    ? Math.ceil(totalCount / SPIRIT_PAGE_SIZE)
+    : 1;
 
   const raw = await db.collectible.findMany({
-    where: isTypeView
-      ? { type: typeFilter as "TROPHY" | "SPIRIT" | "STICKER" }
-      : { smashGameVersion: activeGame, type: { not: "SPRITE" } },
-    orderBy: [
-      { posicaoSpiritSsbu: "asc" },
-      { orderIndex: "asc" },
-      { name: "asc" }
-    ]
+    where,
+    orderBy,
+    ...(isSpiritView && !showAll
+      ? { skip: (currentPage - 1) * SPIRIT_PAGE_SIZE, take: SPIRIT_PAGE_SIZE }
+      : {}),
   });
 
-  // Deduplicate by orderIndex: keep the first record per index (duplicates come
-  // from the same sticker being linked to multiple fighters during import).
+  // Deduplicate by orderIndex (sticker duplicates from multi-fighter import)
   const seenIdx = new Set<number>();
   const collectibles = raw.filter(item => {
     if (!item.orderIndex) return true;
@@ -56,17 +75,33 @@ export default async function CollectiblesPage({ searchParams }: Props) {
 
   const title = isTypeView ? (TYPE_LABELS[typeFilter!] ?? "Coleções") : "Coleções";
 
+  // Pagination URL builder
+  const pageUrl = (p: number) =>
+    `/collectibles?type=SPIRIT&page=${p}`;
+  const allUrl = `/collectibles?type=SPIRIT&all=1`;
+
+  // Page window: first, last, and ±2 around current
+  function pageWindow(current: number, total: number): (number | "...")[] {
+    if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+    const pages: (number | "...")[] = [];
+    const add = (n: number) => { if (!pages.includes(n)) pages.push(n); };
+    add(1);
+    if (current > 3) pages.push("...");
+    for (let i = Math.max(2, current - 2); i <= Math.min(total - 1, current + 2); i++) add(i);
+    if (current < total - 2) pages.push("...");
+    add(total);
+    return pages;
+  }
+
   return (
     <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body">
 
-      {/* Header Fixo e Tabs */}
+      {/* Header Fixo */}
       <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
         <div className="max-w-[1600px] mx-auto px-4 md:px-6 py-4">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-100 uppercase tracking-tight flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-vault-accent/20 flex items-center justify-center text-vault-accent">
-                ★
-              </div>
+              <div className="w-8 h-8 rounded-full bg-vault-accent/20 flex items-center justify-center text-vault-accent">★</div>
               {title}
             </h1>
             <div className="flex items-center gap-2">
@@ -76,12 +111,16 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                 </Link>
               )}
               <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded border border-vault-border/50">
-                {collectibles.length} ITENS
+                {isSpiritView
+                  ? showAll
+                    ? `${collectibles.length} ITENS`
+                    : `${(currentPage - 1) * SPIRIT_PAGE_SIZE + 1}–${Math.min(currentPage * SPIRIT_PAGE_SIZE, totalCount)} de ${totalCount}`
+                  : `${collectibles.length} ITENS`}
               </span>
             </div>
           </div>
 
-          {/* Abas de era — só exibe na view padrão */}
+          {/* Abas de era */}
           {!isTypeView && (
             <div className="flex gap-2">
               {ERAS.map(era => {
@@ -105,6 +144,76 @@ export default async function CollectiblesPage({ searchParams }: Props) {
               })}
             </div>
           )}
+
+          {/* Paginação no header (só spirits paginados) */}
+          {isSpiritView && !showAll && totalPages > 1 && (
+            <div className="flex items-center gap-1 mt-3 flex-wrap">
+              <Link
+                href={currentPage > 1 ? pageUrl(currentPage - 1) : "#"}
+                className={`px-2 py-1 text-xs font-mono rounded border transition-colors ${
+                  currentPage > 1
+                    ? "border-vault-border/60 text-slate-300 hover:border-vault-accent hover:text-vault-accent"
+                    : "border-vault-border/20 text-slate-600 pointer-events-none"
+                }`}
+              >
+                ‹
+              </Link>
+
+              {pageWindow(currentPage, totalPages).map((p, i) =>
+                p === "..." ? (
+                  <span key={`ellipsis-${i}`} className="px-1 text-xs text-slate-600">…</span>
+                ) : (
+                  <Link
+                    key={p}
+                    href={pageUrl(p as number)}
+                    className={`px-2.5 py-1 text-xs font-mono rounded border transition-colors ${
+                      p === currentPage
+                        ? "border-vault-accent bg-vault-accent/10 text-vault-accent"
+                        : "border-vault-border/40 text-slate-400 hover:border-vault-accent hover:text-vault-accent"
+                    }`}
+                  >
+                    {p}
+                  </Link>
+                )
+              )}
+
+              <Link
+                href={currentPage < totalPages ? pageUrl(currentPage + 1) : "#"}
+                className={`px-2 py-1 text-xs font-mono rounded border transition-colors ${
+                  currentPage < totalPages
+                    ? "border-vault-border/60 text-slate-300 hover:border-vault-accent hover:text-vault-accent"
+                    : "border-vault-border/20 text-slate-600 pointer-events-none"
+                }`}
+              >
+                ›
+              </Link>
+
+              <span className="text-slate-700 mx-1 text-xs">|</span>
+
+              <Link
+                href={allUrl}
+                className="px-3 py-1 text-xs font-mono font-bold rounded border border-slate-600 text-slate-400 hover:border-amber-500 hover:text-amber-400 transition-colors"
+                title="Carrega todos os 1582 spirits de uma vez — pode travar o browser"
+              >
+                TODOS ⚠
+              </Link>
+            </div>
+          )}
+
+          {/* Banner quando showAll */}
+          {isSpiritView && showAll && (
+            <div className="flex items-center gap-3 mt-3">
+              <span className="text-xs text-amber-400/80 font-mono">
+                ⚠ Mostrando todos os {totalCount} spirits — desempenho reduzido
+              </span>
+              <Link
+                href={pageUrl(1)}
+                className="px-3 py-1 text-xs font-mono rounded border border-vault-border/60 text-slate-400 hover:text-vault-accent hover:border-vault-accent transition-colors"
+              >
+                ← Voltar à paginação
+              </Link>
+            </div>
+          )}
         </div>
       </div>
 
@@ -115,11 +224,11 @@ export default async function CollectiblesPage({ searchParams }: Props) {
             <div className="text-4xl mb-4 opacity-20">🗄️</div>
             <p className="font-display text-xl text-slate-400">Nenhum item encontrado.</p>
           </div>
-        ) : typeFilter === "SPIRIT" ? (
+        ) : isSpiritView ? (
           /* ── Lista vertical de Spirits ── */
           <div className="flex flex-col gap-0 rounded-xl overflow-hidden border border-vault-border/50">
 
-            {/* Cabeçalho da tabela */}
+            {/* Cabeçalho */}
             <div className="hidden md:grid grid-cols-[56px_80px_1fr_180px_1fr] gap-4 px-4 py-2 bg-slate-900/80 border-b border-vault-border/60 text-[10px] font-bold uppercase tracking-widest text-vault-accent">
               <span>No.</span>
               <span>Arte</span>
@@ -131,7 +240,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
             {collectibles.map((item, idx) => (
               <div
                 key={item.id}
-                className={`grid grid-cols-[56px_80px_1fr] md:grid-cols-[56px_80px_1fr_180px_1fr] gap-4 px-4 py-3 items-start transition-colors border-b border-vault-border/20 last:border-0 ${
+                className={`grid grid-cols-[56px_80px_1fr] md:grid-cols-[56px_80px_1fr_180px_1fr] gap-4 px-4 py-3 items-start border-b border-vault-border/20 last:border-0 transition-colors ${
                   idx % 2 === 0 ? "bg-slate-900/30" : "bg-slate-800/20"
                 } hover:bg-vault-surface/60`}
               >
@@ -159,64 +268,64 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                   )}
                 </div>
 
-                {/* Nome + série */}
+                {/* Nome */}
                 <div className="flex flex-col justify-center min-w-0">
                   <p className="text-sm font-semibold text-slate-100 leading-tight">{item.name}</p>
                   {item.nameJp && (
                     <p className="text-[10px] text-slate-500 mt-0.5">{item.nameJp}</p>
                   )}
-                  {/* Em mobile: mostra o resto dos campos aqui */}
+                  {/* Mobile: campos extras */}
                   <div className="md:hidden mt-1 space-y-0.5">
-                    {(item as any).spiritArtworkSource && (
-                      <p className="text-[10px] text-slate-400">🎨 {(item as any).spiritArtworkSource}</p>
+                    {item.spiritArtworkSource && (
+                      <p className="text-[10px] text-slate-400">🎨 {item.spiritArtworkSource}</p>
                     )}
-                    {(item as any).spiritFirstAppearance && (
-                      <p className="text-[10px] text-slate-500">📅 {(item as any).spiritFirstAppearance}</p>
+                    {item.spiritFirstAppearance && (
+                      <p className="text-[10px] text-slate-500">📅 {item.spiritFirstAppearance}</p>
                     )}
-                    {(item as any).spiritMusicTitle && (
-                      <p className="text-[10px] text-vault-accent/80">♪ {(item as any).spiritMusicTitle}</p>
+                    {item.spiritMusicTitle && (
+                      <p className="text-[10px] text-vault-accent/80">♪ {item.spiritMusicTitle}</p>
                     )}
                   </div>
                 </div>
 
                 {/* Jogo de Origem / 1ª Aparição (desktop) */}
                 <div className="hidden md:flex flex-col justify-center gap-1 min-w-0">
-                  {(item as any).spiritArtworkSource ? (
+                  {item.spiritArtworkSource && (
                     <div>
                       <span className="text-[9px] font-bold uppercase tracking-wider text-vault-accent/60 block">Arte</span>
-                      <p className="text-xs text-slate-300 leading-tight">{(item as any).spiritArtworkSource}</p>
+                      <p className="text-xs text-slate-300 leading-tight">{item.spiritArtworkSource}</p>
                     </div>
-                  ) : null}
-                  {(item as any).spiritFirstAppearance ? (
+                  )}
+                  {item.spiritFirstAppearance && (
                     <div>
                       <span className="text-[9px] font-bold uppercase tracking-wider text-slate-500 block">1ª Aparição</span>
-                      <p className="text-xs text-slate-400 leading-tight">{(item as any).spiritFirstAppearance}</p>
+                      <p className="text-xs text-slate-400 leading-tight">{item.spiritFirstAppearance}</p>
                     </div>
-                  ) : null}
-                  {!(item as any).spiritArtworkSource && !(item as any).spiritFirstAppearance && item.sourceGame && (
+                  )}
+                  {!item.spiritArtworkSource && !item.spiritFirstAppearance && item.sourceGame && (
                     <p className="text-xs text-slate-400">{item.sourceGame}</p>
                   )}
                 </div>
 
                 {/* Música + Texto (desktop) */}
                 <div className="hidden md:flex flex-col justify-center gap-1 min-w-0">
-                  {(item as any).spiritMusicTitle && (
+                  {item.spiritMusicTitle && (
                     <div>
                       <span className="text-[9px] font-bold uppercase tracking-wider text-vault-accent/60 block">Música</span>
-                      <p className="text-xs text-vault-accent/90 leading-tight truncate" title={(item as any).spiritMusicTitle}>
-                        {(item as any).spiritMusicTitle}
+                      <p className="text-xs text-vault-accent/90 leading-tight truncate" title={item.spiritMusicTitle}>
+                        {item.spiritMusicTitle}
                       </p>
-                      {(item as any).spiritMusicArtist && (
+                      {item.spiritMusicArtist && (
                         <p className="text-[10px] text-slate-500 leading-tight truncate">
-                          {(item as any).spiritMusicArtist}
-                          {(item as any).spiritMusicDuration ? ` · ${(item as any).spiritMusicDuration}` : ""}
+                          {item.spiritMusicArtist}
+                          {item.spiritMusicDuration ? ` · ${item.spiritMusicDuration}` : ""}
                         </p>
                       )}
                     </div>
                   )}
-                  {(item as any).spiritCuratorComment && (
+                  {item.spiritCuratorComment && (
                     <p className="text-[10px] text-slate-400 line-clamp-2 leading-snug mt-0.5">
-                      {(item as any).spiritCuratorComment}
+                      {item.spiritCuratorComment}
                     </p>
                   )}
                 </div>
@@ -264,6 +373,61 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Paginação no rodapé (só spirits paginados) */}
+        {isSpiritView && !showAll && totalPages > 1 && (
+          <div className="flex items-center justify-center gap-1 mt-8 flex-wrap">
+            <Link
+              href={currentPage > 1 ? pageUrl(currentPage - 1) : "#"}
+              className={`px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
+                currentPage > 1
+                  ? "border-vault-border/60 text-slate-300 hover:border-vault-accent hover:text-vault-accent"
+                  : "border-vault-border/20 text-slate-600 pointer-events-none"
+              }`}
+            >
+              ‹ Anterior
+            </Link>
+
+            {pageWindow(currentPage, totalPages).map((p, i) =>
+              p === "..." ? (
+                <span key={`ellipsis-bottom-${i}`} className="px-1 text-xs text-slate-600">…</span>
+              ) : (
+                <Link
+                  key={p}
+                  href={pageUrl(p as number)}
+                  className={`px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
+                    p === currentPage
+                      ? "border-vault-accent bg-vault-accent/10 text-vault-accent font-bold"
+                      : "border-vault-border/40 text-slate-400 hover:border-vault-accent hover:text-vault-accent"
+                  }`}
+                >
+                  {p}
+                </Link>
+              )
+            )}
+
+            <Link
+              href={currentPage < totalPages ? pageUrl(currentPage + 1) : "#"}
+              className={`px-3 py-1.5 text-xs font-mono rounded border transition-colors ${
+                currentPage < totalPages
+                  ? "border-vault-border/60 text-slate-300 hover:border-vault-accent hover:text-vault-accent"
+                  : "border-vault-border/20 text-slate-600 pointer-events-none"
+              }`}
+            >
+              Próximo ›
+            </Link>
+
+            <span className="text-slate-700 mx-2 text-xs">|</span>
+
+            <Link
+              href={allUrl}
+              className="px-4 py-1.5 text-xs font-mono font-bold rounded border border-slate-600 text-slate-400 hover:border-amber-500 hover:text-amber-400 transition-colors"
+              title="Carrega todos os spirits de uma vez — pode travar o browser"
+            >
+              TODOS ⚠
+            </Link>
           </div>
         )}
       </div>
