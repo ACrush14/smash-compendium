@@ -38,6 +38,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       ? { type: typeFilter as "TROPHY" | "SPIRIT" | "STICKER" }
       : { smashGameVersion: activeGame, type: { not: "SPRITE" } },
     orderBy: [
+      { posicaoSpiritSsbu: "asc" },
       { orderIndex: "asc" },
       { name: "asc" }
     ]
@@ -107,40 +108,138 @@ export default async function CollectiblesPage({ searchParams }: Props) {
         </div>
       </div>
 
-      {/* Spirit Board Grid */}
+      {/* Conteúdo principal */}
       <div className="flex-1 max-w-[1600px] mx-auto px-4 md:px-6 py-8 w-full">
         {collectibles.length === 0 ? (
           <div className="text-center text-vault-muted py-32 flex flex-col items-center justify-center">
             <div className="text-4xl mb-4 opacity-20">🗄️</div>
             <p className="font-display text-xl text-slate-400">Nenhum item encontrado.</p>
-            <p className="text-sm mt-2 text-slate-500 max-w-md mx-auto">
-              Execute o pipeline de extração (ETL) para popular esta galeria com os troféus e spirits dos personagens.
-            </p>
+          </div>
+        ) : typeFilter === "SPIRIT" ? (
+          /* ── Lista vertical de Spirits ── */
+          <div className="flex flex-col gap-0 rounded-xl overflow-hidden border border-vault-border/50">
+
+            {/* Cabeçalho da tabela */}
+            <div className="hidden md:grid grid-cols-[56px_80px_1fr_180px_1fr] gap-4 px-4 py-2 bg-slate-900/80 border-b border-vault-border/60 text-[10px] font-bold uppercase tracking-widest text-vault-accent">
+              <span>No.</span>
+              <span>Arte</span>
+              <span>Nome</span>
+              <span>Jogo de Origem / 1ª Aparição</span>
+              <span>Música &amp; Texto</span>
+            </div>
+
+            {collectibles.map((item, idx) => (
+              <div
+                key={item.id}
+                className={`grid grid-cols-[56px_80px_1fr] md:grid-cols-[56px_80px_1fr_180px_1fr] gap-4 px-4 py-3 items-start transition-colors border-b border-vault-border/20 last:border-0 ${
+                  idx % 2 === 0 ? "bg-slate-900/30" : "bg-slate-800/20"
+                } hover:bg-vault-surface/60`}
+              >
+                {/* Número */}
+                <div className="flex flex-col items-center justify-center pt-1">
+                  <span className="text-[11px] font-mono font-bold text-vault-accent">
+                    {item.posicaoSpiritSsbu
+                      ? `#${String(item.posicaoSpiritSsbu).padStart(4, "0")}`
+                      : "—"}
+                  </span>
+                </div>
+
+                {/* Imagem */}
+                <div className="relative w-16 h-16 bg-slate-800/60 rounded-lg overflow-hidden flex items-center justify-center border border-vault-border/30 shrink-0">
+                  {item.assetRenderUrl ? (
+                    <Image
+                      src={item.assetRenderUrl}
+                      alt={item.name}
+                      fill
+                      className="object-contain p-1"
+                      sizes="64px"
+                    />
+                  ) : (
+                    <span className="text-2xl opacity-10">?</span>
+                  )}
+                </div>
+
+                {/* Nome + série */}
+                <div className="flex flex-col justify-center min-w-0">
+                  <p className="text-sm font-semibold text-slate-100 leading-tight">{item.name}</p>
+                  {item.nameJp && (
+                    <p className="text-[10px] text-slate-500 mt-0.5">{item.nameJp}</p>
+                  )}
+                  {/* Em mobile: mostra o resto dos campos aqui */}
+                  <div className="md:hidden mt-1 space-y-0.5">
+                    {(item as any).spiritArtworkSource && (
+                      <p className="text-[10px] text-slate-400">🎨 {(item as any).spiritArtworkSource}</p>
+                    )}
+                    {(item as any).spiritFirstAppearance && (
+                      <p className="text-[10px] text-slate-500">📅 {(item as any).spiritFirstAppearance}</p>
+                    )}
+                    {(item as any).spiritMusicTitle && (
+                      <p className="text-[10px] text-vault-accent/80">♪ {(item as any).spiritMusicTitle}</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Jogo de Origem / 1ª Aparição (desktop) */}
+                <div className="hidden md:flex flex-col justify-center gap-1 min-w-0">
+                  {(item as any).spiritArtworkSource ? (
+                    <div>
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-vault-accent/60 block">Arte</span>
+                      <p className="text-xs text-slate-300 leading-tight">{(item as any).spiritArtworkSource}</p>
+                    </div>
+                  ) : null}
+                  {(item as any).spiritFirstAppearance ? (
+                    <div>
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-slate-500 block">1ª Aparição</span>
+                      <p className="text-xs text-slate-400 leading-tight">{(item as any).spiritFirstAppearance}</p>
+                    </div>
+                  ) : null}
+                  {!(item as any).spiritArtworkSource && !(item as any).spiritFirstAppearance && item.sourceGame && (
+                    <p className="text-xs text-slate-400">{item.sourceGame}</p>
+                  )}
+                </div>
+
+                {/* Música + Texto (desktop) */}
+                <div className="hidden md:flex flex-col justify-center gap-1 min-w-0">
+                  {(item as any).spiritMusicTitle && (
+                    <div>
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-vault-accent/60 block">Música</span>
+                      <p className="text-xs text-vault-accent/90 leading-tight truncate" title={(item as any).spiritMusicTitle}>
+                        {(item as any).spiritMusicTitle}
+                      </p>
+                      {(item as any).spiritMusicArtist && (
+                        <p className="text-[10px] text-slate-500 leading-tight truncate">
+                          {(item as any).spiritMusicArtist}
+                          {(item as any).spiritMusicDuration ? ` · ${(item as any).spiritMusicDuration}` : ""}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  {(item as any).spiritCuratorComment && (
+                    <p className="text-[10px] text-slate-400 line-clamp-2 leading-snug mt-0.5">
+                      {(item as any).spiritCuratorComment}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
+          /* ── Grid para Troféus e Stickers ── */
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4 md:gap-6">
             {collectibles.map(item => (
               <div key={item.id} className="group relative flex flex-col items-center">
-                
-                {/* O Card do Coletável */}
                 <div className="relative w-full aspect-square bg-slate-800/40 rounded-xl overflow-hidden border border-vault-border/50 group-hover:border-vault-accent group-hover:bg-vault-surface transition-all duration-300 shadow-sm group-hover:shadow-vault-accent/20 group-hover:-translate-y-1">
-                  
-                  {/* Padrão de fundo (Grid) */}
                   <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '12px 12px' }} />
-                  
-                  {/* Tipo / Badge */}
                   <div className="absolute top-2 right-2 z-10">
                     <span className="text-[8px] font-bold uppercase tracking-wider text-slate-400 bg-slate-900/80 px-1.5 py-0.5 rounded shadow-sm">
                       {item.orderIndex ? `#${String(item.orderIndex).padStart(3, "0")}` : item.type}
                     </span>
                   </div>
-                  
-                  {/* Imagem com suporte a fallbacks */}
                   <div className="absolute inset-4 flex items-center justify-center">
                     {item.assetRenderUrl ? (
-                      <Image 
-                        src={item.assetRenderUrl} 
-                        alt={item.name} 
+                      <Image
+                        src={item.assetRenderUrl}
+                        alt={item.name}
                         fill
                         className="object-contain drop-shadow-lg transition-transform duration-500 group-hover:scale-110"
                         sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, 15vw"
@@ -150,8 +249,6 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                     )}
                   </div>
                 </div>
-
-                {/* Nome embaixo (estilo legenda) */}
                 <div className="mt-2 text-center w-full">
                   <p className="text-xs font-medium text-slate-300 line-clamp-2 leading-tight group-hover:text-white transition-colors">
                     {item.name}
@@ -162,9 +259,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                     </p>
                   )}
                   {!item.sourceGame && item.nameJp && (
-                    <p className="text-[10px] text-slate-500 truncate mt-0.5">
-                      {item.nameJp}
-                    </p>
+                    <p className="text-[10px] text-slate-500 truncate mt-0.5">{item.nameJp}</p>
                   )}
                 </div>
               </div>

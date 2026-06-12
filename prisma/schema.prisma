@@ -109,6 +109,13 @@ model Collectible {
   posicaoTrofeuBrawl Int?
   posicaoTrofeuSsb4  Int?
   posicaoSpiritSsbu  Int?
+  // Spirit metadata (fonte: ssbuspirits.com)
+  spiritFirstAppearance String?       // Jogo de primeira aparição do personagem, ex: "EarthBound (1994)"
+  spiritArtworkSource   String?       // Jogo de origem da artwork do spirit, ex: "Mario Party 10 (2015)"
+  spiritMusicTitle      String?       // Música associada, ex: "Bein' Friends"
+  spiritMusicArtist     String?       // Artista/arranjador, ex: "Shogo Sakai"
+  spiritMusicDuration   String?       // Duração, ex: "02:03"
+  spiritCuratorComment  String?       @db.Text // Texto curatorial de fã (ssbuspirits.com)
   franchiseId      String?
   fighter          Fighter?   @relation(fields: [fighterId], references: [id], onDelete: SetNull)
   franchise        Franchise? @relation("CollectibleFranchise", fields: [franchiseId], references: [id])
