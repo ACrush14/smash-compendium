@@ -361,7 +361,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
           </a>
 
           {/* 02 — Troféus */}
-          <a href="/collectibles"
+          <a href="/collectibles?type=TROPHY"
             className="group relative flex flex-col justify-between overflow-hidden border border-white/10 p-7 transition-all duration-300 hover:scale-[1.03] hover:border-amber-900/50 hover:shadow-[0_0_40px_rgba(120,53,15,0.3)]"
             style={{ background: "linear-gradient(135deg, rgba(120,53,15,0.35) 0%, rgba(69,26,3,0.5) 40%, #0a0500 100%)", clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)" }}
           >
@@ -381,7 +381,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
           </a>
 
           {/* 03 — Spirits */}
-          <a href="/collectibles"
+          <a href="/collectibles?type=SPIRIT"
             className="group relative flex flex-col justify-between overflow-hidden border border-white/10 p-7 transition-all duration-300 hover:scale-[1.03] hover:border-purple-900/50 hover:shadow-[0_0_40px_rgba(88,28,135,0.3)]"
             style={{ background: "linear-gradient(135deg, rgba(88,28,135,0.35) 0%, rgba(46,16,101,0.5) 40%, #060010 100%)", clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)" }}
           >
@@ -401,7 +401,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
           </a>
 
           {/* 04 — Stickers */}
-          <a href="/collectibles"
+          <a href="/collectibles?type=STICKER"
             className="group relative flex flex-col justify-between overflow-hidden border border-white/10 p-7 transition-all duration-300 hover:scale-[1.03] hover:border-sky-900/50 hover:shadow-[0_0_40px_rgba(14,116,144,0.25)]"
             style={{ background: "linear-gradient(135deg, rgba(12,74,110,0.35) 0%, rgba(7,89,133,0.3) 40%, #010814 100%)", clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)" }}
           >

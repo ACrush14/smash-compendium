@@ -17,28 +17,37 @@ const ERAS = [
   { id: "SSBU", label: "Ultimate", year: "2018" },
 ];
 
+const TYPE_LABELS: Record<string, string> = {
+  TROPHY:  "Troféus",
+  SPIRIT:  "Spirits",
+  STICKER: "Stickers",
+};
+
 interface Props {
-  searchParams: { game?: string };
+  searchParams: { game?: string; type?: string };
 }
 
 export default async function CollectiblesPage({ searchParams }: Props) {
+  const typeFilter = searchParams.type?.toUpperCase();
+  const isTypeView = typeFilter === "TROPHY" || typeFilter === "SPIRIT" || typeFilter === "STICKER";
+
   const activeGame = searchParams.game || ERAS[0]!.id;
 
-  // Fetch only collectibles for the active game, excluding sprites
   const collectibles = await db.collectible.findMany({
-    where: { 
-      smashGameVersion: activeGame,
-      type: { not: "SPRITE" } 
-    },
+    where: isTypeView
+      ? { type: typeFilter as "TROPHY" | "SPIRIT" | "STICKER" }
+      : { smashGameVersion: activeGame, type: { not: "SPRITE" } },
     orderBy: [
       { orderIndex: "asc" },
       { name: "asc" }
     ]
   });
 
+  const title = isTypeView ? (TYPE_LABELS[typeFilter!] ?? "Coleções") : "Coleções";
+
   return (
     <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body">
-      
+
       {/* Header Fixo e Tabs */}
       <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
         <div className="max-w-[1600px] mx-auto px-4 md:px-6 py-4">
@@ -47,35 +56,44 @@ export default async function CollectiblesPage({ searchParams }: Props) {
               <div className="w-8 h-8 rounded-full bg-vault-accent/20 flex items-center justify-center text-vault-accent">
                 ★
               </div>
-              Coleções
+              {title}
             </h1>
-            <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded border border-vault-border/50">
-              {collectibles.length} ITENS
-            </span>
+            <div className="flex items-center gap-2">
+              {isTypeView && (
+                <Link href="/collectibles" className="text-xs font-mono text-vault-muted hover:text-slate-200 transition-colors">
+                  ← Todas as coleções
+                </Link>
+              )}
+              <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded border border-vault-border/50">
+                {collectibles.length} ITENS
+              </span>
+            </div>
           </div>
 
-          {/* Abas */}
-          <div className="flex gap-2">
-            {ERAS.map(era => {
-              const isActive = era.id === activeGame;
-              return (
-                <Link
-                  key={era.id}
-                  href={`/collectibles?game=${era.id}`}
-                  className={`px-5 py-2 text-sm font-medium rounded-t-lg transition-colors border-b-2 flex items-baseline gap-2 ${
-                    isActive
-                      ? "bg-vault-surface border-vault-accent text-slate-100"
-                      : "bg-transparent border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
-                  }`}
-                >
-                  <span className="uppercase tracking-wider">{era.label}</span>
-                  <span className={`text-[10px] font-mono ${isActive ? "text-vault-accent" : "text-slate-500"}`}>
-                    {era.year}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
+          {/* Abas de era — só exibe na view padrão */}
+          {!isTypeView && (
+            <div className="flex gap-2">
+              {ERAS.map(era => {
+                const isActive = era.id === activeGame;
+                return (
+                  <Link
+                    key={era.id}
+                    href={`/collectibles?game=${era.id}`}
+                    className={`px-5 py-2 text-sm font-medium rounded-t-lg transition-colors border-b-2 flex items-baseline gap-2 ${
+                      isActive
+                        ? "bg-vault-surface border-vault-accent text-slate-100"
+                        : "bg-transparent border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
+                    }`}
+                  >
+                    <span className="uppercase tracking-wider">{era.label}</span>
+                    <span className={`text-[10px] font-mono ${isActive ? "text-vault-accent" : "text-slate-500"}`}>
+                      {era.year}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 
