@@ -19,10 +19,12 @@
 
 import { db } from "../../lib/db";
 import { fetchHtml, cleanText, log, sleep } from "./utils";
+import { addGamesFromSpirits } from "../admin/add-games-from-spirits";
 
 const BASE = "https://www.ssbuspirits.com";
 const PAGE_DELAY_MS   = 3_000;
 const SPIRIT_DELAY_MS = 1_500;
+const MAX_SPIRIT_NUM  = 1137; // ssbuspirits.com só tem até esse número
 
 // ─── Slug helpers ─────────────────────────────────────────────────────────────
 
@@ -142,16 +144,22 @@ async function main() {
   const listedSlugs = await collectSlugs();
   log.ok(`Listed slugs: ${listedSlugs.size}`);
 
-  // ── Load DB spirits ─────────────────────────────────────────────────────────
+  // ── Load DB spirits (apenas até MAX_SPIRIT_NUM) ─────────────────────────────
   log.step("Loading DB spirits…");
   const dbSpirits = await db.collectible.findMany({
-    where: { type: "SPIRIT" },
+    where: {
+      type: "SPIRIT",
+      OR: [
+        { posicaoSpiritSsbu: { lte: MAX_SPIRIT_NUM } },
+        { posicaoSpiritSsbu: null },
+      ],
+    },
     select: { id: true, name: true, posicaoSpiritSsbu: true },
     orderBy: { posicaoSpiritSsbu: "asc" },
   });
-  log.ok(`DB spirits: ${dbSpirits.length}`);
+  log.ok(`DB spirits (≤ #${MAX_SPIRIT_NUM}): ${dbSpirits.length}`);
 
-  // Complementa slugs com gerados a partir dos nomes do DB
+  // Complementa slugs com gerados a partir dos nomes do DB filtrado
   const allSlugs = new Set<string>(listedSlugs);
   for (const s of dbSpirits) {
     const gen = toSlug(s.name);
@@ -159,97 +167,58 @@ async function main() {
   }
   log.ok(`Total slugs to try: ${allSlugs.size}`);
 
-  // ── Phase 2: scrape individual pages ────────────────────────────────────────
-  log.step("Scraping spirit pages…");
+  // Lookup maps para match imediato no DB
+  const dbByNum  = new Map<number, typeof dbSpirits[number]>();
+  const dbBySlug = new Map<string, typeof dbSpirits[number]>();
+  for (const s of dbSpirits) {
+    if (s.posicaoSpiritSsbu) dbByNum.set(s.posicaoSpiritSsbu, s);
+    dbBySlug.set(normalize(toSlug(s.name)), s);
+  }
+  const updatedIds = new Set<string>(); // evita double-update
 
-  // Map: spiritNumber → meta  +  normalizedSlug → meta
-  const byNumber = new Map<number, SpiritMeta>();
-  const bySlug   = new Map<string, SpiritMeta>();   // normalized slug
-  let scraped = 0, notFound = 0, errors = 0, i = 0;
+  // ── Scrape + update incremental ─────────────────────────────────────────────
+  log.step("Scraping e atualizando DB em tempo real…");
+  let scraped = 0, notFound = 0, errors = 0, updated = 0, i = 0;
 
   for (const slug of allSlugs) {
     i++;
     try {
-      const $ = await fetchHtml(`${BASE}/spirits/${slug}`);
+      const $ = await fetchHtml(`${BASE}/spirits/${slug}`, 1);
       const meta = parseSpiritPage($);
-      if (meta.number !== null) byNumber.set(meta.number, meta);
-      bySlug.set(normalize(slug), meta);
       scraped++;
+
+      // Match: por número primeiro, depois por slug normalizado
+      let dbSpirit = meta.number !== null ? dbByNum.get(meta.number) : undefined;
+      if (!dbSpirit) dbSpirit = dbBySlug.get(normalize(slug));
+
+      if (dbSpirit && !updatedIds.has(dbSpirit.id)) {
+        updatedIds.add(dbSpirit.id);
+        await db.collectible.update({
+          where: { id: dbSpirit.id },
+          data: {
+            spiritFirstAppearance: meta.firstAppearance,
+            spiritArtworkSource:   meta.artworkSource,
+            spiritMusicTitle:      meta.musicTitle,
+            spiritMusicArtist:     meta.musicArtist,
+            spiritMusicDuration:   meta.musicDuration,
+            spiritCuratorComment:  meta.comment,
+          },
+        });
+        updated++;
+      }
     } catch (e: any) {
       if (String(e.message).includes("404")) notFound++;
       else { errors++; if (errors <= 10) console.warn(`  [ERR] ${slug}: ${String(e.message).slice(0, 60)}`); }
     }
 
-    if (i % 100 === 0) log.ok(`  ${i}/${allSlugs.size} tried — scraped: ${scraped}, 404: ${notFound}, err: ${errors}`);
+    if (i % 50 === 0) log.ok(`  ${i}/${allSlugs.size} — scrapeados: ${scraped}, atualizados: ${updated}, 404: ${notFound}`);
     await sleep(SPIRIT_DELAY_MS);
   }
 
-  log.ok(`Done — scraped: ${scraped}, 404: ${notFound}, errors: ${errors}`);
+  log.ok(`Concluído — scrapeados: ${scraped}, atualizados no DB: ${updated}, 404: ${notFound}, erros: ${errors}`);
 
-  // ── Phase 3: match DB spirits ────────────────────────────────────────────────
-  log.step("Matching to DB…");
-  const dbByNum = new Map<number, typeof dbSpirits[number]>();
-  for (const s of dbSpirits) {
-    if (s.posicaoSpiritSsbu) dbByNum.set(s.posicaoSpiritSsbu, s);
-  }
-
-  const assignments = new Map<string, SpiritMeta>(); // dbId → meta
-  let matchNum = 0, matchName = 0, noMatch = 0;
-
-  for (const spirit of dbSpirits) {
-    // Pass 1: by spirit number
-    if (spirit.posicaoSpiritSsbu && byNumber.has(spirit.posicaoSpiritSsbu)) {
-      assignments.set(spirit.id, byNumber.get(spirit.posicaoSpiritSsbu)!);
-      matchNum++;
-      continue;
-    }
-    // Pass 2: by normalized slug from name
-    const slug = normalize(toSlug(spirit.name));
-    if (bySlug.has(slug)) {
-      assignments.set(spirit.id, bySlug.get(slug)!);
-      matchName++;
-      continue;
-    }
-    noMatch++;
-  }
-
-  log.ok(`Matched — by number: ${matchNum}, by name: ${matchName}, unmatched: ${noMatch}`);
-
-  // ── Phase 4: update DB ───────────────────────────────────────────────────────
-  log.step("Updating DB…");
-  let updated = 0;
-
-  for (const spirit of dbSpirits) {
-    const meta = assignments.get(spirit.id);
-    if (!meta) continue;
-
-    await db.collectible.update({
-      where: { id: spirit.id },
-      data: {
-        spiritFirstAppearance: meta.firstAppearance,
-        spiritArtworkSource:   meta.artworkSource,
-        spiritMusicTitle:      meta.musicTitle,
-        spiritMusicArtist:     meta.musicArtist,
-        spiritMusicDuration:   meta.musicDuration,
-        spiritCuratorComment:  meta.comment,
-      },
-    });
-    updated++;
-    if (updated % 100 === 0) log.ok(`  Updated ${updated}…`);
-  }
-
-  log.ok(`DB update done — updated: ${updated} spirits`);
-
-  // Amostra
-  const samples = dbSpirits.slice(0, 3);
-  for (const s of samples) {
-    const m = assignments.get(s.id);
-    if (m) console.log(`\n  #${s.posicaoSpiritSsbu} "${s.name}"`
-      + `\n    FirstApp: ${m.firstAppearance}`
-      + `\n    Artwork:  ${m.artworkSource}`
-      + `\n    Music:    ${m.musicTitle} — ${m.musicArtist} (${m.musicDuration})`
-      + `\n    Comment:  ${(m.comment ?? "").slice(0, 80)}…`);
-  }
+  // Sincroniza automaticamente os jogos novos para o Chronicles
+  await addGamesFromSpirits();
 }
 
 main().catch(console.error);

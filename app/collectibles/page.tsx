@@ -73,6 +73,27 @@ export default async function CollectiblesPage({ searchParams }: Props) {
     return true;
   });
 
+  // Fetch chronicle cover art for spirit view
+  const chronicleArtMap = new Map<string, string>();
+  if (isSpiritView) {
+    const entries = await db.chronicleEntry.findMany({
+      where: { boxArtUrl: { not: null } },
+      select: { titleNtsc: true, boxArtUrl: true },
+    });
+    for (const e of entries) {
+      if (!e.boxArtUrl) continue;
+      const norm = e.titleNtsc.toLowerCase().replace(/[^a-z0-9]/g, "");
+      if (!chronicleArtMap.has(norm)) chronicleArtMap.set(norm, e.boxArtUrl);
+    }
+  }
+
+  const findCoverArt = (source: string | null): string | null => {
+    if (!source) return null;
+    const name = source.replace(/\s*\(\d{4}\)$/, "").trim();
+    const norm = name.toLowerCase().replace(/[^a-z0-9]/g, "");
+    return chronicleArtMap.get(norm) ?? null;
+  };
+
   const title = isTypeView ? (TYPE_LABELS[typeFilter!] ?? "Coleções") : "Coleções";
 
   // Pagination URL builder
@@ -229,7 +250,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
           <div className="flex flex-col gap-0 rounded-xl overflow-hidden border border-vault-border/50">
 
             {/* Cabeçalho */}
-            <div className="hidden md:grid grid-cols-[56px_80px_1fr_180px_1fr] gap-4 px-4 py-2 bg-slate-900/80 border-b border-vault-border/60 text-[10px] font-bold uppercase tracking-widest text-vault-accent">
+            <div className="hidden md:grid grid-cols-[56px_148px_1fr_320px_1fr] gap-4 px-4 py-2 bg-slate-900/80 border-b border-vault-border/60 text-xs font-bold uppercase tracking-widest text-vault-accent">
               <span>No.</span>
               <span>Arte</span>
               <span>Nome</span>
@@ -240,13 +261,13 @@ export default async function CollectiblesPage({ searchParams }: Props) {
             {collectibles.map((item, idx) => (
               <div
                 key={item.id}
-                className={`grid grid-cols-[56px_80px_1fr] md:grid-cols-[56px_80px_1fr_180px_1fr] gap-4 px-4 py-3 items-start border-b border-vault-border/20 last:border-0 transition-colors ${
+                className={`grid grid-cols-[56px_148px_1fr] md:grid-cols-[56px_148px_1fr_320px_1fr] gap-4 px-4 py-4 items-start border-b border-vault-border/20 last:border-0 transition-colors ${
                   idx % 2 === 0 ? "bg-slate-900/30" : "bg-slate-800/20"
                 } hover:bg-vault-surface/60`}
               >
                 {/* Número */}
-                <div className="flex flex-col items-center justify-center pt-1">
-                  <span className="text-[11px] font-mono font-bold text-vault-accent">
+                <div className="flex flex-col items-center justify-center pt-2">
+                  <span className="text-sm font-mono font-bold text-vault-accent">
                     {item.posicaoSpiritSsbu
                       ? `#${String(item.posicaoSpiritSsbu).padStart(4, "0")}`
                       : "—"}
@@ -254,69 +275,93 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                 </div>
 
                 {/* Imagem */}
-                <div className="relative w-16 h-16 bg-slate-800/60 rounded-lg overflow-hidden flex items-center justify-center border border-vault-border/30 shrink-0">
+                <div className="relative w-36 h-36 bg-slate-800/60 rounded-lg overflow-hidden flex items-center justify-center border border-vault-border/30 shrink-0">
                   {item.assetRenderUrl ? (
                     <Image
                       src={item.assetRenderUrl}
                       alt={item.name}
                       fill
                       className="object-contain p-1"
-                      sizes="64px"
+                      sizes="144px"
                     />
                   ) : (
-                    <span className="text-2xl opacity-10">?</span>
+                    <span className="text-3xl opacity-10">?</span>
                   )}
                 </div>
 
                 {/* Nome */}
                 <div className="flex flex-col justify-center min-w-0">
-                  <p className="text-sm font-semibold text-slate-100 leading-tight">{item.name}</p>
+                  <p className="text-base font-semibold text-slate-100 leading-tight">{item.name}</p>
                   {item.nameJp && (
-                    <p className="text-[10px] text-slate-500 mt-0.5">{item.nameJp}</p>
+                    <p className="text-xs text-slate-500 mt-0.5">{item.nameJp}</p>
                   )}
                   {/* Mobile: campos extras */}
                   <div className="md:hidden mt-1 space-y-0.5">
                     {item.spiritArtworkSource && (
-                      <p className="text-[10px] text-slate-400">🎨 {item.spiritArtworkSource}</p>
+                      <p className="text-xs text-slate-400">🎨 {item.spiritArtworkSource}</p>
                     )}
                     {item.spiritFirstAppearance && (
-                      <p className="text-[10px] text-slate-500">📅 {item.spiritFirstAppearance}</p>
+                      <p className="text-xs text-slate-500">📅 {item.spiritFirstAppearance}</p>
                     )}
                     {item.spiritMusicTitle && (
-                      <p className="text-[10px] text-vault-accent/80">♪ {item.spiritMusicTitle}</p>
+                      <p className="text-xs text-vault-accent/80">♪ {item.spiritMusicTitle}</p>
                     )}
                   </div>
                 </div>
 
                 {/* Jogo de Origem / 1ª Aparição (desktop) */}
-                <div className="hidden md:flex flex-col justify-center gap-1 min-w-0">
-                  {item.spiritArtworkSource && (
-                    <div>
-                      <span className="text-[9px] font-bold uppercase tracking-wider text-vault-accent/60 block">Arte</span>
-                      <p className="text-xs text-slate-300 leading-tight">{item.spiritArtworkSource}</p>
+                {(() => {
+                  const artCover   = findCoverArt(item.spiritArtworkSource);
+                  const firstCover = findCoverArt(item.spiritFirstAppearance);
+                  return (
+                    <div className="hidden md:flex flex-col gap-3 min-w-0">
+                      {/* Arte */}
+                      {item.spiritArtworkSource && (
+                        <div className="flex flex-row items-start gap-2">
+                          {artCover && (
+                            <div className="relative shrink-0 w-12 aspect-[3/4] bg-slate-900 rounded-sm overflow-hidden border border-vault-border/50 shadow-md">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img src={artCover} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <span className="text-xs font-bold uppercase tracking-wider text-vault-accent/70 block">Arte</span>
+                            <p className="text-sm text-slate-300 leading-tight">{item.spiritArtworkSource}</p>
+                          </div>
+                        </div>
+                      )}
+                      {/* 1ª Aparição */}
+                      {item.spiritFirstAppearance && (
+                        <div className="flex flex-row items-start gap-2">
+                          {firstCover && (
+                            <div className="relative shrink-0 w-12 aspect-[3/4] bg-slate-900 rounded-sm overflow-hidden border border-vault-border/50 shadow-md">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img src={firstCover} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">1ª Aparição</span>
+                            <p className="text-sm text-slate-400 leading-tight">{item.spiritFirstAppearance}</p>
+                          </div>
+                        </div>
+                      )}
+                      {!item.spiritArtworkSource && !item.spiritFirstAppearance && item.sourceGame && (
+                        <p className="text-sm text-slate-400">{item.sourceGame}</p>
+                      )}
                     </div>
-                  )}
-                  {item.spiritFirstAppearance && (
-                    <div>
-                      <span className="text-[9px] font-bold uppercase tracking-wider text-slate-500 block">1ª Aparição</span>
-                      <p className="text-xs text-slate-400 leading-tight">{item.spiritFirstAppearance}</p>
-                    </div>
-                  )}
-                  {!item.spiritArtworkSource && !item.spiritFirstAppearance && item.sourceGame && (
-                    <p className="text-xs text-slate-400">{item.sourceGame}</p>
-                  )}
-                </div>
+                  );
+                })()}
 
                 {/* Música + Texto (desktop) */}
-                <div className="hidden md:flex flex-col justify-center gap-1 min-w-0">
+                <div className="hidden md:flex flex-col justify-start gap-2 min-w-0">
                   {item.spiritMusicTitle && (
                     <div>
-                      <span className="text-[9px] font-bold uppercase tracking-wider text-vault-accent/60 block">Música</span>
-                      <p className="text-xs text-vault-accent/90 leading-tight truncate" title={item.spiritMusicTitle}>
+                      <span className="text-xs font-bold uppercase tracking-wider text-vault-accent/70 block">Música</span>
+                      <p className="text-sm text-vault-accent/90 leading-tight" title={item.spiritMusicTitle}>
                         {item.spiritMusicTitle}
                       </p>
                       {item.spiritMusicArtist && (
-                        <p className="text-[10px] text-slate-500 leading-tight truncate">
+                        <p className="text-xs text-slate-500 leading-tight">
                           {item.spiritMusicArtist}
                           {item.spiritMusicDuration ? ` · ${item.spiritMusicDuration}` : ""}
                         </p>
@@ -324,7 +369,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                     </div>
                   )}
                   {item.spiritCuratorComment && (
-                    <p className="text-[10px] text-slate-400 line-clamp-2 leading-snug mt-0.5">
+                    <p className="text-sm text-slate-400 leading-snug mt-0.5">
                       {item.spiritCuratorComment}
                     </p>
                   )}
