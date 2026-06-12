@@ -133,9 +133,12 @@ for (const oa of originAssets.filter(o => o.type === "SPRITE")) {
 
 ## Página /collectibles
 
-Exibe troféus, spirits, stickers agrupados por era (SSBM, SSBB, SSB4, SSBU).
+Dois modos de exibição controlados por query params:
 
-Filtro por game via query param: `/collectibles?game=SSBM`
+### Modo padrão — por era
+`/collectibles?game=SSBM` (default: SSBM)
+
+Exibe todos os tipos (exceto SPRITE) do jogo selecionado. Abas de era visíveis.
 
 ```typescript
 const collectibles = await db.collectible.findMany({
@@ -143,6 +146,24 @@ const collectibles = await db.collectible.findMany({
   orderBy: [{ orderIndex: "asc" }, { name: "asc" }]
 });
 ```
+
+### Modo por tipo — galeria isolada (sessão 26)
+`/collectibles?type=TROPHY` | `?type=SPIRIT` | `?type=STICKER`
+
+Exibe **todos** os itens daquele tipo (sem filtro de era). Abas de era ocultadas. Exibe link "← Todas as coleções".
+
+```typescript
+const collectibles = await db.collectible.findMany({
+  where: { type: typeFilter },
+  orderBy: [{ orderIndex: "asc" }, { name: "asc" }]
+});
+```
+
+**Links da home** (sessão 26):
+- Card "Troféus" → `/collectibles?type=TROPHY`
+- Card "Spirits" → `/collectibles?type=SPIRIT`
+- Card "Stickers" → `/collectibles?type=STICKER`
+- Card "Coleções" (view geral) → `/collectibles`
 
 ## Fighters sem Spirits (3rd party — 33 fighters)
 
