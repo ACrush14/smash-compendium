@@ -1,8 +1,11 @@
 import {
   Search,
   Sword,
-  Star,
+  Trophy,
+  Sparkles,
+  Tag,
   BookOpen,
+  Music2,
   Image as ImageIcon,
   ChevronRight,
   Terminal,
@@ -101,11 +104,14 @@ export default async function VaultPage({ searchParams }: PageProps) {
   const query = (q ?? "").trim();
 
   // Queries paralelas ao banco
-  const [fighterCount, franchiseCount, gameCount, collectibleCount, approvedCount, searchResults] = await Promise.all([
+  const [fighterCount, franchiseCount, gameCount, trophyCount, spiritCount, stickerCount, musicCount, approvedCount, searchResults] = await Promise.all([
     db.fighter.count(),
     db.franchise.count(),
     db.game.count(),
-    db.collectible.count({ where: { type: { not: "SPRITE" } } }),
+    db.collectible.count({ where: { type: "TROPHY" } }),
+    db.collectible.count({ where: { type: "SPIRIT" } }),
+    db.collectible.count({ where: { type: "STICKER" } }),
+    db.music.count(),
     db.fighter.count({ where: { curationStatus: "approved" } }),
     query
       ? db.fighter.findMany({
@@ -332,8 +338,9 @@ export default async function VaultPage({ searchParams }: PageProps) {
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-600">Secoes do Acervo</span>
           <span className="h-px flex-1 bg-white/5" />
         </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
 
+          {/* 01 — Lutadores */}
           <a href="/fighters"
             className="group relative flex flex-col justify-between overflow-hidden border border-white/10 p-7 transition-all duration-300 hover:scale-[1.03] hover:border-red-900/50 hover:shadow-[0_0_40px_rgba(127,29,29,0.3)]"
             style={{ background: "linear-gradient(135deg, rgba(127,29,29,0.35) 0%, rgba(69,10,10,0.5) 40%, #0a0010 100%)", clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)" }}
@@ -342,7 +349,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
             <div>
               <div className="mb-4 flex items-start justify-between">
                 <Sword className="h-8 w-8 text-red-400 transition-transform duration-300 group-hover:-rotate-12" strokeWidth={1.5} />
-                <span className="font-mono text-xs text-red-900/70">01 / 03</span>
+                <span className="font-mono text-xs text-red-900/70">01 / 06</span>
               </div>
               <h2 className="mb-2 font-black text-2xl uppercase tracking-tight text-white">Lutadores</h2>
               <p className="text-sm leading-relaxed text-slate-500">Biografias completas em EN e JP, franquia de origem e cronologia de aparicoes por jogo.</p>
@@ -353,29 +360,67 @@ export default async function VaultPage({ searchParams }: PageProps) {
             </div>
           </a>
 
+          {/* 02 — Troféus */}
           <a href="/collectibles"
-            className="group relative flex flex-col justify-between overflow-hidden border border-white/10 p-7 transition-all duration-300 hover:scale-[1.03] hover:border-sky-900/50 hover:shadow-[0_0_40px_rgba(14,116,144,0.25)]"
-            style={{ background: "linear-gradient(135deg, rgba(30,58,138,0.35) 0%, rgba(120,53,15,0.2) 50%, #010814 100%)", clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)" }}
+            className="group relative flex flex-col justify-between overflow-hidden border border-white/10 p-7 transition-all duration-300 hover:scale-[1.03] hover:border-amber-900/50 hover:shadow-[0_0_40px_rgba(120,53,15,0.3)]"
+            style={{ background: "linear-gradient(135deg, rgba(120,53,15,0.35) 0%, rgba(69,26,3,0.5) 40%, #0a0500 100%)", clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)" }}
           >
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-700/50 to-transparent" />
-            <div className="absolute right-4 top-3.5 flex items-center gap-1.5 border border-amber-500/30 bg-amber-500/10 px-2.5 py-1">
-              <Star className="h-3 w-3 text-amber-400" fill="currentColor" />
-              <span className="font-mono text-[10px] font-bold text-amber-400">FEATURED</span>
-            </div>
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-700/60 to-transparent" />
             <div>
               <div className="mb-4 flex items-start justify-between">
-                <Star className="h-8 w-8 text-amber-400 transition-transform duration-300 group-hover:rotate-12" strokeWidth={1.5} />
-                <span className="font-mono text-xs text-slate-700">02 / 03</span>
+                <Trophy className="h-8 w-8 text-amber-400 transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
+                <span className="font-mono text-xs text-amber-900/70">02 / 06</span>
               </div>
-              <h2 className="mb-2 font-black text-2xl uppercase tracking-tight text-white">Colecoes</h2>
-              <p className="text-sm leading-relaxed text-slate-500">Trofeus, Spirits e Stickers catalogados por jogo, franquia e raridade com renders em alta resolucao.</p>
+              <h2 className="mb-2 font-black text-2xl uppercase tracking-tight text-white">Trofeus</h2>
+              <p className="text-sm leading-relaxed text-slate-500">Galeria de trofeus do Melee, Brawl e Smash 4 com renders em alta resolucao.</p>
             </div>
             <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-4">
-              <span className="font-mono text-xs text-slate-600">{collectibleCount} itens</span>
+              <span className="font-mono text-xs text-slate-600">{trophyCount} itens</span>
               <ChevronRight className="h-4 w-4 text-slate-600 transition-all duration-200 group-hover:translate-x-1 group-hover:text-amber-400" />
             </div>
           </a>
 
+          {/* 03 — Spirits */}
+          <a href="/collectibles"
+            className="group relative flex flex-col justify-between overflow-hidden border border-white/10 p-7 transition-all duration-300 hover:scale-[1.03] hover:border-purple-900/50 hover:shadow-[0_0_40px_rgba(88,28,135,0.3)]"
+            style={{ background: "linear-gradient(135deg, rgba(88,28,135,0.35) 0%, rgba(46,16,101,0.5) 40%, #060010 100%)", clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)" }}
+          >
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-purple-700/60 to-transparent" />
+            <div>
+              <div className="mb-4 flex items-start justify-between">
+                <Sparkles className="h-8 w-8 text-purple-400 transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
+                <span className="font-mono text-xs text-purple-900/70">03 / 06</span>
+              </div>
+              <h2 className="mb-2 font-black text-2xl uppercase tracking-tight text-white">Spirits</h2>
+              <p className="text-sm leading-relaxed text-slate-500">Spirit Board do Ultimate com raridades, tipos e habilidades catalogados.</p>
+            </div>
+            <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-4">
+              <span className="font-mono text-xs text-slate-600">{spiritCount} itens</span>
+              <ChevronRight className="h-4 w-4 text-slate-600 transition-all duration-200 group-hover:translate-x-1 group-hover:text-purple-400" />
+            </div>
+          </a>
+
+          {/* 04 — Stickers */}
+          <a href="/collectibles"
+            className="group relative flex flex-col justify-between overflow-hidden border border-white/10 p-7 transition-all duration-300 hover:scale-[1.03] hover:border-sky-900/50 hover:shadow-[0_0_40px_rgba(14,116,144,0.25)]"
+            style={{ background: "linear-gradient(135deg, rgba(12,74,110,0.35) 0%, rgba(7,89,133,0.3) 40%, #010814 100%)", clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)" }}
+          >
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-sky-700/50 to-transparent" />
+            <div>
+              <div className="mb-4 flex items-start justify-between">
+                <Tag className="h-8 w-8 text-sky-400 transition-transform duration-300 group-hover:-rotate-12" strokeWidth={1.5} />
+                <span className="font-mono text-xs text-sky-900/70">04 / 06</span>
+              </div>
+              <h2 className="mb-2 font-black text-2xl uppercase tracking-tight text-white">Stickers</h2>
+              <p className="text-sm leading-relaxed text-slate-500">Adesivos do Brawl organizados por franquia, poder e tipo de ataque.</p>
+            </div>
+            <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-4">
+              <span className="font-mono text-xs text-slate-600">{stickerCount} itens</span>
+              <ChevronRight className="h-4 w-4 text-slate-600 transition-all duration-200 group-hover:translate-x-1 group-hover:text-sky-400" />
+            </div>
+          </a>
+
+          {/* 05 — Chronicles */}
           <a href="/chronicles"
             className="group relative flex flex-col justify-between overflow-hidden border border-white/10 p-7 transition-all duration-300 hover:scale-[1.03] hover:border-emerald-900/50 hover:shadow-[0_0_40px_rgba(6,78,59,0.25)]"
             style={{ background: "linear-gradient(135deg, rgba(6,78,59,0.3) 0%, rgba(4,47,35,0.45) 40%, #010d08 100%)", clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)" }}
@@ -384,7 +429,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
             <div>
               <div className="mb-4 flex items-start justify-between">
                 <BookOpen className="h-8 w-8 text-emerald-500 transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
-                <span className="font-mono text-xs text-slate-700">03 / 03</span>
+                <span className="font-mono text-xs text-emerald-900/70">05 / 06</span>
               </div>
               <h2 className="mb-2 font-black text-2xl uppercase tracking-tight text-white">Chronicles</h2>
               <p className="text-sm leading-relaxed text-slate-500">Linha do tempo interativa dos jogos originais, consoles e franquias representadas em cada titulo.</p>
@@ -394,6 +439,26 @@ export default async function VaultPage({ searchParams }: PageProps) {
               <ChevronRight className="h-4 w-4 text-slate-600 transition-all duration-200 group-hover:translate-x-1 group-hover:text-emerald-500" />
             </div>
           </a>
+
+          {/* 06 — Songs (Em breve) */}
+          <div
+            className="relative flex flex-col justify-between overflow-hidden border border-white/5 p-7 opacity-60 cursor-not-allowed"
+            style={{ background: "linear-gradient(135deg, rgba(109,40,217,0.2) 0%, rgba(67,20,141,0.25) 40%, #060010 100%)", clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)" }}
+          >
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-800/40 to-transparent" />
+            <div className="absolute right-4 top-3.5 font-mono text-[10px] font-bold tracking-widest text-violet-600 border border-violet-800/40 px-2 py-0.5">EM BREVE</div>
+            <div>
+              <div className="mb-4 flex items-start justify-between">
+                <Music2 className="h-8 w-8 text-violet-500" strokeWidth={1.5} />
+                <span className="font-mono text-xs text-violet-900/50">06 / 06</span>
+              </div>
+              <h2 className="mb-2 font-black text-2xl uppercase tracking-tight text-slate-400">Songs</h2>
+              <p className="text-sm leading-relaxed text-slate-600">Trilha sonora iconica de cada franquia no Super Smash Bros. Ultimate.</p>
+            </div>
+            <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-4">
+              <span className="font-mono text-xs text-slate-700">{musicCount} faixas</span>
+            </div>
+          </div>
 
         </div>
       </section>
