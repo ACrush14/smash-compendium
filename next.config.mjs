@@ -6,6 +6,11 @@ const nextConfig = {
       { protocol: "http",  hostname: "**" },
     ],
   },
+  async redirects() {
+    return [
+      { source: "/games", destination: "/chronicles", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;
