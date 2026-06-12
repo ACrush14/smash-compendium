@@ -102,6 +102,7 @@ model Collectible {
   descriptionJp    String?  @db.Text
   descriptionJpEn  String?  @db.Text
   sourceType       String   @default("Official")
+  sourceGame       String?  // Jogo de origem do coletável (ex: "Super Mario Bros.", "F-Zero")
   assetRenderUrl   String?
   orderIndex       Int?     // Número oficial da galeria/spirit board (legado genérico)
   posicaoTrofeuMelee Int?

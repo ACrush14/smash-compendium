@@ -33,7 +33,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
 
   const activeGame = searchParams.game || ERAS[0]!.id;
 
-  const collectibles = await db.collectible.findMany({
+  const raw = await db.collectible.findMany({
     where: isTypeView
       ? { type: typeFilter as "TROPHY" | "SPIRIT" | "STICKER" }
       : { smashGameVersion: activeGame, type: { not: "SPRITE" } },
@@ -41,6 +41,16 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       { orderIndex: "asc" },
       { name: "asc" }
     ]
+  });
+
+  // Deduplicate by orderIndex: keep the first record per index (duplicates come
+  // from the same sticker being linked to multiple fighters during import).
+  const seenIdx = new Set<number>();
+  const collectibles = raw.filter(item => {
+    if (!item.orderIndex) return true;
+    if (seenIdx.has(item.orderIndex)) return false;
+    seenIdx.add(item.orderIndex);
+    return true;
   });
 
   const title = isTypeView ? (TYPE_LABELS[typeFilter!] ?? "Coleções") : "Coleções";
@@ -121,7 +131,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                   {/* Tipo / Badge */}
                   <div className="absolute top-2 right-2 z-10">
                     <span className="text-[8px] font-bold uppercase tracking-wider text-slate-400 bg-slate-900/80 px-1.5 py-0.5 rounded shadow-sm">
-                      {item.type}
+                      {item.orderIndex ? `#${String(item.orderIndex).padStart(3, "0")}` : item.type}
                     </span>
                   </div>
                   
@@ -146,7 +156,12 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                   <p className="text-xs font-medium text-slate-300 line-clamp-2 leading-tight group-hover:text-white transition-colors">
                     {item.name}
                   </p>
-                  {item.nameJp && (
+                  {item.sourceGame && (
+                    <p className="text-[10px] text-slate-500 truncate mt-0.5" title={item.sourceGame}>
+                      {item.sourceGame}
+                    </p>
+                  )}
+                  {!item.sourceGame && item.nameJp && (
                     <p className="text-[10px] text-slate-500 truncate mt-0.5">
                       {item.nameJp}
                     </p>
