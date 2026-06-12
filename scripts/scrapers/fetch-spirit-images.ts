@@ -35,7 +35,7 @@ const SERIES_PAGES = [
   `${BASE}/List_of_spirits_(Kirby_series)`,
   `${BASE}/List_of_spirits_(Star_Fox_series)`,
   `${BASE}/List_of_spirits_(Pok%C3%A9mon_series)`,
-  `${BASE}/List_of_spirits_(EarthBound_%2F_Mother_series)`,
+  `${BASE}/List_of_spirits_(EarthBound_series)`,
   `${BASE}/List_of_spirits_(F-Zero_series)`,
   `${BASE}/List_of_spirits_(Ice_Climber_series)`,
   `${BASE}/List_of_spirits_(Fire_Emblem_series)`,
