@@ -15,10 +15,10 @@ prisma/migrations/
 
 # media gerada (binários grandes)
 public/assets/fighters/
-public/assets/collectibles/SPIRIT-*.png
 public/assets/collectibles/SPRITE-*.png
 public/assets/collectibles/TROPHY-*.png
-# stickers com nome (antigos, baixados em 75px)
+# spirits e stickers com nome (antigos, 75px)
+public/assets/collectibles/SPIRIT-SSBU-[A-Za-z]*.png
 public/assets/collectibles/STICKER-SSBB-[A-Za-z]*.png
 
 # typescript build cache
