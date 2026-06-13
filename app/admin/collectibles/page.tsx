@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, useId } from "react";
 import Link from "next/link";
 import { ArrowLeft, Save, Loader2, CheckCircle } from "lucide-react";
 
@@ -12,22 +12,29 @@ interface Franchise {
 }
 
 interface CollectibleItem {
-  id:               string;
-  type:             string;
-  smashGameVersion: string;
-  name:             string;
-  nameJp:           string | null;
-  description:      string | null;  // EN — campo principal
-  descriptionPt:    string | null;
-  descriptionJp:    string | null;
-  descriptionJpEn:  string | null;
-  assetRenderUrl:   string | null;
-  franchiseId:      string | null;
-  fighter:          { id: string; name: string } | null;
+  id:                     string;
+  type:                   string;
+  smashGameVersion:       string;
+  name:                   string;
+  nameJp:                 string | null;
+  description:            string | null;
+  descriptionPt:          string | null;
+  descriptionJp:          string | null;
+  descriptionJpEn:        string | null;
+  assetRenderUrl:         string | null;
+  franchiseId:            string | null;
+  fighter:                { id: string; name: string } | null;
+  spiritArtworkSource:    string | null;
+  spiritFirstAppearance:  string | null;
+  spiritMusicTitle:       string | null;
+  spiritMusicArtist:      string | null;
+  spiritMusicDuration:    string | null;
+  spiritCuratorComment:   string | null;
 }
 
-type CollectibleType = "ALL" | "TROPHY" | "SPIRIT" | "STICKER";
-type LinkedFilter   = "ALL" | "UNLINKED";
+type CollectibleType  = "ALL" | "TROPHY" | "SPIRIT" | "STICKER";
+type LinkedFilter    = "ALL" | "UNLINKED";
+type MetaFilter      = "ALL" | "NO_FIRST" | "NO_ART" | "NO_MUSIC" | "NO_DESC";
 
 const ERA_LABEL: Record<string, string> = {
   SSB64: "64", SSBM: "Melee", SSBB: "Brawl", SSB4: "4", SSBU: "Ultimate",
@@ -59,13 +66,164 @@ function useSaveFeedback() {
   return { state, setSaving, setSaved, setError };
 }
 
+// ─── AutocompleteInput — generic searchable dropdown ─────────────────────────
+
+function AutocompleteInput({
+  value, onChange, fetchUrl, placeholder, className,
+}: {
+  value:       string;
+  onChange:    (val: string) => void;
+  fetchUrl:    (q: string) => string;
+  placeholder: string;
+  className?:  string;
+}) {
+  const [query,    setQuery]    = useState(value);
+  const [results,  setResults]  = useState<{ id: string; label: string }[]>([]);
+  const [open,     setOpen]     = useState(false);
+  const [loading,  setLoading]  = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout>>();
+  const id    = useId();
+
+  // Sync external value changes
+  useEffect(() => { setQuery(value); }, [value]);
+
+  const search = useCallback((q: string) => {
+    clearTimeout(timer.current);
+    if (!q.trim()) { setResults([]); setOpen(false); return; }
+    timer.current = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const data = await fetch(fetchUrl(q)).then(r => r.json()) as { id: string; label: string }[];
+        setResults(data);
+        setOpen(data.length > 0);
+      } finally { setLoading(false); }
+    }, 220);
+  }, [fetchUrl]);
+
+  return (
+    <div className="relative" id={id}>
+      <input
+        type="text"
+        value={query}
+        placeholder={placeholder}
+        onChange={e => { setQuery(e.target.value); onChange(e.target.value); search(e.target.value); }}
+        onBlur={() => setTimeout(() => setOpen(false), 150)}
+        onFocus={() => { if (results.length > 0) setOpen(true); }}
+        className={`w-full bg-[#030310] border border-white/10 text-slate-200 text-[12px] px-3 py-1.5 focus:outline-none focus:border-cyan-500/20 placeholder:text-slate-700 ${className ?? ""}`}
+      />
+      {loading && <Loader2 size={10} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-600 animate-spin" />}
+      {open && results.length > 0 && (
+        <ul className="absolute z-50 top-full left-0 right-0 bg-[#080818] border border-white/10 max-h-48 overflow-y-auto shadow-xl mt-0.5">
+          {results.map(r => (
+            <li key={r.id}>
+              <button
+                type="button"
+                onMouseDown={() => { onChange(r.label); setQuery(r.label); setOpen(false); }}
+                className="w-full text-left px-3 py-1.5 text-[11px] text-slate-300 hover:bg-cyan-500/10 hover:text-cyan-300 transition-colors"
+              >
+                {r.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+// ─── MusicAutocomplete — selects music and auto-fills artist + duration ────────
+
+function MusicAutocomplete({
+  title, artist, duration,
+  onSelect,
+}: {
+  title:    string;
+  artist:   string;
+  duration: string;
+  onSelect: (title: string, artist: string, duration: string) => void;
+}) {
+  const [query,   setQuery]   = useState(title);
+  const [results, setResults] = useState<{ id: string; title: string; arranger: string | null; duration: string | null }[]>([]);
+  const [open,    setOpen]    = useState(false);
+  const [loading, setLoading] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => { setQuery(title); }, [title]);
+
+  const search = (q: string) => {
+    clearTimeout(timer.current);
+    if (!q.trim()) { setResults([]); setOpen(false); return; }
+    timer.current = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const data = await fetch(`/api/admin/music-tracks/search?q=${encodeURIComponent(q)}`).then(r => r.json());
+        setResults(data);
+        setOpen(data.length > 0);
+      } finally { setLoading(false); }
+    }, 220);
+  };
+
+  return (
+    <div className="grid grid-cols-3 gap-3">
+      <div className="col-span-2">
+        <label className="block text-[10px] text-slate-500 mb-1">Música</label>
+        <div className="relative">
+          <input
+            type="text"
+            value={query}
+            placeholder="Ex: Jump Up, Super Star!"
+            onChange={e => { setQuery(e.target.value); onSelect(e.target.value, artist, duration); search(e.target.value); }}
+            onBlur={() => setTimeout(() => setOpen(false), 150)}
+            onFocus={() => { if (results.length > 0) setOpen(true); }}
+            className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[12px] px-3 py-1.5 focus:outline-none focus:border-cyan-500/20 placeholder:text-slate-700"
+          />
+          {loading && <Loader2 size={10} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-600 animate-spin" />}
+          {open && results.length > 0 && (
+            <ul className="absolute z-50 top-full left-0 right-0 bg-[#080818] border border-white/10 max-h-48 overflow-y-auto shadow-xl mt-0.5">
+              {results.map(r => (
+                <li key={r.id}>
+                  <button
+                    type="button"
+                    onMouseDown={() => {
+                      const a = r.arranger ?? "";
+                      const d = r.duration ?? "";
+                      onSelect(r.title, a, d);
+                      setQuery(r.title);
+                      setOpen(false);
+                    }}
+                    className="w-full text-left px-3 py-1.5 hover:bg-cyan-500/10 transition-colors"
+                  >
+                    <p className="text-[11px] text-slate-300 truncate">{r.title}</p>
+                    <p className="text-[9px] text-slate-600">{r.arranger ?? "—"}{r.duration ? ` · ${r.duration}` : ""}</p>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+      <div>
+        <label className="block text-[10px] text-slate-500 mb-1">Duração</label>
+        <input
+          type="text"
+          value={duration}
+          placeholder="Ex: 04:10"
+          onChange={e => onSelect(title, artist, e.target.value)}
+          className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[12px] px-3 py-1.5 focus:outline-none focus:border-cyan-500/20 placeholder:text-slate-700"
+        />
+      </div>
+    </div>
+  );
+}
+
 // ─── Main page ────────────────────────────────────────────────────────────────
 
 export default function AdminCollectiblesPage() {
   const [franchises,     setFranchises]     = useState<Franchise[]>([]);
   const [selectedFranchise, setSelectedFranchise] = useState<string>("");
-  const [typeFilter,     setTypeFilter]     = useState<CollectibleType>("ALL");
+  const [typeFilter,     setTypeFilter]     = useState<CollectibleType>("SPIRIT");
   const [linkedFilter,   setLinkedFilter]   = useState<LinkedFilter>("ALL");
+  const [metaFilter,     setMetaFilter]     = useState<MetaFilter>("ALL");
   const [search,         setSearch]         = useState<string>("");
   const [items,          setItems]          = useState<CollectibleItem[]>([]);
   const [loading,        setLoading]        = useState(false);
@@ -84,14 +242,15 @@ export default function AdminCollectiblesPage() {
 
   // Load collectibles when filters change
   const loadItems = useCallback(async () => {
-    if (!selectedFranchise) { setItems([]); return; }
+    // Require franchise unless filtering by a specific type (SPIRIT/TROPHY/STICKER)
+    if (!selectedFranchise && typeFilter === "ALL") { setItems([]); return; }
     setLoading(true);
     const params = new URLSearchParams({
-      franchiseId: selectedFranchise,
+      ...(selectedFranchise && { franchiseId: selectedFranchise }),
       ...(typeFilter !== "ALL" && { type: typeFilter }),
       ...(linkedFilter === "UNLINKED" && { fighterId: "null" }),
       ...(search.trim() && { q: search.trim() }),
-      take: "300",
+      take: "1600",
     });
     const data = await fetch(`/api/admin/collectibles?${params}`).then(r => r.json());
     setItems(data);
@@ -144,11 +303,30 @@ export default function AdminCollectiblesPage() {
     }
   };
 
+  // ── Client-side meta filter (spirits only) ──────────────────────────────────
+
+  const displayItems = metaFilter === "ALL" ? items : items.filter(item => {
+    if (item.type !== "SPIRIT") return false;
+    if (metaFilter === "NO_FIRST") return !item.spiritFirstAppearance;
+    if (metaFilter === "NO_ART")   return !item.spiritArtworkSource;
+    if (metaFilter === "NO_MUSIC") return !item.spiritMusicTitle;
+    if (metaFilter === "NO_DESC")  return !item.spiritCuratorComment;
+    return true;
+  });
+
   // ── Counts ──────────────────────────────────────────────────────────────────
 
   const counts: Record<string, number> = { ALL: items.length };
   for (const c of items) { counts[c.type] = (counts[c.type] ?? 0) + 1; }
   const unlinkedCount = items.filter(c => !c.fighter).length;
+  const spirits       = items.filter(c => c.type === "SPIRIT");
+  const metaCounts: Record<MetaFilter, number> = {
+    ALL:      spirits.length,
+    NO_FIRST: spirits.filter(s => !s.spiritFirstAppearance).length,
+    NO_ART:   spirits.filter(s => !s.spiritArtworkSource).length,
+    NO_MUSIC: spirits.filter(s => !s.spiritMusicTitle).length,
+    NO_DESC:  spirits.filter(s => !s.spiritCuratorComment).length,
+  };
 
   // ── Render ───────────────────────────────────────────────────────────────────
 
@@ -245,12 +423,34 @@ export default function AdminCollectiblesPage() {
         />
       </div>
 
+      {/* Spirit metadata filters */}
+      {(typeFilter === "SPIRIT" || typeFilter === "ALL") && spirits.length > 0 && (
+        <div className="shrink-0 border-b border-white/5 px-5 py-2 flex flex-wrap items-center gap-2">
+          <span className="text-[10px] text-slate-600 mr-1">Spirit sem:</span>
+          {(["ALL", "NO_FIRST", "NO_ART", "NO_MUSIC", "NO_DESC"] as MetaFilter[]).map(f => {
+            const label = f === "ALL" ? "Todos" : f === "NO_FIRST" ? "1ª Aparição" : f === "NO_ART" ? "Arte" : f === "NO_MUSIC" ? "Música" : "Descrição";
+            const active = metaFilter === f;
+            return (
+              <button key={f} onClick={() => setMetaFilter(f)}
+                className={`px-2.5 py-0.5 text-[10px] border transition-all ${
+                  active
+                    ? "border-amber-500/40 text-amber-400 bg-amber-500/10"
+                    : "border-white/10 text-slate-600 hover:text-slate-400"
+                }`}>
+                {label}
+                <span className="ml-1 text-[8px] opacity-50">{metaCounts[f]}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       {/* Content */}
       <div className="flex-1 overflow-y-auto p-5">
 
-        {!selectedFranchise ? (
+        {!selectedFranchise && typeFilter === "ALL" ? (
           <div className="flex items-center justify-center h-40 text-slate-700 text-[12px]">
-            Selecione uma franquia para ver os colecionáveis
+            Selecione uma franquia ou um tipo específico para ver os colecionáveis
           </div>
         ) : loading ? (
           <div className="flex items-center justify-center h-40 text-slate-600 gap-2">
@@ -262,7 +462,7 @@ export default function AdminCollectiblesPage() {
           </div>
         ) : (
           <div className="max-w-4xl space-y-1">
-            {items.map(item => {
+            {displayItems.map(item => {
               const isOpen    = expanded.has(item.id);
               const editPatch = edits[item.id] ?? {};
               const isDirty   = Object.keys(editPatch).length > 0;
@@ -415,6 +615,67 @@ export default function AdminCollectiblesPage() {
                           />
                         )}
                       </div>
+
+                      {/* Spirit-specific fields */}
+                      {item.type === "SPIRIT" && (
+                        <div className="space-y-3 border-t border-white/5 pt-3">
+                          <p className="text-[10px] text-slate-600 uppercase tracking-widest">Spirit metadata</p>
+
+                          <div className="grid grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-[10px] text-slate-500 mb-1">Arte de origem</label>
+                              <AutocompleteInput
+                                value={e.spiritArtworkSource ?? item.spiritArtworkSource ?? ""}
+                                onChange={val => setEdit(item.id, "spiritArtworkSource", val)}
+                                fetchUrl={q => `/api/admin/chronicles/search?q=${encodeURIComponent(q)}`}
+                                placeholder="Ex: Mario Party 10 (2015)"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] text-slate-500 mb-1">1ª Aparição</label>
+                              <AutocompleteInput
+                                value={e.spiritFirstAppearance ?? item.spiritFirstAppearance ?? ""}
+                                onChange={val => setEdit(item.id, "spiritFirstAppearance", val)}
+                                fetchUrl={q => `/api/admin/chronicles/search?q=${encodeURIComponent(q)}`}
+                                placeholder="Ex: Donkey Kong (1981)"
+                              />
+                            </div>
+                          </div>
+
+                          <MusicAutocomplete
+                            title={e.spiritMusicTitle ?? item.spiritMusicTitle ?? ""}
+                            artist={e.spiritMusicArtist ?? item.spiritMusicArtist ?? ""}
+                            duration={e.spiritMusicDuration ?? item.spiritMusicDuration ?? ""}
+                            onSelect={(t, a, d) => {
+                              setEdit(item.id, "spiritMusicTitle",    t);
+                              setEdit(item.id, "spiritMusicArtist",   a);
+                              setEdit(item.id, "spiritMusicDuration", d);
+                            }}
+                          />
+
+                          <div>
+                            <label className="block text-[10px] text-slate-500 mb-1">Artista / Arranjador</label>
+                            <input
+                              type="text"
+                              value={e.spiritMusicArtist ?? item.spiritMusicArtist ?? ""}
+                              onChange={ev => setEdit(item.id, "spiritMusicArtist", ev.target.value)}
+                              placeholder="Ex: Naoto Kubo ft. Kate Davis"
+                              className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[12px] px-3 py-1.5 focus:outline-none focus:border-cyan-500/20 placeholder:text-slate-700"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[10px] text-slate-500 mb-1">Descrição curatorial</label>
+                            <textarea
+                              value={e.spiritCuratorComment ?? item.spiritCuratorComment ?? ""}
+                              onChange={ev => setEdit(item.id, "spiritCuratorComment", ev.target.value)}
+                              placeholder="Texto descritivo do spirit..."
+                              rows={4}
+                              className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[12px] px-3 py-2 focus:outline-none focus:border-cyan-500/20 placeholder:text-slate-700 resize-none"
+                            />
+                          </div>
+                        </div>
+                      )}
 
                       {/* Action row */}
                       <div className="flex items-center gap-2 pt-1">

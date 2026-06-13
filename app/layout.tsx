@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
+import CollectiblesMusicBar from "@/components/ui/CollectiblesMusicBar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={`${inter.variable} ${outfit.variable}`}>
       <body className="min-h-screen bg-vault-bg text-vault-text antialiased">
         {children}
+        <CollectiblesMusicBar />
       </body>
     </html>
   );

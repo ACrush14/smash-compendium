@@ -20,6 +20,7 @@ interface Entry {
 }
 
 interface RowState {
+  consoleName: string;
   wikiUrl:    string;
   boxArtUrl:  string;
   preview:    string | null;       // URL sendo mostrada no preview
@@ -31,6 +32,12 @@ interface RowState {
 }
 
 type Filter = "all" | "missing_wiki" | "missing_art";
+
+// Consoles que sempre aparecem no select, mesmo sem entradas no banco
+const EXTRA_CONSOLES = [
+  "Arcade", "Dreamcast", "Movie", "Nintendo 3DS", "Others", "PlayStation Portable", "TCG",
+  "Sega Master System", "Sega Genesis", "Sega CD", "Sega 32X", "Sega Saturn", "Sega Game Gear",
+];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -46,8 +53,9 @@ function statusBadge(entry: Entry) {
 
 // ─── Row Component ────────────────────────────────────────────────────────────
 
-function EntryRow({ entry, onSaved }: { entry: Entry; onSaved: (id: string, data: Partial<Entry>) => void }) {
+function EntryRow({ entry, consoles, onSaved }: { entry: Entry; consoles: string[]; onSaved: (id: string, data: Partial<Entry>) => void }) {
   const [s, setS] = useState<RowState>({
+    consoleName: entry.consoleName,
     wikiUrl:    entry.wikiUrl    ?? "",
     boxArtUrl:  entry.boxArtUrl  ?? "",
     preview:    entry.boxArtUrl  ?? null,
@@ -87,7 +95,7 @@ function EntryRow({ entry, onSaved }: { entry: Entry; onSaved: (id: string, data
       const res = await fetch(`/api/admin/chronicles/${entry.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ wikiUrl: s.wikiUrl || null, boxArtUrl: s.boxArtUrl || null }),
+        body: JSON.stringify({ wikiUrl: s.wikiUrl || null, boxArtUrl: s.boxArtUrl || null, consoleName: s.consoleName }),
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
@@ -95,7 +103,7 @@ function EntryRow({ entry, onSaved }: { entry: Entry; onSaved: (id: string, data
       }
       const updated = await res.json();
       setS(p => ({ ...p, saving: false, saved: true, error: null }));
-      onSaved(entry.id, { wikiUrl: updated.wikiUrl, boxArtUrl: updated.boxArtUrl });
+      onSaved(entry.id, { wikiUrl: updated.wikiUrl, boxArtUrl: updated.boxArtUrl, consoleName: updated.consoleName });
       setTimeout(() => setS(p => ({ ...p, saved: false })), 2500);
     } catch (e) {
       setS(p => ({ ...p, saving: false, error: e instanceof Error ? e.message : "Erro ao salvar" }));
@@ -112,7 +120,7 @@ function EntryRow({ entry, onSaved }: { entry: Entry; onSaved: (id: string, data
     onSaved(entry.id, { boxArtUrl: null });
   }, [entry.id, onSaved]);
 
-  const isDirty = s.wikiUrl !== (entry.wikiUrl ?? "") || s.boxArtUrl !== (entry.boxArtUrl ?? "");
+  const isDirty = s.consoleName !== entry.consoleName || s.wikiUrl !== (entry.wikiUrl ?? "") || s.boxArtUrl !== (entry.boxArtUrl ?? "");
 
   return (
     <div className={`border border-white/5 rounded p-3 flex flex-col gap-2 transition-all ${s.saved ? "border-green-600/40 bg-green-950/10" : isDirty ? "border-cyan-600/30 bg-cyan-950/10" : "bg-[#0a0a1a]"}`}>
@@ -135,6 +143,15 @@ function EntryRow({ entry, onSaved }: { entry: Entry; onSaved: (id: string, data
 
       {/* Edit fields */}
       <div className="grid grid-cols-1 gap-1.5">
+        {/* Console */}
+        <select
+          value={s.consoleName}
+          onChange={e => setS(p => ({ ...p, consoleName: e.target.value }))}
+          className="w-full bg-[#050510] border border-white/10 text-slate-300 font-mono text-[11px] px-2 py-1.5 focus:outline-none focus:border-cyan-500/50"
+        >
+          {consoles.map(c => <option key={c} value={c}>{c}</option>)}
+        </select>
+
         {/* Wiki URL */}
         <div className="flex gap-1">
           <input
@@ -251,9 +268,12 @@ export default function AdminChroniclesPage() {
   const PER_PAGE = 50;
   const totalPages = Math.ceil(total / PER_PAGE);
 
-  // Load consoles
+  // Load consoles (merge DB list with extras)
   useEffect(() => {
-    fetch("/api/admin/chronicles/consoles").then(r => r.json()).then(setConsoles);
+    fetch("/api/admin/chronicles/consoles").then(r => r.json()).then((dbConsoles: string[]) => {
+      const merged = Array.from(new Set([...dbConsoles, ...EXTRA_CONSOLES])).sort();
+      setConsoles(merged);
+    });
   }, []);
 
   // Load entries
@@ -366,7 +386,7 @@ export default function AdminChroniclesPage() {
 
         <div className="flex flex-col gap-2">
           {entries.map(entry => (
-            <EntryRow key={entry.id} entry={entry} onSaved={handleSaved} />
+            <EntryRow key={entry.id} entry={entry} consoles={consoles} onSaved={handleSaved} />
           ))}
         </div>
 

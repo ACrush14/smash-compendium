@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   const type        = searchParams.get("type") ?? undefined;
   const fighterIdParam = searchParams.get("fighterId"); // "null" = unlinked only
   const q           = searchParams.get("q")?.trim();
-  const take        = Math.min(parseInt(searchParams.get("take") ?? "200", 10), 500);
+  const take        = Math.min(parseInt(searchParams.get("take") ?? "200", 10), 2000);
 
   const items = await db.collectible.findMany({
     where: {
@@ -20,7 +20,9 @@ export async function GET(req: NextRequest) {
     include: {
       fighter: { select: { id: true, name: true } },
     },
-    orderBy: [{ smashGameVersion: "asc" }, { name: "asc" }],
+    orderBy: type === "SPIRIT"
+      ? [{ posicaoSpiritSsbu: "asc" }, { name: "asc" }]
+      : [{ smashGameVersion: "asc" }, { name: "asc" }],
     take,
   });
 

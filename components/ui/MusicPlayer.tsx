@@ -13,6 +13,7 @@ interface YTPlayer {
   getDuration(): number;
   setVolume(volume: number): void;
   getVolume(): number;
+  unMute(): void;
   destroy(): void;
 }
 
@@ -36,7 +37,7 @@ export interface MusicTrack {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function MusicPlayer({ youtubeId, title, artist }: MusicTrack) {
+export default function MusicPlayer({ youtubeId, title, artist, autoPlay }: MusicTrack & { autoPlay?: boolean }) {
   const mountRef   = useRef<HTMLDivElement>(null);
   const playerRef  = useRef<YTPlayer | null>(null);
   const tickRef    = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -76,15 +77,23 @@ export default function MusicPlayer({ youtubeId, title, artist }: MusicTrack) {
         videoId: youtubeId,
         width:   "1",
         height:  "1",
-        playerVars: { autoplay: 0, controls: 0, rel: 0, fs: 0, disablekb: 1, modestbranding: 1, iv_load_policy: 3 },
+        playerVars: { autoplay: autoPlay ? 1 : 0, mute: autoPlay ? 1 : 0, controls: 0, rel: 0, fs: 0, disablekb: 1, modestbranding: 1, iv_load_policy: 3 },
         events: {
           onReady: (e: { target: YTPlayer }) => {
             if (destroyed) return;
             playerRef.current = e.target;
-            e.target.setVolume(10);
             setDuration(e.target.getDuration());
             setReady(true);
             setLoading(false);
+            if (autoPlay) {
+              // Inicia mutado (bypass de bloqueio do browser), depois desmuta com volume baixo
+              e.target.playVideo();
+              setTimeout(() => {
+                if (!destroyed) { e.target.unMute(); e.target.setVolume(10); }
+              }, 800);
+            } else {
+              e.target.setVolume(10);
+            }
           },
           onStateChange: (e: { data: number }) => {
             if (destroyed) return;

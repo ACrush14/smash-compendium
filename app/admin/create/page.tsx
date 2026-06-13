@@ -722,11 +722,14 @@ function FormChronicle({
 
   // Common console names for datalist
   const CONSOLES = [
-    "NES / Famicom", "Super NES / Super Famicom", "Nintendo 64",
-    "Game Boy", "Game Boy Advance", "Nintendo DS", "Nintendo 3DS",
-    "GameCube", "Wii", "Wii U", "Nintendo Switch",
-    "Game & Watch", "Virtual Boy", "Satellaview",
-    "MSX", "Arcade", "PC / Computer",
+    "Nintendo Entertainment System", "Super Nintendo Entertainment System", "Nintendo 64",
+    "Nintendo GameCube", "Wii", "Wii U", "Nintendo Switch",
+    "GAME BOY", "GAME BOY ADVANCE", "Nintendo DS", "Nintendo 3DS",
+    "GAME & WATCH", "VIRTUAL BOY",
+    "PlayStation 1", "PlayStation 2", "PlayStation 3", "PlayStation 4",
+    "Xbox 360",
+    "Dreamcast", "Sega Master System", "Sega Genesis", "Sega CD", "Sega 32X", "Sega Saturn", "Sega Game Gear",
+    "Arcade", "Movie", "PC / Computer", "PlayStation Portable", "TCG", "Others",
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
