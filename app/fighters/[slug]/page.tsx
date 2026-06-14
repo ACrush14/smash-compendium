@@ -222,6 +222,7 @@ export default async function FighterPage({ params }: PageProps) {
         bios:  { orderBy: { smashGameVersion: "asc" } },
         works: { include: { game: { include: { franchise: true } } } },
         chronicleLinks: { include: { chronicleEntry: true } },
+        moves: { orderBy: [{ smashGameVersion: "asc" }, { order: "asc" }] },
         tips: true,
         suggestions: {
           where: { approved: true },

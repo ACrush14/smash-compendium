@@ -1,5 +1,5 @@
 # SmashCompendium — Gemini Pro Handoff
-> Sessão 19 · 2026-06-06 · Preparado para continuar em Gemini Pro
+> Sessão 22 · 2026-06-14 · Preparado para continuar em Gemini Pro / Claude Code
 
 Este documento é **autossuficiente**: contém tudo que você precisa para entender o projeto e continuar o trabalho sem sessões anteriores.
 

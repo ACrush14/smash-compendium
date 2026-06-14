@@ -43,9 +43,27 @@ model Fighter {
   chronicleLinks     FighterChronicleLink[]
   collectibles       Collectible[]
   tips               FighterTip[]
+  moves              FighterMove[]
   suggestions        FighterSuggestion[]
 
   @@index([franchiseId])
+}
+
+// Descrições de movimentos/Final Smash por era (fichas SMASH do SSBWiki / smashwiki.info).
+// Ex.: "[DX] マリオ(SMASH)", "[X] マリオファイナル". Múltiplas por era.
+model FighterMove {
+  id               String  @id @default(cuid())
+  fighterId        String
+  smashGameVersion String  // SSB64 | SSBM | SSBB | SSB4 | SSBU
+  order            Int     @default(0)
+  label            String? // rótulo do tipo: "SMASH", "Final Smash", "EX"
+  descEn           String? @db.Text
+  descJp           String? @db.Text
+  descPt           String? @db.Text
+  descJpEn         String? @db.Text
+  fighter          Fighter @relation(fields: [fighterId], references: [id], onDelete: Cascade)
+
+  @@index([fighterId, smashGameVersion])
 }
 
 model FighterBio {

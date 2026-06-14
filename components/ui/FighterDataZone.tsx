@@ -28,6 +28,16 @@ export interface SerializedBio {
   contentJpTranslated: string | null;
 }
 
+export interface SerializedMove {
+  smashGameVersion: string;
+  order:            number;
+  label:            string | null;
+  descEn:           string | null;
+  descPt:           string | null;
+  descJp:           string | null;
+  descJpEn:         string | null;
+}
+
 export interface SerializedCollectible {
   id:               string;
   name:             string;
@@ -67,6 +77,7 @@ export interface FighterDataZoneProps {
   appearances:       string[];
   fichaCounters:     { eras: number; trophies: number; stickers: number; spirits: number };
   originWorkGames?:  WorkGame[];
+  movesMap?:         Record<string, SerializedMove[]>;
   fightersTips?:     FighterTip[];
   lang:              Lang;
   setLang:           (l: Lang) => void;
@@ -75,6 +86,15 @@ export interface FighterDataZoneProps {
 export type FighterDataZoneData = Omit<FighterDataZoneProps, "lang" | "setLang">;
 
 // ─── Language helpers ─────────────────────────────────────────────────────────
+
+function getMoveText(mv: SerializedMove, lang: Lang): string | null {
+  switch (lang) {
+    case "PT":    return mv.descPt ?? mv.descEn ?? mv.descJpEn;
+    case "JP":    return mv.descJp ?? null;
+    case "JP_EN": return mv.descJpEn ?? mv.descEn;
+    default:      return mv.descEn ?? mv.descJpEn;
+  }
+}
 
 function getBioText(
   bio: SerializedBio | null,
@@ -290,7 +310,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
     fighterId,
     curatorOverviewEn, curatorOverviewJp, curatorOverviewJpEn, curatorOverviewPt,
     erasToShow, bios, trophiesMap, stickersMap, appearances, fichaCounters,
-    originWorkGames, fightersTips, lang, setLang,
+    originWorkGames, movesMap, fightersTips, lang, setLang,
   } = props;
 
   const biosMap = Object.fromEntries(bios.map((b) => [b.smashGameVersion, b]));
@@ -377,6 +397,9 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
             const eraStic   = stickersMap[gameVer] ?? [];
             const isDebut   = appearances[0] === gameVer;
             const bioText   = getBioText(bio, lang);
+            const eraMoves  = (movesMap?.[gameVer] ?? [])
+              .map((mv) => ({ mv, text: getMoveText(mv, lang) }))
+              .filter((x) => x.text);
 
             return (
               <div
@@ -414,6 +437,24 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                     <p className="text-[15px] leading-relaxed text-slate-200">{bioText}</p>
                   ) : null}
                 </div>
+
+                {eraMoves.length > 0 && (
+                  <div className="px-6 pb-5 flex flex-col gap-4 border-t border-white/5 pt-4">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.2em]" style={{ color: meta?.eraTextColor }}>
+                      {t(lang, "moves")}
+                    </span>
+                    {eraMoves.map(({ mv, text }) => (
+                      <div key={`${mv.smashGameVersion}-${mv.order}`} className="flex flex-col gap-1">
+                        {mv.label && (
+                          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-cyan-600">
+                            {mv.label}
+                          </span>
+                        )}
+                        <p className="text-[15px] leading-relaxed text-slate-200">{text}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 {(eraTrophy.length > 0 || eraStic.length > 0) && (
                   <div className="px-6 pb-5 flex flex-col gap-4 border-t border-white/5 pt-4">
