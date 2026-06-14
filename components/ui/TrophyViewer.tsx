@@ -377,7 +377,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
         </div>
 
         {/* ── DIREITA: descrição ── */}
-        <div className="flex flex-col gap-3 pt-1">
+        <div className="hidden md:flex flex-col gap-3 pt-1">
           {current.descriptionEn ? (
             <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
               <span className="text-[10px] font-bold uppercase tracking-widest text-vault-accent/70 block mb-1.5">
