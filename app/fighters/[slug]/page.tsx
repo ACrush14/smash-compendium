@@ -150,6 +150,39 @@ const FRANCHISE_ORIGIN_GAMES: Record<string, OriginGame[]> = {
   "Super Smash Bros.":   [{ name: "Mii",                 console: "Wii",  year: 2006,              badgeColor: "#e60012", wikiUrl: "https://en.wikipedia.org/wiki/Mii" }],
 };
 
+// ─── Metadados de console (deriva exibição a partir de ChronicleEntry.consoleName) ──
+type ConsoleMeta = { console: string; consoleFull: string; consoleFullEn: string; icon?: string; color: string };
+const CONSOLE_META: Record<string, ConsoleMeta> = {
+  "Arcade":                              { console: "ARC",  consoleFull: "Arcade",            consoleFullEn: "Arcade",                               color: "#b02020" },
+  "GAME & WATCH":                        { console: "G&W",  consoleFull: "Game & Watch",      consoleFullEn: "Game & Watch",                         color: "#333333" },
+  "Nintendo Entertainment System":       { console: "NES",  consoleFull: "Family Computer",   consoleFullEn: "Nintendo Entertainment System", icon: "nes.svg",  color: "#e60012" },
+  "Famicom":                             { console: "FC",   consoleFull: "Family Computer",   consoleFullEn: "Family Computer",     icon: "famicom.svg", color: "#e60012" },
+  "Super Nintendo Entertainment System": { console: "SNES", consoleFull: "Super Famicom",     consoleFullEn: "Super Nintendo Entertainment System", icon: "snes.svg", color: "#6d3b8e" },
+  "Super Famicom":                       { console: "SFC",  consoleFull: "Super Famicom",     consoleFullEn: "Super Famicom",       icon: "super-famicom.svg", color: "#6d3b8e" },
+  "Nintendo 64":                         { console: "N64",  consoleFull: "Nintendo 64",       consoleFullEn: "Nintendo 64",         icon: "n64.svg",  color: "#1a3a7e" },
+  "Nintendo GameCube":                   { console: "GCN",  consoleFull: "Nintendo GameCube", consoleFullEn: "Nintendo GameCube",   icon: "gcn.svg",  color: "#5a4b9e" },
+  "Wii":                                 { console: "Wii",  consoleFull: "Wii",               consoleFullEn: "Wii",                 icon: "wii.svg",  color: "#1a8ac2" },
+  "Wii U":                               { console: "WiiU", consoleFull: "Wii U",             consoleFullEn: "Wii U",               icon: "wiiu.svg", color: "#1a78b2" },
+  "Nintendo 3DS":                        { console: "3DS",  consoleFull: "Nintendo 3DS",      consoleFullEn: "Nintendo 3DS",        icon: "3ds.svg",  color: "#c2185b" },
+  "Nintendo Switch":                     { console: "NSW",  consoleFull: "Nintendo Switch",   consoleFullEn: "Nintendo Switch",     icon: "switch.svg", color: "#e60012" },
+  "Game Boy":                            { console: "GB",   consoleFull: "Game Boy",          consoleFullEn: "Game Boy",            icon: "gb.svg",   color: "#557755" },
+  "GAME BOY":                            { console: "GB",   consoleFull: "Game Boy",          consoleFullEn: "Game Boy",            icon: "gb.svg",   color: "#557755" },
+  "Game Boy Color":                      { console: "GBC",  consoleFull: "Game Boy Color",    consoleFullEn: "Game Boy Color",      icon: "gbc.svg",  color: "#1a8ac2" },
+  "Game Boy Advance":                    { console: "GBA",  consoleFull: "Game Boy Advance",  consoleFullEn: "Game Boy Advance",    icon: "gba.svg",  color: "#5a3a9e" },
+  "Nintendo DS":                         { console: "DS",   consoleFull: "Nintendo DS",       consoleFullEn: "Nintendo DS",         icon: "ds.svg",   color: "#888888" },
+  "Virtual Boy":                         { console: "VB",   consoleFull: "Virtual Boy",       consoleFullEn: "Virtual Boy",         icon: "virtualboy.svg", color: "#b02020" },
+};
+function consoleMeta(name: string): ConsoleMeta {
+  return CONSOLE_META[name] ?? { console: name, consoleFull: name, consoleFullEn: name, color: "#555" };
+}
+// Parseia datas do Chronicle ("1985/10", "1996", "1989/07/27") → { year, month }
+function parseChrDate(s: string | null | undefined): { year?: number; month?: number } {
+  if (!s) return {};
+  const m = s.match(/(\d{4})(?:[/.-](\d{1,2}))?/);
+  if (!m) return {};
+  return { year: Number(m[1]), month: m[2] ? Number(m[2]) : undefined };
+}
+
 // ─── SVG grid de perspectiva ─────────────────────────────────────────────────
 
 const GRID_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><path d="M60 0L0 0L0 60" fill="none" stroke="rgba(64,180,255,0.13)" stroke-width="0.5"/></svg>`;
@@ -187,7 +220,8 @@ export default async function FighterPage({ params }: PageProps) {
       include: {
         franchise: true,
         bios:  { orderBy: { smashGameVersion: "asc" } },
-        works: { include: { game: true } },
+        works: { include: { game: { include: { franchise: true } } } },
+        chronicleLinks: { include: { chronicleEntry: true } },
         tips: true,
         suggestions: {
           where: { approved: true },
@@ -217,6 +251,7 @@ export default async function FighterPage({ params }: PageProps) {
 
   const appearances: string[] = [];
   for (const w of fighter.works) {
+    if (w.game.franchise?.name !== "Super Smash Bros.") continue; // só aparições no Smash
     const t = w.game.titleEn;
     let ver = "";
     if (t.includes("Ultimate"))                                            ver = "SSBU";
@@ -372,7 +407,44 @@ export default async function FighterPage({ params }: PageProps) {
     chronicleArtMap.has(g.name) ? { ...g, boxArtUrl: chronicleArtMap.get(g.name) } : g
   );
 
-  const originWorkGames: WorkGame[] = rawOriginGames.map((g) => ({
+  // ── Origin games ligados DIRETAMENTE ao Chronicles (FighterChronicleLink) ──
+  // Fonte única de verdade = ChronicleEntry (capa, wiki, console, datas, títulos JP).
+  const dbOriginGames = [...fighter.chronicleLinks]
+    .sort((a, b) => (a.displayOrder ?? 9999) - (b.displayOrder ?? 9999))
+    .map((link): typeof rawOriginGames[number] => {
+      const ce = link.chronicleEntry;
+      const meta = consoleMeta(ce.consoleName);
+      const na = parseChrDate(ce.releaseDateNtsc);
+      const jp = parseChrDate(ce.releaseDateJp);
+      const isLocal = ce.boxArtUrl?.startsWith("/");
+      const isLocalJp = ce.boxArtUrlJp?.startsWith("/");
+      return {
+        name:          ce.titleNtsc,
+        titleJp:       ce.titleJp ?? undefined,
+        console:       meta.console,
+        consoleFull:   meta.consoleFull,
+        consoleFullEn: meta.consoleFullEn,
+        year:          jp.year ?? na.year ?? 0,
+        month:         jp.month,
+        region:        ce.releaseDateJp ? "JP" : undefined,
+        yearNa:        na.year,
+        monthNa:       na.month,
+        regionNa:      ce.releaseDateNtsc ? "NA" : undefined,
+        badgeColor:    meta.color,
+        iconFile:      meta.icon,
+        boxArtPath:    isLocal ? ce.boxArtUrl ?? undefined : undefined,
+        boxArtUrl:     isLocal ? undefined : ce.boxArtUrl ?? undefined,
+        boxArtPathJp:  isLocalJp ? ce.boxArtUrlJp ?? undefined : undefined,
+        jpExclusive:   !ce.releaseDateNtsc && !!ce.releaseDateJp,
+        wikiUrl:       ce.wikiUrl ?? undefined,
+        wikiUrlJp:     ce.wikiUrlJp ?? undefined,
+      };
+    });
+
+  // Usa os links do Chronicles se houver; senão, cai para o hardcoded legado.
+  const originGamesUI = dbOriginGames.length > 0 ? dbOriginGames : rawOriginGames;
+
+  const originWorkGames: WorkGame[] = originGamesUI.map((g) => ({
     name:         g.name,
     titleJp:      g.titleJp,
     dateStr:      g.month ? `${g.year}.${String(g.month).padStart(2, "0")}` : String(g.year),
@@ -494,7 +566,7 @@ export default async function FighterPage({ params }: PageProps) {
             franchiseName: fighter.franchise.name,
             appearances,
           }}
-          originGames={rawOriginGames}
+          originGames={originGamesUI}
           dataZone={dataZoneData}
         />
       </main>

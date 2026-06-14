@@ -40,6 +40,7 @@ model Fighter {
   franchise           Franchise          @relation(fields: [franchiseId], references: [id])
   bios               FighterBio[]
   works              FighterWork[]
+  chronicleLinks     FighterChronicleLink[]
   collectibles       Collectible[]
   tips               FighterTip[]
   suggestions        FighterSuggestion[]
@@ -66,12 +67,19 @@ model Game {
   titleEn        String
   titleJp        String?       // Título original japonês (ex: "MOTHER2 ギーグの逆襲")
   releaseDate    DateTime?     // Data completa quando disponível
-  releaseYear    Int?          // Ano explícito para query fácil
-  releaseMonth   Int?          // Mês explícito (1-12)
+  releaseYear    Int?          // Ano explícito para query fácil (JP)
+  releaseMonth   Int?          // Mês explícito 1-12 (JP)
   releaseRegion  String?       // "JP" | "NA" | "PAL" — região do lançamento desta entrada
+  releaseYearNa  Int?          // Ano de lançamento NA
+  releaseMonthNa Int?          // Mês de lançamento NA (1-12)
   platform       String        // Console (ex: "SNES", "N64", "GCN")
   consoleIconUrl String?       // URL do ícone local (ex: /assets/consoles/snes.png)
-  boxArtUrl      String?       // URL da capa do jogo
+  boxArtUrl      String?       // URL da capa do jogo (NA/EN)
+  boxArtUrlJp    String?       // URL da capa JP
+  wikiUrl        String?       // Link Wikipedia EN
+  wikiUrlJp      String?       // Link Wikipedia JP
+  jpExclusive    Boolean       @default(false)
+  displayOrder   Int?          // Ordem cronológica de exibição no painel ORIGIN GAMES
   franchiseId    String
   franchise      Franchise     @relation(fields: [franchiseId], references: [id])
   fighterWorks   FighterWork[]
@@ -220,10 +228,28 @@ model ChronicleEntry {
   releaseDateJp   String?
   unlockCriteria  String?  @db.Text
   wikiUrl         String?  // URL de referência usada para o merge
+  wikiUrlJp       String?  // URL de referência JP (Wikipedia japonesa)
   boxArtUrl       String?  // Capa oficial do jogo retirada do SmashWiki
+  boxArtUrlJp     String?  // Capa da edição JP
   collectibleLinks CollectibleChronicleLink[]
+  fighterLinks     FighterChronicleLink[]
 
   @@index([consoleName])
+}
+
+// Works dos lutadores — jogos de origem ligados DIRETAMENTE ao Chronicles.
+// Fonte única de verdade: ChronicleEntry (capa, wiki, console, datas, títulos JP).
+model FighterChronicleLink {
+  fighterId        String
+  chronicleEntryId String
+  isDebut          Boolean @default(false)
+  displayOrder     Int?
+  fighter          Fighter        @relation(fields: [fighterId],        references: [id], onDelete: Cascade)
+  chronicleEntry   ChronicleEntry @relation(fields: [chronicleEntryId], references: [id], onDelete: Cascade)
+
+  @@id([fighterId, chronicleEntryId])
+  @@index([fighterId])
+  @@index([chronicleEntryId])
 }
 
 model CollectibleChronicleLink {
