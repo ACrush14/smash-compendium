@@ -242,10 +242,10 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
           >
             {/* SSB4 Both: mostra 3DS + WiiU lado a lado */}
             {current.smashGameVersion === "SSB4" && current.assetRender2Url ? (
-              <div className="flex gap-3 items-end justify-center">
+              <div className="flex gap-4 items-end justify-center">
                 {/* 3DS */}
                 <div className="flex flex-col items-center gap-1">
-                  <div className="relative w-28 h-28 md:w-32 md:h-32 flex items-center justify-center">
+                  <div className="relative w-44 h-44 md:w-56 md:h-56 flex items-center justify-center">
                     <div className="spirit-rays absolute inset-0 pointer-events-none opacity-60" />
                     <div className="spirit-glow absolute inset-0 pointer-events-none opacity-60" />
                     <div className="absolute inset-0 pointer-events-none overflow-visible">
@@ -260,7 +260,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
                       alt={`${current.name} (3DS)`}
                       fill
                       className="object-contain p-1 relative z-10"
-                      sizes="128px"
+                      sizes="224px"
                       priority
                     />
                   </div>
@@ -269,7 +269,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
 
                 {/* WiiU */}
                 <div className="flex flex-col items-center gap-1">
-                  <div className="relative w-28 h-28 md:w-32 md:h-32 flex items-center justify-center">
+                  <div className="relative w-44 h-44 md:w-56 md:h-56 flex items-center justify-center">
                     <div className="spirit-rays absolute inset-0 pointer-events-none opacity-60" />
                     <div className="spirit-glow absolute inset-0 pointer-events-none opacity-60" />
                     <div className="absolute inset-0 pointer-events-none overflow-visible">
@@ -285,7 +285,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
                         alt={`${current.name} (Wii U)`}
                         fill
                         className="object-contain p-1 relative z-10"
-                        sizes="128px"
+                        sizes="224px"
                         priority
                       />
                     ) : (
