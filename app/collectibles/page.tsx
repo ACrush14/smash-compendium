@@ -61,7 +61,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
         orderBy,
         include: { 
           franchise: { select: { svgIconUrl: true, name: true } },
-          fighter: { select: { id: true, name: true, renderUrl: true, smashGameVersion: true } },
+          fighter: { select: { id: true, name: true, imageUrl: true } },
           relationsFrom: {
             include: { to: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
           },
@@ -126,8 +126,8 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       descriptionEn:        item.descriptionEn                   ?? null,
       relatedItems: [
         ...(item.fighter ? [{
-          id: item.fighter.id, name: item.fighter.name, smashGameVersion: item.fighter.smashGameVersion,
-          assetRenderUrl: item.fighter.renderUrl, type: "FIGHTER"
+          id: item.fighter.id, name: item.fighter.name, smashGameVersion: "SSBU",
+          assetRenderUrl: item.fighter.imageUrl, type: "FIGHTER"
         }] : []),
         ...item.relationsFrom.map(r => ({
           id: r.to.id, name: r.to.name, smashGameVersion: r.to.smashGameVersion,
@@ -170,7 +170,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       orderBy: [{ posicaoTrofeuMelee: "asc" }, { posicaoTrofeuBrawl: "asc" }, { posicaoTrofeuSsb4: "asc" }, { name: "asc" }],
       include: {
         franchise: { select: { svgIconUrl: true, name: true } },
-        fighter: { select: { id: true, name: true, renderUrl: true, smashGameVersion: true } },
+        fighter: { select: { id: true, name: true, imageUrl: true } },
         relationsFrom: {
           include: { to: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
         },
@@ -220,8 +220,8 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       smashGameVersion: t.smashGameVersion,
       relatedItems: [
         ...(t.fighter ? [{
-          id: t.fighter.id, name: t.fighter.name, smashGameVersion: t.fighter.smashGameVersion,
-          assetRenderUrl: t.fighter.renderUrl, type: "FIGHTER"
+          id: t.fighter.id, name: t.fighter.name, smashGameVersion: "SSBU",
+          assetRenderUrl: t.fighter.imageUrl, type: "FIGHTER"
         }] : []),
         ...t.relationsFrom.map(r => ({
           id: r.to.id, name: r.to.name, smashGameVersion: r.to.smashGameVersion,
@@ -261,7 +261,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       orderBy: [{ orderIndex: "asc" }, { name: "asc" }],
       include: {
         franchise: { select: { svgIconUrl: true, name: true } },
-        fighter: { select: { id: true, name: true, renderUrl: true, smashGameVersion: true } },
+        fighter: { select: { id: true, name: true, imageUrl: true } },
         relationsFrom: {
           include: { to: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
         },
@@ -314,8 +314,8 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       })),
       relatedItems: [
         ...(s.fighter ? [{
-          id: s.fighter.id, name: s.fighter.name, smashGameVersion: s.fighter.smashGameVersion,
-          assetRenderUrl: s.fighter.renderUrl, type: "FIGHTER"
+          id: s.fighter.id, name: s.fighter.name, smashGameVersion: "SSBU",
+          assetRenderUrl: s.fighter.imageUrl, type: "FIGHTER"
         }] : []),
         ...s.relationsFrom.map(r => ({
           id: r.to.id, name: r.to.name, smashGameVersion: r.to.smashGameVersion,

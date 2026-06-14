@@ -426,8 +426,6 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
           )}
         </div>
       </div>
-
-      </div>
     </div>
   );
 }
