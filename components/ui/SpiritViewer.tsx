@@ -23,6 +23,7 @@ export interface SpiritItem {
   firstCoverUrl: string | null;
   artWikiUrl: string | null;
   firstWikiUrl: string | null;
+  descriptionEn: string | null;
 }
 
 const SIDEBAR_SIZE = 14;
@@ -330,15 +331,23 @@ export default function SpiritViewer({ spirits }: { spirits: SpiritItem[] }) {
                   )}
                 </div>
               )}
+              {current.descriptionEn && (
+                <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-1.5">
+                    Inspiração da Batalha
+                  </span>
+                  <p className="text-sm text-slate-400 leading-snug whitespace-pre-wrap">{current.descriptionEn}</p>
+                </div>
+              )}
               {current.spiritCuratorComment && (
                 <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-1.5">
-                    Descrição
+                    Comentário
                   </span>
-                  <p className="text-sm text-slate-400 leading-snug">{current.spiritCuratorComment}</p>
+                  <p className="text-sm text-slate-400 leading-snug whitespace-pre-wrap">{current.spiritCuratorComment}</p>
                 </div>
               )}
-              {!current.spiritMusicTitle && !current.spiritCuratorComment && (
+              {!current.spiritMusicTitle && !current.spiritCuratorComment && !current.descriptionEn && (
                 <p className="text-xs text-slate-700 italic text-center mt-8">Sem informações adicionais</p>
               )}
             </div>

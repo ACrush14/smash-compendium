@@ -1,7 +1,7 @@
 # SmashCompendium — Contexto do Projeto
 
 > Documento vivo. Fonte única de verdade para todos os assistentes (Claude Code, Antigravity/Gemini).
-> Atualizado em: 2026-06-06 (sessão 20 — Conclusão do Master ETL, Troféus, Spirits e UI)
+> Atualizado em: 2026-06-14 (sessão 21 — Conclusão do Scraper de Spirits do SmashWiki e Refatoração de Abas da UI)
 
 ---
 

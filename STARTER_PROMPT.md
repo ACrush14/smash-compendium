@@ -27,34 +27,13 @@ Você está atuando como engenheiro de software sênior no projeto **SmashCompen
 4. **NUNCA** fazer git push --force sem confirmação explícita
 5. Rate limit: 1.5s entre requests de scraping (já implementado em `scripts/scrapers/utils.ts`)
 
-## Tarefa imediata (P1 — mais urgente):
+## Tarefa imediata:
 
-Corrigir o parser de `sourceGame` em `scripts/admin/scrape-trophy-descriptions.ts`.
+1. **Popular CollectibleRelation (Demanda Grande)**
+   A tabela `CollectibleRelation` está completamente vazia no banco. Precisamos curar e popular essa tabela para criar os links entre troféus cross-game (ex: Linkar o Mario do Melee com o Mario do Brawl e do Smash 4) e vincular aos Fighters.
 
-**Problema:** O campo `sourceGame` no banco tem texto malformatado porque o scraper
-lê `.text()` do `<td>` inteiro, misturando descrição com jogos.
-
-**Estrutura real do HTML no SSBWiki:**
-```html
-<td>
-  <p>Texto da descrição aqui.</p>
-  <dl>
-    <dd><img alt="SNES"> : <i>F-Zero</i></dd>
-    <dd><img alt="Wii"> : <i>F-Zero GX</i></dd>
-  </dl>
-</td>
-```
-
-**Fix:** extrair descrição só do `<p>`, e sourceGame só do `<i>` dentro de `<dl dd>`.
-Separar múltiplos jogos com ` / ` (ex: `"F-Zero / F-Zero GX"`).
-
-**Exceção:** Troféus SMASH do Melee (lutadores) não têm sourceGame — apenas movimentos.
-
-Após o fix, re-rodar apenas para SSBB e SSB4 (Melee não tem sourceGame nos SMASH):
-```powershell
-npx tsx --env-file=.env.local scripts/admin/scrape-trophy-descriptions.ts --game=SSBB
-npx tsx --env-file=.env.local scripts/admin/scrape-trophy-descriptions.ts --game=SSB4
-```
+2. **Substituição de Músicas (Lote 2+)**
+   Restam 633 faixas de música com URLs quebradas a serem processadas pelo script `scripts/admin/replace-dead-music-urls.ts`. Fazer isso em lotes diários devido ao rate limit do YouTube.
 
 ## Comportamento esperado:
 

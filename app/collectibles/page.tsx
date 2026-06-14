@@ -114,28 +114,12 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       firstCoverUrl:        findCover(item.spiritFirstAppearance ?? null),
       artWikiUrl:           findWiki(item.spiritArtworkSource    ?? null),
       firstWikiUrl:         findWiki(item.spiritFirstAppearance  ?? null),
+      descriptionEn:        item.descriptionEn                   ?? null,
     }));
 
     return (
       <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body pb-28">
-        <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
-          <div className="max-w-4xl mx-auto px-4 md:px-6 py-4">
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-100 uppercase tracking-tight flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-vault-accent/20 flex items-center justify-center text-vault-accent">★</div>
-                Spirits
-              </h1>
-              <div className="flex items-center gap-3">
-                <Link href="/collectibles" className="text-xs font-mono text-vault-muted hover:text-slate-200 transition-colors">
-                  ← Coleções
-                </Link>
-                <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded border border-vault-border/50">
-                  {spiritItems.length} SPIRITS
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <CollectiblesHeader activeType="SPIRIT" activeGame={activeGame} itemCount={spiritItems.length} />
 
         <div className="flex-1 max-w-4xl mx-auto px-4 md:px-6 py-8 w-full">
           <SpiritViewer spirits={spiritItems} />
@@ -226,44 +210,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
     return (
       <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body pb-28">
         {/* Header */}
-        <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
-          <div className="max-w-5xl mx-auto px-4 md:px-6 py-4">
-            <div className="flex items-center justify-between mb-4">
-              <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-100 uppercase tracking-tight flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-vault-accent/20 flex items-center justify-center text-vault-accent">★</div>
-                Troféus
-              </h1>
-              <div className="flex items-center gap-3">
-                <Link href="/collectibles" className="text-xs font-mono text-vault-muted hover:text-slate-200 transition-colors">
-                  ← Coleções
-                </Link>
-                <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded border border-vault-border/50">
-                  {trophyItems.length} TROFÉUS
-                </span>
-              </div>
-            </div>
-            {/* Game tabs */}
-            <div className="flex gap-1 flex-wrap">
-              {TROPHY_ERAS.map(era => {
-                const isActive = era.id === activeGame ||
-                  (SSB4_VERSIONS.includes(activeGame) && SSB4_VERSIONS.includes(era.id) && era.id === activeGame);
-                return (
-                  <Link
-                    key={era.id}
-                    href={`/collectibles?type=TROPHY&game=${era.id}`}
-                    className={`px-4 py-1.5 text-xs font-mono rounded-t-lg border-b-2 transition-colors ${
-                      isActive
-                        ? "bg-vault-surface border-vault-accent text-slate-100"
-                        : "bg-transparent border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
-                    }`}
-                  >
-                    {era.label} <span className={`ml-1 ${isActive ? "text-vault-accent" : "text-slate-500"}`}>{era.year}</span>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        <CollectiblesHeader activeType="TROPHY" activeGame={activeGame} itemCount={trophyItems.length} />
         {/* Viewer */}
         <div className="flex-1 max-w-5xl mx-auto px-4 md:px-6 py-8 w-full">
           <TrophyViewer trophies={trophyItems} initialIndex={initialIndex} />
@@ -329,43 +276,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
 
     return (
       <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body pb-28">
-        <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
-          <div className="max-w-4xl mx-auto px-4 md:px-6 py-4">
-            <div className="flex items-center justify-between mb-4">
-              <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-100 uppercase tracking-tight flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-vault-accent/20 flex items-center justify-center text-vault-accent">★</div>
-                Stickers
-              </h1>
-              <div className="flex items-center gap-3">
-                <Link href="/collectibles" className="text-xs font-mono text-vault-muted hover:text-slate-200 transition-colors">
-                  ← Coleções
-                </Link>
-                <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded border border-vault-border/50">
-                  {stickerItems.length} STICKERS
-                </span>
-              </div>
-            </div>
-            {/* Game tabs for stickers (usually just Brawl, but kept for consistency) */}
-            <div className="flex gap-1 flex-wrap">
-              {ERAS.filter(era => era.id === "SSBB").map(era => {
-                const isActive = era.id === activeGame;
-                return (
-                  <Link
-                    key={era.id}
-                    href={`/collectibles?type=STICKER&game=${era.id}`}
-                    className={`px-4 py-1.5 text-xs font-mono rounded-t-lg border-b-2 transition-colors ${
-                      isActive
-                        ? "bg-vault-surface border-vault-accent text-slate-100"
-                        : "bg-transparent border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
-                    }`}
-                  >
-                    {era.label} <span className={`ml-1 ${isActive ? "text-vault-accent" : "text-slate-500"}`}>{era.year}</span>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        <CollectiblesHeader activeType="STICKER" activeGame={activeGame} itemCount={stickerItems.length} />
         <div className="flex-1 max-w-4xl mx-auto px-4 md:px-6 py-8 w-full">
           <StickerViewer stickers={stickerItems} initialIndex={initialIndex} />
         </div>
@@ -414,53 +325,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
     <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body">
 
       {/* Header */}
-      <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
-        <div className="max-w-[1600px] mx-auto px-4 md:px-6 py-4">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-100 uppercase tracking-tight flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-vault-accent/20 flex items-center justify-center text-vault-accent">★</div>
-              {title}
-            </h1>
-            <div className="flex items-center gap-2">
-              {isTypeView && (
-                <Link href="/collectibles" className="text-xs font-mono text-vault-muted hover:text-slate-200 transition-colors">
-                  ← Todas as coleções
-                </Link>
-              )}
-              <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded border border-vault-border/50">
-                {collectibles.length} ITENS
-              </span>
-            </div>
-          </div>
-
-          {(typeFilter === "TROPHY" || !isTypeView) && (
-            <div className="flex gap-2">
-              {(typeFilter === "TROPHY" ? TROPHY_ERAS : ERAS).map(era => {
-                const isActive = era.id === activeGame;
-                const href = typeFilter === "TROPHY"
-                  ? `/collectibles?type=TROPHY&game=${era.id}`
-                  : `/collectibles?game=${era.id}`;
-                return (
-                  <Link
-                    key={era.id}
-                    href={href}
-                    className={`px-5 py-2 text-sm font-medium rounded-t-lg transition-colors border-b-2 flex items-baseline gap-2 ${
-                      isActive
-                        ? "bg-vault-surface border-vault-accent text-slate-100"
-                        : "bg-transparent border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
-                    }`}
-                  >
-                    <span className="uppercase tracking-wider">{era.label}</span>
-                    <span className={`text-[10px] font-mono ${isActive ? "text-vault-accent" : "text-slate-500"}`}>
-                      {era.year}
-                    </span>
-                  </Link>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
+      <CollectiblesHeader activeType="GRID" activeGame={activeGame} itemCount={collectibles.length} />
 
       {/* Grid */}
       <div className="flex-1 max-w-[1600px] mx-auto px-4 md:px-6 py-8 w-full">
@@ -524,5 +389,109 @@ export default async function CollectiblesPage({ searchParams }: Props) {
         )}
       </div>
     </main>
+  );
+}
+
+function CollectiblesHeader({
+  activeType,
+  activeGame,
+  itemCount,
+}: {
+  activeType: "GRID" | "TROPHY" | "SPIRIT" | "STICKER";
+  activeGame: string;
+  itemCount: number;
+}) {
+  return (
+    <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
+      <div className={activeType === "GRID" ? "max-w-[1600px] mx-auto px-4 md:px-6 py-4" : "max-w-5xl mx-auto px-4 md:px-6 py-4"}>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-100 uppercase tracking-tight flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-vault-accent/20 flex items-center justify-center text-vault-accent">★</div>
+            Coleções
+          </h1>
+          <div className="flex items-center gap-3">
+            {activeType !== "GRID" && (
+              <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded border border-vault-border/50">
+                {itemCount} {TYPE_LABELS[activeType]?.toUpperCase() || "ITENS"}
+              </span>
+            )}
+            {activeType === "GRID" && (
+              <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded border border-vault-border/50">
+                {itemCount} ITENS
+              </span>
+            )}
+          </div>
+        </div>
+        
+        {/* Primary Tabs (Integrated) */}
+        <div className="flex gap-1 flex-wrap border-b border-vault-border/30 pb-0">
+          <Link
+            href="/collectibles"
+            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
+              activeType === "GRID"
+                ? "bg-vault-surface border-vault-accent text-slate-100"
+                : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
+            }`}
+          >
+            VISÃO GERAL
+          </Link>
+          
+          <Link
+            href="/collectibles?type=TROPHY&game=SSBM"
+            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
+              activeType === "TROPHY" && activeGame === "SSBM"
+                ? "bg-vault-surface border-vault-accent text-slate-100"
+                : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
+            }`}
+          >
+            TROFÉUS MELEE
+          </Link>
+          
+          <Link
+            href="/collectibles?type=TROPHY&game=SSBB"
+            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
+              activeType === "TROPHY" && activeGame === "SSBB"
+                ? "bg-vault-surface border-vault-accent text-slate-100"
+                : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
+            }`}
+          >
+            TROFÉUS BRAWL
+          </Link>
+          
+          <Link
+            href="/collectibles?type=TROPHY&game=SSB4"
+            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
+              activeType === "TROPHY" && ["SSB4", "SSB4_3DS", "SSB4_WIIU"].includes(activeGame)
+                ? "bg-vault-surface border-vault-accent text-slate-100"
+                : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
+            }`}
+          >
+            TROFÉUS SMASH 4
+          </Link>
+          
+          <Link
+            href="/collectibles?type=STICKER&game=SSBB"
+            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
+              activeType === "STICKER"
+                ? "bg-vault-surface border-vault-accent text-slate-100"
+                : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
+            }`}
+          >
+            STICKERS
+          </Link>
+          
+          <Link
+            href="/collectibles?type=SPIRIT"
+            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
+              activeType === "SPIRIT"
+                ? "bg-vault-surface border-vault-accent text-slate-100"
+                : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
+            }`}
+          >
+            SPIRITS
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
