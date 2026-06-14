@@ -2,6 +2,31 @@
 
 Museu digital interativo do Super Smash Bros. — preserva troféus, spirits, stickers, músicas e biografias bilíngues de cada lutador desde SSB64 até SSBU.
 
+## Screenshots
+
+### Home
+![Home](public/screenshots/home.png)
+
+### Lutadores
+![Fighters](public/screenshots/fighters.png)
+
+### Página do Lutador (Ness)
+![Fighter Ness](public/screenshots/fighter-ness.png)
+
+### Spirit Viewer (1.582 Spirits)
+![Spirit Viewer](public/screenshots/spirit-viewer.png)
+
+### Galeria de Troféus — Melee (293 itens)
+![Trophies Melee](public/screenshots/trophies-melee.png)
+
+### Galeria de Troféus — Brawl (544 itens)
+![Trophies Brawl](public/screenshots/trophies-brawl.png)
+
+### Nintendo Chronicle
+![Chronicles](public/screenshots/chronicles.png)
+
+---
+
 ## Visão Geral
 
 O Smash Compendium é um projeto fan-made sem fins comerciais que reúne em um único lugar todo o conteúdo colecionável das cinco gerações do Super Smash Bros:
