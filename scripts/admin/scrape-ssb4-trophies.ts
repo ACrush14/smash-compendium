@@ -97,11 +97,12 @@ function extractImg($: CheerioAPI, cellHtml: ReturnType<ReturnType<typeof import
 type Version = "SSB4" | "SSB4_3DS" | "SSB4_WIIU";
 
 interface TrophyRow {
-  position: number;
-  name:     string;
-  imgUrl:   string | null;  // Wii U image para SSB4/WIIU; 3DS image para SSB4_3DS
-  series:   string;
-  version:  Version;
+  position:    number;
+  name:        string;
+  imgUrl:      string | null;    // WiiU image para SSB4/WIIU; 3DS image para SSB4_3DS
+  img3dsUrl:   string | null;    // 3DS image — somente para SSB4 Both
+  series:      string;
+  version:     Version;
 }
 
 // ── Parse ─────────────────────────────────────────────────────────────────────
@@ -141,9 +142,12 @@ async function scrapePage(): Promise<TrophyRow[]> {
 
       let imgUrl: string | null = null;
 
+      let img3dsUrl: string | null = null;
+
       if (version === "SSB4") {
         // col1 = 3DS image, col2 = Wii U image (confirmado pelo debug via nomes de arquivo)
-        imgUrl = extractImg($, $(cells.eq(2)));  // Wii U image
+        img3dsUrl = extractImg($, $(cells.eq(1)));  // 3DS image
+        imgUrl    = extractImg($, $(cells.eq(2)));  // Wii U image
         if (n === 5) {
           currentSeries   = cleanText($(cells.eq(3)).text());
           currentCategory = cleanText($(cells.eq(4)).text());
@@ -163,7 +167,7 @@ async function scrapePage(): Promise<TrophyRow[]> {
         // n === 2 → mesma série e categoria (rowspan)
       }
 
-      all.push({ position: pos, name, imgUrl, series: currentSeries, version });
+      all.push({ position: pos, name, imgUrl, img3dsUrl, series: currentSeries, version });
     });
 
     log.ok(`"${heading}": ${pos} troféus`);
@@ -234,12 +238,14 @@ async function main() {
           posicaoTrofeuSsb4: row.position,
           orderIndex:        row.position,
           assetRenderUrl:    row.imgUrl,
+          assetRender2Url:   row.img3dsUrl,
           franchiseId,
         },
         update: {
           posicaoTrofeuSsb4: row.position,
           orderIndex:        row.position,
           assetRenderUrl:    row.imgUrl,
+          assetRender2Url:   row.img3dsUrl,
           ...(franchiseId ? { franchiseId } : {}),
         },
       });
@@ -254,6 +260,7 @@ async function main() {
         posicaoTrofeuSsb4: row.position,
         orderIndex:        row.position,
         assetRenderUrl:    row.imgUrl,
+        assetRender2Url:   row.img3dsUrl,
         ...(franchiseId ? { franchiseId } : {}),
       },
     });

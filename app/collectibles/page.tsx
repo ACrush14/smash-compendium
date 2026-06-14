@@ -40,7 +40,7 @@ const orderBy = [
 ];
 
 interface Props {
-  searchParams: { game?: string; type?: string };
+  searchParams: { game?: string; type?: string; trophy?: string };
 }
 
 export default async function CollectiblesPage({ searchParams }: Props) {
@@ -153,20 +153,45 @@ export default async function CollectiblesPage({ searchParams }: Props) {
     const rawTrophies = await db.collectible.findMany({
       where:   { type: "TROPHY", smashGameVersion: { in: trophyVersions } },
       orderBy: [{ posicaoTrofeuMelee: "asc" }, { posicaoTrofeuBrawl: "asc" }, { posicaoTrofeuSsb4: "asc" }, { name: "asc" }],
-      include: { franchise: { select: { svgIconUrl: true, name: true } } },
+      include: {
+        franchise: { select: { svgIconUrl: true, name: true } },
+        relationsFrom: {
+          include: { to: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
+        },
+        relationsTo: {
+          include: { from: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
+        },
+      },
     });
+
+    // Resolve initial index from ?trophy=<id> param
+    const trophyIdParam = searchParams.trophy;
+    const initialIndex  = trophyIdParam
+      ? Math.max(0, rawTrophies.findIndex(t => t.id === trophyIdParam))
+      : 0;
 
     const trophyItems: TrophyItem[] = rawTrophies.map(t => ({
       id:               t.id,
       name:             t.name,
       nameJp:           t.nameJp          ?? null,
-      orderIndex:       t.orderIndex      ?? null,
+      orderIndex:       t.posicaoTrofeuMelee ?? t.posicaoTrofeuBrawl ?? t.posicaoTrofeuSsb4 ?? t.orderIndex ?? null,
       assetRenderUrl:   t.assetRenderUrl  ?? null,
+      assetRender2Url:  t.assetRender2Url ?? null,
       descriptionEn:    t.descriptionEn   ?? null,
       sourceGame:       t.sourceGame      ?? null,
       svgIconUrl:       t.franchise?.svgIconUrl ?? null,
       franchiseName:    t.franchise?.name       ?? null,
       smashGameVersion: t.smashGameVersion,
+      relatedItems: [
+        ...t.relationsFrom.map(r => ({
+          id: r.to.id, name: r.to.name, smashGameVersion: r.to.smashGameVersion,
+          assetRenderUrl: r.to.assetRenderUrl, type: r.to.type,
+        })),
+        ...t.relationsTo.map(r => ({
+          id: r.from.id, name: r.from.name, smashGameVersion: r.from.smashGameVersion,
+          assetRenderUrl: r.from.assetRenderUrl, type: r.from.type,
+        })),
+      ],
     }));
 
     return (
@@ -212,7 +237,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
         </div>
         {/* Viewer */}
         <div className="flex-1 max-w-5xl mx-auto px-4 md:px-6 py-8 w-full">
-          <TrophyViewer trophies={trophyItems} />
+          <TrophyViewer trophies={trophyItems} initialIndex={initialIndex} />
         </div>
       </main>
     );

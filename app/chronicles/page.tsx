@@ -52,11 +52,93 @@ const CONSOLE_ICONS: Record<string, string> = {
 };
 
 interface Props {
-  searchParams: { console?: string };
+  searchParams: { console?: string; q?: string };
 }
 
 export default async function ChroniclesPage({ searchParams }: Props) {
+  const searchQuery   = searchParams.q?.trim() || null;
   const activeConsole = searchParams.console || CONSOLE_ORDER[0];
+
+  // ── Search mode: query cross-console ──────────────────────────────────────
+  if (searchQuery) {
+    const results = await db.chronicleEntry.findMany({
+      where: {
+        OR: [
+          { titleNtsc: { contains: searchQuery, mode: "insensitive" } },
+          { titleJp:   { contains: searchQuery, mode: "insensitive" } },
+          { titleJpEn: { contains: searchQuery, mode: "insensitive" } },
+          { titlePal:  { contains: searchQuery, mode: "insensitive" } },
+        ],
+      },
+      take: 30,
+    });
+
+    return (
+      <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body">
+        <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
+          <div className="max-w-7xl mx-auto px-4 md:px-6 py-4">
+            <div className="flex items-center gap-4">
+              <Link href="/chronicles" className="text-xs font-mono text-vault-muted hover:text-slate-200 transition-colors">
+                ← Chronicle
+              </Link>
+              <h1 className="text-lg font-display font-bold text-slate-100 uppercase tracking-tight">
+                Resultados para &ldquo;{searchQuery}&rdquo;
+              </h1>
+              <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded">
+                {results.length} REGISTROS
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 max-w-7xl mx-auto px-4 md:px-6 py-8 w-full">
+          {results.length === 0 ? (
+            <div className="text-center text-vault-muted py-20">Nenhum jogo encontrado para &ldquo;{searchQuery}&rdquo;.</div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+              {results.map(game => {
+                const consoleHref = `/chronicles?console=${encodeURIComponent(game.consoleName)}`;
+                return (
+                  <div key={game.id} className="flex flex-col group">
+                    <a
+                      href={game.wikiUrl ?? undefined}
+                      target={game.wikiUrl ? "_blank" : undefined}
+                      rel={game.wikiUrl ? "noopener noreferrer" : undefined}
+                      className={`relative block aspect-[3/4] w-full bg-gradient-to-br from-slate-800 to-slate-950 border-2 border-vault-border rounded-sm overflow-hidden group-hover:border-vault-accent transition-colors shadow-lg${game.wikiUrl ? " cursor-pointer" : " cursor-default"}`}
+                    >
+                      {game.boxArtUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={game.boxArtUrl} alt={game.titleNtsc} className="absolute inset-0 w-full h-full object-cover object-top" />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
+                          <span className="font-bold text-slate-400 text-lg font-serif group-hover:text-amber-500 transition-colors">
+                            {game.titleNtsc !== "JP EXCLUSIVE" ? game.titleNtsc : game.titleJp}
+                          </span>
+                        </div>
+                      )}
+                      <div className="absolute bottom-0 w-full p-3 bg-gradient-to-t from-black/90 via-black/50 to-transparent">
+                        <p className="font-display font-bold text-white text-sm line-clamp-2 leading-tight drop-shadow-md">
+                          {game.titleNtsc !== "JP EXCLUSIVE" ? game.titleNtsc : game.titleJp || "TÍTULO DESCONHECIDO"}
+                        </p>
+                      </div>
+                    </a>
+                    <div className="mt-2 flex flex-col gap-1 px-1">
+                      <p className="text-sm font-semibold text-slate-200 leading-tight">{game.titleNtsc !== "JP EXCLUSIVE" ? game.titleNtsc : game.titleJp}</p>
+                      <Link
+                        href={consoleHref}
+                        className="text-[10px] font-mono text-vault-accent/60 hover:text-vault-accent transition-colors"
+                      >
+                        {game.consoleName} ↗
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </main>
+    );
+  }
 
   // Fetch only games for the active console
   const games = await db.chronicleEntry.findMany({

@@ -104,6 +104,7 @@ model Collectible {
   sourceType       String   @default("Official")
   sourceGame       String?  // Jogo de origem do coletável (ex: "Super Mario Bros.", "F-Zero")
   assetRenderUrl   String?
+  assetRender2Url  String?  // Imagem secundária (ex: versão 3DS para troféus SSB4 Both)
   orderIndex       Int?     // Número oficial da galeria/spirit board (legado genérico)
   posicaoTrofeuMelee Int?
   posicaoTrofeuBrawl Int?
@@ -119,9 +120,24 @@ model Collectible {
   franchiseId      String?
   fighter          Fighter?   @relation(fields: [fighterId], references: [id], onDelete: SetNull)
   franchise        Franchise? @relation("CollectibleFranchise", fields: [franchiseId], references: [id])
+  relationsFrom    CollectibleRelation[] @relation("RelFrom")
+  relationsTo      CollectibleRelation[] @relation("RelTo")
 
   @@index([type, smashGameVersion])
   @@index([franchiseId])
+}
+
+model CollectibleRelation {
+  id           String      @id @default(cuid())
+  fromId       String
+  toId         String
+  relationType String      // "cross_game" | "fighter_link"
+  from         Collectible @relation("RelFrom", fields: [fromId], references: [id], onDelete: Cascade)
+  to           Collectible @relation("RelTo",   fields: [toId],   references: [id], onDelete: Cascade)
+
+  @@unique([fromId, toId])
+  @@index([fromId])
+  @@index([toId])
 }
 
 model Stage {

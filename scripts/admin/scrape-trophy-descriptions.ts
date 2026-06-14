@@ -23,19 +23,22 @@ const DELAY = 1600;
 const GAME_ARG = process.argv.find(a => a.startsWith("--game="))?.split("=")[1];
 
 // ── Jogos a processar ─────────────────────────────────────────────────────────
-const GAMES: { version: string[]; completeListUrl: string; label: string }[] = [
+const GAMES: { version: string[]; urlPrefix: string; completeListUrl: string; label: string }[] = [
   {
     version: ["SSBM"],
+    urlPrefix: "List_of_SSBM_trophies_",
     completeListUrl: `${WIKI}/List_of_SSBM_trophies_(complete_list)`,
     label: "Melee",
   },
   {
     version: ["SSBB"],
+    urlPrefix: "List_of_SSBB_trophies_",
     completeListUrl: `${WIKI}/List_of_SSBB_trophies_(complete_list)`,
     label: "Brawl",
   },
   {
     version: ["SSB4", "SSB4_3DS", "SSB4_WIIU"],
+    urlPrefix: "List_of_SSB4_trophies_",
     completeListUrl: `${WIKI}/List_of_SSB4_trophies_(complete_list)`,
     label: "Smash 4",
   },
@@ -46,15 +49,16 @@ function norm(s: string): string {
 }
 
 // ── Extrai URLs das páginas de série a partir do navbox ───────────────────────
-async function getSeriesUrls(completeListUrl: string): Promise<string[]> {
+// urlPrefix filtra apenas as páginas do jogo correto (navbox inclui links de todos os jogos)
+async function getSeriesUrls(completeListUrl: string, urlPrefix: string): Promise<string[]> {
   const $ = await fetchHtml(completeListUrl, 3);
   const urls: string[] = [];
 
-  // Navbox no final da página — contém links para cada série
+  // Navbox no final da página — contém links para cada série de TODOS os jogos
   $("table.navbox a[href]").each((_i, el) => {
     const href = $(el).attr("href") ?? "";
-    // Links de série de troféus: /List_of_SSB*_trophies_(*_series) ou miscelânea
-    if (href.includes("_trophies_") && !href.includes("complete_list") && !href.includes("#")) {
+    // Filtra pelo prefixo do jogo específico para evitar cross-contamination
+    if (href.includes(urlPrefix) && !href.includes("complete_list") && !href.includes("#")) {
       const full = href.startsWith("http") ? href : `${WIKI}${href}`;
       if (!urls.includes(full)) urls.push(full);
     }
@@ -138,9 +142,9 @@ async function main() {
       dbByName.get(key)!.push(t);
     }
 
-    // Descobre URLs das séries
+    // Descobre URLs das séries (filtradas pelo prefixo do jogo)
     log.step(`Buscando URLs de séries em ${game.completeListUrl}…`);
-    const seriesUrls = await getSeriesUrls(game.completeListUrl);
+    const seriesUrls = await getSeriesUrls(game.completeListUrl, game.urlPrefix);
     log.ok(`${seriesUrls.length} páginas de série encontradas`);
 
     let gameUpdated = 0;
