@@ -100,8 +100,22 @@ async function scrapeSeriesPage(url: string): Promise<TrophyDesc[]> {
       const name = cleanText($(cells.eq(nameIdx)).text());
       if (!name) return;
 
-      const description = cleanText($(cells.eq(descIdx)).text());
-      const firstGame   = gameIdx !== -1 ? cleanText($(cells.eq(gameIdx)).text()) : "";
+      const descCell = $(cells.eq(descIdx));
+      const description = cleanText(descCell.find("p").text() || descCell.clone().find("dl").remove().end().text());
+
+      const gameNames: string[] = [];
+      descCell.find("dl dd").each((_i, dd) => {
+        const gameName = cleanText($(dd).find("i").text());
+        if (gameName) gameNames.push(gameName);
+      });
+      let firstGame = gameNames.join(" / ");
+
+      // Fallback para a coluna separada (usada no Melee), ignorando a coluna se for "moves"
+      if (!firstGame && gameIdx !== -1) {
+        if (!headerCells[gameIdx].includes("moves")) {
+          firstGame = cleanText($(cells.eq(gameIdx)).text());
+        }
+      }
 
       if (!description) return;
       results.push({ name, description, firstGame });
