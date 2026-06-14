@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
+import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 import { ChronicleLink } from "./TrophyViewer";
 
 export interface StickerItem {
@@ -15,6 +16,7 @@ export interface StickerItem {
   svgIconUrl: string | null;
   franchiseName: string | null;
   chronicleLinks: ChronicleLink[];
+  relatedItems: RelatedItem[];
 }
 
 function parseSourceGames(raw: string | null): string[] {
@@ -315,6 +317,8 @@ export default function StickerViewer({ stickers, initialIndex = 0 }: Props) {
                 ))}
               </div>
             )}
+
+            <RelatedItemsGrid items={displayed.relatedItems} />
           </div>
         </div>
 

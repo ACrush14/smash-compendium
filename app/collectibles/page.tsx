@@ -59,7 +59,16 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       db.collectible.findMany({
         where:   { type: "SPIRIT" },
         orderBy,
-        include: { franchise: { select: { svgIconUrl: true, name: true } } },
+        include: { 
+          franchise: { select: { svgIconUrl: true, name: true } },
+          fighter: { select: { id: true, name: true, renderUrl: true, smashGameVersion: true } },
+          relationsFrom: {
+            include: { to: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
+          },
+          relationsTo: {
+            include: { from: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
+          },
+        },
       }),
       db.chronicleEntry.findMany({
         where:  { OR: [{ boxArtUrl: { not: null } }, { wikiUrl: { not: null } }] },
@@ -115,6 +124,20 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       artWikiUrl:           findWiki(item.spiritArtworkSource    ?? null),
       firstWikiUrl:         findWiki(item.spiritFirstAppearance  ?? null),
       descriptionEn:        item.descriptionEn                   ?? null,
+      relatedItems: [
+        ...(item.fighter ? [{
+          id: item.fighter.id, name: item.fighter.name, smashGameVersion: item.fighter.smashGameVersion,
+          assetRenderUrl: item.fighter.renderUrl, type: "FIGHTER"
+        }] : []),
+        ...item.relationsFrom.map(r => ({
+          id: r.to.id, name: r.to.name, smashGameVersion: r.to.smashGameVersion,
+          assetRenderUrl: r.to.assetRenderUrl, type: r.to.type,
+        })),
+        ...item.relationsTo.map(r => ({
+          id: r.from.id, name: r.from.name, smashGameVersion: r.from.smashGameVersion,
+          assetRenderUrl: r.from.assetRenderUrl, type: r.from.type,
+        })),
+      ].slice(0, 8),
     }));
 
     const itemIdParam = searchParams.trophy;
@@ -147,6 +170,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       orderBy: [{ posicaoTrofeuMelee: "asc" }, { posicaoTrofeuBrawl: "asc" }, { posicaoTrofeuSsb4: "asc" }, { name: "asc" }],
       include: {
         franchise: { select: { svgIconUrl: true, name: true } },
+        fighter: { select: { id: true, name: true, renderUrl: true, smashGameVersion: true } },
         relationsFrom: {
           include: { to: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
         },
@@ -195,6 +219,10 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       franchiseName:    t.franchise?.name       ?? null,
       smashGameVersion: t.smashGameVersion,
       relatedItems: [
+        ...(t.fighter ? [{
+          id: t.fighter.id, name: t.fighter.name, smashGameVersion: t.fighter.smashGameVersion,
+          assetRenderUrl: t.fighter.renderUrl, type: "FIGHTER"
+        }] : []),
         ...t.relationsFrom.map(r => ({
           id: r.to.id, name: r.to.name, smashGameVersion: r.to.smashGameVersion,
           assetRenderUrl: r.to.assetRenderUrl, type: r.to.type,
@@ -203,7 +231,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
           id: r.from.id, name: r.from.name, smashGameVersion: r.from.smashGameVersion,
           assetRenderUrl: r.from.assetRenderUrl, type: r.from.type,
         })),
-      ],
+      ].slice(0, 8),
       chronicleLinks: (linksByTrophy.get(t.id) ?? []).map(lnk => ({
         id:        lnk.id,
         titleNtsc: lnk.titleNtsc,
@@ -233,6 +261,13 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       orderBy: [{ orderIndex: "asc" }, { name: "asc" }],
       include: {
         franchise: { select: { svgIconUrl: true, name: true } },
+        fighter: { select: { id: true, name: true, renderUrl: true, smashGameVersion: true } },
+        relationsFrom: {
+          include: { to: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
+        },
+        relationsTo: {
+          include: { from: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
+        },
       },
     });
 
@@ -277,6 +312,20 @@ export default async function CollectiblesPage({ searchParams }: Props) {
         boxArtUrl: lnk.boxArtUrl,
         wikiUrl:   lnk.wikiUrl,
       })),
+      relatedItems: [
+        ...(s.fighter ? [{
+          id: s.fighter.id, name: s.fighter.name, smashGameVersion: s.fighter.smashGameVersion,
+          assetRenderUrl: s.fighter.renderUrl, type: "FIGHTER"
+        }] : []),
+        ...s.relationsFrom.map(r => ({
+          id: r.to.id, name: r.to.name, smashGameVersion: r.to.smashGameVersion,
+          assetRenderUrl: r.to.assetRenderUrl, type: r.to.type,
+        })),
+        ...s.relationsTo.map(r => ({
+          id: r.from.id, name: r.from.name, smashGameVersion: r.from.smashGameVersion,
+          assetRenderUrl: r.from.assetRenderUrl, type: r.from.type,
+        })),
+      ].slice(0, 8),
     }));
 
     return (

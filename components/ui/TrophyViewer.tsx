@@ -3,14 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
-
-export interface RelatedItem {
-  id: string;
-  name: string;
-  smashGameVersion: string;
-  assetRenderUrl: string | null;
-  type: string;
-}
+import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 
 export interface ChronicleLink {
   id:         string;
@@ -385,6 +378,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
               )}
             </div>
 
+            <RelatedItemsGrid items={displayed.relatedItems} />
           </div>
         </div>
 
@@ -433,36 +427,6 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
         </div>
       </div>
 
-      {/* ── Personagens Relacionados ── */}
-      <div className="mt-4 pt-5 border-t border-vault-border/20">
-        <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-3">
-          Personagens Relacionados
-        </h3>
-        {displayed.relatedItems.length > 0 ? (
-          <div className="flex flex-wrap gap-3">
-            {displayed.relatedItems.map(rel => (
-              <a
-                key={rel.id}
-                href={`/collectibles?type=TROPHY&game=${rel.smashGameVersion}&trophy=${rel.id}`}
-                className="flex items-center gap-2 bg-slate-900/50 border border-vault-border/40 hover:border-vault-accent/50 hover:bg-slate-900/80 rounded-lg px-3 py-2 transition-all"
-              >
-                {rel.assetRenderUrl && (
-                  <div className="relative w-8 h-8 shrink-0">
-                    <Image src={rel.assetRenderUrl} alt={rel.name} fill className="object-contain" sizes="32px" />
-                  </div>
-                )}
-                <div>
-                  <p className="text-xs font-medium text-slate-300">{rel.name}</p>
-                  <p className="text-[9px] font-mono text-vault-muted">{rel.smashGameVersion.replace("_", " ")}</p>
-                </div>
-              </a>
-            ))}
-          </div>
-        ) : (
-          <p className="text-xs text-slate-700 italic">
-            Nenhum personagem relacionado vinculado ainda.
-          </p>
-        )}
       </div>
     </div>
   );

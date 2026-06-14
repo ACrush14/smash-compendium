@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
+import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 
 export interface SpiritItem {
   id: string;
@@ -24,6 +25,7 @@ export interface SpiritItem {
   artWikiUrl: string | null;
   firstWikiUrl: string | null;
   descriptionEn: string | null;
+  relatedItems: RelatedItem[];
 }
 
 const SIDEBAR_SIZE = 14;
@@ -285,6 +287,8 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
                     <p className="text-[10px] font-mono text-vault-accent/50 mt-1">↩ clique para ir à posição</p>
                   )}
                 </div>
+
+                <RelatedItemsGrid items={current.relatedItems} />
               </div>
             </div>
 
