@@ -85,19 +85,26 @@ async function scrapePage(): Promise<TrophyRow[]> {
   const rows: TrophyRow[] = [];
   let pos = 0;
 
-  // Brawl table: Name | Image | Series (optional) | Type (optional)
-  // Rows with 2 td: [Name | Image] — no series (SSB-specific items)
-  // Rows with 3 td: [Name | Image | Series]
-  // Rows with 4 td: [Name | Image | Series | Type]
+  // Brawl table uses rowspan on the Series column.
+  // First row of each series group: 4 td = [Name | Image | Series(rowspan=N) | Type]
+  // Subsequent rows in same group: 3 td = [Name | Image | Type]  (Series comes from rowspan)
+  // Rows with no Type: 2 td = [Name | Image]
+  // → Track currentSeries: update only when cells.length === 4 (first row of group).
+  let currentSeries = "";
+
   $("table.wikitable tbody tr").each((_i, row) => {
     const cells = $("td", row);
     if (cells.length < 2) return;
 
-    const name   = cleanText($(cells.eq(0)).text());
-    const series = cells.length >= 3 ? cleanText($(cells.eq(2)).text()) : "";
-
+    const name = cleanText($(cells.eq(0)).text());
     if (!name) return;
     pos++;
+
+    // First row of a new series group — col2 is the Series cell (with rowspan)
+    if (cells.length === 4) {
+      currentSeries = cleanText($(cells.eq(2)).text());
+    }
+    const series = currentSeries;
 
     let imageUrl: string | null = null;
     const img = $(cells.eq(1)).find("img").first();

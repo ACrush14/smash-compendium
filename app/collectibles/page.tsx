@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import SpiritViewer, { type SpiritItem } from "@/components/ui/SpiritViewer";
+import TrophyViewer, { type TrophyItem } from "@/components/ui/TrophyViewer";
 
 export const revalidate = 3600;
 
@@ -141,7 +142,84 @@ export default async function CollectiblesPage({ searchParams }: Props) {
   }
 
   /* ─────────────────────────────────────────────────────────── */
-  /* Trophies, Stickers, and era-based grid                     */
+  /* Trophy View — one at a time, like SpiritViewer             */
+  /* ─────────────────────────────────────────────────────────── */
+  if (typeFilter === "TROPHY") {
+    const SSB4_VERSIONS = ["SSB4", "SSB4_3DS", "SSB4_WIIU"];
+    const trophyVersions = SSB4_VERSIONS.includes(activeGame)
+      ? SSB4_VERSIONS
+      : [activeGame];
+
+    const rawTrophies = await db.collectible.findMany({
+      where:   { type: "TROPHY", smashGameVersion: { in: trophyVersions } },
+      orderBy: [{ posicaoTrofeuMelee: "asc" }, { posicaoTrofeuBrawl: "asc" }, { posicaoTrofeuSsb4: "asc" }, { name: "asc" }],
+      include: { franchise: { select: { svgIconUrl: true, name: true } } },
+    });
+
+    const trophyItems: TrophyItem[] = rawTrophies.map(t => ({
+      id:               t.id,
+      name:             t.name,
+      nameJp:           t.nameJp          ?? null,
+      orderIndex:       t.orderIndex      ?? null,
+      assetRenderUrl:   t.assetRenderUrl  ?? null,
+      descriptionEn:    t.descriptionEn   ?? null,
+      sourceGame:       t.sourceGame      ?? null,
+      svgIconUrl:       t.franchise?.svgIconUrl ?? null,
+      franchiseName:    t.franchise?.name       ?? null,
+      smashGameVersion: t.smashGameVersion,
+    }));
+
+    return (
+      <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body pb-28">
+        {/* Header */}
+        <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
+          <div className="max-w-5xl mx-auto px-4 md:px-6 py-4">
+            <div className="flex items-center justify-between mb-4">
+              <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-100 uppercase tracking-tight flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-vault-accent/20 flex items-center justify-center text-vault-accent">★</div>
+                Troféus
+              </h1>
+              <div className="flex items-center gap-3">
+                <Link href="/collectibles" className="text-xs font-mono text-vault-muted hover:text-slate-200 transition-colors">
+                  ← Coleções
+                </Link>
+                <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded border border-vault-border/50">
+                  {trophyItems.length} TROFÉUS
+                </span>
+              </div>
+            </div>
+            {/* Game tabs */}
+            <div className="flex gap-1 flex-wrap">
+              {TROPHY_ERAS.map(era => {
+                const isActive = era.id === activeGame ||
+                  (SSB4_VERSIONS.includes(activeGame) && SSB4_VERSIONS.includes(era.id) && era.id === activeGame);
+                return (
+                  <Link
+                    key={era.id}
+                    href={`/collectibles?type=TROPHY&game=${era.id}`}
+                    className={`px-4 py-1.5 text-xs font-mono rounded-t-lg border-b-2 transition-colors ${
+                      isActive
+                        ? "bg-vault-surface border-vault-accent text-slate-100"
+                        : "bg-transparent border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
+                    }`}
+                  >
+                    {era.label} <span className={`ml-1 ${isActive ? "text-vault-accent" : "text-slate-500"}`}>{era.year}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        {/* Viewer */}
+        <div className="flex-1 max-w-5xl mx-auto px-4 md:px-6 py-8 w-full">
+          <TrophyViewer trophies={trophyItems} />
+        </div>
+      </main>
+    );
+  }
+
+  /* ─────────────────────────────────────────────────────────── */
+  /* Stickers and era-based grid (non-trophy)                   */
   /* ─────────────────────────────────────────────────────────── */
   const where = typeFilter === "TROPHY"
     ? { type: "TROPHY" as const, smashGameVersion: activeGame }
