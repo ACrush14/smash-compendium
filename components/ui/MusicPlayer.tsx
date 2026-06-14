@@ -46,7 +46,7 @@ export default function MusicPlayer({ youtubeId, title, artist, autoPlay }: Musi
   const [playing,     setPlaying]     = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration,    setDuration]    = useState(0);
-  const [volume,      setVolumeState] = useState(10);
+  const [volume,      setVolumeState] = useState(2);
   const [loading,     setLoading]     = useState(true);
 
   const setVolume = (v: number) => {
@@ -89,10 +89,10 @@ export default function MusicPlayer({ youtubeId, title, artist, autoPlay }: Musi
               // Inicia mutado (bypass de bloqueio do browser), depois desmuta com volume baixo
               e.target.playVideo();
               setTimeout(() => {
-                if (!destroyed) { e.target.unMute(); e.target.setVolume(10); }
+                if (!destroyed) { e.target.unMute(); e.target.setVolume(2); }
               }, 800);
             } else {
-              e.target.setVolume(10);
+              e.target.setVolume(2);
             }
           },
           onStateChange: (e: { data: number }) => {

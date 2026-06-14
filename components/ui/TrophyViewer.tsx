@@ -50,7 +50,8 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
   const [index, setIndex]         = useState(initialIndex);
   const [direction, setDirection] = useState<"next" | "prev" | null>(null);
   const [query, setQuery]         = useState("");
-  const activeRef = useRef<HTMLButtonElement>(null);
+  const activeRef     = useRef<HTMLButtonElement>(null);
+  const lastCurrentRef = useRef<TrophyItem | null>(null);
 
   const filtered = query.trim()
     ? trophies.filter(t =>
@@ -60,8 +61,15 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
       )
     : trophies;
 
-  const safeIndex = Math.min(index, Math.max(0, filtered.length - 1));
-  const current   = filtered[safeIndex];
+  const noResults  = query.trim().length > 0 && filtered.length === 0;
+  const safeIndex  = Math.min(index, Math.max(0, filtered.length - 1));
+  const current    = filtered[safeIndex];
+  // When search yields no results, keep displaying the last valid trophy
+  const displayed  = current ?? lastCurrentRef.current ?? trophies[0];
+
+  useEffect(() => {
+    if (current) lastCurrentRef.current = current;
+  }, [current]);
 
   // Sidebar window centered on safeIndex
   const half         = Math.floor(SIDEBAR_SIZE / 2);
@@ -111,16 +119,11 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
   };
 
   const isSearchActive = query.trim().length > 0;
-  const games = parseSourceGames(current?.sourceGame ?? null);
+  const games = parseSourceGames(displayed?.sourceGame ?? null);
 
-  if (!current) return (
-    <div className="py-16 text-center text-slate-500">
-      <Search className="w-10 h-10 mx-auto mb-3 opacity-20" />
-      <p className="text-sm">Nenhum troféu encontrado para &ldquo;{query}&rdquo;</p>
-    </div>
-  );
+  if (!displayed) return null;
 
-  const num = current.orderIndex ? `#${String(current.orderIndex).padStart(3, "0")}` : "—";
+  const num = displayed.orderIndex ? `#${String(displayed.orderIndex).padStart(3, "0")}` : "—";
 
   return (
     <div className="flex flex-col gap-5 py-2">
@@ -146,8 +149,16 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
         )}
       </div>
 
+      {/* ── Sem resultados ── */}
+      {noResults && (
+        <div className="flex items-center justify-center gap-2 text-xs font-mono text-slate-600">
+          <Search className="w-3.5 h-3.5 opacity-40" />
+          <span>Nenhum troféu encontrado para &ldquo;{query}&rdquo;</span>
+        </div>
+      )}
+
       {/* ── Progresso ── */}
-      {filtered.length > 0 && (
+      {!noResults && filtered.length > 0 && (
         <div className="flex items-center justify-center gap-3 text-xs font-mono text-slate-600">
           <span className="text-vault-accent w-12 text-right tabular-nums">{safeIndex + 1}</span>
           <div className="w-36 h-[2px] bg-slate-800 relative rounded-full overflow-hidden">
@@ -241,7 +252,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
             className={`flex flex-col items-center gap-2 ${direction ? `spirit-enter-${direction}` : ""} ${isSearchActive ? "cursor-pointer" : ""}`}
           >
             {/* SSB4 Both: mostra 3DS + WiiU lado a lado */}
-            {current.smashGameVersion === "SSB4" && current.assetRender2Url ? (
+            {displayed.smashGameVersion === "SSB4" && displayed.assetRender2Url ? (
               <div className="flex gap-4 items-end justify-center">
                 {/* 3DS */}
                 <div className="flex flex-col items-center gap-1">
@@ -256,8 +267,8 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
                       <span className="spirit-rise sr-1" /><span className="spirit-rise sr-3" />
                     </div>
                     <Image
-                      src={current.assetRender2Url}
-                      alt={`${current.name} (3DS)`}
+                      src={displayed.assetRender2Url}
+                      alt={`${displayed.name} (3DS)`}
                       fill
                       className="object-contain p-1 relative z-10"
                       sizes="224px"
@@ -279,10 +290,10 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
                       <span className="spirit-orb so-8"  /><span className="spirit-orb so-11" />
                       <span className="spirit-rise sr-2" /><span className="spirit-rise sr-4" />
                     </div>
-                    {current.assetRenderUrl ? (
+                    {displayed.assetRenderUrl ? (
                       <Image
-                        src={current.assetRenderUrl}
-                        alt={`${current.name} (Wii U)`}
+                        src={displayed.assetRenderUrl}
+                        alt={`${displayed.name} (Wii U)`}
                         fill
                         className="object-contain p-1 relative z-10"
                         sizes="224px"
@@ -298,10 +309,10 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
             ) : (
               /* Single image — Melee, Brawl, SSB4_3DS, SSB4_WIIU, SSB4 sem imagem dupla */
               <div className="relative w-56 h-56 md:w-64 md:h-64 flex items-center justify-center shrink-0">
-                {current.svgIconUrl && (
+                {displayed.svgIconUrl && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={current.svgIconUrl}
+                    src={displayed.svgIconUrl}
                     alt=""
                     aria-hidden
                     className="absolute inset-0 w-full h-full object-contain opacity-[0.07] scale-90 pointer-events-none"
@@ -325,10 +336,10 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
                   <span className="spirit-rise sr-1"  /><span className="spirit-rise sr-2"  />
                   <span className="spirit-rise sr-3"  /><span className="spirit-rise sr-4"  />
                 </div>
-                {current.assetRenderUrl ? (
+                {displayed.assetRenderUrl ? (
                   <Image
-                    src={current.assetRenderUrl}
-                    alt={current.name}
+                    src={displayed.assetRenderUrl}
+                    alt={displayed.name}
                     fill
                     className="object-contain p-1 relative z-10"
                     sizes="256px"
@@ -342,17 +353,17 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
 
             {/* Nome + número */}
             <div className="text-center">
-              <p className="text-xl font-bold text-slate-100 leading-tight">{current.name}</p>
-              {current.nameJp && (
-                <p className="text-xs text-slate-500 mt-0.5">{current.nameJp}</p>
+              <p className="text-xl font-bold text-slate-100 leading-tight">{displayed.name}</p>
+              {displayed.nameJp && (
+                <p className="text-xs text-slate-500 mt-0.5">{displayed.nameJp}</p>
               )}
               <p className="text-xs font-mono mt-1 flex items-center justify-center gap-2">
                 <span className="text-vault-accent">{num}</span>
-                {current.franchiseName && (
-                  <span className="text-slate-600">{current.franchiseName}</span>
+                {displayed.franchiseName && (
+                  <span className="text-slate-600">{displayed.franchiseName}</span>
                 )}
               </p>
-              {isSearchActive && (
+              {isSearchActive && !noResults && (
                 <p className="text-[10px] font-mono text-vault-accent/50 mt-1">↩ clique para ir à posição</p>
               )}
             </div>
@@ -378,12 +389,12 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
 
         {/* ── DIREITA: descrição ── */}
         <div className="hidden md:flex flex-col gap-3 pt-1">
-          {current.descriptionEn ? (
+          {displayed.descriptionEn ? (
             <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
               <span className="text-[10px] font-bold uppercase tracking-widest text-vault-accent/70 block mb-1.5">
                 Descrição
               </span>
-              <p className="text-sm text-slate-300 leading-snug">{current.descriptionEn}</p>
+              <p className="text-sm text-slate-300 leading-snug">{displayed.descriptionEn}</p>
             </div>
           ) : (
             <p className="text-xs text-slate-700 italic text-center mt-8">Descrição não disponível</p>
@@ -393,10 +404,10 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
 
       {/* ── Mobile: descrição ── */}
       <div className="md:hidden">
-        {current.descriptionEn && (
+        {displayed.descriptionEn && (
           <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
             <span className="text-[10px] font-bold uppercase tracking-widest text-vault-accent/70 block mb-1.5">Descrição</span>
-            <p className="text-sm text-slate-300 leading-snug">{current.descriptionEn}</p>
+            <p className="text-sm text-slate-300 leading-snug">{displayed.descriptionEn}</p>
           </div>
         )}
       </div>
@@ -406,9 +417,9 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
         <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-600 mb-3">
           Personagens Relacionados
         </h3>
-        {current.relatedItems.length > 0 ? (
+        {displayed.relatedItems.length > 0 ? (
           <div className="flex flex-wrap gap-3">
-            {current.relatedItems.map(rel => (
+            {displayed.relatedItems.map(rel => (
               <a
                 key={rel.id}
                 href={`/collectibles?type=TROPHY&game=${rel.smashGameVersion}&trophy=${rel.id}`}
