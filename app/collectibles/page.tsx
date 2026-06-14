@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import SpiritViewer, { type SpiritItem } from "@/components/ui/SpiritViewer";
 import TrophyViewer, { type TrophyItem } from "@/components/ui/TrophyViewer";
+import StickerViewer, { type StickerItem } from "@/components/ui/StickerViewer";
 
 export const revalidate = 3600;
 
@@ -23,8 +24,6 @@ const TROPHY_ERAS = [
   { id: "SSBM",      label: "Melee",        year: "2001" },
   { id: "SSBB",      label: "Brawl",        year: "2008" },
   { id: "SSB4",      label: "Smash 4",      year: "2014" },
-  { id: "SSB4_3DS",  label: "Smash 4 3DS",  year: "2014" },
-  { id: "SSB4_WIIU", label: "Smash 4 Wii U",year: "2014" },
 ];
 
 const TYPE_LABELS: Record<string, string> = {
@@ -46,7 +45,11 @@ interface Props {
 export default async function CollectiblesPage({ searchParams }: Props) {
   const typeFilter = searchParams.type?.toUpperCase();
   const isTypeView  = typeFilter === "TROPHY" || typeFilter === "SPIRIT" || typeFilter === "STICKER";
-  const activeGame  = searchParams.game || (typeFilter === "TROPHY" ? "SSBM" : ERAS[0]!.id);
+  const activeGame  = searchParams.game || (
+    typeFilter === "TROPHY" ? "SSBM" : 
+    typeFilter === "STICKER" ? "SSBB" : 
+    ERAS[0]!.id
+  );
 
   /* ─────────────────────────────────────────────────────────── */
   /* Spirit View — one at a time, client-side navigation        */
@@ -164,6 +167,26 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       },
     });
 
+    // Load chronicle links via raw SQL (Prisma client not yet regenerated for new relation)
+    type ChrLink = { collectibleId: string; id: string; titleNtsc: string; boxArtUrl: string | null; wikiUrl: string | null };
+    let chronicleLinksRaw: ChrLink[] = [];
+    if (rawTrophies.length > 0) {
+      const ids = rawTrophies.map(t => t.id);
+      chronicleLinksRaw = await (db as any).$queryRawUnsafe(
+        `SELECT ccl."collectibleId", ce.id, ce."titleNtsc", ce."boxArtUrl", ce."wikiUrl"
+         FROM "CollectibleChronicleLink" ccl
+         JOIN "ChronicleEntry" ce ON ccl."chronicleEntryId" = ce.id
+         WHERE ccl."collectibleId" = ANY($1::text[])
+         ORDER BY ce."titleNtsc"`,
+        ids
+      ) as ChrLink[];
+    }
+    const linksByTrophy = new Map<string, ChrLink[]>();
+    for (const lnk of chronicleLinksRaw) {
+      if (!linksByTrophy.has(lnk.collectibleId)) linksByTrophy.set(lnk.collectibleId, []);
+      linksByTrophy.get(lnk.collectibleId)!.push(lnk);
+    }
+
     // Resolve initial index from ?trophy=<id> param
     const trophyIdParam = searchParams.trophy;
     const initialIndex  = trophyIdParam
@@ -192,6 +215,12 @@ export default async function CollectiblesPage({ searchParams }: Props) {
           assetRenderUrl: r.from.assetRenderUrl, type: r.from.type,
         })),
       ],
+      chronicleLinks: (linksByTrophy.get(t.id) ?? []).map(lnk => ({
+        id:        lnk.id,
+        titleNtsc: lnk.titleNtsc,
+        boxArtUrl: lnk.boxArtUrl,
+        wikiUrl:   lnk.wikiUrl,
+      })),
     }));
 
     return (
@@ -244,7 +273,108 @@ export default async function CollectiblesPage({ searchParams }: Props) {
   }
 
   /* ─────────────────────────────────────────────────────────── */
-  /* Stickers and era-based grid (non-trophy)                   */
+  /* Sticker View — one at a time, like SpiritViewer            */
+  /* ─────────────────────────────────────────────────────────── */
+  if (typeFilter === "STICKER") {
+    const rawStickers = await db.collectible.findMany({
+      where:   { type: "STICKER", smashGameVersion: activeGame },
+      orderBy: [{ orderIndex: "asc" }, { name: "asc" }],
+      include: {
+        franchise: { select: { svgIconUrl: true, name: true } },
+      },
+    });
+
+    // Load chronicle links via raw SQL
+    type ChrLink = { collectibleId: string; id: string; titleNtsc: string; boxArtUrl: string | null; wikiUrl: string | null };
+    let chronicleLinksRaw: ChrLink[] = [];
+    if (rawStickers.length > 0) {
+      const ids = rawStickers.map(s => s.id);
+      chronicleLinksRaw = await (db as any).$queryRawUnsafe(
+        `SELECT ccl."collectibleId", ce.id, ce."titleNtsc", ce."boxArtUrl", ce."wikiUrl"
+         FROM "CollectibleChronicleLink" ccl
+         JOIN "ChronicleEntry" ce ON ccl."chronicleEntryId" = ce.id
+         WHERE ccl."collectibleId" = ANY($1::text[])
+         ORDER BY ce."titleNtsc"`,
+        ids
+      ) as ChrLink[];
+    }
+    const linksBySticker = new Map<string, ChrLink[]>();
+    for (const lnk of chronicleLinksRaw) {
+      if (!linksBySticker.has(lnk.collectibleId)) linksBySticker.set(lnk.collectibleId, []);
+      linksBySticker.get(lnk.collectibleId)!.push(lnk);
+    }
+
+    // Resolve initial index from ?trophy=<id> param (reusing the param name for consistency if needed, or ?sticker=)
+    const itemIdParam = searchParams.trophy;
+    const initialIndex  = itemIdParam
+      ? Math.max(0, rawStickers.findIndex(s => s.id === itemIdParam))
+      : 0;
+
+    const stickerItems: StickerItem[] = rawStickers.map(s => ({
+      id:               s.id,
+      name:             s.name,
+      nameJp:           s.nameJp          ?? null,
+      orderIndex:       s.orderIndex      ?? null,
+      assetRenderUrl:   s.assetRenderUrl  ?? null,
+      sourceGame:       s.sourceGame      ?? null,
+      svgIconUrl:       s.franchise?.svgIconUrl ?? null,
+      franchiseName:    s.franchise?.name       ?? null,
+      chronicleLinks: (linksBySticker.get(s.id) ?? []).map(lnk => ({
+        id:        lnk.id,
+        titleNtsc: lnk.titleNtsc,
+        boxArtUrl: lnk.boxArtUrl,
+        wikiUrl:   lnk.wikiUrl,
+      })),
+    }));
+
+    return (
+      <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body pb-28">
+        <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
+          <div className="max-w-4xl mx-auto px-4 md:px-6 py-4">
+            <div className="flex items-center justify-between mb-4">
+              <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-100 uppercase tracking-tight flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-vault-accent/20 flex items-center justify-center text-vault-accent">★</div>
+                Stickers
+              </h1>
+              <div className="flex items-center gap-3">
+                <Link href="/collectibles" className="text-xs font-mono text-vault-muted hover:text-slate-200 transition-colors">
+                  ← Coleções
+                </Link>
+                <span className="text-xs font-mono text-vault-muted bg-vault-surface px-2 py-1 rounded border border-vault-border/50">
+                  {stickerItems.length} STICKERS
+                </span>
+              </div>
+            </div>
+            {/* Game tabs for stickers (usually just Brawl, but kept for consistency) */}
+            <div className="flex gap-1 flex-wrap">
+              {ERAS.filter(era => era.id === "SSBB").map(era => {
+                const isActive = era.id === activeGame;
+                return (
+                  <Link
+                    key={era.id}
+                    href={`/collectibles?type=STICKER&game=${era.id}`}
+                    className={`px-4 py-1.5 text-xs font-mono rounded-t-lg border-b-2 transition-colors ${
+                      isActive
+                        ? "bg-vault-surface border-vault-accent text-slate-100"
+                        : "bg-transparent border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
+                    }`}
+                  >
+                    {era.label} <span className={`ml-1 ${isActive ? "text-vault-accent" : "text-slate-500"}`}>{era.year}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 max-w-4xl mx-auto px-4 md:px-6 py-8 w-full">
+          <StickerViewer stickers={stickerItems} initialIndex={initialIndex} />
+        </div>
+      </main>
+    );
+  }
+
+  /* ─────────────────────────────────────────────────────────── */
+  /* General Grid (non-trophy/non-spirit/non-sticker)           */
   /* ─────────────────────────────────────────────────────────── */
   const where = typeFilter === "TROPHY"
     ? { type: "TROPHY" as const, smashGameVersion: activeGame }

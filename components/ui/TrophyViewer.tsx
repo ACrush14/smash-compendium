@@ -12,6 +12,13 @@ export interface RelatedItem {
   type: string;
 }
 
+export interface ChronicleLink {
+  id:         string;
+  titleNtsc:  string;
+  boxArtUrl:  string | null;
+  wikiUrl:    string | null;
+}
+
 export interface TrophyItem {
   id:               string;
   name:             string;
@@ -25,6 +32,7 @@ export interface TrophyItem {
   franchiseName:    string | null;
   smashGameVersion: string;
   relatedItems:     RelatedItem[];
+  chronicleLinks:   ChronicleLink[];
 }
 
 // Parse "Super Mario Bros. (NES) / New Super Mario Bros. (NDS)" → ["Super Mario Bros. (NES)", ...]
@@ -72,11 +80,8 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
     if (current) lastCurrentRef.current = current;
   }, [current]);
 
-  // Sidebar window centered on safeIndex
-  const half         = Math.floor(SIDEBAR_SIZE / 2);
-  const sidebarStart = Math.max(0, Math.min(safeIndex - half, filtered.length - SIDEBAR_SIZE));
-  const sidebarEnd   = Math.min(filtered.length, sidebarStart + SIDEBAR_SIZE);
-  const sidebarItems = filtered.slice(sidebarStart, sidebarEnd);
+  // O usuário solicitou um scroll com todos os itens, então não precisamos mais cortar a lista.
+  // Renderiza todos os itens filtrados na sidebar scrollable.
 
   // Scroll active into view
   useEffect(() => {
@@ -176,9 +181,8 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
       <div className="grid grid-cols-1 md:grid-cols-[200px_1fr_280px] gap-3 md:gap-5 items-start">
 
         {/* ── ESQUERDA: sidebar ── */}
-        <div className="hidden md:flex flex-col gap-0.5 bg-slate-900/40 rounded-xl border border-vault-border/30 p-1.5">
-          {sidebarItems.map((t, i) => {
-            const filteredIdx = sidebarStart + i;
+        <div className="hidden md:flex flex-col gap-0.5 bg-slate-900/40 rounded-xl border border-vault-border/30 p-1.5 max-h-[700px] overflow-y-auto scrollbar-thin scrollbar-thumb-vault-accent/30 scrollbar-track-transparent">
+          {filtered.map((t, filteredIdx) => {
             const isActive    = filteredIdx === safeIndex;
             return (
               <button
@@ -197,14 +201,22 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
                     <Image src={t.assetRenderUrl} alt={t.name} fill className="object-contain" sizes="32px" />
                   )}
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className={`text-[11px] font-medium truncate leading-tight ${isActive ? "text-slate-100" : "text-slate-500"}`}>
-                    {t.name}
-                  </p>
-                  {t.orderIndex != null && (
-                    <p className={`text-[9px] font-mono ${isActive ? "text-vault-accent" : "text-slate-700"}`}>
-                      #{t.orderIndex}
+                <div className="min-w-0 flex-1 flex items-center justify-between">
+                  <div className="min-w-0">
+                    <p className={`text-[11px] font-medium truncate leading-tight ${isActive ? "text-slate-100" : "text-slate-500"}`}>
+                      {t.name}
                     </p>
+                    {t.orderIndex != null && (
+                      <p className={`text-[9px] font-mono ${isActive ? "text-vault-accent" : "text-slate-700"}`}>
+                        #{t.orderIndex}
+                      </p>
+                    )}
+                  </div>
+                  {t.smashGameVersion === "SSB4_3DS" && (
+                    <span className="text-[10px] font-bold text-red-500 ml-2 shrink-0">(3DS)</span>
+                  )}
+                  {t.smashGameVersion === "SSB4_WIIU" && (
+                    <span className="text-[10px] font-bold text-red-500 ml-2 shrink-0">(WII U)</span>
                   )}
                 </div>
                 {isSearchActive && isActive && (
@@ -354,7 +366,11 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
 
             {/* Nome + número */}
             <div className="text-center">
-              <p className="text-xl font-bold text-slate-100 leading-tight">{displayed.name}</p>
+              <p className="text-xl font-bold text-slate-100 leading-tight">
+                {displayed.name}
+                {displayed.smashGameVersion === "SSB4_3DS" && <span className="text-red-500 ml-2 text-lg">(3DS)</span>}
+                {displayed.smashGameVersion === "SSB4_WIIU" && <span className="text-red-500 ml-2 text-lg">(WII U)</span>}
+              </p>
               {displayed.nameJp && (
                 <p className="text-xs text-slate-500 mt-0.5">{displayed.nameJp}</p>
               )}
@@ -369,8 +385,19 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
               )}
             </div>
 
-            {/* Jogos de origem → links para Chronicles */}
-            {games.length > 0 && (
+            {/* Jogos de origem — GameCards com capa se disponível */}
+            {displayed.chronicleLinks.length > 0 ? (
+              <div className="flex flex-wrap gap-2 justify-center mt-1">
+                {displayed.chronicleLinks.map(link => (
+                  <GameCard
+                    key={link.id}
+                    title={link.titleNtsc}
+                    coverUrl={link.boxArtUrl}
+                    wikiUrl={link.wikiUrl}
+                  />
+                ))}
+              </div>
+            ) : games.length > 0 && (
               <div className="flex flex-wrap gap-2 justify-center mt-1">
                 {games.map((g, gi) => (
                   <a
@@ -445,5 +472,44 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
         )}
       </div>
     </div>
+  );
+}
+
+function GameCard({
+  title,
+  coverUrl,
+  wikiUrl,
+}: {
+  title:    string;
+  coverUrl: string | null;
+  wikiUrl:  string | null;
+}) {
+  const inner = (
+    <div className={`flex gap-3 items-center rounded-xl border p-3 transition-all ${
+      wikiUrl
+        ? "bg-slate-900/60 border-vault-border/40 hover:border-vault-accent/50 hover:bg-slate-900/80"
+        : "bg-slate-900/40 border-vault-border/20"
+    }`}>
+      {coverUrl && (
+        <div className="relative shrink-0 w-14 aspect-[3/4] bg-slate-900 rounded overflow-hidden border border-vault-border/40 shadow-md">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={coverUrl} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
+        </div>
+      )}
+      <div className="min-w-0">
+        <p className="text-sm text-slate-300 font-medium leading-tight">{title}</p>
+        {wikiUrl && (
+          <span className="text-[10px] text-vault-accent/60 mt-1 block">↗ Wikipedia</span>
+        )}
+      </div>
+    </div>
+  );
+
+  return wikiUrl ? (
+    <a href={wikiUrl} target="_blank" rel="noopener noreferrer" className="block max-w-sm">
+      {inner}
+    </a>
+  ) : (
+    <div className="max-w-sm">{inner}</div>
   );
 }

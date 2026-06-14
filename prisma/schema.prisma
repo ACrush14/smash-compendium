@@ -122,6 +122,7 @@ model Collectible {
   franchise        Franchise? @relation("CollectibleFranchise", fields: [franchiseId], references: [id])
   relationsFrom    CollectibleRelation[] @relation("RelFrom")
   relationsTo      CollectibleRelation[] @relation("RelTo")
+  chronicleLinks   CollectibleChronicleLink[]
 
   @@index([type, smashGameVersion])
   @@index([franchiseId])
@@ -220,6 +221,18 @@ model ChronicleEntry {
   unlockCriteria  String?  @db.Text
   wikiUrl         String?  // URL de referência usada para o merge
   boxArtUrl       String?  // Capa oficial do jogo retirada do SmashWiki
+  collectibleLinks CollectibleChronicleLink[]
 
   @@index([consoleName])
+}
+
+model CollectibleChronicleLink {
+  collectibleId    String
+  chronicleEntryId String
+  collectible      Collectible    @relation(fields: [collectibleId],    references: [id], onDelete: Cascade)
+  chronicleEntry   ChronicleEntry @relation(fields: [chronicleEntryId], references: [id], onDelete: Cascade)
+
+  @@id([collectibleId, chronicleEntryId])
+  @@index([collectibleId])
+  @@index([chronicleEntryId])
 }

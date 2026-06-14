@@ -48,11 +48,8 @@ export default function SpiritViewer({ spirits }: { spirits: SpiritItem[] }) {
   const safeIndex = Math.min(index, Math.max(0, filtered.length - 1));
   const current   = filtered[safeIndex];
 
-  // Sidebar window centered on safeIndex
-  const half         = Math.floor(SIDEBAR_SIZE / 2);
-  const sidebarStart = Math.max(0, Math.min(safeIndex - half, filtered.length - SIDEBAR_SIZE));
-  const sidebarEnd   = Math.min(filtered.length, sidebarStart + SIDEBAR_SIZE);
-  const sidebarItems = filtered.slice(sidebarStart, sidebarEnd);
+  // O usuário solicitou um scroll com todos os itens, então não precisamos mais cortar a lista.
+  // Renderiza todos os itens filtrados na sidebar scrollable.
 
   // Scroll active sidebar item into view when navigating
   useEffect(() => {
@@ -146,9 +143,8 @@ export default function SpiritViewer({ spirits }: { spirits: SpiritItem[] }) {
           <div className="grid grid-cols-1 md:grid-cols-[200px_1fr_280px] gap-3 md:gap-5 items-start">
 
             {/* ── ESQUERDA: lista de spirits ── */}
-            <div className="hidden md:flex flex-col gap-0.5 bg-slate-900/40 rounded-xl border border-vault-border/30 p-1.5">
-              {sidebarItems.map((spirit, i) => {
-                const filteredIdx = sidebarStart + i;
+            <div className="hidden md:flex flex-col gap-0.5 bg-slate-900/40 rounded-xl border border-vault-border/30 p-1.5 max-h-[700px] overflow-y-auto scrollbar-thin scrollbar-thumb-vault-accent/30 scrollbar-track-transparent">
+              {filtered.map((spirit, filteredIdx) => {
                 const isActive    = filteredIdx === safeIndex;
                 return (
                   <button

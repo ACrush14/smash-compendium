@@ -105,26 +105,30 @@ async function scrapeSeriesPage(url: string): Promise<TrophyDesc[]> {
 
       // Extrai sourceGame: <dd> com <img> de plataforma = jogo de origem
       //                    <dd> sem <img> = movimento (troféu SMASH de lutador)
-      let hasMoveDL = false;
       const gameNames: string[] = [];
-      descCell.find("dl dd").each((_i, dd) => {
-        if ($(dd).find("img").length > 0) {
-          const gameName = cleanText($(dd).find("i").text());
-          if (gameName) gameNames.push(gameName);
-        } else {
-          hasMoveDL = true; // entrada de movimento — troféu SMASH
-        }
+      descCell.find("dl > dd").each((_i, dd) => {
+        const rawHtml = $(dd).html() || "";
+        const gameName = cleanText($("<div>").html(rawHtml.replace(/<br\s*\/?>/gi, " ")).text()).replace(/^[:\s]+/, "");
+        if (gameName) gameNames.push(gameName);
       });
       let firstGame = gameNames.join(" / ");
-      // Se só havia movimentos e nenhum jogo de origem → sentinela SMASH
-      if (!firstGame && hasMoveDL) firstGame = "SMASH";
 
       // Fallback para coluna separada (Melee): "first game" = extrai; "moves"/"game / moves" = SMASH
       if (!firstGame && gameIdx !== -1) {
-        if (headerCells[gameIdx].includes("moves")) {
+        const rawGameHtml = $(cells.eq(gameIdx)).html() || "";
+        const gameText = cleanText($("<div>").html(rawGameHtml.replace(/<br\s*\/?>/gi, " ")).text());
+        
+        // Se o texto parecer uma lista de movimentos (ex: "B: Fireball")
+        if (gameText.includes(" B:") || gameText.includes("B:")) {
           firstGame = "SMASH"; // Melee SMASH trophy
         } else {
-          firstGame = cleanText($(cells.eq(gameIdx)).text());
+          firstGame = gameText;
+          // Normaliza nomenclaturas de Smash conforme regra de negócio
+          if (firstGame.includes("Super Smash Bros. Melee")) {
+            firstGame = "Super Smash Bros. Melee (GCN)";
+          } else if (firstGame.includes("Super Smash Bros.")) {
+            firstGame = "Super Smash Bros. (N64)";
+          }
         }
       }
 
