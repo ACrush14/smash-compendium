@@ -29,8 +29,9 @@ export interface TrophyItem {
 
 // Parse "Super Mario Bros. (NES) / New Super Mario Bros. (NDS)" → ["Super Mario Bros. (NES)", ...]
 // Splits only on " / " (space-slash-space) to avoid breaking "Pokémon Red/Blue"
+// "SMASH" is a sentinel for fighter trophies (moves, no game origin) — hidden from UI
 function parseSourceGames(raw: string | null): string[] {
-  if (!raw) return [];
+  if (!raw || raw.toUpperCase() === "SMASH") return [];
   return raw.split(/\s+\/\s+/).map(s => s.trim()).filter(Boolean);
 }
 

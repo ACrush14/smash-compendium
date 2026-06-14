@@ -63,6 +63,7 @@ export default async function ChroniclesPage({ searchParams }: Props) {
   if (searchQuery) {
     const results = await db.chronicleEntry.findMany({
       where: {
+        consoleName: { not: "SMASH" }, // categoria oculta — sentinela para troféus de lutadores
         OR: [
           { titleNtsc: { contains: searchQuery, mode: "insensitive" } },
           { titleJp:   { contains: searchQuery, mode: "insensitive" } },

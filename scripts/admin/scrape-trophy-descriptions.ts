@@ -103,16 +103,27 @@ async function scrapeSeriesPage(url: string): Promise<TrophyDesc[]> {
       const descCell = $(cells.eq(descIdx));
       const description = cleanText(descCell.find("p").text() || descCell.clone().find("dl").remove().end().text());
 
+      // Extrai sourceGame: <dd> com <img> de plataforma = jogo de origem
+      //                    <dd> sem <img> = movimento (troféu SMASH de lutador)
+      let hasMoveDL = false;
       const gameNames: string[] = [];
       descCell.find("dl dd").each((_i, dd) => {
-        const gameName = cleanText($(dd).find("i").text());
-        if (gameName) gameNames.push(gameName);
+        if ($(dd).find("img").length > 0) {
+          const gameName = cleanText($(dd).find("i").text());
+          if (gameName) gameNames.push(gameName);
+        } else {
+          hasMoveDL = true; // entrada de movimento — troféu SMASH
+        }
       });
       let firstGame = gameNames.join(" / ");
+      // Se só havia movimentos e nenhum jogo de origem → sentinela SMASH
+      if (!firstGame && hasMoveDL) firstGame = "SMASH";
 
-      // Fallback para a coluna separada (usada no Melee), ignorando a coluna se for "moves"
+      // Fallback para coluna separada (Melee): "first game" = extrai; "moves"/"game / moves" = SMASH
       if (!firstGame && gameIdx !== -1) {
-        if (!headerCells[gameIdx].includes("moves")) {
+        if (headerCells[gameIdx].includes("moves")) {
+          firstGame = "SMASH"; // Melee SMASH trophy
+        } else {
           firstGame = cleanText($(cells.eq(gameIdx)).text());
         }
       }
