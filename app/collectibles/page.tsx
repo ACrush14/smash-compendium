@@ -117,12 +117,17 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       descriptionEn:        item.descriptionEn                   ?? null,
     }));
 
+    const itemIdParam = searchParams.trophy;
+    const initialIndex  = itemIdParam
+      ? Math.max(0, spiritItems.findIndex(s => s.id === itemIdParam))
+      : 0;
+
     return (
       <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body pb-28">
         <CollectiblesHeader activeType="SPIRIT" activeGame={activeGame} itemCount={spiritItems.length} />
 
         <div className="flex-1 max-w-4xl mx-auto px-4 md:px-6 py-8 w-full">
-          <SpiritViewer spirits={spiritItems} />
+          <SpiritViewer spirits={spiritItems} initialIndex={initialIndex} />
         </div>
       </main>
     );
@@ -336,8 +341,15 @@ export default async function CollectiblesPage({ searchParams }: Props) {
           </div>
         ) : (
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4 md:gap-6">
-            {collectibles.map(item => (
-              <div key={item.id} className="group relative flex flex-col items-center">
+            {collectibles.map(item => {
+              const targetUrl = item.type === "SPIRIT"
+                ? `/collectibles?type=SPIRIT&trophy=${item.id}`
+                : item.type === "STICKER" || item.type === "TROPHY"
+                ? `/collectibles?type=${item.type}&game=${item.smashGameVersion}&trophy=${item.id}`
+                : `/collectibles`; // Fallback for MEDIA/SPRITE
+
+              return (
+              <Link href={targetUrl} key={item.id} className="group relative flex flex-col items-center">
                 <div className="relative w-full aspect-square bg-slate-800/40 rounded-xl overflow-hidden border border-vault-border/50 group-hover:border-vault-accent group-hover:bg-vault-surface transition-all duration-300 shadow-sm group-hover:shadow-vault-accent/20 group-hover:-translate-y-1">
                   <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '12px 12px' }} />
                   <div className="absolute top-2 right-2 z-10">
@@ -383,8 +395,8 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                     <p className="text-[10px] text-slate-500 truncate mt-0.5">{item.nameJp}</p>
                   )}
                 </div>
-              </div>
-            ))}
+              </Link>
+            )})}
           </div>
         )}
       </div>

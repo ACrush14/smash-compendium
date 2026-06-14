@@ -28,8 +28,8 @@ export interface SpiritItem {
 
 const SIDEBAR_SIZE = 14;
 
-export default function SpiritViewer({ spirits }: { spirits: SpiritItem[] }) {
-  const [index, setIndex]         = useState(0);
+export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: SpiritItem[], initialIndex?: number }) {
+  const [index, setIndex]         = useState(initialIndex);
   const [direction, setDirection] = useState<"next" | "prev" | null>(null);
   const [query, setQuery]         = useState("");
   const activeRef = useRef<HTMLButtonElement>(null);
