@@ -18,7 +18,13 @@ const ERAS = [
   { id: "SSBU", label: "Ultimate",year: "2018" },
 ];
 
-const TROPHY_ERAS = ERAS.filter(e => e.id !== "SSBU");
+const TROPHY_ERAS = [
+  { id: "SSBM",      label: "Melee",        year: "2001" },
+  { id: "SSBB",      label: "Brawl",        year: "2008" },
+  { id: "SSB4",      label: "Smash 4",      year: "2014" },
+  { id: "SSB4_3DS",  label: "Smash 4 3DS",  year: "2014" },
+  { id: "SSB4_WIIU", label: "Smash 4 Wii U",year: "2014" },
+];
 
 const TYPE_LABELS: Record<string, string> = {
   TROPHY:  "Troféus",
@@ -143,13 +149,14 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       ? { type: typeFilter as "STICKER" }
       : { smashGameVersion: activeGame, type: { not: "SPRITE" as const } };
 
-  const trophyOrderBy = activeGame === "SSBM"
-    ? [{ posicaoTrofeuMelee: "asc" as const }, { name: "asc" as const }]
+  const trophyOrderBy =
+    activeGame === "SSBM"
+      ? [{ posicaoTrofeuMelee: "asc" as const }, { name: "asc" as const }]
     : activeGame === "SSBB"
       ? [{ posicaoTrofeuBrawl: "asc" as const }, { name: "asc" as const }]
-      : activeGame === "SSB4"
-        ? [{ posicaoTrofeuSsb4: "asc" as const }, { name: "asc" as const }]
-        : orderBy;
+    : ["SSB4", "SSB4_3DS", "SSB4_WIIU"].includes(activeGame)
+      ? [{ posicaoTrofeuSsb4: "asc" as const }, { name: "asc" as const }]
+    : orderBy;
 
   const raw = await db.collectible.findMany({
     where,
