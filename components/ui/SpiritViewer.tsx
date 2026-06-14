@@ -285,31 +285,6 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
                     <p className="text-[10px] font-mono text-vault-accent/50 mt-1">↩ clique para ir à posição</p>
                   )}
                 </div>
-
-                {/* Jogos de origem — logo abaixo do nome */}
-                {(current.spiritArtworkSource || current.spiritFirstAppearance || current.sourceGame) && (
-                  <div className="flex flex-wrap gap-2 justify-center mt-1">
-                    {current.spiritArtworkSource && (
-                      <GameCard
-                        label="Arte"
-                        title={current.spiritArtworkSource}
-                        coverUrl={current.artCoverUrl}
-                        wikiUrl={current.artWikiUrl}
-                      />
-                    )}
-                    {current.spiritFirstAppearance && current.spiritFirstAppearance !== current.spiritArtworkSource && (
-                      <GameCard
-                        label="1ª Aparição"
-                        title={current.spiritFirstAppearance}
-                        coverUrl={current.firstCoverUrl}
-                        wikiUrl={current.firstWikiUrl}
-                      />
-                    )}
-                    {!current.spiritArtworkSource && !current.spiritFirstAppearance && current.sourceGame && (
-                      <p className="text-sm text-slate-400 italic">{current.sourceGame}</p>
-                    )}
-                  </div>
-                )}
               </div>
             </div>
 
@@ -347,7 +322,32 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
                   <p className="text-sm text-slate-400 leading-snug whitespace-pre-wrap">{current.spiritCuratorComment}</p>
                 </div>
               )}
-              {!current.spiritMusicTitle && !current.spiritCuratorComment && !current.descriptionEn && (
+              {/* Jogos de origem — logo abaixo do nome */}
+              {(current.spiritArtworkSource || current.spiritFirstAppearance || current.sourceGame) && (
+                <div className="flex flex-col gap-2 mt-2">
+                  {current.spiritArtworkSource && (
+                    <GameCard
+                      label="Arte"
+                      title={current.spiritArtworkSource}
+                      coverUrl={current.artCoverUrl}
+                      wikiUrl={current.artWikiUrl}
+                    />
+                  )}
+                  {current.spiritFirstAppearance && current.spiritFirstAppearance !== current.spiritArtworkSource && (
+                    <GameCard
+                      label="1ª Aparição"
+                      title={current.spiritFirstAppearance}
+                      coverUrl={current.firstCoverUrl}
+                      wikiUrl={current.firstWikiUrl}
+                    />
+                  )}
+                  {!current.spiritArtworkSource && !current.spiritFirstAppearance && current.sourceGame && (
+                    <p className="text-sm text-slate-400 italic">{current.sourceGame}</p>
+                  )}
+                </div>
+              )}
+
+              {!current.spiritMusicTitle && !current.spiritCuratorComment && !current.descriptionEn && !current.spiritArtworkSource && !current.spiritFirstAppearance && !current.sourceGame && (
                 <p className="text-xs text-slate-700 italic text-center mt-8">Sem informações adicionais</p>
               )}
             </div>

@@ -385,59 +385,52 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
               )}
             </div>
 
-            {/* Jogos de origem — GameCards com capa se disponível */}
-            {displayed.chronicleLinks.length > 0 ? (
-              <div className="flex flex-wrap gap-2 justify-center mt-1">
-                {displayed.chronicleLinks.map(link => (
-                  <GameCard
-                    key={link.id}
-                    title={link.titleNtsc}
-                    coverUrl={link.boxArtUrl}
-                    wikiUrl={link.wikiUrl}
-                  />
-                ))}
-              </div>
-            ) : games.length > 0 && (
-              <div className="flex flex-wrap gap-2 justify-center mt-1">
-                {games.map((g, gi) => (
-                  <a
-                    key={gi}
-                    href={`/chronicles?q=${encodeURIComponent(gameSearchTitle(g))}`}
-                    className="flex items-center gap-1.5 bg-slate-900/60 border border-vault-border/40 hover:border-vault-accent/50 hover:bg-slate-900/80 rounded-lg px-3 py-1.5 transition-all group"
-                    title={`Ver ${g} no Chronicles`}
-                  >
-                    <span className="text-[10px] font-mono text-slate-400 group-hover:text-slate-200 transition-colors">{g}</span>
-                    <span className="text-[9px] text-vault-accent/40 group-hover:text-vault-accent/80 transition-colors">↗</span>
-                  </a>
-                ))}
-              </div>
-            )}
           </div>
         </div>
 
         {/* ── DIREITA: descrição ── */}
-        <div className="hidden md:flex flex-col gap-3 pt-1">
-          {displayed.descriptionEn ? (
+        <div className="flex flex-col gap-3 pt-1">
+          {displayed.descriptionEn && (
             <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
               <span className="text-[10px] font-bold uppercase tracking-widest text-vault-accent/70 block mb-1.5">
                 Descrição
               </span>
               <p className="text-sm text-slate-300 leading-snug">{displayed.descriptionEn}</p>
             </div>
-          ) : (
-            <p className="text-xs text-slate-700 italic text-center mt-8">Descrição não disponível</p>
+          )}
+
+          {/* Jogos de origem — GameCards com capa se disponível */}
+          {displayed.chronicleLinks.length > 0 ? (
+            <div className="flex flex-col gap-2 mt-2">
+              {displayed.chronicleLinks.map(link => (
+                <GameCard
+                  key={link.id}
+                  title={link.titleNtsc}
+                  coverUrl={link.boxArtUrl}
+                  wikiUrl={link.wikiUrl}
+                />
+              ))}
+            </div>
+          ) : games.length > 0 && (
+            <div className="flex flex-col gap-2 mt-2">
+              {games.map((g, gi) => (
+                <a
+                  key={gi}
+                  href={`/chronicles?q=${encodeURIComponent(gameSearchTitle(g))}`}
+                  className="flex items-center gap-1.5 bg-slate-900/60 border border-vault-border/40 hover:border-vault-accent/50 hover:bg-slate-900/80 rounded-lg px-3 py-1.5 transition-all group max-w-sm"
+                  title={`Ver ${g} no Chronicles`}
+                >
+                  <span className="text-[10px] font-mono text-slate-400 group-hover:text-slate-200 transition-colors">{g}</span>
+                  <span className="text-[9px] text-vault-accent/40 group-hover:text-vault-accent/80 transition-colors">↗</span>
+                </a>
+              ))}
+            </div>
+          )}
+
+          {!displayed.descriptionEn && displayed.chronicleLinks.length === 0 && games.length === 0 && (
+            <p className="text-xs text-slate-700 italic text-center mt-8">Sem informações adicionais</p>
           )}
         </div>
-      </div>
-
-      {/* ── Mobile: descrição ── */}
-      <div className="md:hidden">
-        {displayed.descriptionEn && (
-          <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-vault-accent/70 block mb-1.5">Descrição</span>
-            <p className="text-sm text-slate-300 leading-snug">{displayed.descriptionEn}</p>
-          </div>
-        )}
       </div>
 
       {/* ── Personagens Relacionados ── */}
