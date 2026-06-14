@@ -291,7 +291,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
     ? { type: "TROPHY" as const, smashGameVersion: activeGame }
     : isTypeView
       ? { type: typeFilter as "STICKER" }
-      : { smashGameVersion: activeGame, type: { not: "SPRITE" as const } };
+      : { type: { not: "SPRITE" as const } };
 
   const trophyOrderBy =
     activeGame === "SSBM"
