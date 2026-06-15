@@ -12,6 +12,8 @@ interface FighterHeader {
   name:          string;
   franchiseName: string;
   appearances:   string[];
+  prevSlug?:     string | null;
+  nextSlug?:     string | null;
 }
 
 interface FighterPageLayoutProps {

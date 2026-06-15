@@ -83,7 +83,7 @@ export default async function FighterPage({ params }: PageProps) {
   const { slug } = await params;
   const name = decodeURIComponent(slug);
 
-  const [fighter, allCollectibles] = await Promise.all([
+  const [fighter, allCollectibles, allFightersRaw] = await Promise.all([
     db.fighter.findFirst({
       where: { name: { equals: name, mode: "insensitive" } },
       include: {
@@ -102,9 +102,24 @@ export default async function FighterPage({ params }: PageProps) {
       where: { fighter: { name: { equals: name, mode: "insensitive" } } },
       orderBy: [{ smashGameVersion: "asc" }, { name: "asc" }],
     }),
+    db.fighter.findMany({ select: { name: true, rosterNumber: true } }),
   ]);
 
   if (!fighter) notFound();
+
+  // Ordena corretamente: "1","2",...,"33","33a","33b","33c","34",...
+  function parseRoster(r: string): [number, string] {
+    const m = r.match(/^(\d+)([a-z]*)$/);
+    return m ? [Number(m[1]), m[2] ?? ""] : [9999, r];
+  }
+  const sortedFighters = [...allFightersRaw].sort((a, b) => {
+    const [na, sa] = parseRoster(a.rosterNumber);
+    const [nb, sb] = parseRoster(b.rosterNumber);
+    return na !== nb ? na - nb : sa.localeCompare(sb);
+  });
+  const curIdx = sortedFighters.findIndex(f => f.name.toLowerCase() === fighter.name.toLowerCase());
+  const prevFighterName = curIdx > 0 ? sortedFighters[curIdx - 1]!.name : null;
+  const nextFighterName = curIdx < sortedFighters.length - 1 ? sortedFighters[curIdx + 1]!.name : null;
 
   // ── Derivações ──────────────────────────────────────────────────────────────
 
@@ -459,6 +474,8 @@ export default async function FighterPage({ params }: PageProps) {
             name:          fighter.name,
             franchiseName: fighter.franchise.name,
             appearances,
+            prevSlug: prevFighterName,
+            nextSlug: nextFighterName,
           }}
           originGames={originGamesUI}
           dataZone={dataZoneData}

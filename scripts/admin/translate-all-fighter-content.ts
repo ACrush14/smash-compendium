@@ -3,7 +3,7 @@
  * Traduz automaticamente contentEn → contentPt e contentJp → contentJpEn
  * de todos os FighterBio sem tradução. Também traduz FighterMove.
  *
- * Usa Gemini 2.5 Flash (free tier: 1500 req/dia, 15 req/min).
+ * Usa Gemini 2.5 Flash Lite (free tier).
  * Requer GEMINI_API_KEY em .env.local (aistudio.google.com).
  *
  * Uso:
@@ -36,13 +36,37 @@ const ERA_LABELS: Record<string, string> = {
 function sleep(ms: number) { return new Promise(r => setTimeout(r, ms)); }
 
 async function translate(ai: GoogleGenAI, prompt: string): Promise<string> {
-  const result = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
-  });
-  const text = result.text;
-  if (!text) throw new Error("Gemini returned empty response");
-  return text.trim();
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    try {
+      const result = await ai.models.generateContent({
+        model: "gemini-2.5-flash-lite",
+        contents: prompt,
+      });
+      const text = result.text;
+      if (!text) throw new Error("Gemini returned empty response");
+      return text.trim();
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      const is503 = msg.includes("503") || msg.includes("UNAVAILABLE");
+      // 429: extrai retryDelay da mensagem e espera
+      const retryMatch = msg.match(/"retryDelay":"(\d+)s"/);
+      const is429 = msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED");
+      if (attempt < 4) {
+        if (retryMatch && is429) {
+          const waitMs = (parseInt(retryMatch[1]) + 2) * 1000;
+          process.stdout.write(` [retry ${attempt}/3, wait ${retryMatch[1]}s]`);
+          await sleep(waitMs);
+          continue;
+        }
+        if (is503) {
+          await sleep(5000 * attempt);
+          continue;
+        }
+      }
+      throw e;
+    }
+  }
+  throw new Error("translate: unreachable");
 }
 
 function buildPtPrompt(fighterName: string, era: string, textEn: string): string {
@@ -245,8 +269,8 @@ async function main() {
     process.exit(1);
   }
 
-  const ai = new GoogleGenAI({ apiKey });
-  console.log("SmashCompendium — Tradução automática via Gemini 2.5 Flash (free)");
+  const ai = new GoogleGenAI({ apiKey, apiVersion: "v1" });
+  console.log("SmashCompendium — Tradução automática via Gemini 2.5 Flash Lite");
   console.log(DRY_RUN ? "MODO DRY RUN — sem escrita\n" : "");
 
   if (!ONLY_MOVES) await translateBios(ai);

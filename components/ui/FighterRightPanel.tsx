@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import OriginGamesPanel, { type OriginGame } from "./OriginGamesPanel";
 import FighterDataZone, { type FighterDataZoneData, type Lang } from "./FighterDataZone";
 import FighterSuggestions, { type SerializedSuggestion } from "./FighterSuggestions";
@@ -12,6 +13,8 @@ interface FighterHeader {
   name:          string;
   franchiseName: string;
   appearances:   string[];
+  prevSlug?:     string | null;
+  nextSlug?:     string | null;
 }
 
 interface FighterRightPanelProps {
@@ -54,12 +57,36 @@ export default function FighterRightPanel({ fighterId, fighterSlug, suggestions,
                 {header.franchiseName}
               </Link>
             </div>
-            <h1
-              className="font-black italic uppercase leading-none tracking-tight text-white fighter-title-glow"
-              style={{ fontSize: "clamp(2rem, 2.8vw, 3rem)" }}
-            >
-              {header.name}
-            </h1>
+            <div className="flex items-center gap-2">
+              {header.prevSlug ? (
+                <Link
+                  href={`/fighters/${encodeURIComponent(header.prevSlug)}`}
+                  className="text-cyan-500/50 hover:text-cyan-400 transition-colors shrink-0"
+                  title={`← ${header.prevSlug}`}
+                >
+                  <ChevronLeft size={28} strokeWidth={2.5} />
+                </Link>
+              ) : (
+                <span className="w-7 shrink-0" />
+              )}
+              <h1
+                className="font-black italic uppercase leading-none tracking-tight text-white fighter-title-glow"
+                style={{ fontSize: "clamp(2rem, 2.8vw, 3rem)" }}
+              >
+                {header.name}
+              </h1>
+              {header.nextSlug ? (
+                <Link
+                  href={`/fighters/${encodeURIComponent(header.nextSlug)}`}
+                  className="text-cyan-500/50 hover:text-cyan-400 transition-colors shrink-0"
+                  title={`${header.nextSlug} →`}
+                >
+                  <ChevronRight size={28} strokeWidth={2.5} />
+                </Link>
+              ) : (
+                <span className="w-7 shrink-0" />
+              )}
+            </div>
           </div>
 
           {/* Badges compactos no header sticky */}
