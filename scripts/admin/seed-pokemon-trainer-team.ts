@@ -180,7 +180,8 @@ async function main() {
     } catch (e) { console.error(`  ⚠ EN falhou: ${e}`); }
 
     // 3. Raspa bios + moves JP
-    const jpUrl = `https://smashwiki.info/${encodeURIComponent(pokemon.jpSlug)}`;
+    const jpUrl = `https://smashwiki.info/${pokemon.jpSlug.split("/").map(encodeURIComponent).join("/")}`;
+
     console.log(`  Scraping JP: ${jpUrl}`);
     let jpBios: Record<string, string> = {};
     let jpMoves: MoveEntry[] = [];

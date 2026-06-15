@@ -68,7 +68,7 @@ const JP_SLUG: Record<string, string> = {
   "King Dedede":        "デデデ",
   "Olimar":             "ピクミン&オリマー",
   "Lucario":            "ルカリオ",
-  "R.O.B.":             "R.O.B.",
+  "R.O.B.":             "ロボット",
   "Toon Link":          "トゥーンリンク",
   "Wolf":               "ウルフ",
   "Villager":           "むらびと",
@@ -168,7 +168,9 @@ async function enrichMoves(fighter: { id: string; name: string }) {
   const jpSlug = JP_SLUG[fighter.name];
   if (!jpSlug) return { skipped: true, count: 0 };
 
-  const jpUrl = `https://smashwiki.info/${encodeURIComponent(jpSlug)}`;
+  // Encode each segment separately so "/" in names stays as path separator
+  const jpUrl = `https://smashwiki.info/${jpSlug.split("/").map(encodeURIComponent).join("/")}`;
+
   let moves: MoveEntry[] = [];
 
   try {
