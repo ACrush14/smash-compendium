@@ -3,10 +3,8 @@
  * Traduz automaticamente contentEn → contentPt e contentJp → contentJpEn
  * de todos os FighterBio sem tradução. Também traduz FighterMove.
  *
- * Usa Claude API (claude-sonnet-4-6) com prompt curatorial — o resultado
- * deve soar como texto escrito originalmente em PT-BR ou EN, não traduzido.
- *
- * Requer ANTHROPIC_API_KEY em .env.local
+ * Usa Gemini 2.5 Flash (free tier: 1500 req/dia, 15 req/min).
+ * Requer GEMINI_API_KEY em .env.local (aistudio.google.com).
  *
  * Uso:
  *   npx tsx --env-file=.env.local scripts/admin/translate-all-fighter-content.ts
@@ -15,7 +13,7 @@
  *   npx tsx --env-file=.env.local scripts/admin/translate-all-fighter-content.ts --fighter Mario
  */
 
-import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenAI } from "@google/genai";
 import { db } from "../../lib/db";
 
 const args = process.argv.slice(2);
@@ -24,7 +22,8 @@ const ONLY_MOVES = args.includes("--only-moves");
 const ONLY_BIOS  = args.includes("--only-bios");
 const FIGHTER_ARG = args.includes("--fighter") ? args[args.indexOf("--fighter") + 1] : null;
 
-const DELAY_MS = 800; // entre chamadas à API
+// Gemini free tier: 15 req/min → mínimo 4s entre chamadas
+const DELAY_MS = 4100;
 
 const ERA_LABELS: Record<string, string> = {
   SSB64: "Super Smash Bros. (Nintendo 64, 1999)",
@@ -36,15 +35,14 @@ const ERA_LABELS: Record<string, string> = {
 
 function sleep(ms: number) { return new Promise(r => setTimeout(r, ms)); }
 
-async function translate(client: Anthropic, prompt: string): Promise<string> {
-  const msg = await client.messages.create({
-    model: "claude-sonnet-4-6",
-    max_tokens: 512,
-    messages: [{ role: "user", content: prompt }],
+async function translate(ai: GoogleGenAI, prompt: string): Promise<string> {
+  const result = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: prompt,
   });
-  const block = msg.content[0];
-  if (block.type !== "text") throw new Error("Unexpected response type");
-  return block.text.trim();
+  const text = result.text;
+  if (!text) throw new Error("Gemini returned empty response");
+  return text.trim();
 }
 
 function buildPtPrompt(fighterName: string, era: string, textEn: string): string {
@@ -109,22 +107,20 @@ function buildMoveJpEnPrompt(fighterName: string, era: string, label: string, te
  English translation:`;
 }
 
-async function translateBios(client: Anthropic) {
+async function translateBios(ai: GoogleGenAI) {
   const where = FIGHTER_ARG
     ? { fighter: { name: FIGHTER_ARG } }
     : {};
 
-  const bios = await db.fighterBio.findMany({
-    where: {
-      ...where,
-      OR: [
-        { contentPt: null, contentEn: { not: null } },
-        { contentJpEn: null, contentJp: { not: null } },
-      ],
-    },
+  const allBios = await db.fighterBio.findMany({
+    where,
     include: { fighter: { select: { name: true } } },
     orderBy: [{ fighter: { rosterNumber: "asc" } }, { smashGameVersion: "asc" }],
   });
+  const bios = allBios.filter(b =>
+    (b.contentPt === null && b.contentEn !== null) ||
+    (b.contentJpEn === null && b.contentJp !== null)
+  );
 
   console.log(`\nBIOS sem tradução: ${bios.length}`);
   let done = 0, failed = 0;
@@ -139,20 +135,22 @@ async function translateBios(client: Anthropic) {
     try {
       if (bio.contentEn && !bio.contentPt) {
         if (!DRY_RUN) {
-          updates.contentPt = await translate(client, buildPtPrompt(name, era, bio.contentEn));
+          updates.contentPt = await translate(ai, buildPtPrompt(name, era, bio.contentEn));
           await sleep(DELAY_MS);
         } else {
-          console.log(`[dry] PT from EN`);
+          process.stdout.write("[dry] PT ");
         }
       }
       if (bio.contentJp && !bio.contentJpEn) {
         if (!DRY_RUN) {
-          updates.contentJpEn = await translate(client, buildJpEnPrompt(name, era, bio.contentJp));
+          updates.contentJpEn = await translate(ai, buildJpEnPrompt(name, era, bio.contentJp));
           await sleep(DELAY_MS);
         } else {
-          console.log(`[dry] JP→EN`);
+          process.stdout.write("[dry] JP→EN ");
         }
       }
+
+      if (DRY_RUN) { console.log(""); continue; }
 
       if (Object.keys(updates).length > 0) {
         await db.fighterBio.update({
@@ -173,23 +171,21 @@ async function translateBios(client: Anthropic) {
   console.log(`  Bios: ${done} traduzidos, ${failed} falhas`);
 }
 
-async function translateMoves(client: Anthropic) {
+async function translateMoves(ai: GoogleGenAI) {
   const where = FIGHTER_ARG
     ? { fighter: { name: FIGHTER_ARG } }
     : {};
 
-  const moves = await db.fighterMove.findMany({
-    where: {
-      ...where,
-      OR: [
-        { descPt: null, descEn: { not: null } },
-        { descJpEn: null, descJp: { not: null } },
-        { descEn: null, descJp: { not: null } },
-      ],
-    },
+  const allMoves = await db.fighterMove.findMany({
+    where,
     include: { fighter: { select: { name: true } } },
     orderBy: [{ fighter: { rosterNumber: "asc" } }, { smashGameVersion: "asc" }, { order: "asc" }],
   });
+  const moves = allMoves.filter(m =>
+    (m.descPt === null && m.descEn !== null) ||
+    (m.descJpEn === null && m.descJp !== null) ||
+    (m.descEn === null && m.descJp !== null)
+  );
 
   console.log(`\nMOVES sem tradução: ${moves.length}`);
   let done = 0, failed = 0;
@@ -203,22 +199,19 @@ async function translateMoves(client: Anthropic) {
     const updates: Record<string, string> = {};
 
     try {
-      // JP → EN (se só tem JP)
       if (mv.descJp && !mv.descJpEn) {
         if (!DRY_RUN) {
-          updates.descJpEn = await translate(client, buildMoveJpEnPrompt(name, era, label, mv.descJp));
+          updates.descJpEn = await translate(ai, buildMoveJpEnPrompt(name, era, label, mv.descJp));
           await sleep(DELAY_MS);
         }
       }
-      // EN base: usa descEn se existir, senão usa descJpEn recém-traduzido
       const enBase = mv.descEn ?? updates.descJpEn;
       if (enBase && !mv.descPt) {
         if (!DRY_RUN) {
-          updates.descPt = await translate(client, buildMovePtPrompt(name, era, label, enBase));
+          updates.descPt = await translate(ai, buildMovePtPrompt(name, era, label, enBase));
           await sleep(DELAY_MS);
         }
       }
-      // Garante descEn preenchido se só tinha JP
       if (!mv.descEn && updates.descJpEn) {
         updates.descEn = updates.descJpEn;
       }
@@ -245,18 +238,19 @@ async function translateMoves(client: Anthropic) {
 }
 
 async function main() {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    console.error("❌ ANTHROPIC_API_KEY não definida em .env.local");
+    console.error("❌ GEMINI_API_KEY não definida em .env.local");
+    console.error("   Crie uma chave gratuita em: aistudio.google.com/apikey");
     process.exit(1);
   }
 
-  const client = new Anthropic({ apiKey });
-  console.log(`SmashCompendium — Tradução automática de bios e movimentos`);
+  const ai = new GoogleGenAI({ apiKey });
+  console.log("SmashCompendium — Tradução automática via Gemini 2.5 Flash (free)");
   console.log(DRY_RUN ? "MODO DRY RUN — sem escrita\n" : "");
 
-  if (!ONLY_MOVES) await translateBios(client);
-  if (!ONLY_BIOS)  await translateMoves(client);
+  if (!ONLY_MOVES) await translateBios(ai);
+  if (!ONLY_BIOS)  await translateMoves(ai);
 
   await db.$disconnect();
   console.log("\n✅ Tradução concluída.");
