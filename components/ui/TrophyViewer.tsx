@@ -23,6 +23,7 @@ export interface TrophyItem {
   descriptionEn:    string | null;
   sourceGame:       string | null;
   svgIconUrl:       string | null;
+  franchiseId:      string | null;
   franchiseName:    string | null;
   smashGameVersion: string;
   relatedItems:     RelatedItem[];

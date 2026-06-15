@@ -15,6 +15,7 @@ export interface StickerItem {
   assetRenderUrl: string | null;
   sourceGame: string | null;
   svgIconUrl: string | null;
+  franchiseId: string | null;
   franchiseName: string | null;
   chronicleLinks: ChronicleLink[];
   relatedItems: RelatedItem[];

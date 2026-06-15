@@ -118,6 +118,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       spiritCuratorComment: item.spiritCuratorComment  ?? null,
       sourceGame:           item.sourceGame            ?? null,
       svgIconUrl:           item.franchise?.svgIconUrl ?? null,
+      franchiseId:          item.franchiseId           ?? null,
       franchiseName:        item.franchise?.name       ?? null,
       artCoverUrl:          findCover(item.spiritArtworkSource   ?? null),
       firstCoverUrl:        findCover(item.spiritFirstAppearance ?? null),
@@ -216,6 +217,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       descriptionEn:    t.descriptionEn   ?? null,
       sourceGame:       t.sourceGame      ?? null,
       svgIconUrl:       t.franchise?.svgIconUrl ?? null,
+      franchiseId:      t.franchiseId           ?? null,
       franchiseName:    t.franchise?.name       ?? null,
       smashGameVersion: t.smashGameVersion,
       relatedItems: [
@@ -305,6 +307,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       assetRenderUrl:   s.assetRenderUrl  ?? null,
       sourceGame:       s.sourceGame      ?? null,
       svgIconUrl:       s.franchise?.svgIconUrl ?? null,
+      franchiseId:      s.franchiseId           ?? null,
       franchiseName:    s.franchise?.name       ?? null,
       chronicleLinks: (linksBySticker.get(s.id) ?? []).map(lnk => ({
         id:        lnk.id,

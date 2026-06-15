@@ -20,6 +20,7 @@ export interface SpiritItem {
   spiritCuratorComment: string | null;
   sourceGame: string | null;
   svgIconUrl: string | null;
+  franchiseId: string | null;
   franchiseName: string | null;
   artCoverUrl: string | null;
   firstCoverUrl: string | null;
