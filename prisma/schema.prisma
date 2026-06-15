@@ -12,7 +12,6 @@ model Franchise {
   name         String        @unique
   svgIconUrl   String?
   fighters     Fighter[]
-  games        Game[]
   stages       Stage[]
   musicTracks  Music[]
   collectibles Collectible[] @relation("CollectibleFranchise")
@@ -39,7 +38,6 @@ model Fighter {
   curationNotes       String?       @db.Text
   franchise           Franchise          @relation(fields: [franchiseId], references: [id])
   bios               FighterBio[]
-  works              FighterWork[]
   chronicleLinks     FighterChronicleLink[]
   collectibles       Collectible[]
   tips               FighterTip[]
@@ -78,39 +76,6 @@ model FighterBio {
   fighter             Fighter @relation(fields: [fighterId], references: [id], onDelete: Cascade)
 
   @@unique([fighterId, smashGameVersion])
-}
-
-model Game {
-  id             String        @id @default(cuid())
-  titleEn        String
-  titleJp        String?       // Título original japonês (ex: "MOTHER2 ギーグの逆襲")
-  releaseDate    DateTime?     // Data completa quando disponível
-  releaseYear    Int?          // Ano explícito para query fácil (JP)
-  releaseMonth   Int?          // Mês explícito 1-12 (JP)
-  releaseRegion  String?       // "JP" | "NA" | "PAL" — região do lançamento desta entrada
-  releaseYearNa  Int?          // Ano de lançamento NA
-  releaseMonthNa Int?          // Mês de lançamento NA (1-12)
-  platform       String        // Console (ex: "SNES", "N64", "GCN")
-  consoleIconUrl String?       // URL do ícone local (ex: /assets/consoles/snes.png)
-  boxArtUrl      String?       // URL da capa do jogo (NA/EN)
-  boxArtUrlJp    String?       // URL da capa JP
-  wikiUrl        String?       // Link Wikipedia EN
-  wikiUrlJp      String?       // Link Wikipedia JP
-  jpExclusive    Boolean       @default(false)
-  displayOrder   Int?          // Ordem cronológica de exibição no painel ORIGIN GAMES
-  franchiseId    String
-  franchise      Franchise     @relation(fields: [franchiseId], references: [id])
-  fighterWorks   FighterWork[]
-}
-
-model FighterWork {
-  fighterId String
-  gameId    String
-  isDebut   Boolean @default(false)
-  fighter   Fighter @relation(fields: [fighterId], references: [id], onDelete: Cascade)
-  game      Game    @relation(fields: [gameId], references: [id], onDelete: Cascade)
-
-  @@id([fighterId, gameId])
 }
 
 model Collectible {

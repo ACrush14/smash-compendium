@@ -33,21 +33,20 @@ export async function GET(
     include: {
       franchise: { select: { id: true, name: true } },
       bios:      { orderBy: { smashGameVersion: "asc" } },
-      works: {
-        include: { game: { select: { titleEn: true } } },
+      chronicleLinks: {
+        include: { chronicleEntry: { select: { titleNtsc: true } } },
       },
     },
   });
 
   if (!fighter) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  const worksEras = fighter.works
-    .map(w => titleToEra(w.game.titleEn))
-    .filter((e): e is string => !!e)
+  const worksEras = fighter.bios
+    .map(b => b.smashGameVersion)
     .filter((e, i, arr) => arr.indexOf(e) === i) // unique
     .sort((a, b) => ERA_ORDER.indexOf(a) - ERA_ORDER.indexOf(b));
 
-  const { works, franchise, ...rest } = fighter;
+  const { chronicleLinks, franchise, ...rest } = fighter;
 
   return NextResponse.json({
     ...rest,

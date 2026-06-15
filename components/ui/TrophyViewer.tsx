@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
+import AssociatedCards from "./AssociatedCards";
 
 export interface ChronicleLink {
   id:         string;
@@ -426,6 +427,14 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
           )}
         </div>
       </div>
+
+      {displayed.franchiseId && (
+        <AssociatedCards
+          currentId={displayed.id}
+          name={displayed.name}
+          franchiseId={displayed.franchiseId}
+        />
+      )}
     </div>
   );
 }

@@ -12,7 +12,8 @@ export interface MediaAsset {
   sublabel?: string;
   assetType:
     | "render" | "trophy" | "sticker" | "spirit" | "sprite"
-    | "clay" | "art" | "gif" | "video";
+    | "clay" | "art" | "gif" | "video" | "cover";
+  href?: string;
 }
 
 interface MediaVaultViewerProps {
@@ -90,7 +91,6 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
             }}
           />
 
-          {/* Halo ciano sutil ao redor do render ativo */}
           <div
             className="absolute inset-8 pointer-events-none z-0 rounded-full opacity-20"
             style={{
@@ -99,21 +99,61 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
             }}
           />
 
+          {active && (active.assetType === "spirit" || active.assetType === "render") && (
+            <>
+              <div className="spirit-rays absolute inset-0 pointer-events-none" />
+              <div className="spirit-glow absolute inset-0 pointer-events-none" />
+              <div className="absolute inset-0 pointer-events-none overflow-visible">
+                <span className="spirit-star ss-1"  /><span className="spirit-star ss-2"  />
+                <span className="spirit-star ss-3"  /><span className="spirit-star ss-4"  />
+                <span className="spirit-star ss-5"  /><span className="spirit-star ss-6"  />
+                <span className="spirit-star ss-7"  /><span className="spirit-star ss-8"  />
+                <span className="spirit-star ss-9"  /><span className="spirit-star ss-10" />
+                <span className="spirit-star ss-11" /><span className="spirit-star ss-12" />
+                <span className="spirit-orb so-1"   /><span className="spirit-orb so-2"   />
+                <span className="spirit-orb so-3"   /><span className="spirit-orb so-4"   />
+                <span className="spirit-orb so-5"   /><span className="spirit-orb so-6"   />
+                <span className="spirit-orb so-7"   /><span className="spirit-orb so-8"   />
+                <span className="spirit-orb so-9"   /><span className="spirit-orb so-10"  />
+                <span className="spirit-orb so-11"  /><span className="spirit-orb so-12"  />
+                <span className="spirit-rise sr-1"  /><span className="spirit-rise sr-2"  />
+                <span className="spirit-rise sr-3"  /><span className="spirit-rise sr-4"  />
+              </div>
+            </>
+          )}
+
           {active && active.url ? (
-            <Image
-              src={active.url}
-              alt={active.label}
-              width={800}
-              height={800}
-              className="w-full h-full object-contain object-center relative z-10"
-              style={{
-                filter:
-                  "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))",
-                imageRendering: IS_GIF(active.url) ? "pixelated" : undefined,
-              }}
-              priority
-              unoptimized={IS_GIF(active.url)}
-            />
+            active.href ? (
+              <a href={active.href} className="w-full h-full relative z-10 block group cursor-pointer" title={`Ver página de ${active.label}`}>
+                <Image
+                  src={active.url}
+                  alt={active.label}
+                  width={800}
+                  height={800}
+                  className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-300"
+                  style={{
+                    filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))",
+                    imageRendering: IS_GIF(active.url) ? "pixelated" : undefined,
+                  }}
+                  priority
+                  unoptimized={IS_GIF(active.url)}
+                />
+              </a>
+            ) : (
+              <Image
+                src={active.url}
+                alt={active.label}
+                width={800}
+                height={800}
+                className="w-full h-full object-contain object-center relative z-10"
+                style={{
+                  filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))",
+                  imageRendering: IS_GIF(active.url) ? "pixelated" : undefined,
+                }}
+                priority
+                unoptimized={IS_GIF(active.url)}
+              />
+            )
           ) : (
             <div className="flex flex-col items-center gap-3 text-slate-700 z-10">
               <ImageIcon className="h-16 w-16" strokeWidth={0.75} />
@@ -126,7 +166,11 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
         {active && (
           <div className="shrink-0 text-center pb-4 px-6">
             <p className={`font-mono text-[13px] font-semibold uppercase tracking-widest leading-tight ${ASSET_ACCENT[active.assetType]}`}>
-              {active.label}
+              {active.href ? (
+                <a href={active.href} className="hover:underline flex items-center justify-center gap-1">
+                  {active.label} <span className="text-[10px] opacity-70">↗</span>
+                </a>
+              ) : active.label}
             </p>
             {active.sublabel && (
               <p className="mt-1.5 font-mono text-[11px] text-slate-500 leading-snug">{active.sublabel}</p>

@@ -23,10 +23,11 @@ interface FighterPageLayoutProps {
   header:      FighterHeader;
   originGames: OriginGame[];
   dataZone:    FighterDataZoneData;
+  associatedCardsNode?: React.ReactNode;
 }
 
 export default function FighterPageLayout({
-  fighterId, fighterSlug, suggestions, assets, music, header, originGames, dataZone,
+  fighterId, fighterSlug, suggestions, assets, music, header, originGames, dataZone, associatedCardsNode
 }: FighterPageLayoutProps) {
   const [lang, setLang] = useState<Lang>("EN");
 
@@ -48,6 +49,7 @@ export default function FighterPageLayout({
           dataZone={dataZone}
           lang={lang}
           setLang={setLang}
+          associatedCardsNode={associatedCardsNode}
         />
       </div>
     </>

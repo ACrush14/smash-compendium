@@ -11,8 +11,8 @@ export default async function FightersPage() {
   const fighters = await db.fighter.findMany({
     include: {
       franchise: true,
-      works: {
-        include: { game: true }
+      chronicleLinks: {
+        include: { chronicleEntry: true }
       }
     },
     // We order them by roster number. Note: "01", "02", "02e"
@@ -20,7 +20,7 @@ export default async function FightersPage() {
   });
 
   const serializedFighters = fighters.map(f => {
-    const debutWork = f.works.find(w => w.isDebut);
+    const debutLink = f.chronicleLinks.find(l => l.isDebut);
     return {
       id: f.id,
       name: f.name,
@@ -28,9 +28,9 @@ export default async function FightersPage() {
       rosterNumber: f.rosterNumber,
       imageUrl: f.imageUrl,
       franchise: f.franchise.name,
-      // Usamos o ID do jogo como chave de debut, ou o título
-      debutGame: debutWork ? debutWork.game.titleEn : "Unknown",
-      debutVersion: debutWork ? debutWork.gameId : "Unknown", // "SSB64", "SSBM", etc.
+      // Usamos o título do jogo como chave de debut
+      debutGame: debutLink ? debutLink.chronicleEntry.titleNtsc : "Unknown",
+      debutVersion: debutLink ? debutLink.chronicleEntry.consoleName : "Unknown",
     };
   });
 

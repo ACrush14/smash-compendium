@@ -23,9 +23,10 @@ interface FighterRightPanelProps {
   dataZone:    FighterDataZoneData;
   lang:        Lang;
   setLang:     (l: Lang) => void;
+  associatedCardsNode?: React.ReactNode;
 }
 
-export default function FighterRightPanel({ fighterId, fighterSlug, suggestions, header, originGames, dataZone, lang, setLang }: FighterRightPanelProps) {
+export default function FighterRightPanel({ fighterId, fighterSlug, suggestions, header, originGames, dataZone, lang, setLang, associatedCardsNode }: FighterRightPanelProps) {
 
   return (
     <div
@@ -125,6 +126,8 @@ export default function FighterRightPanel({ fighterId, fighterSlug, suggestions,
         suggestions={suggestions}
         validSections={header.appearances}
       />
+
+      {associatedCardsNode}
 
       {/* ── Footer ─────────────────────────────────────────────── */}
       <footer className="border-t border-cyan-500/10 px-10 py-5">

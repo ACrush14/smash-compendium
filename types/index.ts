@@ -1,9 +1,9 @@
 import type {
   Fighter,
   FighterBio,
-  FighterWork,
+  FighterChronicleLink,
+  ChronicleEntry,
   Franchise,
-  Game,
   Collectible,
   Stage,
   Music,
@@ -42,7 +42,7 @@ export type Platform = (typeof PLATFORMS)[number];
 export type FighterWithRelations = Fighter & {
   franchise: Franchise;
   bios: FighterBio[];
-  works: (FighterWork & { game: Game })[];
+  chronicleLinks: (FighterChronicleLink & { chronicleEntry: ChronicleEntry })[];
   collectibles: Collectible[];
 };
 
@@ -50,10 +50,7 @@ export type CollectibleWithFighter = Collectible & {
   fighter: Fighter | null;
 };
 
-export type GameWithFighters = Game & {
-  franchise: Franchise;
-  fighterWorks: (FighterWork & { fighter: Fighter })[];
-};
+
 
 export type StageWithTracks = Stage & {
   franchise: Franchise;

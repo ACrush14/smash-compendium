@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, X, Shield, Sword, Heart } from "lucide-react";
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
+import AssociatedCards from "./AssociatedCards";
 import { ChronicleLink } from "./TrophyViewer";
 
 export interface StickerItem {
@@ -323,6 +324,14 @@ export default function StickerViewer({ stickers, initialIndex = 0 }: Props) {
         </div>
 
       </div>
+
+      {displayed.franchiseId && (
+        <AssociatedCards
+          currentId={displayed.id}
+          name={displayed.name}
+          franchiseId={displayed.franchiseId}
+        />
+      )}
     </div>
   );
 }

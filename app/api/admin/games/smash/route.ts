@@ -22,16 +22,16 @@ function titleToEra(titleEn: string) {
 
 // GET /api/admin/games/smash → the 5 main Smash games with IDs
 export async function GET() {
-  const games = await db.game.findMany({
-    where: { titleEn: { startsWith: "Super Smash Bros" } },
-    orderBy: { releaseYear: "asc" },
-    select: { id: true, titleEn: true, releaseYear: true, platform: true },
+  const entries = await db.chronicleEntry.findMany({
+    where: { titleNtsc: { startsWith: "Super Smash Bros" } },
+    orderBy: { releaseDateNtsc: "asc" },
+    select: { id: true, titleNtsc: true, consoleName: true },
   });
 
-  type GameWithEra = { id: string; titleEn: string; releaseYear: number | null; platform: string; era: string };
+  type GameWithEra = { id: string; titleNtsc: string; consoleName: string; era: string };
 
-  const smashGames = games
-    .map(g => ({ ...g, era: titleToEra(g.titleEn) }))
+  const smashGames = entries
+    .map(g => ({ ...g, era: titleToEra(g.titleNtsc) }))
     .filter((g): g is GameWithEra => !!g.era)
     // deduplicate by era (keep first per era)
     .reduce<GameWithEra[]>((acc, g) => {

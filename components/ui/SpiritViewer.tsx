@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import AssociatedCards from "./AssociatedCards";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
@@ -358,6 +359,14 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
           </div>
 
         </>
+      )}
+
+      {current && current.franchiseId && (
+        <AssociatedCards
+          currentId={current.id}
+          name={current.name}
+          franchiseId={current.franchiseId}
+        />
       )}
     </div>
   );

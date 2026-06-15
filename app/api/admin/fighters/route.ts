@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
       curatorOverviewEn: true,
       franchise:         { select: { name: true } },
       bios:              { select: { smashGameVersion: true } },
-      works:             { select: { gameId: true } },
+      chronicleLinks:    { select: { chronicleEntryId: true } },
       collectibles:      {
         where:  { type: { in: ["TROPHY", "SPIRIT", "STICKER"] } },
         select: { type: true },
@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
       franchise:      f.franchise.name,
       hasCuratorText: !!curatorOverviewEn,
       biosCount:      f.bios.length,
-      worksCount:     f.works.length,
+      worksCount:     f.chronicleLinks.length,
       trophyCount,
       spiritCount,
       stickerCount,
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
     musicYoutubeId?: string | null;
     musicTitle?:     string | null;
     musicArtist?:    string | null;
-    works?:          { gameId: string; isDebut?: boolean }[];
+    chronicleLinks?: { chronicleEntryId: string; isDebut?: boolean }[];
   };
 
   if (!body.name?.trim())         return NextResponse.json({ error: "name is required" }, { status: 400 });
@@ -79,19 +79,19 @@ export async function POST(req: NextRequest) {
       musicYoutubeId: body.musicYoutubeId  || null,
       musicTitle:     body.musicTitle      || null,
       musicArtist:    body.musicArtist     || null,
-      // Create FighterWork entries if provided
-      works: body.works?.length
+      // Create FighterChronicleLink entries if provided
+      chronicleLinks: body.chronicleLinks?.length
         ? {
-            create: body.works.map(w => ({
-              gameId:  w.gameId,
-              isDebut: w.isDebut ?? false,
+            create: body.chronicleLinks.map(l => ({
+              chronicleEntryId: l.chronicleEntryId,
+              isDebut:          l.isDebut ?? false,
             })),
           }
         : undefined,
     },
     include: {
       franchise: { select: { name: true } },
-      works:     { select: { gameId: true, isDebut: true } },
+      chronicleLinks: { select: { chronicleEntryId: true, isDebut: true } },
     },
   });
 

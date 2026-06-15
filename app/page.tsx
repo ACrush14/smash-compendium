@@ -107,7 +107,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
   const [fighterCount, franchiseCount, gameCount, trophyCount, spiritCount, stickerCount, musicCount, approvedCount, searchResults] = await Promise.all([
     db.fighter.count(),
     db.franchise.count(),
-    db.game.count(),
+    db.chronicleEntry.count(),
     db.collectible.count({ where: { type: "TROPHY" } }),
     db.collectible.count({ where: { type: "SPIRIT" } }),
     db.collectible.count({ where: { type: "STICKER" } }),
