@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { Zap } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -468,6 +469,14 @@ function CollectiblesHeader({
   return (
     <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
       <div className={activeType === "GRID" ? "max-w-[1600px] mx-auto px-4 md:px-6 py-4" : "max-w-5xl mx-auto px-4 md:px-6 py-4"}>
+        <div className="mb-4">
+          <Link href="/" className="inline-flex items-center gap-2 transition-opacity hover:opacity-80">
+            <Zap className="h-4 w-4 text-amber-400" strokeWidth={2.5} />
+            <span className="font-black italic tracking-tight text-white text-sm" style={{ letterSpacing: "-0.02em" }}>
+              SMASH<span className="text-amber-400">COMPENDIUM</span>
+            </span>
+          </Link>
+        </div>
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-100 uppercase tracking-tight flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-vault-accent/20 flex items-center justify-center text-vault-accent">★</div>

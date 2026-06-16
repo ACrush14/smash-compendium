@@ -36,6 +36,8 @@ export async function GET(
       chronicleLinks: {
         include: { chronicleEntry: { select: { titleNtsc: true } } },
       },
+      tips: { orderBy: { id: "asc" } },
+      collectibles: { orderBy: { smashGameVersion: "asc" } },
     },
   });
 

@@ -1,28 +1,24 @@
 /**
  * populate-all-fighter-works.ts
- * Scrapa a seção "Works" de cada lutador no SSBWiki e cria FighterChronicleLinks
- * apontando para ChronicleEntry existentes no banco.
+ * Scrapa a seção "Works" de cada lutador no SSBWiki e cria FighterChronicleLinks.
  *
- * Estratégia de match:
- *   1. Tenta match exato por titleNtsc
- *   2. Tenta match por substring (title contém ou é contido pelo nome scrapeado)
- *   3. Tenta match ignorando subtítulo após ":"
- *   Cria ChronicleEntry placeholder (console=Unknown) se nenhum match encontrado.
+ * Works no SSBWiki ficam em <dd> começando com "Works:" seguido de <ul><li><a>.
+ * Usa o título do link (atributo title) como nome canônico do jogo.
  *
  * Uso:
  *   npx tsx --env-file=.env.local scripts/admin/populate-all-fighter-works.ts
- *   npx tsx --env-file=.env.local scripts/admin/populate-all-fighter-works.ts --skip-existing
  *   npx tsx --env-file=.env.local scripts/admin/populate-all-fighter-works.ts --dry-run
  *   npx tsx --env-file=.env.local scripts/admin/populate-all-fighter-works.ts --fighter Mario
+ *   npx tsx --env-file=.env.local scripts/admin/populate-all-fighter-works.ts --clear  (deleta links existentes antes)
  */
 
 import { db } from "../../lib/db";
 import { fetchHtml } from "../scrapers/utils";
 
 const args = process.argv.slice(2);
-const DRY_RUN       = args.includes("--dry-run");
-const SKIP_EXISTING = args.includes("--skip-existing");
-const FIGHTER_ARG   = args.includes("--fighter") ? args[args.indexOf("--fighter") + 1] : null;
+const DRY_RUN     = args.includes("--dry-run");
+const CLEAR       = args.includes("--clear");
+const FIGHTER_ARG = args.includes("--fighter") ? args[args.indexOf("--fighter") + 1] : null;
 
 const DELAY_MS = 1600;
 
@@ -44,41 +40,67 @@ function normalize(s: string) {
     .trim();
 }
 
+// SSBWiki slugs especiais que diferem do nome do lutador
+const SSBWIKI_SLUGS: Record<string, string> = {
+  "Link":           "Link_(character)",
+  "Samus":          "Samus_(character)",
+  "Peach":          "Peach_(character)",
+  "Zelda":          "Zelda_(character)",
+  "Falco":          "Falco_(character)",
+  "Marth":          "Marth_(SSBM)",
+  "Captain Falcon": "Captain_Falcon",
+  "Mr. Game & Watch": "Mr._Game_%26_Watch",
+  "R.O.B.":         "R.O.B.",
+  "Pokémon Trainer":"Pokémon_Trainer_(SSBB)",
+  "Mii Brawler":    "Mii_Brawler",
+  "Mii Swordfighter": "Mii_Swordfighter",
+  "Mii Gunner":     "Mii_Gunner",
+  "Rosalina & Luma": "Rosalina_%26_Luma",
+  "Banjo & Kazooie": "Banjo_%26_Kazooie",
+  "Pyra":           "Pyra/Mythra",
+  "Mythra":         "Pyra/Mythra",
+  "Joker":          "Joker_(SSBU)",
+  "Hero":           "Hero_(SSBU)",
+  "Steve":          "Steve_(SSBU)",
+  "Sephiroth":      "Sephiroth_(SSBU)",
+  "Min Min":        "Min_Min_(SSBU)",
+  "Kazuya":         "Kazuya_(SSBU)",
+  "Sora":           "Sora_(SSBU)",
+};
+
 async function scrapeWorks(fighterName: string): Promise<string[]> {
-  const url = `https://www.ssbwiki.com/${encodeURIComponent(fighterName.replace(/ /g, "_"))}`;
+  const slug = SSBWIKI_SLUGS[fighterName] ?? fighterName.replace(/ /g, "_");
+  const url  = `https://www.ssbwiki.com/${slug}`;
   const $ = await fetchHtml(url);
 
   const works: string[] = [];
 
-  // Busca seção "Works" ou "Game appearances" → lista de jogos
-  $(".mw-parser-output").find("h2, h3, h4").each((_, heading) => {
-    const text = $(heading).text().trim().toLowerCase();
-    if (!text.includes("work") && !text.includes("game appearance")) return;
+  // Works ficam em <dd> cujo texto começa com "Works:"
+  $("dd").each((_, el) => {
+    const rawText = $(el).clone().children().remove().end().text().trim();
+    if (!rawText.toLowerCase().startsWith("works")) return;
 
-    // Pega os elementos imediatamente após o heading até o próximo heading
-    let el = $(heading).next();
-    while (el.length && !el.is("h2, h3, h4")) {
-      el.find("li, td").each((__, item) => {
-        const title = $(item).text().replace(/\(.*?\)/g, "").trim();
-        if (title && !SMASH_GAMES.has(title) && title.length > 1) {
-          works.push(title);
+    // Extrai títulos via atributo title dos links (canônico) ou texto do <a>
+    $(el).find("li a").each((__, link) => {
+      const title = $(link).attr("title")?.replace(/ \(.*?\)$/, "").trim()
+                 ?? $(link).text().trim();
+      if (title && title.length > 1 && !SMASH_GAMES.has(title)) {
+        works.push(title);
+      }
+    });
+
+    // Fallback: li sem link (ex.: "Metroid II: Return of Samus")
+    if (works.length === 0) {
+      $(el).find("li").each((__, li) => {
+        const text = $(li).text().replace(/\s*\(.*?\)\s*/g, "").trim();
+        if (text && text.length > 1 && !SMASH_GAMES.has(text)) {
+          works.push(text);
         }
       });
-      el = el.next();
     }
   });
 
-  // Fallback: seção "In other games" ou "Appearances"
-  if (works.length === 0) {
-    $("table.wikitable td:first-child, ul li").each((_, el) => {
-      const text = $(el).text().replace(/\(.*?\)/g, "").trim();
-      if (text && text.length > 3 && !SMASH_GAMES.has(text) && /[A-Z]/.test(text[0]!)) {
-        works.push(text);
-      }
-    });
-  }
-
-  return [...new Set(works)].slice(0, 20); // deduplica, max 20
+  return [...new Set(works)];
 }
 
 async function findChronicleEntry(title: string, allEntries: { id: string; titleNtsc: string }[]) {
@@ -175,12 +197,21 @@ async function main() {
   const fighters = await db.fighter.findMany({
     where: fighterWhere,
     orderBy: { rosterNumber: "asc" },
-    include: { chronicleLinks: { select: { chronicleEntryId: true } } },
+    include: { chronicleLinks: { select: { chronicleEntryId: true, fighterId: true } } },
   });
 
-  const toProcess = SKIP_EXISTING
-    ? fighters.filter(f => f.chronicleLinks.length === 0)
-    : fighters;
+  // --clear: apaga todos os FighterChronicleLinks dos lutadores selecionados
+  if (CLEAR && !DRY_RUN) {
+    const ids = fighters.map(f => f.id);
+    const deleted = await db.fighterChronicleLink.deleteMany({
+      where: { fighterId: { in: ids } },
+    });
+    console.log(`--clear: ${deleted.count} FighterChronicleLinks apagados\n`);
+    // Re-carrega com links zerados
+    for (const f of fighters) f.chronicleLinks = [];
+  }
+
+  const toProcess = fighters;
 
   console.log(`Lutadores a processar: ${toProcess.length}/${fighters.length}`);
   console.log(DRY_RUN ? "MODO DRY RUN\n" : "");

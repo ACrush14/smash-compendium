@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { Zap } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
@@ -11,14 +12,14 @@ export const metadata: Metadata = {
 };
 
 const CONSOLE_ORDER = [
-  "GAME & WATCH",
+  "Game & Watch",
   "Nintendo Entertainment System",
-  "Disk System",
-  "GAME BOY",
+  "Famicom Disk System",
+  "Game Boy",
   "Super Nintendo Entertainment System",
-  "VIRTUAL BOY",
+  "Virtual Boy",
   "Nintendo 64",
-  "GAME BOY ADVANCE",
+  "Game Boy Advance",
   "Nintendo GameCube",
   "Nintendo DS",
   "Wii",
@@ -33,12 +34,12 @@ const CONSOLE_ORDER = [
 
 const CONSOLE_ICONS: Record<string, string> = {
   "Nintendo Entertainment System": "/assets/consoles/nes.svg",
-  "Disk System": "/assets/consoles/famicom.svg",
-  "GAME BOY": "/assets/consoles/gb.svg",
+  "Famicom Disk System": "/assets/consoles/famicom.svg",
+  "Game Boy": "/assets/consoles/gb.svg",
   "Super Nintendo Entertainment System": "/assets/consoles/snes.svg",
-  "VIRTUAL BOY": "/assets/consoles/virtualboy.svg",
+  "Virtual Boy": "/assets/consoles/virtualboy.svg",
   "Nintendo 64": "/assets/consoles/n64.svg",
-  "GAME BOY ADVANCE": "/assets/consoles/gba.svg",
+  "Game Boy Advance": "/assets/consoles/gba.svg",
   "Nintendo GameCube": "/assets/consoles/gcn.svg",
   "Nintendo DS": "/assets/consoles/ds.svg",
   "Wii": "/assets/consoles/wii.svg",
@@ -78,7 +79,15 @@ export default async function ChroniclesPage({ searchParams }: Props) {
       <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body">
         <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
           <div className="max-w-7xl mx-auto px-4 md:px-6 py-4">
-            <div className="flex items-center gap-4">
+            <div className="mb-4">
+              <Link href="/" className="inline-flex items-center gap-2 transition-opacity hover:opacity-80">
+                <Zap className="h-4 w-4 text-amber-400" strokeWidth={2.5} />
+                <span className="font-black italic tracking-tight text-white text-sm" style={{ letterSpacing: "-0.02em" }}>
+                  SMASH<span className="text-amber-400">COMPENDIUM</span>
+                </span>
+              </Link>
+            </div>
+            <div className="flex items-center gap-4 mb-4">
               <Link href="/chronicles" className="text-xs font-mono text-vault-muted hover:text-slate-200 transition-colors">
                 ← Chronicle
               </Link>
@@ -212,6 +221,14 @@ export default async function ChroniclesPage({ searchParams }: Props) {
       {/* Header Fixo e Tabs */}
       <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4">
+          <div className="mb-4">
+            <Link href="/" className="inline-flex items-center gap-2 transition-opacity hover:opacity-80">
+              <Zap className="h-4 w-4 text-amber-400" strokeWidth={2.5} />
+              <span className="font-black italic tracking-tight text-white text-sm" style={{ letterSpacing: "-0.02em" }}>
+                SMASH<span className="text-amber-400">COMPENDIUM</span>
+              </span>
+            </Link>
+          </div>
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl md:text-3xl font-display font-bold text-slate-100 uppercase tracking-tight">
               Nintendo Chronicle

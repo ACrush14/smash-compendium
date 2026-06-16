@@ -1,84 +1,93 @@
-# SmashCompendium — Gemini Pro Handoff
-> Sessão 22 · 2026-06-14 · Preparado para continuar em Gemini Pro / Claude Code
+# SmashCompendium — Handoff para IA (Antigravity / Gemini / Claude)
+> Sessão 24 · 2026-06-16 · Preparado por Claude Sonnet 4.6
 
-Este documento é **autossuficiente**: contém tudo que você precisa para entender o projeto e continuar o trabalho sem sessões anteriores.
+Este documento é **autossuficiente**: tudo que você precisa para entender o projeto e continuar o trabalho.
 
 ---
 
 ## 1. Visão Geral
 
-**SmashCompendium** é um museu digital do Super Smash Bros., preservando troféus, spirits, stickers, biografias bilíngues e capas de jogos de cada lutador desde SSB64 até SSBU. Projeto acadêmico/fan-made sem fins comerciais.
+**SmashCompendium** é um museu digital fan-made/acadêmico do Super Smash Bros.  
+Preserva troféus, spirits, stickers, biografias bilíngues, colecionáveis e jogos de origem de cada lutador (SSB64 → SSBU).
+
+- **Path:** `D:\Super Smash Bros Museum`
+- **Branch:** `master`
+- **Versão:** V00.087 Alpha (em `lib/version.ts` — incrementar a cada commit)
 
 ---
 
-## 2. Stack & Setup
+## 2. Stack & Regras Absolutas
 
 | Tecnologia | Versão | Nota |
 |---|---|---|
 | Next.js | 14.2 | App Router, Server Components |
 | Prisma | 5.22 | ORM para PostgreSQL |
-| Supabase | — | PostgreSQL na região sa-east-1 |
+| Supabase | — | PostgreSQL sa-east-1 |
 | Node | 24 | Runtime |
 | TypeScript | 5.x | Strict mode |
-| Tailwind CSS | 3.x | Tema dark, fundo `#0a0a2a` |
-| cheerio | 1.2 | Scraping HTML |
+| Tailwind CSS | 3.x | Tema dark, fundo `#020617` |
 
-### Iniciar o servidor
-```bash
-npm run dev           # http://localhost:3000
-```
+### Regras que NUNCA podem ser violadas
 
-### Rodar scripts TypeScript
-```bash
-# SEMPRE usar npx tsx — NUNCA ts-node
-npx tsx --env-file=.env.local scripts/scrapers/nome-do-script.ts
-```
+1. **Scripts:** `npx tsx --env-file=.env.local scripts/...` — NUNCA `ts-node`
+2. **Migrações:** `$executeRawUnsafe` SQL direto — NUNCA `prisma migrate dev`
+3. **`prisma generate`:** parar o dev server ANTES (DLL lock no Windows)
+4. **Banco:** Session Pooler IPv4 `aws-1-sa-east-1.pooler.supabase.com:5432` (não usar conexão direta — IPv6)
+5. **`curationStatus`:** NUNCA setar `"approved"` via script — só aprovação manual
+6. **Versão:** incrementar `APP_VERSION` em `lib/version.ts` em cada commit
+7. **PowerShell + colchetes:** usar `-LiteralPath` para caminhos com `[slug]`
+8. **Cache `.next`:** se o SWC der erros impossíveis, parar o servidor e deletar `.next` antes de reiniciar
 
-### Variáveis de ambiente
-- `.env.local` contém `DATABASE_URL` (Session Pooler do Supabase — IPv4)
-- Session Pooler: `aws-1-sa-east-1.pooler.supabase.com:5432`
-- **Não usar** a conexão direta (IPv6-only, não funciona em rede doméstica)
-
----
-
-## 3. Schema do Banco
-
-```prisma
-model Franchise    { id, name (unique), fighters[], games[], stages[], musicTracks[] }
-model Fighter      { id, rosterNumber, name (unique), franchiseId, imageUrl?,
-                     curatorOverviewEn/Pt/Jp/JpEn?,
-                     musicYoutubeId?, musicTitle?, musicArtist?, musicStatus?,
-                     bios[], works[], collectibles[], tips[], suggestions[] }
-model FighterBio   { id, fighterId, smashGameVersion, contentEn, contentPt?,
-                     contentJp?, contentJpEn? }
-model Game         { id, titleEn, platform, releaseYear?, boxArtUrl? }
-model FighterWork  { fighterId, gameId, isDebut }  -- M:N fighter×smash_game
-model Collectible  { id, fighterId?, type (TROPHY|SPIRIT|STICKER|SPRITE|MEDIA),
-                     smashGameVersion, name, description?, descriptionPt?,
-                     descriptionJp?, descriptionJpEn?, assetRenderUrl?,
-                     posicaoSpiritSsbu?, posicaoTrofeuMelee/Brawl/Ssb4? }
-model ChronicleEntry { id, consoleName, titleNtsc, titlePal?, titleJp?,
-                        releaseDateNtsc/Pal/Jp?, wikiUrl?, boxArtUrl? }
-model FighterTip   { id, fighterId, titleEn, textEn, titlePt?, textPt?,
-                     titleJp?, textJp?, titleJpEn?, textJpEn? }
-model FighterSuggestion { id, fighterId, section, authorName, message, approved }
+### Dev server
+```powershell
+npm run dev   # porta 3000 (ou 3001 se 3000 estiver em uso)
 ```
 
 ---
 
-## 4. Estado Atual do Banco (2026-06-06)
+## 3. Schema do Banco (modelos relevantes)
 
-| Tabela | Total | Observação |
+```
+Franchise             — 47 franquias
+Fighter               — 90 lutadores (87 SSBU + Squirtle #33a + Ivysaur #33b + Charizard #33c)
+FighterBio            — bios por versão do Smash (SSB64/SSBM/SSBB/SSB4/SSBU) EN+JP
+FighterMove           — movimentos/Final Smash por era JP
+FighterChronicleLink  — Fighter ↔ ChronicleEntry (Works GLOBAL do lutador)
+FighterTip            — tips de gameplay (Ness completo; outros pendentes)
+
+Collectible           — TROPHY|SPIRIT|STICKER|SPRITE|MEDIA
+  smashGameVersion    — "SSB64"|"SSBM"|"SSBB"|"SSB4"|"SSBU"
+  type                — "TROPHY"|"SPIRIT"|"STICKER"|"SPRITE"|"MEDIA"
+
+CollectibleChronicleLink — Collectible ↔ ChronicleEntry (jogos de origem do troféu)
+                         ⭐ FONTE DOS WORKS POR ERA (ver seção 7)
+
+ChronicleEntry        — catálogo de jogos Nintendo (1254 entradas)
+  consoleName, titleNtsc, titlePal, titleJp, releaseDateNtsc/Pal/Jp, wikiUrl, boxArtUrl
+
+Music                 — 1076 faixas SSBU (536 sem YouTube embeddável)
+```
+
+### ⚠️ Arquitetura Works (decisão de 2026-06-14)
+`FighterChronicleLink → ChronicleEntry` é a **única** fonte de verdade dos jogos de origem.  
+NÃO usar a tabela `Game` para works. Corrigir Chronicles corrige a UI automaticamente.
+
+---
+
+## 4. Estado do Banco (2026-06-16)
+
+| Tabela | Total | Status |
 |---|---|---|
-| Fighter | 87 | Todos com bios |
-| FighterBio | ~435 | Todos os 87 lutadores têm bio em EN |
-| FighterWork | 9 | **INCOMPLETO** — só 9 fighters mapeados a jogos Smash |
-| Collectible (TROPHY) | 901 | 71/87 fighters |
-| Collectible (SPIRIT) | 1582 | 84/87 fighters |
-| Collectible (STICKER) | 707 | 55/87 fighters |
-| ChronicleEntry | 947 | — |
-| ChronicleEntry c/ boxArtUrl | 263 | ~28% com imagem |
-| ChronicleEntry sem wikiUrl | 558 | Precisam de wikiUrl para busca de imagem |
+| Fighter | 90 | ✅ (87 SSBU + Squirtle/Ivysaur/Charizard) |
+| FighterBio | ~250 | ✅ EN + JP por era, 90 fighters |
+| FighterMove | ~100 | ✅ moves JP por era |
+| FighterChronicleLink | 139 | ✅ 66/90 fighters cobertos (works global) |
+| CollectibleChronicleLink | ~2184 | ✅ troféus → jogos de origem |
+| Collectible (TROPHY) | ~1045 | ✅ Melee(293) + Brawl(544) + SSB4(408+) |
+| Collectible (SPIRIT) | 1582 | ✅ SSBU |
+| Collectible (STICKER) | ~707 | ✅ Brawl |
+| ChronicleEntry | 1254 | ✅ 0 consoleName=Unknown; 54 sem boxArt, 57 sem wikiUrl, 603 sem titleJp |
+| Music | 1076 | ⚠️ 536 sem YouTube embeddável |
 
 ---
 
@@ -86,249 +95,219 @@ model FighterSuggestion { id, fighterId, section, authorName, message, approved 
 
 ```
 app/
-  fighters/[slug]/page.tsx        ← Página do fighter (Server Component)
-  chronicles/page.tsx             ← Página do Chronicles
-  collectibles/page.tsx           ← Página de colecionáveis
+  fighters/[slug]/page.tsx        ← Página do lutador (Server Component) ← MODIFICADO 2026-06-16
+  chronicles/page.tsx             ← Catálogo de jogos Nintendo
+  collectibles/page.tsx           ← Troféus/Spirits/Stickers viewer
   admin/music/page.tsx            ← Admin: revisão de músicas
 
-components/ui/
-  FighterPageLayout.tsx           ← Layout split-vault (esquerda=vault, direita=data)
-  FighterDataZone.tsx             ← Zona direita com bio, troféus, works
-  OriginGamesPanel.tsx            ← Painel de jogos de origem com capas
-  MediaVaultViewer.tsx            ← Carrossel de imagens/gifs (zona esquerda)
-  FighterRightPanel.tsx           ← Wrapper client (gerencia lang state)
+components/
+  fighter/
+    FighterDataZone.tsx           ← Timeline + bio + works por era ← MODIFICADO 2026-06-16
+    FighterRightPanel.tsx         ← Wrapper client (controla lang state)
+    OriginGamesPanel.tsx          ← Painel de works global (painel direito)
+    MediaVaultViewer.tsx          ← Carrossel de colecionáveis (painel esquerdo)
 
 lib/
-  db.ts                           ← Instância Prisma (singleton)
-  smash-meta.ts                   ← GAME_META, GAME_ORDER por versão Smash
+  version.ts                      ← APP_VERSION (incrementar a cada commit)
+  smash-meta.ts                   ← GAME_META por versão do Smash
   ui-i18n.ts                      ← Strings i18n EN/PT/JP/JP+EN
-  fighters-tips.ts                ← Tips por lutador (SSBU)
 
-scripts/scrapers/
-  character-article.ts            ← ETL bios + troféus + stickers da SSBWiki
-  fetch-images.ts                 ← ETL imagens (renders, troféus, sprites, spirits)
-  fighters.ts                     ← Bulk insert dos 87 fighters
-  fetch-chronicles-boxarts-v2.ts  ← Scraper box arts do Chronicles (Wikipedia/MarioWiki)
-  fix-chronicles-false-positives.ts ← Limpa boxArtUrl falsos positivos
-  fetch-all-boxarts.ts            ← Scraper box arts dos origin games
-  origin-boxart-map.json          ← Mapa nome→arquivo dos origin games baixados
-
-public/assets/
-  games/                          ← 36 capas dos origin games (comprometido no git)
-  fighters/                       ← Renders dos fighters (no .gitignore)
-  collectibles/                   ← Imagens de troféus (no .gitignore)
-  consoles/                       ← Ícones de consoles SVG/PNG
-
-prisma/schema.prisma              ← Schema completo do banco
-next.config.mjs                   ← remotePatterns para imagens externas
+scripts/admin/
+  replace-dead-music-urls.ts      ⏳ música — 536 pendentes, ~95/dia
+  translate-all-fighter-content.ts ⬜ tradução — aguarda ANTHROPIC_API_KEY
+  populate-all-fighter-works.ts   ✅ já rodado
+  check-trophy-works.ts           diagnóstico: works de um fighter
+  check-fighter-coverage.ts       diagnóstico: cobertura de fighters
+  link-ssbm-trophies-to-chronicles.ts ✅ 204 CollectibleChronicleLinks Melee
 ```
 
 ---
 
-## 6. Página do Fighter (`/fighters/[slug]`)
+## 6. Página do Lutador (`/fighters/[slug]`) — Arquitetura Atual
 
-### Arquitetura
 ```
 page.tsx (Server Component)
-  ├── FIGHTER_ORIGIN_GAMES   ← override por fighter (Ness, Lucas, Pyra, Mythra, Cloud, Sephiroth)
-  ├── FRANCHISE_ORIGIN_GAMES ← fallback por franquia (todos os 87 fighters cobertos)
-  ├── FIGHTER_GIFS           ← GIFs hardcoded por era (só Ness tem dados)
+  ├── db.fighter.findUnique()         → Fighter + FighterBio + FighterMove + FighterTip
+  ├── db.collectible.findMany()       → todos os Collectibles do fighter
+  │     include: chronicleLinks → chronicleEntry   ← NOVO (2026-06-16)
+  ├── db.fighter.findFirst({          → FighterChronicleLinks (works global)
+  │     include: { chronicleLinks: { include: { chronicleEntry } } }
+  │   })
+  │
+  ├── SMASH_TITLES (Set)              → filtro: exclui jogos Smash dos Works
+  ├── ceToWorkGame()                  → converte ChronicleEntry → WorkGame
+  ├── originWorkGames []              → Works global (union de FighterChronicleLink)
+  ├── worksPerGame {}                 → Works por era (de Collectible.chronicleLinks)  ← NOVO
+  │     Record<"SSBM"|"SSBB"|"SSB4"|"SSBU", WorkGame[]>
+  │     construído agrupando CollectibleChronicleLink por smashGameVersion do Collectible
+  │
   └── FighterPageLayout
-        ├── Esquerda: MediaVaultViewer (carrossel assets)
-        └── Direita: FighterRightPanel
-              ├── OriginGamesPanel (jogos de origem da franquia)
-              └── FighterDataZone (bio, troféus, spirits, works, tips)
+        ├── Esquerda (col-span-5): MediaVaultViewer — render + carrossel colecionáveis
+        └── Direita (col-span-7):  FighterRightPanel → FighterDataZone
 ```
 
-### Idiomas suportados
-- `EN` — inglês (padrão)
-- `PT` — português BR (tradução automática via Claude Haiku `/api/translate`)
-- `JP` — japonês
-- `JP_EN` — japonês com romanização
+---
 
-### Como adicionar origin games de um novo fighter
+## 7. Works por Era — Sistema Implementado (2026-06-16) ⭐
+
+### Como funciona
+
+Cada `Collectible` (troféu) de um fighter tem `smashGameVersion` (ex: "SSBM") e `chronicleLinks`
+apontando para `ChronicleEntry` (jogos de origem daquele troféu). Isso é usado para mostrar
+os Works específicos de cada era na linha do tempo do fighter.
+
+**Fonte:**
+- `CollectibleChronicleLink → ChronicleEntry` agrupado por `Collectible.smashGameVersion`
+- Builder em `page.tsx` → `worksPerGame: Record<string, WorkGame[]>`
+
+**Fallback por era:**
 ```typescript
-// Em app/fighters/[slug]/page.tsx
+const eraWorkGames: WorkGame[] =
+  (worksPerGame && worksPerGame[gameVer])
+    ? worksPerGame[gameVer]!
+    : (originWorkGames ?? []);
+```
+- Se o troféu daquela era tem jogos ligados → mostra esses jogos
+- Senão → mostra os works globais (`FighterChronicleLink`)
+- SSB64 e SSBU DLC (sem troféus) → sempre usam o fallback global
 
-// Override por fighter (tem prioridade):
-const FIGHTER_ORIGIN_GAMES: Record<string, OriginGame[]> = {
-  "NomeFighter": [
-    { name: "Nome do Jogo", console: "NSW", year: 2017, badgeColor: "#2a2a8e",
-      boxArtPath: "/assets/games/ARQUIVO.jpg",  // opcional — se não tiver, omitir
-      wikiUrl: "https://en.wikipedia.org/wiki/..." }
-  ],
-};
+### Cobertura
+- **66 fighters** têm CollectibleChronicleLinks (troféus Melee/Brawl/SSB4 com jogos de origem)
+- **24 DLC SSBU** (Joker, Hero, Banjo, Terry, Byleth, Min Min, Steve, Sephiroth, Pyra/Mythra, Kazuya, Sora, Miis) — sem troféus → sem per-era Works → usam fallback global
+- **SSB64** — nenhum fighter tem troféu dessa era → todos usam fallback
 
-// Fallback por franquia:
-const FRANCHISE_ORIGIN_GAMES: Record<string, OriginGame[]> = {
-  "NomeFranquia": [...],
-};
+### Exemplo verificado (Yoshi):
+- Melee → "Super Mario World", "Super Mario World 2: Yoshi's Island"
+- Brawl → "Yoshi's Safari", "Yoshi's Story"
+- SSB4 → "Super Mario World", "Super Mario World 2: Yoshi's Island"
+- SSB64/SSBU → fallback global (todos os 4 jogos)
+
+---
+
+## 8. Idiomas Suportados
+
+| Código | Descrição |
+|---|---|
+| `EN` | Inglês (padrão) |
+| `PT` | Português BR (tradução via Claude API — bloqueada sem `ANTHROPIC_API_KEY`) |
+| `JP` | Japonês |
+| `JP_EN` | Japonês com romanização EN |
+
+---
+
+## 9. Pendências (por prioridade)
+
+### 🔵 PRÓXIMO — Music URLs (fácil, só rodar)
+```powershell
+npx tsx --env-file=.env.local scripts/admin/replace-dead-music-urls.ts
+```
+- 536 faixas sem YouTube embeddável
+- Rodar diariamente (quota ~95/dia, ~6 runs)
+- Cada run atualiza `Music.youtubeId` + `Music.embedUrl`
+
+### 🔵 PRÓXIMO — Tradução (bloqueada em ANTHROPIC_API_KEY)
+```powershell
+# Adicionar ao .env.local:
+ANTHROPIC_API_KEY="sk-ant-..."
+
+npx tsx --env-file=.env.local scripts/admin/translate-all-fighter-content.ts
+```
+- Traduz `contentEn→contentPt` e `contentJp→contentJpEn` para todos os ~250 FighterBio
+- Também traduz moves: `descJp→descJpEn` para ~100 FighterMove
+- Modelo: `claude-sonnet-4-6`
+- Flags: `--dry-run`, `--only-bios`, `--only-moves`, `--fighter <Name>`
+
+### 🟡 MÉDIO — Works para 24 DLC SSBU (manual)
+Joker, Hero, Banjo & Kazooie, Terry, Byleth, Min Min, Steve, Sephiroth, Pyra/Mythra, Kazuya, Sora, Mii Brawler, Mii Swordfighter, Mii Gunner não têm troféus → sem `CollectibleChronicleLink` → sem per-era Works.
+
+**Solução:** o usuário provê a lista de Works manualmente por era, e criamos `FighterChronicleLink` diretamente com um script.
+
+### 🟡 MÉDIO — Works para SSB64 (todas as eras)
+Nenhum fighter tem troféu do SSB64 → a era SSB64 usa sempre o fallback global.  
+Para mostrar Works específicos para SSB64 de cada fighter, precisaria criar `FighterChronicleLink` com um sub-tipo ou nova tabela.
+
+### 🟠 P1 — Reclassificar troféus `sourceGame="SMASH"`
+Só os troféus Melee #002–078 são moves legítimos de lutador. Os outros ~160 troféus com `sourceGame="SMASH"` na verdade referem-se a "Super Smash Bros. (N64)" ou "Super Smash Bros. Melee (GCN)" — precisam ser corrigidos.
+Ver: `memory/next_demand_smash_reclassify.md`
+
+### 🟠 P1 — Corrigir Chronicles
+- 54 ChronicleEntry sem boxArt
+- 57 ChronicleEntry sem wikiUrl
+- 603 ChronicleEntry sem titleJp
+Ver: `memory/next_demand_fix_chronicles.md`
+
+### 🟠 P1 — Curadoria dos lutadores
+Dados incorretos/faltando em alguns fighters. Usuário fará revisão manual + automação pontual.
+Ver: `memory/next_demand_curation.md`
+
+### P2 — sourceGame Melee malformatado
+Alguns troféus têm `sourceGame = "Donkey KongArcade 1981"` (sem espaço). Precisam de correção.
+
+### P2 — 22 ChronicleEntry com consoleName="Unknown"
+Criadas pelo works populator automaticamente. Precisam de curadoria manual.
+
+### P2 — CollectibleRelation (tabela vazia)
+Tabela existe mas está vazia. Linkar troféus cross-game (ex: Lakitu Melee → Lakitu Brawl).
+
+### P3 — curatorOverview por fighter
+Texto editorial por fighter (apenas Mario tem). ~90 fighters sem.
+
+### P3 — GIFs / galeria
+Animações por era (apenas Ness tem). Solução de hospedagem a decidir.
+
+---
+
+## 10. Scripts Disponíveis
+
+```powershell
+# Enriquecimento
+npx tsx --env-file=.env.local scripts/scrapers/enrich-all-fighter-bios.ts    # bio EN+JP
+npx tsx --env-file=.env.local scripts/scrapers/enrich-all-fighter-moves.ts   # moves JP
+npx tsx --env-file=.env.local scripts/admin/translate-all-fighter-content.ts # tradução (requer ANTHROPIC_API_KEY)
+npx tsx --env-file=.env.local scripts/admin/populate-all-fighter-works.ts    # works via trofeus
+
+# Música
+npx tsx --env-file=.env.local scripts/admin/replace-dead-music-urls.ts       # 536 pendentes
+
+# Diagnóstico
+npx tsx --env-file=.env.local scripts/admin/check-bio-coverage.ts
+npx tsx --env-file=.env.local scripts/admin/check-trophy-works.ts
+npx tsx --env-file=.env.local scripts/admin/check-fighter-coverage.ts
 ```
 
 ---
 
-## 7. Box Arts dos Origin Games
+## 11. Commits Recentes
 
-### Status atual: 36/37 jogos baixados
-Arquivos em `public/assets/games/`. Ball (G&W) não tem imagem disponível.
-
-### Origin games SEM capa ainda (adicionados sessão 19, precisam de imagem manual)
-| Fighter(s) | Jogo | Arquivo sugerido |
-|---|---|---|
-| Snake | Metal Gear Solid (PS, 1998) | `METAL_GEAR_SOLID_PS_BOX.jpg` |
-| Wii Fit Trainer | Wii Fit (Wii, 2007) | `WII_FIT_WII_BOX.jpg` |
-| Inkling | Splatoon (Wii U, 2015) | `SPLATOON_WIIU_BOX.jpg` |
-| Terry | Fatal Fury (Neo Geo, 1991) | `FATAL_FURY_NEO_BOX.jpg` |
-| Cloud + Sephiroth | Final Fantasy VII (PS, 1997) | `FF7_PS_BOX.jpg` |
-| Steve + Alex | Minecraft (PC, 2011) | `MINECRAFT_PC_BOX.jpg` |
-| Kazuya | Tekken (ARC, 1994) | `TEKKEN_ARC_BOX.jpg` |
-| Sora | Kingdom Hearts (PS2, 2002) | `KINGDOM_HEARTS_PS2_BOX.jpg` |
-| R.O.B. | Gyromite (NES, 1985) | `GYROMITE_NES_BOX.jpg` |
-| Mii Fighters | Mii Channel (Wii, 2006) | `MII_WII_BOX.jpg` |
-| Pyra + Mythra | Xenoblade Chronicles 2 (NSW, 2017) | `XC2_NSW_BOX.jpg` |
-
-**Como adicionar uma capa manualmente:**
-1. Coloque a imagem em `public/assets/games/ARQUIVO.jpg`
-2. Em `app/fighters/[slug]/page.tsx`, adicione `boxArtPath: "/assets/games/ARQUIVO.jpg"` na entrada correspondente de `FRANCHISE_ORIGIN_GAMES` ou `FIGHTER_ORIGIN_GAMES`
-
----
-
-## 8. Chronicles Box Arts
-
-### Status: 263/947 com boxArtUrl (~28%)
-- 258 válidas + passou por cleanup de falsos positivos
-- 126 entradas falharam nos 2 passes (lazy loading Wikipedia — Zelda, Kirby, Wii Sports, etc.)
-- 558 sem `wikiUrl` (precisam de wikiUrl antes de buscar imagem)
-
-### Scripts disponíveis
-```bash
-# Scraper principal (só processa entradas com wikiUrl e sem boxArtUrl):
-npx tsx --env-file=.env.local scripts/scrapers/fetch-chronicles-boxarts-v2.ts
-
-# Limpar falsos positivos após novo run:
-npx tsx --env-file=.env.local scripts/scrapers/fix-chronicles-false-positives.ts
-
-# Filtrar por console específico:
-npx tsx --env-file=.env.local scripts/scrapers/fetch-chronicles-boxarts-v2.ts --console="Nintendo 64"
-
-# Dry run (não salva no banco):
-npx tsx --env-file=.env.local scripts/scrapers/fetch-chronicles-boxarts-v2.ts --dry-run
 ```
-
-### Por que algumas falham
-Páginas como Zelda, Kirby, Wii Sports, Star Fox, Pokémon no Wikipedia carregam imagens via JavaScript (lazy loading). O `fetch` simples não consegue executar JS — seria necessário usar MediaWiki Action API (`prop=images&prop=imageinfo`) como fallback.
-
-### Entradas sem wikiUrl (558 entradas)
-Precisam ter o campo `wikiUrl` populado antes que o scraper possa buscar a imagem. Opções:
-1. Popular manualmente via admin
-2. Criar script que tenta match por `titleNtsc` → URL Wikipedia auto-gerada
-
----
-
-## 9. FighterWork — Aparições nos Jogos Smash (PENDENTE CRÍTICO)
-
-**Problema:** Apenas 9 fighters têm entradas em `FighterWork`. Os outros 78 não têm dados de em quais jogos Smash aparecem.
-
-**Impacto:** A seção de "eras" no timeline da página do fighter fica baseada apenas nos bios e troféus, não nas aparições reais.
-
-**O que precisa ser feito:**
-1. Criar um script `scripts/scrapers/populate-fighter-works.ts`
-2. Para cada fighter, criar `FighterWork` entries nos jogos Smash em que aparece
-3. Os 5 jogos Smash estão na tabela `Game` (buscar com `db.game.findMany()`)
-4. Cada fighter tem um `isDebut: true` no jogo em que estreou
-
-**Exemplo de como fazer:**
-```typescript
-// Buscar IDs dos jogos
-const games = await db.game.findMany();
-const ssb64 = games.find(g => g.titleEn.includes("64"));
-const ssbm = games.find(g => g.titleEn.includes("Melee"));
-// etc.
-
-// Mario estreou no SSB64 e aparece em todos
-await db.fighterWork.createMany({
-  data: [
-    { fighterId: marioId, gameId: ssb64.id, isDebut: true },
-    { fighterId: marioId, gameId: ssbm.id, isDebut: false },
-    // ...
-  ]
-});
+4c5cf2c feat(fighters): Works por versão do Smash — cada era mostra jogos do trofeu da era
+16814e7 feat(fighters): popula Works via CollectibleChronicleLinks dos trofeus (139 links, 66 fighters)
+b588752 feat(fighters): 681 FighterChronicleLinks — todos os lutadores com jogos de origem
+0a00bc1 feat(music): 97 faixas com URLs YouTube atualizadas (97/536)
+dd2d695 feat(chronicles): corrige Game & Watch — 57 jogos limpos
 ```
 
 ---
 
-## 10. Pendências Prioritizadas
-
-### P1 — Impacto visual imediato
-- [ ] **Capas dos origin games faltantes** (11 fighters sem imagem — lista na seção 7)
-- [ ] **Populat FighterWork** para todos os 87 fighters (seção 9)
-- [ ] **Chronicles wikiUrl** para as 558 entradas sem URL → depois rodar scraper novamente
-
-### P2 — Conteúdo
-- [ ] **ETL em massa** — bios EN + troféus + imagens para os outros 86 fighters além de Ness
-  - Script: `npx tsx --env-file=.env.local scripts/scrapers/index.ts` (orquestrador)
-  - Fonte: SSBWiki (`https://www.ssbwiki.com/Fighter_name`)
-- [ ] **Spirits no timeline** — spirits são contados mas não exibidos como conteúdo na página do fighter
-  - Atualmente só contados em `fichaCounters.spirits`
-  - Para exibir: criar `spiritsMap` análogo ao `trophiesMap` em `page.tsx` e `FighterDataZone`
-- [ ] **Stickers no timeline** — `stickersMapSerialized` está sempre vazio (bug em `page.tsx` linha ~330)
-  - Fix: popular `stickersMapSerialized` com os stickers do fighter
-
-### P3 — Produção
-- [ ] **`ANTHROPIC_API_KEY` no Vercel** — tradução PT-BR cai para EN em produção
-- [ ] **87 fighters — músicas** — `musicStatus = "pending_review"` para todos
-  - Admin em `/admin/music` para aprovar/substituir YouTube IDs
-- [ ] **Spirits 3rd party** (33 fighters) — sem página em ssbuspirits.com para Snake, Sonic, Cloud, etc.
-
----
-
-## 11. Padrões e Convenções
-
-### Scripts TypeScript
-```bash
-# SEMPRE: npx tsx  ❌ NUNCA: ts-node
-npx tsx --env-file=.env.local scripts/scrapers/meu-script.ts
-```
+## 12. Padrões Técnicos
 
 ### Rate limiting em scrapers
 ```typescript
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
-// Entre requisições:
-await sleep(1300 + Math.random() * 400);
-// A cada 30 requisições:
-await sleep(5000);
+await sleep(1600 + Math.random() * 400);  // entre requisições
+await sleep(5000);                          // a cada 30 requisições
 ```
 
-### Imagens externas no Next.js
-Domínios permitidos em `next.config.mjs`:
-- `www.ssbwiki.com` / `ssb.wiki.gallery`
-- `upload.wikimedia.org`
-- `mario.wiki.gallery`
-- `earthbound.fandom.com` / `static.wikia.nocookie.net`
-
-**Regra:** box arts de jogos usam `<img>` com `height: Xpx, width: "auto"` (preserva proporção). Renders e troféus usam `<Image>` do Next.js.
-
-### Box art — extração de Wikipedia
+### Prisma em scripts
 ```typescript
-// Converter thumbnail para full-res:
-if (imgUrl.includes("/thumb/")) {
-  imgUrl = imgUrl.replace("/thumb/", "/").replace(/\/\d+px-[^/]+$/, "");
-}
-// Filtrar falsos positivos:
-if (resolved.match(/\.svg(?:\.png)?/i)) return;
-if (resolved.match(/Cscr-|featured|cc-by|poweredby|logo/i)) return;
-```
-
-### Consultas Prisma
-```typescript
-import { db } from "@/lib/db";  // singleton
-
-// Em scripts, criar nova instância:
 import { PrismaClient } from "@prisma/client";
 const db = new PrismaClient();
 // ... usar db ...
 await db.$disconnect();
 ```
+
+### Imagens externas no Next.js (`next.config.mjs`)
+Domínios permitidos: `www.ssbwiki.com`, `ssb.wiki.gallery`, `upload.wikimedia.org`, `mario.wiki.gallery`, `earthbound.fandom.com`, `static.wikia.nocookie.net`
 
 ### Versões do Smash (smashGameVersion)
 `"SSB64"` | `"SSBM"` | `"SSBB"` | `"SSB4"` | `"SSBU"` | `"ORIGIN"`
@@ -338,66 +317,36 @@ await db.$disconnect();
 
 ---
 
-## 12. Rotas da Aplicação
+## 13. Gotchas & Armadilhas Conhecidas
 
-| Rota | Tipo | Descrição |
-|---|---|---|
-| `/` | Server | Home com busca de fighters |
-| `/fighters` | Server | Grid de todos os fighters |
-| `/fighters/[slug]` | Server | Página individual do fighter |
-| `/chronicles` | Server | Timeline de jogos Nintendo |
-| `/collectibles` | Server | Galeria de troféus/spirits/stickers |
-| `/admin/music` | Server | Admin para revisão de músicas |
-| `/api/translate` | API Route | Tradução PT-BR via Claude Haiku |
-
----
-
-## 13. Fluxo ETL para um Novo Fighter
-
-Para ingerir dados completos de um fighter (ex: Mario):
-
-```bash
-# 1. Bio + troféus + stickers (texto)
-npx tsx --env-file=.env.local scripts/scrapers/character-article.ts --fighter="Mario"
-
-# 2. Imagens (render, troféus, sprite, spirit)
-npx tsx --env-file=.env.local scripts/scrapers/fetch-images.ts --fighter="Mario"
-
-# 3. Verificar no banco
-npx tsx --env-file=.env.local -e "
-  const { PrismaClient } = require('@prisma/client');
-  const db = new PrismaClient();
-  db.fighter.findFirst({
-    where: { name: 'Mario' },
-    include: { bios: true, collectibles: true }
-  }).then(f => { console.log('bios:', f.bios.length, 'collectibles:', f.collectibles.length); db.\$disconnect(); });
-"
-```
+1. **SWC stale cache:** Erros "Unexpected token div" mesmo após fix → `Remove-Item -Recurse -Force .next` + reiniciar dev server.
+2. **`prisma generate` com server ativo:** Falha no Windows por DLL lock. Parar server primeiro.
+3. **Session Pooler obrigatório:** Conexão direta do Supabase é IPv6-only → não funciona em rede doméstica.
+4. **`ts-node` não funciona:** `tsconfig.json` usa `"module": "esnext"` que ts-node não suporta.
+5. **`ANTHROPIC_API_KEY` ausente:** Tab PT-BR fica desabilitado — comportamento esperado, não é bug.
+6. **`releaseYear` vs `releaseDateNtsc`:** no ChronicleEntry, o campo é `releaseDateNtsc` (string), não `releaseYear` (int).
+7. **GIFs no Next.js:** usar `unoptimized={true}` em `<Image>` para preservar animação.
+8. **`height: 180` fixo no EraHeader:** NUNCA usar `minHeight` — quebra o `fill` do Next.js.
 
 ---
 
-## 14. Nota sobre o Ness
+## 14. Perfil do Usuário
 
-Ness é o fighter com dados mais completos — serve como referência para todos os outros:
-- 1 sprite de origem (EarthBound)
-- 3 troféus Melee, 1 Brawl, 5 SSB4
-- 1 spirit SSBU (Spirit #563)
-- Bio EN para todas as eras (SSB64 → SSBU)
-- GIFs hardcoded em `FIGHTER_GIFS["Ness"]`
-- Tips SSBU em `lib/fighters-tips.ts`
-- `curatorOverviewEn` com texto curatorial
+- **Anderson (Crush) de Lima** — brasileiro, Git user "Anderson (Crush) de Lima"
+- Valida resultados **visualmente no browser** (localhost:3000 ou 3001)
+- Prefere **execução direta** sem excesso de perguntas
+- Tema visual: dark intenso (slate-950), acentos amber/dourado, tipografia monospace para metadados
 
 ---
 
-## 15. Problemas Conhecidos / Gotchas
+## 15. Protocolo de Handoff
 
-1. **Wikipedia lazy loading** — Zelda, Pokémon, Kirby, Metroid games não carregam imagens via fetch simples. Usar MediaWiki API (`prop=images&prop=imageinfo`) como alternativa.
-2. **Prisma em scripts Node** — usar `require('@prisma/client')` em scripts `.js` ou `import` em `.ts` com tsx.
-3. **PowerShell e colchetes** — usar `-LiteralPath` para caminhos com `[slug]`.
-4. **Supabase IPv4** — sempre Session Pooler, nunca conexão direta.
-5. **`tsx` não `ts-node`** — o tsconfig usa `"module": "esnext"` que ts-node não suporta.
-6. **`ANTHROPIC_API_KEY` no Vercel** — não está configurado, tradução PT cai para EN em produção.
+Ao terminar uma sessão:
+1. Atualizar `>Sessão` e data no topo deste arquivo
+2. Atualizar seção 9 (pendências) — marcar o que foi feito, adicionar o que surgiu
+3. Atualizar seção 4 (estado do banco) com novos counts
+4. Atualizar `APP_VERSION` em `lib/version.ts` (a cada commit)
+5. Atualizar `CONTEXT.md` (seção pendências + data)
+6. **Nunca deixar o projeto em estado quebrado**
 
----
-
-*Handoff preparado em 2026-06-06. Para dúvidas sobre decisões de design, ver `CONTEXT.md` (arquivo extenso com histórico de todas as sessões).*
+*Contexto técnico completo (histórico de sessões, UI design, padrões de layout): ver `CONTEXT.md`*

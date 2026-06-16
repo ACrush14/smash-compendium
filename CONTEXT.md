@@ -1,7 +1,7 @@
 # SmashCompendium — Contexto do Projeto
 
 > Documento vivo. Fonte única de verdade para todos os assistentes (Claude Code, Antigravity/Gemini).
-> Atualizado em: 2026-06-14 (sessão 22 — Adição das Associações Automáticas e Fix UI/TypeScript)
+> Atualizado em: 2026-06-16 (sessão 24 — Works por Era ✅ implementado e verificado; handoff Antigravity)
 
 ---
 
@@ -1569,3 +1569,65 @@ public/assets/collectibles/   # 1380+ PNGs de spirits baixados localmente — n�
 ### 28.4 Nota sobre .gitignore
 - `public/assets/games/` NÃO está no `.gitignore` — as 36 capas SERÃO commitadas
 - `public/assets/fighters/` e `public/assets/collectibles/` continuam ignorados
+
+---
+
+## 29. Sessão 23 — Works Específicos por Era (2026-06-16)
+
+### 29.1 Novo Paradigma de Exibição de Jogos de Origem (Works)
+**Problema:** Anteriormente, a seção "Works" exibia um bloco global de jogos de origem para todas as eras de um lutador. Isso era historicamente incorreto, pois os jogos associados a um personagem variam por jogo Smash. Ex: Em Melee, Yoshi está associado a "Super Mario World" e "Yoshi's Island", enquanto em Brawl ele está associado a "Yoshi's Safari" e "Yoshi's Story".
+**Solução:** O sistema agora mapeia os jogos exibidos na ficha de cada era utilizando os dados canônicos extraídos diretamente dos troféus daquele respectivo jogo Smash.
+
+### 29.2 ETL e Limpeza de Dados (FighterChronicleLink)
+- Foram identificados e removidos 681 links incorretos (amplo escopo).
+- Um novo script cruzou o esquema `Collectible` com os links (`CollectibleChronicleLink`) e populou `FighterChronicleLink` baseando-se estritamente na versão do Smash e no dono do troféu.
+- Foram criados 139 links corretos abarcando 66 lutadores. Os restantes (ex: DLC de Ultimate sem troféus) ficam sem works específicos.
+- Filtros foram aplicados no script para não incluir entradas inválidas como "JP EXCLUSIVE", "PAL EXCLUSIVE" ou jogos da própria franquia Smash, além de deduplicar títulos iguais para o mesmo lutador.
+
+### 29.3 Atualização de UI (FighterDataZone e page.tsx)
+- O componente de perfil do lutador (`page.tsx`) agora puxa e constrói a variável `worksPerGame`, agrupada por `smashGameVersion` (ex: `MELEE`, `BRAWL`, `SSB4`).
+- A interface `FighterDataZoneProps` e o componente interno `FighterDataZone.tsx` foram atualizados para renderizar condicionalmente `worksPerGame?.[gameVer] ?? originWorkGames`.
+- **Fallback:** Se uma era não possui jogos catalogados, ela exibe o conjunto geral (ex: SSB64 e Ultimate mostram o `originWorkGames` global).
+- Isso foi implementado de forma segura fora de interpolações complexas no JSX para evitar quebras do parser (SWC do Next.js).
+
+## 30. Template de Inserção Manual de Dados (Sessão 23)
+
+### 30.1 Protocolo de Curadoria (Mario ao Sora)
+Para preencher as informações específicas de cada lutador que necessitam de curadoria humana fina, o usuário proverá os textos manualmente via chat através do template abaixo. O assistente usará esses dados para atualizar o banco (tabelas `FighterBio`, `Collectible`, `FighterTip`, etc.).
+
+**Template Oficial:**
+```text
+Games (O Works que fica lá em cima)
+
+N64 Bios:
+N64 Works:
+N64 Bios JP:
+N64 Works JP:
+
+Melee Trophy:
+Melee Works:
+Melee Smash 1:
+Melee Smash 2:
+Melee Trophy JP:
+Melee Works JP:
+Melee Smash 1 JP:
+Melee Smash 2 JP:
+
+Brawl Trophy:
+Brawl Works:
+Brawl Alt:
+
+Brawl Trophy JP:
+Brawl Works JP:
+Brawl Alt JP:
+
+Smash 4 Trophy JP:
+Smash 4 Works JP:
+Smash 4 Alt JP:
+
+Ultimate Fan description:
+Ultimate Fighter Tips:
+Ultimate não tem Works.
+
+Ultimate Fighter Tips JP:
+```

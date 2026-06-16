@@ -54,7 +54,7 @@ interface CollectibleItem {
   assetRenderUrl: string | null;
 }
 
-type Tab = "overview" | "bios" | "collectibles";
+type Tab = "overview" | "bios" | "collectibles" | "constructor";
 type OverviewLang = "EN" | "PT" | "JP" | "JP+EN";
 type BioLang = "EN" | "PT" | "JP" | "JP+EN";
 type CollectibleType = "TROPHY" | "SPIRIT" | "STICKER";
@@ -488,6 +488,10 @@ function TabCollectibles({
   const [saving, setSaving]   = useState<Set<string>>(new Set());
   const [saved,  setSaved]    = useState<Set<string>>(new Set());
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null); // id do item aguardando confirmação
+  const [isCreating, setIsCreating] = useState(false);
+  const [newItem, setNewItem] = useState({
+    name: "", nameJp: "", description: "", descriptionJp: "", smashGameVersion: "SSBM", assetRenderUrl: ""
+  });
 
   const loadItems = useCallback(async (t: CollectibleType) => {
     setLoading(true);
@@ -532,6 +536,31 @@ function TabCollectibles({
       });
     } finally {
       setSaving(prev => { const n = new Set(prev); n.delete(item.id); return n; });
+    }
+  };
+
+  const handleCreate = async () => {
+    if (!newItem.name.trim()) return;
+    setSaving(prev => new Set(prev).add("new"));
+    try {
+      const res = await fetch("/api/admin/collectibles", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify({
+          ...newItem,
+          type,
+          fighterId,
+        }),
+      });
+      if (!res.ok) throw new Error("Failed to create");
+      const created = await res.json();
+      setItems(prev => [...prev, created]);
+      setIsCreating(false);
+      setNewItem({ name: "", nameJp: "", description: "", descriptionJp: "", smashGameVersion: newItem.smashGameVersion, assetRenderUrl: "" });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setSaving(prev => { const n = new Set(prev); n.delete("new"); return n; });
     }
   };
 
@@ -817,6 +846,92 @@ function TabCollectibles({
           })}
         </div>
       )}
+
+      {/* ── Add New Collectible ── */}
+      {isCreating ? (
+        <div className="mt-4 border border-cyan-500/30 p-4 bg-cyan-900/10 grid grid-cols-2 gap-4">
+          <div className="col-span-2">
+            <h4 className="text-[11px] font-mono text-cyan-400 mb-2">Novo {typeLabels[type]}</h4>
+          </div>
+          <div>
+            <label className="block text-[9px] text-slate-500 mb-1">Nome EN *</label>
+            <input
+              value={newItem.name}
+              onChange={e => setNewItem(prev => ({ ...prev, name: e.target.value }))}
+              className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[11px] px-2.5 py-1.5 focus:outline-none focus:border-cyan-500/30"
+            />
+          </div>
+          <div>
+            <label className="block text-[9px] text-slate-500 mb-1">Nome JP</label>
+            <input
+              value={newItem.nameJp}
+              onChange={e => setNewItem(prev => ({ ...prev, nameJp: e.target.value }))}
+              className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[11px] px-2.5 py-1.5 focus:outline-none focus:border-cyan-500/30"
+            />
+          </div>
+          <div className="col-span-2">
+            <label className="block text-[9px] text-slate-500 mb-1">Descrição EN</label>
+            <textarea
+              value={newItem.description}
+              onChange={e => setNewItem(prev => ({ ...prev, description: e.target.value }))}
+              rows={3}
+              className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[11px] px-2.5 py-2 focus:outline-none focus:border-cyan-500/30 resize-none"
+            />
+          </div>
+          <div className="col-span-2">
+            <label className="block text-[9px] text-slate-500 mb-1">Descrição JP</label>
+            <textarea
+              value={newItem.descriptionJp}
+              onChange={e => setNewItem(prev => ({ ...prev, descriptionJp: e.target.value }))}
+              rows={3}
+              className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[11px] px-2.5 py-2 focus:outline-none focus:border-cyan-500/30 resize-none"
+            />
+          </div>
+          <div>
+            <label className="block text-[9px] text-slate-500 mb-1">Era (Game Version)</label>
+            <select
+              value={newItem.smashGameVersion}
+              onChange={e => setNewItem(prev => ({ ...prev, smashGameVersion: e.target.value }))}
+              className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[11px] px-2.5 py-1.5 focus:outline-none focus:border-cyan-500/30"
+            >
+              <option value="SSB64">SSB64</option>
+              <option value="SSBM">SSBM</option>
+              <option value="SSBB">SSBB</option>
+              <option value="SSB4">SSB4</option>
+              <option value="SSBU">SSBU</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-[9px] text-slate-500 mb-1">Render URL</label>
+            <input
+              value={newItem.assetRenderUrl}
+              onChange={e => setNewItem(prev => ({ ...prev, assetRenderUrl: e.target.value }))}
+              className="w-full bg-[#030310] border border-white/10 text-slate-200 text-[11px] px-2.5 py-1.5 focus:outline-none focus:border-cyan-500/30"
+            />
+          </div>
+          <div className="col-span-2 flex justify-end gap-2 mt-2">
+            <button
+              onClick={() => setIsCreating(false)}
+              className="px-4 py-1.5 text-[11px] font-mono border border-white/10 text-slate-400 hover:text-slate-200 transition-all"
+            >
+              Cancelar
+            </button>
+            <SaveButton
+              state={saving.has("new") ? "saving" : "idle"}
+              onClick={handleCreate}
+              label="Criar Item"
+              disabled={!newItem.name.trim()}
+            />
+          </div>
+        </div>
+      ) : (
+        <button
+          onClick={() => setIsCreating(true)}
+          className="mt-4 w-full py-2.5 border border-dashed border-white/10 text-slate-500 hover:text-cyan-400 hover:border-cyan-500/30 text-[11px] font-mono transition-all"
+        >
+          + Adicionar novo {typeLabels[type]}
+        </button>
+      )}
     </div>
   );
 }
@@ -853,6 +968,138 @@ function SaveButton({
   );
 }
 
+// ─── Tab: Constructor ─────────────────────────────────────────────────────────
+
+function TabConstructor({ fighterId }: { fighterId: string }) {
+  const [data, setData] = useState<Record<string, string>>({});
+  const [status, setStatus] = useState<"idle"|"saving"|"saved"|"error">("idle");
+  const [result, setResult] = useState<any>(null);
+
+  const handleIngest = async () => {
+    setStatus("saving");
+    try {
+      const res = await fetch(`/api/admin/fighters/${fighterId}/template`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data }),
+      });
+      if (!res.ok) throw new Error();
+      const resData = await res.json();
+      setResult(resData.parsed);
+      setStatus("saved");
+      setData({});
+      setTimeout(() => setStatus("idle"), 3000);
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const updateField = (key: string, val: string) => setData(p => ({ ...p, [key]: val }));
+
+  const Field = ({ label, id, rows = 3 }: { label: string, id: string, rows?: number }) => (
+    <div className="mb-3">
+      <label className="block text-[10px] text-emerald-500/80 mb-1">{label}</label>
+      <textarea
+        value={data[id] ?? ""}
+        onChange={e => updateField(id, e.target.value)}
+        rows={rows}
+        className="w-full bg-[#030310] border border-emerald-500/20 text-slate-200 text-[11px] px-3 py-2 focus:outline-none focus:border-emerald-500/50 placeholder:text-slate-700 resize-y font-mono leading-relaxed"
+      />
+    </div>
+  );
+
+  return (
+    <div className="max-w-3xl mx-auto pb-10">
+      <div className="mb-4 flex items-center justify-between">
+        <h3 className="text-[11px] uppercase tracking-widest text-emerald-400 font-bold flex items-center gap-2">
+          Construtor Modular (Bulk Ingest)
+        </h3>
+      </div>
+      
+      <div className="mb-4 px-4 py-3 border border-emerald-500/15 bg-emerald-500/[0.04] text-[11px] font-mono text-emerald-600 leading-relaxed">
+        Preencha apenas os campos que desejar atualizar. Campos vazios serão ignorados.
+      </div>
+      
+      <div className="space-y-6">
+        {/* N64 */}
+        <section className="border border-emerald-500/10 p-4">
+          <h4 className="text-[12px] font-bold text-emerald-300 mb-3 border-b border-emerald-500/10 pb-2">SSB64</h4>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="N64 Bios" id="n64BiosEn" rows={4} />
+            <Field label="N64 Bios JP" id="n64BiosJp" rows={4} />
+            <Field label="N64 Works" id="n64WorksEn" rows={2} />
+            <Field label="N64 Works JP" id="n64WorksJp" rows={2} />
+          </div>
+        </section>
+
+        {/* Melee */}
+        <section className="border border-emerald-500/10 p-4">
+          <h4 className="text-[12px] font-bold text-emerald-300 mb-3 border-b border-emerald-500/10 pb-2">Melee</h4>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Melee Trophy" id="meleeTrophyEn" rows={4} />
+            <Field label="Melee Trophy JP" id="meleeTrophyJp" rows={4} />
+            <Field label="Melee Works" id="meleeWorksEn" rows={2} />
+            <Field label="Melee Works JP" id="meleeWorksJp" rows={2} />
+            <Field label="Melee Smash 1" id="meleeSmash1En" rows={3} />
+            <Field label="Melee Smash 1 JP" id="meleeSmash1Jp" rows={3} />
+            <Field label="Melee Smash 2" id="meleeSmash2En" rows={3} />
+            <Field label="Melee Smash 2 JP" id="meleeSmash2Jp" rows={3} />
+          </div>
+        </section>
+
+        {/* Brawl */}
+        <section className="border border-emerald-500/10 p-4">
+          <h4 className="text-[12px] font-bold text-emerald-300 mb-3 border-b border-emerald-500/10 pb-2">Brawl</h4>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Brawl Trophy" id="brawlTrophyEn" rows={4} />
+            <Field label="Brawl Trophy JP" id="brawlTrophyJp" rows={4} />
+            <Field label="Brawl Works" id="brawlWorksEn" rows={2} />
+            <Field label="Brawl Works JP" id="brawlWorksJp" rows={2} />
+            <Field label="Brawl Final Smash (Alt)" id="brawlAltEn" rows={3} />
+            <Field label="Brawl Final Smash JP" id="brawlAltJp" rows={3} />
+          </div>
+        </section>
+
+        {/* Smash 4 */}
+        <section className="border border-emerald-500/10 p-4">
+          <h4 className="text-[12px] font-bold text-emerald-300 mb-3 border-b border-emerald-500/10 pb-2">Smash 4</h4>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Smash 4 Trophy" id="smash4TrophyEn" rows={4} />
+            <Field label="Smash 4 Trophy JP" id="smash4TrophyJp" rows={4} />
+            <Field label="Smash 4 Works" id="smash4WorksEn" rows={2} />
+            <Field label="Smash 4 Works JP" id="smash4WorksJp" rows={2} />
+            <Field label="Smash 4 Alt" id="smash4AltEn" rows={3} />
+            <Field label="Smash 4 Alt JP" id="smash4AltJp" rows={3} />
+          </div>
+        </section>
+
+        {/* Ultimate */}
+        <section className="border border-emerald-500/10 p-4">
+          <h4 className="text-[12px] font-bold text-emerald-300 mb-3 border-b border-emerald-500/10 pb-2">Ultimate</h4>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Ultimate Fan Description (Overview EN)" id="ultimateFanEn" rows={4} />
+            <Field label="Ultimate Works" id="ultimateWorksEn" rows={2} />
+          </div>
+          <div className="grid grid-cols-2 gap-4 mt-2">
+            <Field label="Ultimate Fighter Tips" id="ultimateTipsEn" rows={10} />
+            <Field label="Ultimate Fighter Tips JP" id="ultimateTipsJp" rows={10} />
+          </div>
+        </section>
+      </div>
+      
+      <div className="flex justify-between items-center mt-6 sticky bottom-0 bg-[#040412] p-4 border-t border-emerald-500/20">
+        <div className="text-[10px] text-slate-500 font-mono">
+          {result && status === "saved" && (
+            <span className="text-emerald-400">✓ Sucesso!</span>
+          )}
+          {status === "error" && <span className="text-red-400">✗ Erro ao salvar</span>}
+        </div>
+        <SaveButton state={status} onClick={handleIngest} label="Salvar Tudo" disabled={Object.keys(data).length === 0} />
+      </div>
+    </div>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function FighterEditorPage() {
@@ -881,6 +1128,7 @@ export default function FighterEditorPage() {
     { id: "overview",     label: "Visão Geral",    icon: <ImageIcon size={11} /> },
     { id: "bios",         label: "Bios",           icon: <FileText size={11} /> },
     { id: "collectibles", label: "Colecionáveis",  icon: <Trophy size={11} /> },
+    { id: "constructor",  label: "Construtor",     icon: <RefreshCw size={11} className="text-emerald-400" /> },
   ];
 
   return (
@@ -980,6 +1228,9 @@ export default function FighterEditorPage() {
             franchiseId={fighter.franchiseId ?? fighter.franchiseObjId}
             franchiseName={fighter.franchise}
           />
+        )}
+        {tab === "constructor" && (
+          <TabConstructor fighterId={fighter.id} />
         )}
       </div>
     </div>
