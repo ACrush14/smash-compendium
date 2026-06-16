@@ -9,12 +9,13 @@ export async function PATCH(
   try {
     const { id }   = await params;
     const body     = await req.json();
-    const { wikiUrl, boxArtUrl, consoleName } = body;
+    const { wikiUrl, boxArtUrl, consoleName, titleJp } = body;
 
     const data: Record<string, string | null> = {};
     if (wikiUrl     !== undefined) data.wikiUrl     = wikiUrl     || null;
     if (boxArtUrl   !== undefined) data.boxArtUrl   = boxArtUrl   || null;
     if (consoleName !== undefined) data.consoleName = consoleName || null;
+    if (titleJp     !== undefined) data.titleJp     = titleJp     || null;
 
     const updated = await db.chronicleEntry.update({
       where: { id },

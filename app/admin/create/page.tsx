@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   Shield, Loader2, CheckCircle, Plus, Sword, Trophy, Ghost,
   Music, Layout, BookOpen, Gamepad2, ExternalLink, ChevronRight,
+  AlertCircle, Image, Globe, Languages, Save,
 } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -21,7 +22,8 @@ type EntityType =
   | "music"
   | "stage"
   | "chronicle"
-  | "franchise";
+  | "franchise"
+  | "pending";
 
 const ERA_ORDER = ["SSB64", "SSBM", "SSBB", "SSB4", "SSBU"];
 const ERA_LABEL: Record<string, string> = {
@@ -905,6 +907,256 @@ function FormFranchise({
   );
 }
 
+// ─── Form: Pending Chronicles ────────────────────────────────────────────────
+
+type PendingFilter = "all" | "noBoxArt" | "noWiki" | "noJp";
+
+interface PendingEntry {
+  id: string;
+  consoleName: string;
+  titleNtsc: string | null;
+  titleJp: string | null;
+  wikiUrl: string | null;
+  boxArtUrl: string | null;
+  releaseDateNtsc: string | null;
+}
+
+const FILTER_LABELS: Record<PendingFilter, string> = {
+  all:      "Todos",
+  noBoxArt: "Sem Box Art",
+  noWiki:   "Sem Wiki",
+  noJp:     "Sem Título JP",
+};
+
+function PendingChronicles() {
+  const [filter,  setFilter]  = useState<PendingFilter>("all");
+  const [entries, setEntries] = useState<PendingEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [edits,   setEdits]   = useState<Record<string, Partial<PendingEntry>>>({});
+  const [saving,  setSaving]  = useState<Set<string>>(new Set());
+  const [saved,   setSaved]   = useState<Set<string>>(new Set());
+
+  const fetchPending = useCallback(async (f: PendingFilter) => {
+    setLoading(true);
+    const data = await fetch(`/api/admin/chronicles/pending?filter=${f}`)
+      .then(r => r.json());
+    setEntries(data);
+    setEdits({});
+    setSaved(new Set());
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { fetchPending(filter); }, [filter, fetchPending]);
+
+  const setEdit = (id: string, field: string, val: string) =>
+    setEdits(prev => ({ ...prev, [id]: { ...prev[id], [field]: val } }));
+
+  const handleSave = async (entry: PendingEntry) => {
+    const patch = edits[entry.id] ?? {};
+    if (Object.keys(patch).length === 0) return;
+    setSaving(prev => new Set(prev).add(entry.id));
+    try {
+      await fetch(`/api/admin/chronicles/${entry.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(patch),
+      });
+      // update local state
+      setEntries(prev => prev.map(e =>
+        e.id === entry.id ? { ...e, ...patch } : e
+      ));
+      setSaved(prev => new Set(prev).add(entry.id));
+      setEdits(prev => { const n = { ...prev }; delete n[entry.id]; return n; });
+    } finally {
+      setSaving(prev => { const n = new Set(prev); n.delete(entry.id); return n; });
+    }
+  };
+
+  // decide which fields to show per filter
+  const showBoxArt = filter === "all" || filter === "noBoxArt";
+  const showWiki   = filter === "all" || filter === "noWiki";
+  const showJp     = filter === "all" || filter === "noJp";
+
+  // counts per category
+  const countNoBoxArt = entries.filter(e => !e.boxArtUrl).length;
+  const countNoWiki   = entries.filter(e => !e.wikiUrl).length;
+  const countNoJp     = entries.filter(e => !e.titleJp).length;
+
+  return (
+    <div className="space-y-4">
+      {/* Filter tabs */}
+      <div className="flex gap-1 flex-wrap">
+        {(Object.keys(FILTER_LABELS) as PendingFilter[]).map(f => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            className={`px-3 py-1 text-[10px] uppercase tracking-wider border transition-all ${
+              filter === f
+                ? "border-cyan-500/50 bg-cyan-500/10 text-cyan-300"
+                : "border-white/10 text-slate-500 hover:text-slate-300"
+            }`}
+          >
+            {FILTER_LABELS[f]}
+          </button>
+        ))}
+      </div>
+
+      {/* Stats row */}
+      {!loading && (
+        <div className="flex gap-4 text-[10px] text-slate-600">
+          <span className="flex items-center gap-1">
+            <Image size={10} className="text-amber-500" />
+            {countNoBoxArt} sem box art
+          </span>
+          <span className="flex items-center gap-1">
+            <Globe size={10} className="text-blue-500" />
+            {countNoWiki} sem wiki
+          </span>
+          <span className="flex items-center gap-1">
+            <Languages size={10} className="text-purple-500" />
+            {countNoJp} sem JP
+          </span>
+          <span className="ml-auto">{entries.length} entradas</span>
+        </div>
+      )}
+
+      {loading && (
+        <div className="flex items-center gap-2 text-slate-600 text-[12px] py-8 justify-center">
+          <Loader2 size={14} className="animate-spin" /> Carregando…
+        </div>
+      )}
+
+      {/* Entry list */}
+      {!loading && entries.map(entry => {
+        const edit     = edits[entry.id] ?? {};
+        const isSaving = saving.has(entry.id);
+        const isSaved  = saved.has(entry.id);
+        const isDirty  = Object.keys(edit).length > 0;
+
+        // resolved values (edit takes precedence over DB value)
+        const boxArt = edit.boxArtUrl  ?? entry.boxArtUrl  ?? "";
+        const wiki   = edit.wikiUrl    ?? entry.wikiUrl    ?? "";
+        const jp     = edit.titleJp    ?? entry.titleJp    ?? "";
+
+        // which fields are missing in DB (not yet saved)
+        const missingBoxArt = !entry.boxArtUrl;
+        const missingWiki   = !entry.wikiUrl;
+        const missingJp     = !entry.titleJp;
+
+        // only show this entry if it still has a missing field for the current filter
+        const visible =
+          filter === "all"      ? (missingBoxArt || missingWiki || missingJp) :
+          filter === "noBoxArt" ? missingBoxArt :
+          filter === "noWiki"   ? missingWiki :
+          missingJp;
+        if (!visible) return null;
+
+        return (
+          <div
+            key={entry.id}
+            className={`border p-3 space-y-3 transition-all ${
+              isSaved
+                ? "border-emerald-500/30 bg-emerald-500/5"
+                : isDirty
+                ? "border-cyan-500/30 bg-cyan-500/5"
+                : "border-white/[0.06] hover:border-white/10"
+            }`}
+          >
+            {/* Game header */}
+            <div className="flex items-start gap-3 justify-between">
+              <div className="min-w-0">
+                <p className="text-[12px] text-slate-200 font-bold truncate">{entry.titleNtsc}</p>
+                <p className="text-[9px] text-slate-600 truncate">{entry.consoleName}</p>
+              </div>
+              <div className="flex items-center gap-1.5 shrink-0">
+                {missingBoxArt && <span title="Sem box art"><Image size={10} className="text-amber-500/70" /></span>}
+                {missingWiki   && <span title="Sem wiki"><Globe  size={10} className="text-blue-500/70" /></span>}
+                {missingJp     && <span title="Sem título JP"><Languages size={10} className="text-purple-500/70" /></span>}
+              </div>
+            </div>
+
+            {/* Editable fields */}
+            <div className="space-y-2">
+              {showBoxArt && missingBoxArt && (
+                <div className="flex gap-2 items-center">
+                  <Image size={10} className="text-amber-500 shrink-0" />
+                  <input
+                    value={boxArt}
+                    onChange={e => setEdit(entry.id, "boxArtUrl", e.target.value)}
+                    placeholder="https://thumbnails.libretro.com/…"
+                    className="flex-1 bg-[#030310] border border-amber-500/20 text-slate-200 text-[11px] px-2 py-1 focus:outline-none focus:border-amber-500/40 placeholder:text-slate-700"
+                  />
+                  {boxArt && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={boxArt} alt="" className="w-8 h-10 object-contain border border-white/10 shrink-0" />
+                  )}
+                </div>
+              )}
+
+              {showWiki && missingWiki && (
+                <div className="flex gap-2 items-center">
+                  <Globe size={10} className="text-blue-500 shrink-0" />
+                  <input
+                    value={wiki}
+                    onChange={e => setEdit(entry.id, "wikiUrl", e.target.value)}
+                    placeholder="https://en.wikipedia.org/wiki/…"
+                    className="flex-1 bg-[#030310] border border-blue-500/20 text-slate-200 text-[11px] px-2 py-1 focus:outline-none focus:border-blue-500/40 placeholder:text-slate-700"
+                  />
+                </div>
+              )}
+
+              {showJp && missingJp && (
+                <div className="flex gap-2 items-center">
+                  <Languages size={10} className="text-purple-500 shrink-0" />
+                  <input
+                    value={jp}
+                    onChange={e => setEdit(entry.id, "titleJp", e.target.value)}
+                    placeholder="日本語タイトル"
+                    className="flex-1 bg-[#030310] border border-purple-500/20 text-slate-200 text-[11px] px-2 py-1 focus:outline-none focus:border-purple-500/40 placeholder:text-slate-700 font-sans"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Save row */}
+            {isDirty && (
+              <div className="flex justify-end">
+                <button
+                  onClick={() => handleSave(entry)}
+                  disabled={isSaving}
+                  className="flex items-center gap-1.5 px-3 py-1 text-[10px] bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 transition-all disabled:opacity-40"
+                >
+                  {isSaving
+                    ? <Loader2 size={10} className="animate-spin" />
+                    : <Save size={10} />}
+                  Salvar
+                </button>
+              </div>
+            )}
+
+            {isSaved && !isDirty && (
+              <p className="text-[10px] text-emerald-400 flex items-center gap-1">
+                <CheckCircle size={10} /> Salvo
+              </p>
+            )}
+          </div>
+        );
+      })}
+
+      {!loading && entries.filter(e =>
+        filter === "all"      ? (!e.boxArtUrl || !e.wikiUrl || !e.titleJp) :
+        filter === "noBoxArt" ? !e.boxArtUrl :
+        filter === "noWiki"   ? !e.wikiUrl :
+        !e.titleJp
+      ).length === 0 && (
+        <div className="py-8 text-center text-[12px] text-slate-600">
+          Nenhuma pendência encontrada para este filtro.
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Entity Sidebar ────────────────────────────────────────────────────────────
 
 const ENTITIES: {
@@ -920,8 +1172,9 @@ const ENTITIES: {
   { type: "sticker",   label: "Sticker",    sublabel: "collectible STICKER", icon: <Gamepad2 size={14} />, color: "text-pink-400 border-pink-500/40" },
   { type: "music",     label: "Música",     sublabel: "faixa de palco",      icon: <Music size={14} />,    color: "text-green-400 border-green-500/40" },
   { type: "stage",     label: "Palco",      sublabel: "stage / arena",       icon: <Layout size={14} />,   color: "text-orange-400 border-orange-500/40" },
-  { type: "chronicle", label: "Crônica",    sublabel: "chronicle entry",     icon: <BookOpen size={14} />, color: "text-red-400 border-red-500/40" },
-  { type: "franchise", label: "Franquia",   sublabel: "nova franquia",       icon: <Shield size={14} />,   color: "text-slate-400 border-slate-500/40" },
+  { type: "chronicle", label: "Crônica",    sublabel: "chronicle entry",     icon: <BookOpen size={14} />,     color: "text-red-400 border-red-500/40" },
+  { type: "franchise", label: "Franquia",   sublabel: "nova franquia",       icon: <Shield size={14} />,       color: "text-slate-400 border-slate-500/40" },
+  { type: "pending",   label: "Pendências", sublabel: "box art · wiki · JP", icon: <AlertCircle size={14} />, color: "text-amber-400 border-amber-500/40" },
 ];
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -1019,7 +1272,9 @@ export default function AdminCreatePage() {
             <div className={`flex items-center gap-2 mb-6 pb-4 border-b border-white/5`}>
               <span className={selected.color.split(" ")[0]}>{selected.icon}</span>
               <div>
-                <h2 className="text-base font-bold text-slate-100">Criar {selected.label}</h2>
+                <h2 className="text-base font-bold text-slate-100">
+                  {entity === "pending" ? "Pendências" : `Criar ${selected.label}`}
+                </h2>
                 <p className="text-[10px] text-slate-600">{selected.sublabel}</p>
               </div>
             </div>
@@ -1031,8 +1286,11 @@ export default function AdminCreatePage() {
               </div>
             )}
 
+            {/* Pending panel is always visible (no create-flow) */}
+            {entity === "pending" && <PendingChronicles />}
+
             {/* Form */}
-            {!justCreated && (
+            {entity !== "pending" && !justCreated && (
               <>
                 {entity === "fighter"   && (
                   <FormFighter franchises={franchises} smashGames={smashGames} onSuccess={handleSuccess} />
