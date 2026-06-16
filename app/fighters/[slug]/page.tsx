@@ -100,6 +100,11 @@ export default async function FighterPage({ params }: PageProps) {
     }),
     db.collectible.findMany({
       where: { fighter: { name: { equals: name, mode: "insensitive" } } },
+      include: {
+        chronicleLinks: {
+          include: { chronicleEntry: true },
+        },
+      },
       orderBy: [{ smashGameVersion: "asc" }, { name: "asc" }],
     }),
     db.fighter.findMany({ select: { name: true, rosterNumber: true } }),
@@ -345,6 +350,48 @@ export default async function FighterPage({ params }: PageProps) {
     wikiUrlJp:    g.wikiUrlJp,
   }));
 
+  // Works por versão do Smash (CollectibleChronicleLink agrupado por smashGameVersion)
+  const SMASH_TITLES = new Set([
+    "Super Smash Bros.", "Super Smash Bros. Melee", "Super Smash Bros. Brawl",
+    "Super Smash Bros. for Nintendo 3DS", "Super Smash Bros. for Wii U",
+    "Super Smash Bros. for Nintendo 3DS / Wii U", "Super Smash Bros. Ultimate",
+  ]);
+  function ceToWorkGame(ce: { titleNtsc: string; titleJp: string | null; consoleName: string; releaseDateNtsc: string | null; releaseDateJp: string | null; boxArtUrl: string | null; boxArtUrlJp: string | null; wikiUrl: string | null; wikiUrlJp: string | null }): WorkGame {
+    const meta = consoleMeta(ce.consoleName);
+    const na   = parseChrDate(ce.releaseDateNtsc);
+    const jp   = parseChrDate(ce.releaseDateJp);
+    const isLocal   = ce.boxArtUrl?.startsWith("/");
+    const isLocalJp = ce.boxArtUrlJp?.startsWith("/");
+    return {
+      name:         ce.titleNtsc,
+      titleJp:      ce.titleJp ?? undefined,
+      dateStr:      jp.month ? `${jp.year}.${String(jp.month).padStart(2, "0")}` : String(jp.year ?? na.year ?? ""),
+      dateStrNa:    na.month ? `${na.year}.${String(na.month).padStart(2, "0")}` : (na.year ? String(na.year) : undefined),
+      boxArtPath:   isLocal   ? (ce.boxArtUrl ?? undefined)   : undefined,
+      boxArtPathJp: isLocalJp ? (ce.boxArtUrlJp ?? undefined) : undefined,
+      badgeColor:   meta.color,
+      wikiUrl:      ce.wikiUrl ?? `https://en.wikipedia.org/wiki/${encodeURIComponent(ce.titleNtsc.replace(/\s+/g, "_"))}`,
+      wikiUrlJp:    ce.wikiUrlJp ?? undefined,
+    };
+  }
+  const worksPerGame: Record<string, WorkGame[]> = {};
+  for (const col of allCollectibles) {
+    if (!col.chronicleLinks.length) continue;
+    const ver = col.smashGameVersion;
+    const existing = worksPerGame[ver] ?? [];
+    const seenNorm = new Set(existing.map(g => g.name.toLowerCase()));
+    for (const cl of col.chronicleLinks) {
+      const ce = cl.chronicleEntry;
+      if (SMASH_TITLES.has(ce.titleNtsc)) continue;
+      if (ce.titleNtsc.includes("EXCLUSIVE")) continue;
+      const norm = ce.titleNtsc.toLowerCase();
+      if (seenNorm.has(norm)) continue;
+      seenNorm.add(norm);
+      existing.push(ceToWorkGame(ce));
+    }
+    if (existing.length) worksPerGame[ver] = existing;
+  }
+
   // Movimentos/Final Smash por era (FighterMove)
   const movesMap: Record<string, SerializedMove[]> = {};
   for (const mv of fighter.moves) {
@@ -378,6 +425,7 @@ export default async function FighterPage({ params }: PageProps) {
       spirits:  allCollectibles.filter((c) => c.type === "SPIRIT").length,
     },
     originWorkGames,
+    worksPerGame,
     movesMap,
     fightersTips: fighter.tips,
   };

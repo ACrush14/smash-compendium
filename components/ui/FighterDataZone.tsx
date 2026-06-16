@@ -77,6 +77,7 @@ export interface FighterDataZoneProps {
   appearances:       string[];
   fichaCounters:     { eras: number; trophies: number; stickers: number; spirits: number };
   originWorkGames?:  WorkGame[];
+  worksPerGame?:     Record<string, WorkGame[]>;
   movesMap?:         Record<string, SerializedMove[]>;
   fightersTips?:     FighterTip[];
   lang:              Lang;
@@ -310,7 +311,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
     fighterId,
     curatorOverviewEn, curatorOverviewJp, curatorOverviewJpEn, curatorOverviewPt,
     erasToShow, bios, trophiesMap, stickersMap, appearances, fichaCounters,
-    originWorkGames, movesMap, fightersTips, lang, setLang,
+    originWorkGames, worksPerGame, movesMap, fightersTips, lang, setLang,
   } = props;
 
   const biosMap = Object.fromEntries(bios.map((b) => [b.smashGameVersion, b]));
@@ -400,6 +401,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
             const eraMoves  = (movesMap?.[gameVer] ?? [])
               .map((mv) => ({ mv, text: getMoveText(mv, lang) }))
               .filter((x) => x.text);
+            const eraWorkGames: WorkGame[] = (worksPerGame && worksPerGame[gameVer]) ? worksPerGame[gameVer]! : (originWorkGames ?? []);
 
             return (
               <div
@@ -498,43 +500,43 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                   {/* Label Works */}
                   <span className="font-mono text-[13px] uppercase tracking-[0.2em] text-cyan-800">{t(lang, "works")}</span>
 
-                  {/* Jogos de origem com capa + data */}
-                  {originWorkGames && originWorkGames.length > 0 && (
+                  {/* Jogos de origem — específicos por era, fallback para global */}
+                  {eraWorkGames.length > 0 && (
                     <div className="flex flex-wrap gap-3">
-                      {originWorkGames.map((wg) => {
+                      {eraWorkGames.map((wg) => {
                         const useJpMode = lang === "JP" || lang === "JP_EN";
                         const title = useJpMode && wg.titleJp ? wg.titleJp : wg.name;
                         const artSrc = (useJpMode && wg.boxArtPathJp) ? wg.boxArtPathJp : wg.boxArtPath;
                         const targetUrl = useJpMode ? (wg.wikiUrlJp || wg.wikiUrl) : (wg.wikiUrl || wg.wikiUrlJp);
                         const displayDate = (!useJpMode && wg.dateStrNa) ? wg.dateStrNa : wg.dateStr;
-
                         return (
-                        <a
-                          key={wg.name}
-                          href={targetUrl || "#"}
-                          target={targetUrl ? "_blank" : undefined}
-                          rel={targetUrl ? "noopener noreferrer" : undefined}
-                          className="flex items-center gap-2.5 group hover:opacity-80 transition-opacity"
-                        >
-                          {artSrc && (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                              src={artSrc}
-                              alt={title}
-                              style={{ height: 48, width: "auto", display: "block", opacity: 0.9 }}
-                              className="border border-white/10 group-hover:border-white/30 transition-colors"
-                            />
-                          )}
-                          <div className="flex flex-col gap-0.5">
-                            <span className="font-mono text-[22px] font-semibold text-slate-200 leading-none group-hover:text-white transition-colors">
-                              {title}
-                            </span>
-                            <span className="font-mono text-[10px] leading-none" style={{ color: wg.badgeColor }}>
-                              {displayDate}
-                            </span>
-                          </div>
-                        </a>
-                      )})}
+                          <a
+                            key={wg.name}
+                            href={targetUrl || "#"}
+                            target={targetUrl ? "_blank" : undefined}
+                            rel={targetUrl ? "noopener noreferrer" : undefined}
+                            className="flex items-center gap-2.5 group hover:opacity-80 transition-opacity"
+                          >
+                            {artSrc && (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img
+                                src={artSrc}
+                                alt={title}
+                                style={{ height: 48, width: "auto", display: "block", opacity: 0.9 }}
+                                className="border border-white/10 group-hover:border-white/30 transition-colors"
+                              />
+                            )}
+                            <div className="flex flex-col gap-0.5">
+                              <span className="font-mono text-[22px] font-semibold text-slate-200 leading-none group-hover:text-white transition-colors">
+                                {title}
+                              </span>
+                              <span className="font-mono text-[10px] leading-none" style={{ color: wg.badgeColor }}>
+                                {displayDate}
+                              </span>
+                            </div>
+                          </a>
+                        );
+                      })}
                     </div>
                   )}
 
