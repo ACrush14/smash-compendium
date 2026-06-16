@@ -113,6 +113,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
       for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
+        if (!line) continue;
         if (!currentTitle) {
           currentTitle = line;
           continue;
