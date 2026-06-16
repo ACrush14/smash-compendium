@@ -87,7 +87,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
         const match = line.match(/^(\([★☆]{3}\))\s*(.*?)[:–-]\s*(.*)$/);
         if (match) {
           const title = `${match[1]} ${match[2]}`.trim();
-          const content = match[3].trim();
+          const content = (match[3] || "").trim();
           
           const existing = await db.fighterTip.findFirst({ where: { fighterId: id, titleEn: title } });
           if (existing) {
