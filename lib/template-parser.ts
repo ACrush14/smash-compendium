@@ -88,7 +88,7 @@ export function parseFighterTemplate(text: string): ParsedTemplate {
     // A key is typically followed by a colon, e.g., "N64 Bios:" or "Smash 4 Trophy :"
     const match = line.match(/^([A-Za-z0-9 ]+)\s*:/);
     if (match) {
-      const potentialKey = match[1].trim().toLowerCase();
+      const potentialKey = (match[1] || "").trim().toLowerCase();
       if (KEY_MAPPINGS[potentialKey]) {
         saveBuffer();
         currentKey = KEY_MAPPINGS[potentialKey];

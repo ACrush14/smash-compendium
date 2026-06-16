@@ -137,9 +137,11 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
       for (let i = 0; i < parsedJpTips.length; i++) {
         const jpTip = parsedJpTips[i];
-        if (allTips[i]) {
+        if (!jpTip) continue;
+        const existingTip = allTips[i];
+        if (existingTip) {
           await db.fighterTip.update({
-            where: { id: allTips[i].id },
+            where: { id: existingTip.id },
             data: { titleJp: jpTip.title, textJp: jpTip.content }
           });
         } else {
