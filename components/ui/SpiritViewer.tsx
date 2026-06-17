@@ -24,8 +24,10 @@ export interface SpiritItem {
   franchiseName: string | null;
   artCoverUrl: string | null;
   firstCoverUrl: string | null;
+  sourceCoverUrl?: string | null;
   artWikiUrl: string | null;
   firstWikiUrl: string | null;
+  sourceWikiUrl?: string | null;
   descriptionEn: string | null;
   relatedItems: RelatedItem[];
 }
@@ -347,8 +349,13 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
                       wikiUrl={current.firstWikiUrl}
                     />
                   )}
-                  {!current.spiritArtworkSource && !current.spiritFirstAppearance && current.sourceGame && (
-                    <p className="text-sm text-slate-400 italic">{current.sourceGame}</p>
+                  {current.sourceGame && current.sourceGame !== current.spiritArtworkSource && current.sourceGame !== current.spiritFirstAppearance && (
+                    <GameCard
+                      label="Origem"
+                      title={current.sourceGame}
+                      coverUrl={current.sourceCoverUrl ?? null}
+                      wikiUrl={current.sourceWikiUrl ?? null}
+                    />
                   )}
                 </div>
               )}

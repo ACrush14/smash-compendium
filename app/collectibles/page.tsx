@@ -123,8 +123,10 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       franchiseName:        item.franchise?.name       ?? null,
       artCoverUrl:          findCover(item.spiritArtworkSource   ?? null),
       firstCoverUrl:        findCover(item.spiritFirstAppearance ?? null),
+      sourceCoverUrl:       findCover(item.sourceGame            ?? null),
       artWikiUrl:           findWiki(item.spiritArtworkSource    ?? null),
       firstWikiUrl:         findWiki(item.spiritFirstAppearance  ?? null),
+      sourceWikiUrl:        findWiki(item.sourceGame             ?? null),
       descriptionEn:        item.descriptionEn                   ?? null,
       relatedItems: [
         ...(item.fighter ? [{

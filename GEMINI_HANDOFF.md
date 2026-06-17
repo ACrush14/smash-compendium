@@ -197,6 +197,12 @@ const eraWorkGames: WorkGame[] =
 
 ## 9. Pendências (por prioridade)
 
+### 🔵 PRÓXIMO — Origem, Artwork e Inspiration dos Spirits (SSBU)
+O usuário solicitou que fossem adicionadas as informações de Jogo de Origem e Jogo de Artwork Source (com as respectivas capas) nos Spirits do Ultimate a partir do número 1115 (ex: Baxter & Forthington). Além disso, pediu para extrair o campo "inspiration" de cada spirit e anotar no banco.
+- **Ação 1:** Fazer scraping ou processamento manual para preencher as origens, artwork source e inspiration dos spirits faltando.
+- **Ação 2:** Garantir que essas origens também se tornem entradas na tabela `ChronicleEntry` e sejam referenciadas nos `Collectibles` correspondentes, para aparecerem na interface da página de Coleções.
+- **Ação 3:** Buscar páginas Wiki e baixar as capas que faltam no Chronicles desses jogos específicos de origem.
+
 ### 🔵 PRÓXIMO — Music URLs (fácil, só rodar)
 ```powershell
 npx tsx --env-file=.env.local scripts/admin/replace-dead-music-urls.ts
