@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import OriginGamesPanel, { type OriginGame } from "./OriginGamesPanel";
@@ -7,6 +8,8 @@ import FighterDataZone, { type FighterDataZoneData, type Lang } from "./FighterD
 import FighterSuggestions, { type SerializedSuggestion } from "./FighterSuggestions";
 import { GAME_META } from "@/lib/smash-meta";
 import { t } from "@/lib/ui-i18n";
+
+export type TabName = "SMASH" | "ORIGINS" | "PROFILE";
 
 interface FighterHeader {
   rosterNumber:  number;
@@ -30,6 +33,7 @@ interface FighterRightPanelProps {
 }
 
 export default function FighterRightPanel({ fighterId, fighterSlug, suggestions, header, originGames, dataZone, lang, setLang, associatedCardsNode }: FighterRightPanelProps) {
+  const [activeTab, setActiveTab] = useState<TabName>("SMASH");
 
   return (
     <div
@@ -105,54 +109,79 @@ export default function FighterRightPanel({ fighterId, fighterSlug, suggestions,
             </div>
           )}
         </div>
-        <div className="mt-3 h-px bg-gradient-to-r from-cyan-500/35 via-cyan-500/10 to-transparent" />
+        
+        {/* TABS */}
+        <div className="mt-4 flex items-center gap-6 border-b border-cyan-500/10">
+          <button 
+            onClick={() => setActiveTab("SMASH")}
+            className={`pb-2 font-mono text-[11px] uppercase tracking-widest transition-colors ${activeTab === "SMASH" ? "text-cyan-400 border-b-2 border-cyan-400" : "text-cyan-900 hover:text-cyan-600"}`}
+          >
+            Série Smash
+          </button>
+          <button 
+            onClick={() => setActiveTab("ORIGINS")}
+            className={`pb-2 font-mono text-[11px] uppercase tracking-widest transition-colors ${activeTab === "ORIGINS" ? "text-cyan-400 border-b-2 border-cyan-400" : "text-cyan-900 hover:text-cyan-600"}`}
+          >
+            Aparições Originais
+          </button>
+          <button 
+            onClick={() => setActiveTab("PROFILE")}
+            className={`pb-2 font-mono text-[11px] uppercase tracking-widest transition-colors ${activeTab === "PROFILE" ? "text-cyan-400 border-b-2 border-cyan-400" : "text-cyan-900 hover:text-cyan-600"}`}
+          >
+            Perfil & Dados
+          </button>
+        </div>
       </div>
 
-      {/* ── Showcase: Jogos de Origem + Box Art do debut ──────────── */}
-      <div className="px-10 pt-8 pb-6 flex flex-col gap-6">
+      {/* ── Showcase: Jogos de Origem ──────────── */}
+      {activeTab === "ORIGINS" && (
+        <div className="px-10 pt-8 pb-6 flex flex-col gap-6">
 
-        {/* Jogos de Origem com placeholders */}
-        {originGames.length > 0 && (
-          <OriginGamesPanel games={originGames} lang={lang} />
-        )}
+          {/* Jogos de Origem com placeholders */}
+          {originGames.length > 0 && (
+            <OriginGamesPanel games={originGames} lang={lang} />
+          )}
 
-        {/* Outras aparições (Debut agora fica no EraHeader de cada era) */}
-        {header.appearances.length > 1 && (() => {
-          const rest = header.appearances.slice(1);
-          return (
-            <div className="flex flex-col gap-1.5">
-              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-cyan-700">
-                {t(lang, "alsoIn")}
-              </span>
-              <div className="flex items-center gap-1.5 flex-wrap">
-                {rest.map((ver) => {
-                  const meta = GAME_META[ver];
-                  if (!meta) return null;
-                  return (
-                    <span key={ver} className={`border px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase ${meta.color}`}>
-                      {meta.short}
-                    </span>
-                  );
-                })}
+          {/* Outras aparições */}
+          {header.appearances.length > 1 && (() => {
+            const rest = header.appearances.slice(1);
+            return (
+              <div className="flex flex-col gap-1.5">
+                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-cyan-700">
+                  {t(lang, "alsoIn")}
+                </span>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {rest.map((ver) => {
+                    const meta = GAME_META[ver];
+                    if (!meta) return null;
+                    return (
+                      <span key={ver} className={`border px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase ${meta.color}`}>
+                        {meta.short}
+                      </span>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          );
-        })()}
+            );
+          })()}
 
-        <div className="h-px bg-gradient-to-r from-cyan-500/20 via-cyan-500/8 to-transparent" />
-      </div>
+          <div className="h-px bg-gradient-to-r from-cyan-500/20 via-cyan-500/8 to-transparent" />
+        </div>
+      )}
 
       {/* ── Data Zone (controlada pelo idioma do panel) ─────────── */}
-      <FighterDataZone {...dataZone} lang={lang} setLang={setLang} />
+      <FighterDataZone {...dataZone} lang={lang} setLang={setLang} activeTab={activeTab} />
 
       {/* ── Sugestões / Comentários ────────────────────────────── */}
-      <FighterSuggestions
-        fighterId={fighterId}
-        fighterSlug={fighterSlug}
-        fighterName={header.name}
-        suggestions={suggestions}
-        validSections={header.appearances}
-      />
+      {activeTab === "PROFILE" && (
+        <FighterSuggestions
+          fighterId={fighterId}
+          fighterSlug={fighterSlug}
+          fighterName={header.name}
+          suggestions={suggestions}
+          validSections={header.appearances}
+        />
+      )}
 
       {associatedCardsNode}
 

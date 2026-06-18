@@ -1,0 +1,242 @@
+[
+  {
+    "fighter": "Mario",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "00:00:05",
+    "end": "00:00:24",
+    "gameVer": "SSBM",
+    "title": "Gameplay 1"
+  },
+  {
+    "fighter": "Mario",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "00:00:42",
+    "end": "00:01:59",
+    "gameVer": "SSBM",
+    "title": "Gameplay 2"
+  },
+  {
+    "fighter": "Dr. Mario",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "00:00:25",
+    "end": "00:00:41",
+    "gameVer": "SSBM",
+    "title": "Gameplay 1"
+  },
+  {
+    "fighter": "Ice Climbers",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "00:55:59",
+    "end": "00:56:55",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Mario",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:08:11",
+    "end": "01:08:45",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Yoshi",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:08:45",
+    "end": "01:09:20",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Donkey Kong",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:09:20",
+    "end": "01:09:56",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Link",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:09:56",
+    "end": "01:10:30",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Captain Falcon",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:10:30",
+    "end": "01:11:11",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Fox",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:11:11",
+    "end": "01:11:47",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Samus",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:11:47",
+    "end": "01:12:24",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Kirby",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:12:24",
+    "end": "01:13:02",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Ness",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:13:02",
+    "end": "01:13:37",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Pikachu",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:13:37",
+    "end": "01:14:09",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Jigglypuff",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:14:09",
+    "end": "01:14:46",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Luigi",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:14:46",
+    "end": "01:15:22",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Bowser",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:15:22",
+    "end": "01:16:01",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Peach",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:16:01",
+    "end": "01:16:35",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Zelda",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:16:35",
+    "end": "01:17:15",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Sheik",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:17:15",
+    "end": "01:17:51",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Marth",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:17:51",
+    "end": "01:18:27",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Mewtwo",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:18:27",
+    "end": "01:19:05",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Ice Climbers",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:19:05",
+    "end": "01:19:44",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Mr. Game & Watch",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:19:44",
+    "end": "01:20:23",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Dr. Mario",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:20:23",
+    "end": "01:21:00",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Young Link",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:21:00",
+    "end": "01:21:34",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Falco",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:21:34",
+    "end": "01:22:11",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Pichu",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:22:11",
+    "end": "01:22:46",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Roy",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:22:46",
+    "end": "01:23:21",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  },
+  {
+    "fighter": "Ganondorf",
+    "url": "https://www.youtube.com/watch?v=TrR2nhdzeW4",
+    "start": "01:23:21",
+    "end": "01:24:00",
+    "gameVer": "SSBM",
+    "title": "Intro"
+  }
+]

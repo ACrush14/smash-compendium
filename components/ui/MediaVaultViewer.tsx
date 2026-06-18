@@ -24,6 +24,7 @@ interface MediaVaultViewerProps {
 
 const IS_PLACEHOLDER = (t: MediaAsset["assetType"]) => t.startsWith("placeholder-");
 const IS_GIF = (url: string | null) => !!url && url.toLowerCase().endsWith(".gif");
+const IS_VIDEO = (url: string | null) => !!url && (url.toLowerCase().endsWith(".webm") || url.toLowerCase().endsWith(".mp4"));
 
 // Glow class por tipo de asset
 const ASSET_GLOW_CLASS: Partial<Record<MediaAsset["assetType"], string>> = {
@@ -123,7 +124,15 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
           )}
 
           {active && active.url ? (
-            active.href ? (
+            IS_VIDEO(active.url) ? (
+              active.href ? (
+                <a href={active.href} className="w-full h-full relative z-10 block group cursor-pointer" title={`Ver página de ${active.label}`}>
+                  <video src={active.url} autoPlay loop muted playsInline className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-300" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
+                </a>
+              ) : (
+                <video src={active.url} autoPlay loop muted playsInline className="w-full h-full object-contain object-center relative z-10" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
+              )
+            ) : active.href ? (
               <a href={active.href} className="w-full h-full relative z-10 block group cursor-pointer" title={`Ver página de ${active.label}`}>
                 <Image
                   src={active.url}
@@ -258,14 +267,22 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
                     <div className="w-3 h-px opacity-30" style={{ background: PLACEHOLDER_TAG[asset.assetType]?.color }} />
                   </div>
                 ) : asset.url ? (
-                  <Image
-                    src={asset.url}
-                    alt={asset.label}
-                    width={44}
-                    height={44}
-                    className="object-contain h-11 w-11 relative z-10"
-                    unoptimized={IS_GIF(asset.url)}
-                  />
+                  IS_VIDEO(asset.url) ? (
+                    <video
+                      src={asset.url}
+                      autoPlay loop muted playsInline
+                      className="object-cover h-11 w-11 relative z-10 pointer-events-none"
+                    />
+                  ) : (
+                    <Image
+                      src={asset.url}
+                      alt={asset.label}
+                      width={44}
+                      height={44}
+                      className="object-contain h-11 w-11 relative z-10"
+                      unoptimized={IS_GIF(asset.url)}
+                    />
+                  )
                 ) : (
                   <Package className="h-4 w-4 text-slate-700 relative z-10" strokeWidth={1} />
                 )}

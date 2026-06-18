@@ -165,8 +165,14 @@ export default async function FighterPage({ params }: PageProps) {
   const fighterGifsMap: any = {};
 
   const pushGifs = (era: string) => {
-    for (const g of fighterGifsMap[era] ?? []) {
-      vaultAssets.push({ url: g.url, label: g.label, sublabel: g.sublabel, assetType: "gif" });
+    for (const m of mediaAssets.filter((m) => m.smashGameVersion === era && m.name.includes("CLIP"))) {
+      const eraMeta = GAME_META[era];
+      vaultAssets.push({
+        url: m.assetRenderUrl!,
+        label: m.name.replace("CLIP - ", ""),
+        sublabel: `Clipe em WebM · ${eraMeta?.fullNameEn ?? era}`,
+        assetType: "gif"
+      });
     }
   };
 

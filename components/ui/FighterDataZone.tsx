@@ -82,9 +82,10 @@ export interface FighterDataZoneProps {
   fightersTips?:     FighterTip[];
   lang:              Lang;
   setLang:           (l: Lang) => void;
+  activeTab?:        "SMASH" | "ORIGINS" | "PROFILE";
 }
 
-export type FighterDataZoneData = Omit<FighterDataZoneProps, "lang" | "setLang">;
+export type FighterDataZoneData = Omit<FighterDataZoneProps, "lang" | "setLang" | "activeTab">;
 
 // ─── Language helpers ─────────────────────────────────────────────────────────
 
@@ -207,6 +208,50 @@ function EraHeader({ gameVer, isDebut, lang }: { gameVer: string; isDebut: boole
   const useJpMode = lang === "JP" || lang === "JP_EN";
   const infoUrl = useJpMode ? (meta.wikiUrlJp || meta.wikiUrlUsa) : (meta.wikiUrlUsa || meta.wikiUrlJp);
 
+  if (!isDebut) {
+    return (
+      <div className="flex items-stretch border-b border-white/5 overflow-hidden justify-between" style={{ background: meta.eraHeaderBg, height: 110 }}>
+        <a href={infoUrl || "#"} target={infoUrl ? "_blank" : undefined} rel={infoUrl ? "noopener noreferrer" : undefined} className="flex items-center gap-5 px-6 shrink-0 relative hover:brightness-125 transition-all cursor-pointer flex-1" style={{ background: meta.consoleBg }}>
+          {meta.consoleIcon && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={`/assets/consoles/${meta.consoleIcon}`} alt={meta.consoleFull} style={{ width: 80, height: 48, objectFit: "contain", filter: "brightness(0) invert(1)", opacity: 0.7 }} />
+          )}
+          <div className="flex flex-col">
+            <span className="font-black uppercase leading-none tracking-tight" style={{ color: meta.eraTextColor, fontSize: "1.8rem" }}>{meta.short}</span>
+            <span className="font-mono text-[11px] leading-none mt-1.5" style={{ color: meta.eraTextColor, opacity: 0.65 }}>{meta.year}{meta.releaseMonth ? `.${meta.releaseMonth}` : ""}</span>
+          </div>
+        </a>
+
+        <div className="flex items-end gap-px shrink-0">
+          {meta.boxArtUsa && (
+            <a href={meta.wikiUrlUsa || "#"} target="_blank" rel="noopener noreferrer" className="shrink-0 overflow-hidden border-l border-white/10 self-stretch flex items-center hover:brightness-110 transition-all cursor-pointer">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={meta.boxArtUsa} alt={`${meta.short} — Box USA`} style={{ height: 110, width: "auto", display: "block" }} />
+            </a>
+          )}
+          {meta.boxArtJp && (
+            <a href={meta.wikiUrlJp || "#"} target="_blank" rel="noopener noreferrer" className="shrink-0 overflow-hidden border-l border-white/[0.08] self-stretch flex items-center hover:brightness-110 transition-all cursor-pointer" style={{ opacity: 0.88 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={meta.boxArtJp} alt={`${meta.short} — Box JP`} style={{ height: 110, width: "auto", display: "block" }} />
+            </a>
+          )}
+          {meta.boxArtAlt && (
+            <a href={meta.wikiUrlUsa || "#"} target="_blank" rel="noopener noreferrer" className="shrink-0 overflow-hidden border-l border-white/10 self-stretch flex items-center hover:brightness-110 transition-all cursor-pointer">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={meta.boxArtAlt} alt={`${meta.short} — Box Alt`} style={{ height: 110, width: "auto", display: "block" }} />
+            </a>
+          )}
+          {meta.boxArtAltJp && (
+            <a href={meta.wikiUrlJp || "#"} target="_blank" rel="noopener noreferrer" className="shrink-0 overflow-hidden border-l border-white/[0.08] self-stretch flex items-center hover:brightness-110 transition-all cursor-pointer" style={{ opacity: 0.88 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={meta.boxArtAltJp} alt={`${meta.short} — Box Alt JP`} style={{ height: 110, width: "auto", display: "block" }} />
+            </a>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className="flex items-stretch border-b border-white/5 overflow-hidden"
@@ -311,7 +356,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
     fighterId,
     curatorOverviewEn, curatorOverviewJp, curatorOverviewJpEn, curatorOverviewPt,
     erasToShow, bios, trophiesMap, stickersMap, appearances, fichaCounters,
-    originWorkGames, worksPerGame, movesMap, fightersTips, lang, setLang,
+    originWorkGames, worksPerGame, movesMap, fightersTips, lang, setLang, activeTab = "SMASH",
   } = props;
 
   const biosMap = Object.fromEntries(bios.map((b) => [b.smashGameVersion, b]));
@@ -327,6 +372,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
 
       <LangSelector lang={lang} setLang={setLang} />
 
+      {activeTab === "PROFILE" && (
       <section>
         <div className="flex items-center gap-2 mb-4">
           <span className="h-px w-5 bg-cyan-500/35" />
@@ -381,7 +427,9 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
           </div>
         </div>
       </section>
+      )}
 
+      {activeTab === "SMASH" && (
       <section>
         <div className="flex items-center gap-2 mb-4">
           <span className="h-px w-5 bg-cyan-500/35" />
@@ -566,6 +614,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
           )}
         </div>
       </section>
+      )}
 
       <SuggestionPanel
         fighterId={fighterId}
