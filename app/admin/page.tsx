@@ -31,6 +31,10 @@ export default function AdminDashboard() {
           <h2 className="text-xl font-semibold mb-2">Create New</h2>
           <p className="text-gray-500 text-sm">Add new database entries.</p>
         </Link>
+        <Link href="/admin/timestamps" className="p-6 border border-cyan-900/40 rounded-lg hover:bg-cyan-950/40 transition-colors">
+          <h2 className="text-xl font-semibold mb-2">⏱ Timestamps</h2>
+          <p className="text-gray-500 text-sm">Revisar e corrigir timestamps de vídeo — Melee, Brawl, Smash 4.</p>
+        </Link>
       </div>
     </div>
   );
