@@ -51,7 +51,7 @@ function gameSearchTitle(entry: string): string {
 const SIDEBAR_SIZE = 14;
 
 const LOCAL_VIDEOS: Record<string, string> = {
-  SSBM: "/videos/full_video_trophies.mp4",
+  SSBM: "/videos/full_video.mp4",
   SSBB: "/videos/full_video_brawl.mp4",
   SSB4: "/videos/full_video_ssb4_wiiu.mp4",
   SSB4_WIIU: "/videos/full_video_ssb4_wiiu.mp4",
