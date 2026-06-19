@@ -57,6 +57,9 @@ temp_urls.txt
 user_youtube.txt
 teste_*.jpg
 
+# CSVs exportados (gerados pelo export-timestamps-csv.ts)
+timestamps-*.csv
+
 # pastas de rascunho
 scratch/
 .vscode/
