@@ -73,6 +73,11 @@ model FighterBio {
   contentJp           String? @db.Text
   contentJpTranslated String? @db.Text  // deprecated — mantido para compat
   contentJpEn         String? @db.Text
+  
+  // Timestamps do vídeo de perfil (ex: Smash 64 Profiles, Melee ZoomZike, etc)
+  videoStartSec       Int?
+  videoEndSec         Int?
+
   fighter             Fighter @relation(fields: [fighterId], references: [id], onDelete: Cascade)
 
   @@unique([fighterId, smashGameVersion])
@@ -101,6 +106,10 @@ model Collectible {
   posicaoTrofeuBrawl Int?
   posicaoTrofeuSsb4  Int?
   posicaoSpiritSsbu  Int?
+  // Timestamps do vídeo de galeria
+  videoStartSec      Int?
+  videoEndSec        Int?
+  curationStatus     String   @default("pending_review")
   // Spirit metadata (fonte: ssbuspirits.com)
   spiritFirstAppearance String?       // Jogo de primeira aparição do personagem, ex: "EarthBound (1994)"
   spiritArtworkSource   String?       // Jogo de origem da artwork do spirit, ex: "Mario Party 10 (2015)"

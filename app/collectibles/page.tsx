@@ -174,7 +174,15 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       orderBy: [{ posicaoTrofeuMelee: "asc" }, { posicaoTrofeuBrawl: "asc" }, { posicaoTrofeuSsb4: "asc" }, { name: "asc" }],
       include: {
         franchise: { select: { svgIconUrl: true, name: true } },
-        fighter: { select: { id: true, name: true, imageUrl: true } },
+        fighter: {
+          select: {
+            id: true, name: true, imageUrl: true,
+            bios: {
+              where: { smashGameVersion: 'SSBM' },
+              select: { videoStartSec: true, videoEndSec: true },
+            },
+          },
+        },
         relationsFrom: {
           include: { to: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
         },
@@ -223,6 +231,10 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       franchiseId:      t.franchiseId           ?? null,
       franchiseName:    t.franchise?.name       ?? null,
       smashGameVersion: t.smashGameVersion,
+      videoStartSec:             t.videoStartSec                    ?? null,
+      videoEndSec:               t.videoEndSec                      ?? null,
+      fighterBioVideoStartSec:   t.fighter?.bios?.[0]?.videoStartSec ?? null,
+      fighterBioVideoEndSec:     t.fighter?.bios?.[0]?.videoEndSec   ?? null,
       relatedItems: [
         ...(t.fighter ? [{
           id: t.fighter.id, name: t.fighter.name, smashGameVersion: "SSBU",

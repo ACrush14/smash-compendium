@@ -38,4 +38,28 @@ figma-plugin-smash.js
 scripts/append-context.js
 scripts/append-context-2.js
 
+# vídeos locais (grandes demais para git — hospedar no Supabase Storage)
+public/videos/
+*.mp4
+*.mp4.part
+
+# frames temporários do OCR
+temp_*_frames/
+temp_clip*
+
+# WebM de troféus/lutadores (idem — Supabase Storage)
+public/assets/media/
+
+# arquivos de dados gerados por OCR/scripts
+*-timestamps.json
+eng.traineddata
+temp_urls.txt
+user_youtube.txt
+teste_*.jpg
+
+# pastas de rascunho
+scratch/
+.vscode/
+"Super Smash Bros Brawl All Trophies Retrospective HD Remastered/"
+
 .vercel

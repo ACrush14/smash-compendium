@@ -195,6 +195,42 @@ const eraWorkGames: WorkGame[] =
 
 ---
 
+## 8.5 Pipeline de Clipes WebM 360° (iniciado 2026-06-19)
+
+Cada troféu do Melee, Brawl e SSB4 deve ter um clipe WebM em loop seamless de 360° para exibir na página de coleções e na página do lutador.
+
+### Fontes de vídeo
+| Jogo | URL | Arquivo local | Status |
+|---|---|---|---|
+| Melee (293) | — | `full_video_trophies.mp4` | ✅ Vídeo disponível |
+| Brawl (544) | https://www.youtube.com/watch?v=vBjfzgulIRQ | `full_video_brawl.mp4` | ⏳ Download em andamento |
+| SSB4 Wii U | https://www.youtube.com/watch?v=Zy4tT1KMZs8 | — | ⬜ Na fila após Brawl |
+| SSB4 3DS | https://www.youtube.com/watch?v=dry8MwgOswI | — | ⬜ Na fila após Brawl |
+
+### Status por jogo
+
+**Melee:** timestamps anotados **manualmente** pelo usuário no Google Sheets.
+- ⬜ Exportar JSON do Sheets → FFmpeg → 293 WebM
+
+**Brawl:** automação via OCR.
+- ✅ `scripts/admin/auto-timestamp-brawl.ts` criado (tesseract.js, 4 workers)
+- FFmpeg faz crop `x=900,y=0,w=1000,h=250` (top-right onde fica o nome do troféu)
+- Fuzzy match Levenshtein contra nomes do banco (`smashGameVersion: 'SSBB'`, ordem `posicaoTrofeuBrawl`)
+- Output: `brawl-timestamps.json`
+- ⬜ Baixar vídeo (yt-dlp com bloqueios; alternativa: JDownloader / 4K Video Downloader)
+- ⬜ Rodar OCR → revisar JSON → `extract-360-brawl.ts` → 544 WebM
+
+**SSB4 Wii U + 3DS:** mesmo pipeline do Brawl — na fila.
+
+### Pendente de schema
+```prisma
+// Adicionar em Collectible:
+clip360Url String?  // WebM de 360° em loop
+```
+Usar `$executeRawUnsafe` (NUNCA `prisma migrate dev`). Depois popular + UI no TrophyViewer.
+
+---
+
 ## 9. Pendências (por prioridade)
 
 ### 🔵 PRÓXIMO — Origem, Artwork e Inspiration dos Spirits (SSBU)
@@ -254,6 +290,18 @@ Criadas pelo works populator automaticamente. Precisam de curadoria manual.
 
 ### P2 — CollectibleRelation (tabela vazia)
 Tabela existe mas está vazia. Linkar troféus cross-game (ex: Lakitu Melee → Lakitu Brawl).
+
+### P2 — Clipes WebM 360° (pipeline completo)
+Ver seção 8.5. Ordem: Melee → Brawl → SSB4. Schema + UI ainda a fazer.
+
+### P2 — Requisitos RF não implementados (levantado 2026-06-19)
+Com base na planilha de requisitos funcionais (RF01–RF05):
+- **RF02 — Filtros na `/fighters`**: filtro por era (SSB64/Melee/Brawl/SSB4/SSBU) e por franquia — não implementados
+- **RF05 — 8 itens relacionados por colecionável**: tabela `CollectibleRelation` completamente vazia
+- **Design — Música persistente entre páginas**: player atual só existe na página do fighter; RF pede fundo global no site
+- **Songs — Página pública `/music`**: existe `/admin/music` (aprovação) mas não página pública de músicas
+- **RF01 — Asset aleatório na home**: verificar se a home exibe algum asset aleatório; se não, implementar
+- **Design — Mobile responsivo 1080p**: não testado/implementado
 
 ### P3 — curatorOverview por fighter
 Texto editorial por fighter (apenas Mario tem). ~90 fighters sem.

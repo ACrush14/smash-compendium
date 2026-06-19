@@ -25,6 +25,7 @@
     "next": "^14.2.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "tesseract.js": "^7.0.0",
     "ytsr": "^3.8.4"
   },
   "devDependencies": {

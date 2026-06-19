@@ -292,10 +292,13 @@ export default async function FighterPage({ params }: PageProps) {
     contentJp:           b.contentJp,
     contentJpEn:         b.contentJpEn,
     contentJpTranslated: b.contentJpTranslated,
+    videoStartSec:       b.videoStartSec,
+    videoEndSec:         b.videoEndSec,
   }));
 
-  const serializeCollectible = (c: { id: string; name: string; nameJp?: string | null; description?: string | null; descriptionPt?: string | null; descriptionJp?: string | null; descriptionJpEn?: string | null; smashGameVersion: string; sourceType: string; assetRenderUrl?: string | null; }): SerializedCollectible => ({
+  const serializeCollectible = (c: { id: string; name: string; nameJp?: string | null; description?: string | null; descriptionPt?: string | null; descriptionJp?: string | null; descriptionJpEn?: string | null; smashGameVersion: string; sourceType: string; assetRenderUrl?: string | null; videoStartSec?: number | null; videoEndSec?: number | null; }): SerializedCollectible => ({
     id: c.id, name: c.name, nameJp: c.nameJp ?? null, description: c.description ?? null, descriptionPt: c.descriptionPt ?? null, descriptionJp: c.descriptionJp ?? null, descriptionJpEn: c.descriptionJpEn ?? null, smashGameVersion: c.smashGameVersion, sourceType: c.sourceType, assetRenderUrl: c.assetRenderUrl ?? null,
+    videoStartSec: c.videoStartSec ?? null, videoEndSec: c.videoEndSec ?? null,
   });
 
   const trophiesMapSerialized: Record<string, SerializedCollectible[]> = {};
@@ -396,6 +399,26 @@ export default async function FighterPage({ params }: PageProps) {
       existing.push(ceToWorkGame(ce));
     }
     if (existing.length) worksPerGame[ver] = existing;
+  }
+
+  // Hardcoded SSB64 Works based on the in-game Smash 64 character profile videos
+  const SSB64_WORKS: Record<string, { title: string; console: string }[]> = {
+    "Mario": [
+      { title: "Super Mario Bros.", console: "Nintendo Entertainment System" },
+      { title: "Super Mario Kart", console: "Super Nintendo Entertainment System" },
+      { title: "Mario Kart 64", console: "Nintendo 64" },
+    ],
+  };
+
+  if (SSB64_WORKS[fighter.name]) {
+    const list = SSB64_WORKS[fighter.name]!;
+    const worksEntries = await db.chronicleEntry.findMany({
+      where: {
+        OR: list.map(item => ({ titleNtsc: item.title, consoleName: item.console }))
+      }
+    });
+    const sorted = list.map(item => worksEntries.find(ce => ce.titleNtsc === item.title && ce.consoleName === item.console)).filter(Boolean) as any[];
+    worksPerGame["SSB64"] = sorted.map(ce => ceToWorkGame(ce));
   }
 
   // Movimentos/Final Smash por era (FighterMove)

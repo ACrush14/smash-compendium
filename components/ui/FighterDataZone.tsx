@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { GAME_META } from "@/lib/smash-meta";
 import SuggestionPanel from "@/components/ui/SuggestionPanel";
+import LocalVideoGif from "@/components/ui/LocalVideoGif";
 import { t } from "@/lib/ui-i18n";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -26,6 +27,8 @@ export interface SerializedBio {
   contentJp:           string | null;
   contentJpEn:         string | null;
   contentJpTranslated: string | null;
+  videoStartSec?:      number | null;
+  videoEndSec?:        number | null;
 }
 
 export interface SerializedMove {
@@ -49,6 +52,8 @@ export interface SerializedCollectible {
   smashGameVersion: string;
   sourceType:       string;
   assetRenderUrl?:  string | null;
+  videoStartSec?:   number | null;
+  videoEndSec?:     number | null;
 }
 
 export interface WorkGame {
@@ -439,17 +444,32 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
         </div>
 
         <div className="flex flex-col gap-3">
-          {erasToShow.map((gameVer) => {
+          {erasToShow.map((gameVer, index) => {
+            const LOCAL_VIDEOS: Record<string, string> = {
+              SSB64: "/videos/full_SSB64_video.mp4",
+              SSBM: "/videos/full_video.mp4",
+            };
+
+            const TROPHY_LOCAL_VIDEOS: Record<string, string> = {
+              SSBM: "/videos/full_video_trophies.mp4",
+              SSBB: "/videos/full_video_brawl.mp4",
+              SSB4: "/videos/full_video_ssb4_wiiu.mp4",
+            };
+
             const meta      = GAME_META[gameVer];
             const bio       = biosMap[gameVer] ?? null;
             const eraTrophy = trophiesMap[gameVer] ?? [];
             const eraStic   = stickersMap[gameVer] ?? [];
-            const isDebut   = appearances[0] === gameVer;
+            const isDebut   = index === 0;
             const bioText   = getBioText(bio, lang);
             const eraMoves  = (movesMap?.[gameVer] ?? [])
               .map((mv) => ({ mv, text: getMoveText(mv, lang) }))
               .filter((x) => x.text);
             const eraWorkGames: WorkGame[] = (worksPerGame && worksPerGame[gameVer]) ? worksPerGame[gameVer]! : (originWorkGames ?? []);
+
+            const mainTrophyWithVideo = 
+              eraTrophy.find(t => t.name === meta?.short && t.videoStartSec != null && t.videoEndSec != null) || 
+              eraTrophy.find(t => t.videoStartSec != null && t.videoEndSec != null);
 
             return (
               <div
@@ -460,6 +480,24 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                 <EraHeader gameVer={gameVer} isDebut={isDebut} lang={lang} />
 
                 <div className="px-6 pt-5 pb-4">
+                  {bio?.videoStartSec != null && bio?.videoEndSec != null && LOCAL_VIDEOS[gameVer] ? (
+                    <div className="relative w-full aspect-video flex justify-center mb-5 rounded-xl overflow-hidden border border-cyan-500/20 shadow-xl bg-black/50">
+                      <LocalVideoGif
+                        src={LOCAL_VIDEOS[gameVer]}
+                        startSec={bio.videoStartSec}
+                        endSec={bio.videoEndSec}
+                      />
+                    </div>
+                  ) : mainTrophyWithVideo && TROPHY_LOCAL_VIDEOS[gameVer] ? (
+                    <div className="relative w-full aspect-video flex justify-center mb-5 rounded-xl overflow-hidden border border-cyan-500/20 shadow-xl bg-black/50">
+                      <LocalVideoGif
+                        src={TROPHY_LOCAL_VIDEOS[gameVer]}
+                        startSec={mainTrophyWithVideo.videoStartSec!}
+                        endSec={mainTrophyWithVideo.videoEndSec!}
+                      />
+                    </div>
+                  ) : null}
+
                   {gameVer === "SSB64" && (
                     <span className="font-mono text-[11px] uppercase tracking-[0.25em] block mb-3" style={{ color: `${meta?.eraTextColor}80` }}>
                       {t(lang, "bios")}

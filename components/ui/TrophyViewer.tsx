@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 import AssociatedCards from "./AssociatedCards";
+import LocalVideoGif from "./LocalVideoGif";
 
 export interface ChronicleLink {
   id:         string;
@@ -26,6 +27,10 @@ export interface TrophyItem {
   franchiseId:      string | null;
   franchiseName:    string | null;
   smashGameVersion: string;
+  videoStartSec?:           number | null;
+  videoEndSec?:             number | null;
+  fighterBioVideoStartSec?: number | null;
+  fighterBioVideoEndSec?:   number | null;
   relatedItems:     RelatedItem[];
   chronicleLinks:   ChronicleLink[];
 }
@@ -44,6 +49,14 @@ function gameSearchTitle(entry: string): string {
 }
 
 const SIDEBAR_SIZE = 14;
+
+const LOCAL_VIDEOS: Record<string, string> = {
+  SSBM: "/videos/full_video_trophies.mp4",
+  SSBB: "/videos/full_video_brawl.mp4",
+  SSB4: "/videos/full_video_ssb4_wiiu.mp4",
+  SSB4_WIIU: "/videos/full_video_ssb4_wiiu.mp4",
+  SSB4_3DS: "/videos/full_video_ssb4_3ds.mp4",
+};
 
 interface Props {
   trophies:     TrophyItem[];
@@ -356,6 +369,42 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
                 ) : (
                   <span className="text-5xl opacity-10 relative z-10">?</span>
                 )}
+              </div>
+            )}
+
+            {/* Vídeo 360 do troféu se existir (WebM) */}
+            {displayed.assetRender2Url && displayed.assetRender2Url.endsWith('.webm') && (
+              <div className="relative w-full max-w-[360px] md:max-w-[440px] h-auto flex justify-center mt-2 mb-2">
+                <video 
+                  src={displayed.assetRender2Url} 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-full h-auto object-contain rounded-xl border-2 border-vault-accent/40 shadow-xl shadow-vault-accent/20 bg-slate-900/50"
+                />
+              </div>
+            )}
+
+            {/* Local Video Player — trophy rotation (Melee: full_video_trophies.mp4; outros jogos: video do jogo) */}
+            {(() => {
+              const videoSrc = LOCAL_VIDEOS[displayed.smashGameVersion];
+              if (displayed.videoStartSec == null || displayed.videoEndSec == null || !videoSrc) return null;
+              return (
+                <div className="relative w-full aspect-video flex justify-center mt-6 rounded-xl overflow-hidden border border-cyan-500/20 shadow-xl bg-black/50">
+                  <LocalVideoGif src={videoSrc} startSec={displayed.videoStartSec} endSec={displayed.videoEndSec} />
+                </div>
+              );
+            })()}
+
+            {/* Melee only: ZoomZike fighter showcase (full_video.mp4), quando o troféu é de um lutador */}
+            {displayed.smashGameVersion === "SSBM" && displayed.fighterBioVideoStartSec != null && displayed.fighterBioVideoEndSec != null && (
+              <div className="relative w-full aspect-video flex justify-center mt-3 rounded-xl overflow-hidden border border-vault-accent/20 shadow-xl bg-black/50">
+                <LocalVideoGif
+                  src="/videos/full_video.mp4"
+                  startSec={displayed.fighterBioVideoStartSec}
+                  endSec={displayed.fighterBioVideoEndSec}
+                />
               </div>
             )}
 
