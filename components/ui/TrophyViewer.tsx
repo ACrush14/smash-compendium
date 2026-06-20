@@ -397,8 +397,8 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
               );
             })()}
 
-            {/* Melee only: ZoomZike fighter showcase, quando o troféu é de um lutador */}
-            {displayed.smashGameVersion === "SSBM" && displayed.fighterBioVideoStartSec != null && displayed.fighterBioVideoEndSec != null && (
+            {/* Melee only: ZoomZike fighter showcase — só exibe se o troféu não tem timestamp próprio */}
+            {displayed.smashGameVersion === "SSBM" && displayed.videoStartSec == null && displayed.fighterBioVideoStartSec != null && displayed.fighterBioVideoEndSec != null && (
               <div className="relative w-full aspect-video flex justify-center mt-3 rounded-xl overflow-hidden border border-vault-accent/20 shadow-xl bg-black/50">
                 <LocalVideoGif
                   src="/videos/full_video_Zoomzike.mp4"
