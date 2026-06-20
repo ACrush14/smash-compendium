@@ -38,7 +38,7 @@ export default async function TimestampAdminPage() {
     {
       key: 'melee-trophies',
       label: 'Melee — Troféus',
-      videoSrc: '/videos/full_video.mp4',
+      videoSrc: '/videos/full_video_Zoomzike.mp4',
       entries: meleeTrophies.map(t => ({
         id: t.id, name: t.name, position: t.posicaoTrofeuMelee,
         videoStartSec: t.videoStartSec, videoEndSec: t.videoEndSec,
@@ -48,7 +48,7 @@ export default async function TimestampAdminPage() {
     {
       key: 'melee-fighters',
       label: 'Melee — Lutadores',
-      videoSrc: '/videos/full_video.mp4',
+      videoSrc: '/videos/full_video_Zoomzike.mp4',
       entries: meleeBios.map(b => ({
         id: b.id, name: b.fighter?.name ?? '?', position: null,
         videoStartSec: b.videoStartSec, videoEndSec: b.videoEndSec,

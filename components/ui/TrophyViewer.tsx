@@ -51,7 +51,7 @@ function gameSearchTitle(entry: string): string {
 const SIDEBAR_SIZE = 14;
 
 const LOCAL_VIDEOS: Record<string, string> = {
-  SSBM: "/videos/full_video.mp4",
+  SSBM: "/videos/full_video_Zoomzike.mp4",
   SSBB: "/videos/full_video_brawl.mp4",
   SSB4: "/videos/full_video_ssb4_wiiu.mp4",
   SSB4_WIIU: "/videos/full_video_ssb4_wiiu.mp4",
@@ -397,11 +397,11 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
               );
             })()}
 
-            {/* Melee only: ZoomZike fighter showcase (full_video.mp4), quando o troféu é de um lutador */}
+            {/* Melee only: ZoomZike fighter showcase, quando o troféu é de um lutador */}
             {displayed.smashGameVersion === "SSBM" && displayed.fighterBioVideoStartSec != null && displayed.fighterBioVideoEndSec != null && (
               <div className="relative w-full aspect-video flex justify-center mt-3 rounded-xl overflow-hidden border border-vault-accent/20 shadow-xl bg-black/50">
                 <LocalVideoGif
-                  src="/videos/full_video.mp4"
+                  src="/videos/full_video_Zoomzike.mp4"
                   startSec={displayed.fighterBioVideoStartSec}
                   endSec={displayed.fighterBioVideoEndSec}
                 />

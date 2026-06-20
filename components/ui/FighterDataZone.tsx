@@ -447,11 +447,11 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
           {erasToShow.map((gameVer, index) => {
             const LOCAL_VIDEOS: Record<string, string> = {
               SSB64: "/videos/full_SSB64_video.mp4",
-              SSBM: "/videos/full_video.mp4",
+              SSBM: "/videos/full_video_Zoomzike.mp4",
             };
 
             const TROPHY_LOCAL_VIDEOS: Record<string, string> = {
-              SSBM: "/videos/full_video_trophies.mp4",
+              SSBM: "/videos/full_video_Zoomzike.mp4",
               SSBB: "/videos/full_video_brawl.mp4",
               SSB4: "/videos/full_video_ssb4_wiiu.mp4",
             };
