@@ -66,3 +66,6 @@ scratch/
 "Super Smash Bros Brawl All Trophies Retrospective HD Remastered/"
 
 .vercel
+
+# Google Service Account (credenciais sensíveis — nunca commitar)
+google-service-account.json
