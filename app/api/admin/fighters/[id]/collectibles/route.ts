@@ -19,12 +19,14 @@ export async function GET(
       smashGameVersion: true,
       name: true,
       nameJp: true,
-      description: true,        // EN — campo principal
+      description: true,
       descriptionPt: true,
       descriptionJp: true,
       descriptionJpEn: true,
       assetRenderUrl: true,
       orderIndex: true,
+      videoStartSec: true,
+      videoEndSec: true,
     },
   });
 

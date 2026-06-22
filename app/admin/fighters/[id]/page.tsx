@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowLeft, Save, Loader2, CheckCircle, ChevronDown, ChevronUp,
-  Music, Image as ImageIcon, FileText, Trophy, ExternalLink, RefreshCw,
+  Music, Image as ImageIcon, FileText, Trophy, ExternalLink, RefreshCw, Package,
 } from "lucide-react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -54,7 +54,7 @@ interface CollectibleItem {
   assetRenderUrl: string | null;
 }
 
-type Tab = "overview" | "bios" | "collectibles" | "constructor";
+type Tab = "overview" | "bios" | "collectibles" | "order" | "constructor";
 type OverviewLang = "EN" | "PT" | "JP" | "JP+EN";
 type BioLang = "EN" | "PT" | "JP" | "JP+EN";
 type CollectibleType = "TROPHY" | "SPIRIT" | "STICKER";
@@ -1100,6 +1100,189 @@ function TabConstructor({ fighterId }: { fighterId: string }) {
   );
 }
 
+// ─── Tab: Order ───────────────────────────────────────────────────────────────
+
+interface OrderItem {
+  id: string;
+  name: string;
+  smashGameVersion: string;
+  type: string;
+  assetRenderUrl: string | null;
+  videoStartSec: number | null;
+  videoEndSec: number | null;
+}
+
+const ORDER_GAMES = [
+  { key: "SSBM", label: "Melee (2001)", color: "text-indigo-400 border-indigo-500/40" },
+  { key: "SSBB", label: "Brawl (2008)", color: "text-emerald-400 border-emerald-500/40" },
+  { key: "SSB4", label: "Smash 4 (2014)", color: "text-red-400 border-red-500/40" },
+] as const;
+
+function TabOrder({ fighterId }: { fighterId: string }) {
+  const [groups, setGroups] = useState<Record<string, OrderItem[]>>({});
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState<Record<string, boolean>>({});
+  const [saved, setSaved]   = useState<Record<string, boolean>>({});
+  const dragItem  = useRef<{ game: string; index: number } | null>(null);
+  const dragOver  = useRef<{ game: string; index: number } | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    Promise.all(
+      ORDER_GAMES.map(g =>
+        fetch(`/api/admin/fighters/${fighterId}/collectibles?type=TROPHY`)
+          .then(r => r.json())
+          .then((items: OrderItem[]) => [g.key, items.filter(i => i.smashGameVersion === g.key)] as const)
+      )
+    ).then(results => {
+      const map: Record<string, OrderItem[]> = {};
+      for (const [key, items] of results) map[key] = items;
+      setGroups(map);
+      setLoading(false);
+    });
+  }, [fighterId]);
+
+  const handleDragStart = (game: string, index: number) => {
+    dragItem.current = { game, index };
+  };
+
+  const handleDragEnter = (game: string, index: number) => {
+    dragOver.current = { game, index };
+  };
+
+  const handleDrop = (game: string) => {
+    if (!dragItem.current || !dragOver.current) return;
+    if (dragItem.current.game !== game || dragOver.current.game !== game) return;
+
+    const fromIdx = dragItem.current.index;
+    const toIdx   = dragOver.current.index;
+    if (fromIdx === toIdx) return;
+
+    setGroups(prev => {
+      const list = [...(prev[game] ?? [])];
+      const [moved] = list.splice(fromIdx, 1);
+      if (moved) list.splice(toIdx, 0, moved);
+      return { ...prev, [game]: list };
+    });
+
+    dragItem.current  = null;
+    dragOver.current  = null;
+  };
+
+  const saveOrder = async (game: string) => {
+    const ids = (groups[game] ?? []).map(i => i.id);
+    setSaving(p => ({ ...p, [game]: true }));
+    try {
+      await fetch(`/api/admin/fighters/${fighterId}/reorder-collectibles`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ game, ids }),
+      });
+      setSaved(p => ({ ...p, [game]: true }));
+      setTimeout(() => setSaved(p => ({ ...p, [game]: false })), 2200);
+    } finally {
+      setSaving(p => ({ ...p, [game]: false }));
+    }
+  };
+
+  if (loading) return (
+    <div className="flex items-center justify-center py-16 text-slate-600 gap-2">
+      <Loader2 size={14} className="animate-spin" /> Carregando…
+    </div>
+  );
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-8">
+      <p className="text-[11px] text-slate-500 border border-white/5 px-4 py-3 bg-white/[0.02]">
+        Arraste os troféus para definir a ordem de exibição na página pública.
+        A ordem salva aqui controla tanto a coluna direita (lista de troféus) quanto a esquerda (carrossel de mídia).
+      </p>
+
+      {ORDER_GAMES.map(({ key, label, color }) => {
+        const items = groups[key] ?? [];
+        const isSaving = saving[key];
+        const isSaved  = saved[key];
+
+        return (
+          <section key={key} className={`border ${color} border-l-2 border-t border-r border-b border-opacity-30`}
+            style={{ borderColor: undefined }}
+          >
+            <div className={`flex items-center justify-between px-4 py-2.5 border-b border-white/5`}>
+              <span className={`font-mono text-[11px] font-bold uppercase tracking-widest ${color.split(" ")[0]}`}>
+                {label}
+                <span className="ml-2 text-slate-600 font-normal">{items.length} troféus</span>
+              </span>
+              <button
+                onClick={() => saveOrder(key)}
+                disabled={isSaving}
+                className={`flex items-center gap-1.5 px-3 py-1 text-[10px] font-mono border transition-all disabled:opacity-40 ${
+                  isSaved
+                    ? "border-emerald-500/50 text-emerald-400 bg-emerald-500/10"
+                    : "border-cyan-500/40 text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20"
+                }`}
+              >
+                {isSaving ? <Loader2 size={10} className="animate-spin" /> : isSaved ? <CheckCircle size={10} /> : <Save size={10} />}
+                {isSaved ? "Salvo!" : "Salvar ordem"}
+              </button>
+            </div>
+
+            {items.length === 0 ? (
+              <div className="px-4 py-6 text-[11px] text-slate-600 text-center">Nenhum troféu vinculado.</div>
+            ) : (
+              <div className="p-3 flex flex-col gap-1.5"
+                onDragOver={(e) => e.preventDefault()}
+              >
+                {items.map((item, index) => (
+                  <div
+                    key={item.id}
+                    draggable
+                    onDragStart={() => handleDragStart(key, index)}
+                    onDragEnter={() => handleDragEnter(key, index)}
+                    onDragEnd={() => handleDrop(key)}
+                    className="flex items-center gap-3 px-3 py-2 border border-white/5 bg-[#06061a] cursor-grab active:cursor-grabbing hover:border-white/10 transition-all select-none"
+                  >
+                    {/* Drag handle */}
+                    <span className="text-slate-600 text-[14px] flex-shrink-0 leading-none">⠿</span>
+
+                    {/* Position badge */}
+                    <span className="font-mono text-[10px] text-slate-600 w-5 text-right flex-shrink-0">
+                      {index + 1}
+                    </span>
+
+                    {/* Thumbnail */}
+                    {item.assetRenderUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={item.assetRenderUrl}
+                        alt=""
+                        className="w-9 h-9 object-contain flex-shrink-0"
+                      />
+                    ) : (
+                      <div className="w-9 h-9 border border-white/5 flex items-center justify-center flex-shrink-0">
+                        <Package size={14} className="text-slate-700" />
+                      </div>
+                    )}
+
+                    {/* Name */}
+                    <span className="text-[12px] text-slate-300 flex-1 min-w-0 truncate">{item.name}</span>
+
+                    {/* Video badge */}
+                    {item.videoStartSec != null && (
+                      <span className="text-[8px] font-mono border border-amber-500/30 text-amber-600 px-1.5 py-0.5 flex-shrink-0">
+                        ▶ VÍD
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function FighterEditorPage() {
@@ -1128,6 +1311,7 @@ export default function FighterEditorPage() {
     { id: "overview",     label: "Visão Geral",    icon: <ImageIcon size={11} /> },
     { id: "bios",         label: "Bios",           icon: <FileText size={11} /> },
     { id: "collectibles", label: "Colecionáveis",  icon: <Trophy size={11} /> },
+    { id: "order",        label: "Ordem",          icon: <span className="text-[11px]">⠿</span> },
     { id: "constructor",  label: "Construtor",     icon: <RefreshCw size={11} className="text-emerald-400" /> },
   ];
 
@@ -1228,6 +1412,9 @@ export default function FighterEditorPage() {
             franchiseId={fighter.franchiseId ?? fighter.franchiseObjId}
             franchiseName={fighter.franchise}
           />
+        )}
+        {tab === "order" && (
+          <TabOrder fighterId={fighter.id} />
         )}
         {tab === "constructor" && (
           <TabConstructor fighterId={fighter.id} />

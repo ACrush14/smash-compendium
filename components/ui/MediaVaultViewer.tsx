@@ -6,6 +6,8 @@ import { ImageIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
 import MusicPlayer, { type MusicTrack } from "@/components/ui/MusicPlayer";
 import { t, type UILang } from "@/lib/ui-i18n";
 
+export type EraFilter = "N64" | "SSBM" | "SSBB" | "SSB4" | "SSBU" | "WORKS";
+
 export interface MediaAsset {
   url:       string | null;
   label:     string;
@@ -14,6 +16,7 @@ export interface MediaAsset {
     | "render" | "trophy" | "sticker" | "spirit" | "sprite"
     | "clay" | "art" | "gif" | "video" | "cover";
   href?: string;
+  era?:  EraFilter;
 }
 
 interface MediaVaultViewerProps {
@@ -58,10 +61,42 @@ const PLACEHOLDER_TAG: Partial<Record<MediaAsset["assetType"], { label: string; 
   "video": { label: "VIDEO", color: "#f87171" },
 };
 
+const ERA_BUTTONS: { era: EraFilter; label: string }[] = [
+  { era: "N64",   label: "N64"     },
+  { era: "SSBM",  label: "Melee"   },
+  { era: "SSBB",  label: "Brawl"   },
+  { era: "SSB4",  label: "Smash 4" },
+  { era: "WORKS", label: "Works"   },
+];
+
+const ERA_BTN_STYLE: Record<EraFilter, string> = {
+  N64:   "text-yellow-400 border-yellow-500/50 bg-yellow-500/10",
+  SSBM:  "text-indigo-400 border-indigo-500/50 bg-indigo-500/10",
+  SSBB:  "text-emerald-400 border-emerald-500/50 bg-emerald-500/10",
+  SSB4:  "text-red-400 border-red-500/50 bg-red-500/10",
+  SSBU:  "text-cyan-400 border-cyan-500/50 bg-cyan-500/10",
+  WORKS: "text-purple-400 border-purple-500/50 bg-purple-500/10",
+};
+
 export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVaultViewerProps) {
+  const [activeEra, setActiveEra] = useState<EraFilter | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const active = assets[activeIndex] ?? null;
   const stripRef = useRef<HTMLDivElement>(null);
+
+  const filteredAssets = activeEra
+    ? assets.filter((a) => a.era === activeEra)
+    : assets;
+
+  const active = filteredAssets[activeIndex] ?? null;
+
+  // Reset active index when era changes
+  const handleEraClick = (era: EraFilter) => {
+    setActiveEra((prev) => (prev === era ? null : era));
+    setActiveIndex(0);
+  };
+
+  // Eras that actually have assets
+  const availableEras = new Set(assets.map((a) => a.era).filter(Boolean) as EraFilter[]);
 
   function scrollStrip(dir: "left" | "right") {
     const el = stripRef.current;
@@ -191,7 +226,33 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
       {/* ── Music Player ─────────────────────────────────────────── */}
       {music && <MusicPlayer {...music} />}
 
-      {/* ── Gallery Carousel (flex-[1] ≈ 25% da altura) ───────────── */}
+      {/* ── Era Filter Buttons ───────────────────────────────────── */}
+      {availableEras.size > 0 && (
+        <div
+          className="shrink-0 flex gap-1.5 px-4 py-2 flex-wrap"
+          style={{ borderTop: "1px solid rgba(64,180,255,0.07)", background: "rgba(5,5,24,0.6)" }}
+        >
+          {ERA_BUTTONS.filter((b) => availableEras.has(b.era)).map(({ era, label }) => {
+            const isActive = activeEra === era;
+            return (
+              <button
+                key={era}
+                onClick={() => handleEraClick(era)}
+                className={[
+                  "font-mono text-[8px] font-bold uppercase tracking-[0.18em] px-2.5 py-1 border transition-all",
+                  isActive
+                    ? ERA_BTN_STYLE[era]
+                    : "text-slate-600 border-white/8 hover:text-slate-400 hover:border-white/20",
+                ].join(" ")}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {/* ── Gallery Carousel ────────────────────────────────────── */}
       <div
         className="flex-[1] min-h-0 flex flex-col justify-center px-4 py-3 overflow-hidden"
         style={{
@@ -202,9 +263,9 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
         {/* Contador + nav buttons */}
         <div className="shrink-0 flex items-center justify-between mb-2">
           <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-cyan-800">
-            {t(lang, "collection")} · {assets.length} {t(lang, "artifacts")}
+            {t(lang, "collection")} · {filteredAssets.length} {t(lang, "artifacts")}
           </span>
-          {assets.length > 4 && (
+          {filteredAssets.length > 4 && (
             <div className="flex gap-1">
               <button
                 onClick={() => scrollStrip("left")}
@@ -228,7 +289,7 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
 
         {/* Strip de thumbnails */}
         <div ref={stripRef} className="flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {assets.map((asset, i) => {
+          {filteredAssets.map((asset, i) => {
             const isActive = i === activeIndex;
             return (
               <button
@@ -304,7 +365,7 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
             );
           })}
 
-          {assets.length === 0 && (
+          {filteredAssets.length === 0 && (
             <p className="font-mono text-[10px] text-slate-700 italic self-center">
               {t(lang, "noArtifacts")}
             </p>
