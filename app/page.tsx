@@ -440,25 +440,26 @@ export default async function VaultPage({ searchParams }: PageProps) {
             </div>
           </a>
 
-          {/* 06 — Songs (Em breve) */}
-          <div
-            className="relative flex flex-col justify-between overflow-hidden border border-white/5 p-7 opacity-60 cursor-not-allowed"
+          {/* 06 — Songs */}
+          <a
+            href="/music"
+            className="relative flex flex-col justify-between overflow-hidden border border-white/5 p-7 transition-all duration-300 hover:border-violet-500/30 hover:shadow-lg hover:shadow-violet-900/20 group"
             style={{ background: "linear-gradient(135deg, rgba(109,40,217,0.2) 0%, rgba(67,20,141,0.25) 40%, #060010 100%)", clipPath: "polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%)" }}
           >
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-800/40 to-transparent" />
-            <div className="absolute right-4 top-3.5 font-mono text-[10px] font-bold tracking-widest text-violet-600 border border-violet-800/40 px-2 py-0.5">EM BREVE</div>
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
             <div>
               <div className="mb-4 flex items-start justify-between">
-                <Music2 className="h-8 w-8 text-violet-500" strokeWidth={1.5} />
-                <span className="font-mono text-xs text-violet-900/50">06 / 06</span>
+                <Music2 className="h-8 w-8 text-violet-400 group-hover:text-violet-300 transition-colors" strokeWidth={1.5} />
+                <span className="font-mono text-xs text-violet-700/70">06 / 06</span>
               </div>
-              <h2 className="mb-2 font-black text-2xl uppercase tracking-tight text-slate-400">Songs</h2>
-              <p className="text-sm leading-relaxed text-slate-600">Trilha sonora iconica de cada franquia no Super Smash Bros. Ultimate.</p>
+              <h2 className="mb-2 font-black text-2xl uppercase tracking-tight text-slate-200 group-hover:text-violet-200 transition-colors">Songs</h2>
+              <p className="text-sm leading-relaxed text-slate-500">Trilha sonora iconica de cada franquia no Super Smash Bros. Ultimate.</p>
             </div>
             <div className="mt-8 flex items-center justify-between border-t border-white/5 pt-4">
-              <span className="font-mono text-xs text-slate-700">{musicCount} faixas</span>
+              <span className="font-mono text-xs text-slate-500">{musicCount} faixas</span>
+              <span className="font-mono text-[10px] text-violet-600 group-hover:text-violet-400 transition-colors">EXPLORAR →</span>
             </div>
-          </div>
+          </a>
 
         </div>
       </section>
