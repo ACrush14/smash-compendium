@@ -180,10 +180,9 @@ export default async function FighterPage({ params }: PageProps) {
 
 
   // ── Montagem do Media Vault (Visão Geral) ───────────────────────────────────
-  // Incluir TUDO: render, art, troféus, stickers, spirits, capas de jogos.
+  // Ordem: GIFs → Troféus → Spirits → Stickers → Box Art/Sprites
 
   const vaultAssets: MediaAsset[] = [];
-  const fighterGifsMap: any = {};
 
   const mediaAssets = allCollectibles.filter(c => c.type === "MEDIA");
 
@@ -192,41 +191,32 @@ export default async function FighterPage({ params }: PageProps) {
     ? `${originGameEntry.titleNtsc} (${originGameEntry.consoleName})`
     : fighter.franchise.name;
 
-  // 1. Capas de Jogos (Chronicles)  →  era WORKS
-  for (const link of fighter.chronicleLinks) {
-    if (link.chronicleEntry.boxArtUrl) {
-      vaultAssets.push({
-        url: link.chronicleEntry.boxArtUrl,
-        label: link.chronicleEntry.titleNtsc,
-        sublabel: `Capa oficial · ${link.chronicleEntry.consoleName}`,
-        assetType: "cover",
-        era: "WORKS",
-        href: `/chronicles?q=${encodeURIComponent(link.chronicleEntry.titleNtsc)}`,
-      });
-    }
+  // 1. GIFs/CLIPs — todos os eras (SSBM → SSBB → SSB4 → SSBU → origem)
+  for (const m of mediaAssets.filter((m) => m.smashGameVersion === "SSBM")) {
+    vaultAssets.push({ url: m.assetRenderUrl!, label: m.name.replace("CLIP - ", "").replace("360 TROPHY - ", ""),
+      sublabel: `Clipe em WebM · Super Smash Bros. Melee`, assetType: "gif", era: "SSBM" });
   }
-
-  // 2. ORIGIN — sprite de pixel art + GIFs do jogo de origem  →  era N64
-  for (const oa of allCollectibles.filter((o) => o.type === "SPRITE" && o.assetRenderUrl)) {
-    const consoleLabel = originGameEntry?.consoleName ?? "Super Famicom";
-    vaultAssets.push({
-      url: oa.assetRenderUrl!, label: oa.name,
-      sublabel: `Sprite de batalha original · ${fighter.franchise.name} (${consoleLabel})`,
-      assetType: "sprite",
-      era: "N64",
-    });
+  for (const m of mediaAssets.filter((m) => m.smashGameVersion === "SSBB" && m.name.includes("CLIP"))) {
+    vaultAssets.push({ url: m.assetRenderUrl!, label: m.name.replace("CLIP - ", ""),
+      sublabel: `Clipe em WebM · Super Smash Bros. Brawl`, assetType: "gif", era: "SSBB" });
   }
-  // origin GIFs também vão para WORKS (gameplay de jogos de origem)
+  for (const m of mediaAssets.filter((m) => m.smashGameVersion === "SSB4" && m.name.includes("CLIP"))) {
+    vaultAssets.push({ url: m.assetRenderUrl!, label: m.name.replace("CLIP - ", ""),
+      sublabel: `Clipe em WebM · Super Smash Bros. for Wii U / 3DS`, assetType: "gif", era: "SSB4" });
+  }
+  for (const m of mediaAssets.filter((m) => m.smashGameVersion === "SSBU" && m.name.includes("CLIP"))) {
+    vaultAssets.push({ url: m.assetRenderUrl!, label: m.name.replace("CLIP - ", ""),
+      sublabel: `Clipe em WebM · Super Smash Bros. Ultimate`, assetType: "gif", era: "SSBU" });
+  }
   for (const m of mediaAssets.filter((m) => m.name.includes("GIF") && !["SSBM","SSBB","SSB4","SSBU"].includes(m.smashGameVersion))) {
     vaultAssets.push({
       url: m.assetRenderUrl!, label: m.name,
       sublabel: `Gameplay de origem · ${originGameLabel} — ${m.name.replace("GIF - ", "")}`,
-      assetType: "gif",
-      era: "WORKS",
+      assetType: "gif", era: "WORKS",
     });
   }
 
-  // 3. SSBM (2001) — clay model → artwork → troféus → GIFs  →  era SSBM
+  // 2. Troféus — todos os eras (SSBM → SSBB → SSB4), incluindo clay/art Melee
   for (const m of mediaAssets.filter((m) => m.name.includes("Clay"))) {
     vaultAssets.push({ url: m.assetRenderUrl!, label: m.name,
       sublabel: "Modelo de argila utilizado como referência 3D · Super Smash Bros. Melee (GameCube, 2001)",
@@ -238,51 +228,22 @@ export default async function FighterPage({ params }: PageProps) {
       assetType: "art", era: "SSBM" });
   }
   for (const t of trophiesByGame.get("SSBM") ?? []) {
-    if (t.assetRenderUrl) {
-      vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
-        sublabel: "Troféu 3D oficial · Super Smash Bros. Melee (GameCube, 2001)", assetType: "trophy",
-        era: "SSBM", href: `/collectibles?type=TROPHY&game=SSBM&trophy=${t.id}` });
-    }
+    vaultAssets.push({ url: t.assetRenderUrl ?? null, label: t.name,
+      sublabel: "Troféu 3D oficial · Super Smash Bros. Melee (GameCube, 2001)", assetType: "trophy",
+      era: "SSBM", href: `/collectibles?type=TROPHY&game=SSBM&trophy=${t.id}` });
   }
-  for (const m of mediaAssets.filter((m) => m.smashGameVersion === "SSBM" && m.name.includes("CLIP"))) {
-    vaultAssets.push({ url: m.assetRenderUrl!, label: m.name.replace("CLIP - ", ""),
-      sublabel: `Clipe em WebM · Super Smash Bros. Melee`, assetType: "gif", era: "SSBM" });
-  }
-
-  // 4. SSBB (2008) — troféus → stickers → GIFs  →  era SSBB
   for (const t of trophiesByGame.get("SSBB") ?? []) {
-    if (t.assetRenderUrl) {
-      vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
-        sublabel: "Troféu 3D oficial · Super Smash Bros. Brawl (Wii, 2008)", assetType: "trophy",
-        era: "SSBB", href: `/collectibles?type=TROPHY&game=SSBB&trophy=${t.id}` });
-    }
+    vaultAssets.push({ url: t.assetRenderUrl ?? null, label: t.name,
+      sublabel: "Troféu 3D oficial · Super Smash Bros. Brawl (Wii, 2008)", assetType: "trophy",
+      era: "SSBB", href: `/collectibles?type=TROPHY&game=SSBB&trophy=${t.id}` });
   }
-  for (const s of stickersByGame.get("SSBB") ?? []) {
-    if (s.assetRenderUrl) {
-      vaultAssets.push({ url: s.assetRenderUrl, label: s.name,
-        sublabel: "Sticker colecionável · Super Smash Bros. Brawl (Wii, 2008)", assetType: "sticker",
-        era: "SSBB", href: `/collectibles?type=STICKER&game=SSBB&trophy=${s.id}` });
-    }
-  }
-  for (const m of mediaAssets.filter((m) => m.smashGameVersion === "SSBB" && m.name.includes("CLIP"))) {
-    vaultAssets.push({ url: m.assetRenderUrl!, label: m.name.replace("CLIP - ", ""),
-      sublabel: `Clipe em WebM · Super Smash Bros. Brawl`, assetType: "gif", era: "SSBB" });
-  }
-
-  // 5. SSB4 (2014) — troféus → GIFs  →  era SSB4
   for (const t of trophiesByGame.get("SSB4") ?? []) {
-    if (t.assetRenderUrl) {
-      vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
-        sublabel: "Troféu 3D oficial · Super Smash Bros. for Wii U / 3DS (2014)", assetType: "trophy",
-        era: "SSB4", href: `/collectibles?type=TROPHY&game=SSB4&trophy=${t.id}` });
-    }
-  }
-  for (const m of mediaAssets.filter((m) => m.smashGameVersion === "SSB4" && m.name.includes("CLIP"))) {
-    vaultAssets.push({ url: m.assetRenderUrl!, label: m.name.replace("CLIP - ", ""),
-      sublabel: `Clipe em WebM · Super Smash Bros. for Wii U / 3DS`, assetType: "gif", era: "SSB4" });
+    vaultAssets.push({ url: t.assetRenderUrl ?? null, label: t.name,
+      sublabel: "Troféu 3D oficial · Super Smash Bros. for Wii U / 3DS (2014)", assetType: "trophy",
+      era: "SSB4", href: `/collectibles?type=TROPHY&game=SSB4&trophy=${t.id}` });
   }
 
-  // 6. SSBU (2018) — render oficial → spirit → GIFs  →  era SSBU
+  // 3. Spirits (SSBU) — render oficial → spirits
   if (fighter.imageUrl) {
     vaultAssets.push({
       url: fighter.imageUrl, label: `${fighter.name} — Render Oficial`,
@@ -298,9 +259,35 @@ export default async function FighterPage({ params }: PageProps) {
       href: `/collectibles?type=SPIRIT&game=SSBU&trophy=${oa.id}`,
     });
   }
-  for (const m of mediaAssets.filter((m) => m.smashGameVersion === "SSBU" && m.name.includes("CLIP"))) {
-    vaultAssets.push({ url: m.assetRenderUrl!, label: m.name.replace("CLIP - ", ""),
-      sublabel: `Clipe em WebM · Super Smash Bros. Ultimate`, assetType: "gif", era: "SSBU" });
+
+  // 4. Stickers (SSBB)
+  for (const s of stickersByGame.get("SSBB") ?? []) {
+    if (s.assetRenderUrl) {
+      vaultAssets.push({ url: s.assetRenderUrl, label: s.name,
+        sublabel: "Sticker colecionável · Super Smash Bros. Brawl (Wii, 2008)", assetType: "sticker",
+        era: "SSBB", href: `/collectibles?type=STICKER&game=SSBB&trophy=${s.id}` });
+    }
+  }
+
+  // 5. Box Art + Sprites (WORKS / N64)
+  for (const oa of allCollectibles.filter((o) => o.type === "SPRITE" && o.assetRenderUrl)) {
+    const consoleLabel = originGameEntry?.consoleName ?? "Super Famicom";
+    vaultAssets.push({
+      url: oa.assetRenderUrl!, label: oa.name,
+      sublabel: `Sprite de batalha original · ${fighter.franchise.name} (${consoleLabel})`,
+      assetType: "sprite", era: "N64",
+    });
+  }
+  for (const link of fighter.chronicleLinks) {
+    if (link.chronicleEntry.boxArtUrl) {
+      vaultAssets.push({
+        url: link.chronicleEntry.boxArtUrl,
+        label: link.chronicleEntry.titleNtsc,
+        sublabel: `Capa oficial · ${link.chronicleEntry.consoleName}`,
+        assetType: "cover", era: "WORKS",
+        href: `/chronicles?q=${encodeURIComponent(link.chronicleEntry.titleNtsc)}`,
+      });
+    }
   }
 
   // Deduplicar por URL — remove renders com mesma URL (dados duplicados no banco)
