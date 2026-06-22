@@ -12,7 +12,7 @@ const TROPHY_GALLERY: { youtubeId: string; title: string; artist: string } = {
 
 export default function CollectiblesMusicBar() {
   const pathname = usePathname();
-  const showMusic = pathname === "/" || pathname === "/collectibles" || pathname === "/chronicles" || pathname.startsWith("/fighters");
+  const showMusic = pathname === "/" || pathname === "/collectibles" || pathname === "/chronicles" || pathname.startsWith("/fighters") || pathname === "/music";
   if (!showMusic) return null;
 
   return (

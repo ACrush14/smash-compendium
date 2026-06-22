@@ -109,6 +109,9 @@ model Collectible {
   // Timestamps do vídeo de galeria
   videoStartSec      Int?
   videoEndSec        Int?
+  // Timestamps do vídeo secundário (3DS para troféus SSB4 compartilhados)
+  videoStartSec2     Int?
+  videoEndSec2       Int?
   curationStatus     String   @default("pending_review")
   // Spirit metadata (fonte: ssbuspirits.com)
   spiritFirstAppearance String?       // Jogo de primeira aparição do personagem, ex: "EarthBound (1994)"

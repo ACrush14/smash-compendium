@@ -29,6 +29,8 @@ export interface TrophyItem {
   smashGameVersion: string;
   videoStartSec?:           number | null;
   videoEndSec?:             number | null;
+  videoStartSec2?:          number | null;
+  videoEndSec2?:            number | null;
   fighterBioVideoStartSec?: number | null;
   fighterBioVideoEndSec?:   number | null;
   relatedItems:     RelatedItem[];
@@ -386,15 +388,29 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
               </div>
             )}
 
-            {/* Local Video Player — trophy rotation (Melee: full_video_trophies.mp4; outros jogos: video do jogo) */}
+            {/* Local Video Player — trophy rotation */}
             {(() => {
-              const videoSrc = LOCAL_VIDEOS[displayed.smashGameVersion];
-              if (displayed.videoStartSec == null || displayed.videoEndSec == null || !videoSrc) return null;
-              return (
+              const isSharedSsb4 = displayed.smashGameVersion === 'SSB4';
+              const wiiuSrc = LOCAL_VIDEOS[displayed.smashGameVersion]; // SSB4 → wiiu, SSB4_WIIU → wiiu, SSB4_3DS → 3ds
+              const ds3Src  = '/videos/full_video_ssb4_3ds.mp4';
+
+              // Clipe Wii U (ou vídeo único para jogos sem versão dupla)
+              const wiiuClip = displayed.videoStartSec != null && displayed.videoEndSec != null && wiiuSrc ? (
                 <div className="relative w-full aspect-video flex justify-center mt-6 rounded-xl overflow-hidden border border-cyan-500/20 shadow-xl bg-black/50">
-                  <LocalVideoGif src={videoSrc} startSec={displayed.videoStartSec} endSec={displayed.videoEndSec} />
+                  {isSharedSsb4 && <span className="absolute top-2 left-2 z-10 text-xs font-bold bg-black/70 text-yellow-300 px-2 py-0.5 rounded">Wii U</span>}
+                  <LocalVideoGif src={wiiuSrc} startSec={displayed.videoStartSec} endSec={displayed.videoEndSec} />
                 </div>
-              );
+              ) : null;
+
+              // Clipe 3DS (só para troféus SSB4 compartilhados com videoStartSec2)
+              const ds3Clip = isSharedSsb4 && displayed.videoStartSec2 != null && displayed.videoEndSec2 != null ? (
+                <div className="relative w-full aspect-video flex justify-center mt-3 rounded-xl overflow-hidden border border-red-500/20 shadow-xl bg-black/50">
+                  <span className="absolute top-2 left-2 z-10 text-xs font-bold bg-black/70 text-red-300 px-2 py-0.5 rounded">3DS</span>
+                  <LocalVideoGif src={ds3Src} startSec={displayed.videoStartSec2} endSec={displayed.videoEndSec2} />
+                </div>
+              ) : null;
+
+              return <>{wiiuClip}{ds3Clip}</>;
             })()}
 
             {/* Melee only: ZoomZike fighter showcase — só exibe se o troféu não tem timestamp próprio */}

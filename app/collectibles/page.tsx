@@ -233,6 +233,8 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       smashGameVersion: t.smashGameVersion,
       videoStartSec:             t.videoStartSec                    ?? null,
       videoEndSec:               t.videoEndSec                      ?? null,
+      videoStartSec2:            (t as any).videoStartSec2          ?? null,
+      videoEndSec2:              (t as any).videoEndSec2            ?? null,
       fighterBioVideoStartSec:   t.fighter?.bios?.[0]?.videoStartSec ?? null,
       fighterBioVideoEndSec:     t.fighter?.bios?.[0]?.videoEndSec   ?? null,
       relatedItems: [

@@ -54,6 +54,8 @@ export interface SerializedCollectible {
   assetRenderUrl?:  string | null;
   videoStartSec?:   number | null;
   videoEndSec?:     number | null;
+  videoStartSec2?:  number | null;
+  videoEndSec2?:    number | null;
 }
 
 export interface WorkGame {
@@ -489,13 +491,26 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                       />
                     </div>
                   ) : mainTrophyWithVideo && TROPHY_LOCAL_VIDEOS[gameVer] ? (
-                    <div className="relative w-full aspect-video flex justify-center mb-5 rounded-xl overflow-hidden border border-cyan-500/20 shadow-xl bg-black/50">
-                      <LocalVideoGif
-                        src={TROPHY_LOCAL_VIDEOS[gameVer]}
-                        startSec={mainTrophyWithVideo.videoStartSec!}
-                        endSec={mainTrophyWithVideo.videoEndSec!}
-                      />
-                    </div>
+                    <>
+                      <div className="relative w-full aspect-video flex justify-center mb-3 rounded-xl overflow-hidden border border-cyan-500/20 shadow-xl bg-black/50">
+                        {mainTrophyWithVideo.videoStartSec2 != null && <span className="absolute top-2 left-2 z-10 text-xs font-bold bg-black/70 text-yellow-300 px-2 py-0.5 rounded">Wii U</span>}
+                        <LocalVideoGif
+                          src={TROPHY_LOCAL_VIDEOS[gameVer]}
+                          startSec={mainTrophyWithVideo.videoStartSec!}
+                          endSec={mainTrophyWithVideo.videoEndSec!}
+                        />
+                      </div>
+                      {mainTrophyWithVideo.videoStartSec2 != null && mainTrophyWithVideo.videoEndSec2 != null && (
+                        <div className="relative w-full aspect-video flex justify-center mb-5 rounded-xl overflow-hidden border border-red-500/20 shadow-xl bg-black/50">
+                          <span className="absolute top-2 left-2 z-10 text-xs font-bold bg-black/70 text-red-300 px-2 py-0.5 rounded">3DS</span>
+                          <LocalVideoGif
+                            src="/videos/full_video_ssb4_3ds.mp4"
+                            startSec={mainTrophyWithVideo.videoStartSec2}
+                            endSec={mainTrophyWithVideo.videoEndSec2}
+                          />
+                        </div>
+                      )}
+                    </>
                   ) : null}
 
                   {gameVer === "SSB64" && (
