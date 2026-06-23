@@ -7,11 +7,13 @@ export default function LocalVideoGif({
   startSec,
   endSec,
   className = "",
+  onError,
 }: {
   src: string;
   startSec: number;
   endSec: number;
   className?: string;
+  onError?: (target: HTMLVideoElement) => void;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -57,6 +59,7 @@ export default function LocalVideoGif({
       loop={false}
       controls={false}
       disablePictureInPicture
+      onError={onError ? (e) => onError(e.currentTarget) : undefined}
       // We scale it slightly in case the local video has tiny black borders
       className={`pointer-events-none w-full h-full object-cover ${className}`}
       style={{ transform: "scale(1.05)" }}

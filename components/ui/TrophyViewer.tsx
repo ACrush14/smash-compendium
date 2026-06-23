@@ -376,14 +376,15 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
 
             {/* Vídeo 360 do troféu se existir (WebM) */}
             {displayed.assetRender2Url && displayed.assetRender2Url.endsWith('.webm') && (
-              <div className="relative w-full max-w-[360px] md:max-w-[440px] h-auto flex justify-center mt-2 mb-2">
-                <video 
-                  src={displayed.assetRender2Url} 
-                  autoPlay 
-                  loop 
-                  muted 
+              <div data-video-box className="relative w-full max-w-[360px] md:max-w-[440px] h-auto flex justify-center mt-2 mb-2">
+                <video
+                  src={displayed.assetRender2Url}
+                  autoPlay
+                  loop
+                  muted
                   playsInline
                   className="w-full h-auto object-contain rounded-xl border-2 border-vault-accent/40 shadow-xl shadow-vault-accent/20 bg-slate-900/50"
+                  onError={(e) => { const p = (e.currentTarget as HTMLElement).closest('[data-video-box]') as HTMLElement; if (p) p.style.display = 'none'; }}
                 />
               </div>
             )}
@@ -396,17 +397,19 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
 
               // Clipe Wii U (ou vídeo único para jogos sem versão dupla)
               const wiiuClip = displayed.videoStartSec != null && displayed.videoEndSec != null && wiiuSrc ? (
-                <div className="relative w-full aspect-video flex justify-center mt-6 rounded-xl overflow-hidden border border-cyan-500/20 shadow-xl bg-black/50">
+                <div data-video-box className="relative w-full aspect-video flex justify-center mt-6 rounded-xl overflow-hidden border border-cyan-500/20 shadow-xl bg-black/50">
                   {isSharedSsb4 && <span className="absolute top-2 left-2 z-10 text-xs font-bold bg-black/70 text-yellow-300 px-2 py-0.5 rounded">Wii U</span>}
-                  <LocalVideoGif src={wiiuSrc} startSec={displayed.videoStartSec} endSec={displayed.videoEndSec} />
+                  <LocalVideoGif src={wiiuSrc} startSec={displayed.videoStartSec} endSec={displayed.videoEndSec}
+                    onError={(v) => { const p = v.closest('[data-video-box]') as HTMLElement; if (p) p.style.display = 'none'; }} />
                 </div>
               ) : null;
 
               // Clipe 3DS (só para troféus SSB4 compartilhados com videoStartSec2)
               const ds3Clip = isSharedSsb4 && displayed.videoStartSec2 != null && displayed.videoEndSec2 != null ? (
-                <div className="relative w-full aspect-video flex justify-center mt-3 rounded-xl overflow-hidden border border-red-500/20 shadow-xl bg-black/50">
+                <div data-video-box className="relative w-full aspect-video flex justify-center mt-3 rounded-xl overflow-hidden border border-red-500/20 shadow-xl bg-black/50">
                   <span className="absolute top-2 left-2 z-10 text-xs font-bold bg-black/70 text-red-300 px-2 py-0.5 rounded">3DS</span>
-                  <LocalVideoGif src={ds3Src} startSec={displayed.videoStartSec2} endSec={displayed.videoEndSec2} />
+                  <LocalVideoGif src={ds3Src} startSec={displayed.videoStartSec2} endSec={displayed.videoEndSec2}
+                    onError={(v) => { const p = v.closest('[data-video-box]') as HTMLElement; if (p) p.style.display = 'none'; }} />
                 </div>
               ) : null;
 
@@ -415,11 +418,12 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
 
             {/* Melee only: ZoomZike fighter showcase — só exibe se o troféu não tem timestamp próprio */}
             {displayed.smashGameVersion === "SSBM" && displayed.videoStartSec == null && displayed.fighterBioVideoStartSec != null && displayed.fighterBioVideoEndSec != null && (
-              <div className="relative w-full aspect-video flex justify-center mt-3 rounded-xl overflow-hidden border border-vault-accent/20 shadow-xl bg-black/50">
+              <div data-video-box className="relative w-full aspect-video flex justify-center mt-3 rounded-xl overflow-hidden border border-vault-accent/20 shadow-xl bg-black/50">
                 <LocalVideoGif
                   src="/videos/full_video_Zoomzike.mp4"
                   startSec={displayed.fighterBioVideoStartSec}
                   endSec={displayed.fighterBioVideoEndSec}
+                  onError={(v) => { const p = v.closest('[data-video-box]') as HTMLElement; if (p) p.style.display = 'none'; }}
                 />
               </div>
             )}
