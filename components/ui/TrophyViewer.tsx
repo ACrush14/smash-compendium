@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 import AssociatedCards from "./AssociatedCards";
 import LocalVideoGif from "./LocalVideoGif";
+import { FULL_VIDEOS, cdnUrl } from "@/lib/media-config";
 
 export interface ChronicleLink {
   id:         string;
@@ -51,14 +52,6 @@ function gameSearchTitle(entry: string): string {
 }
 
 const SIDEBAR_SIZE = 14;
-
-const LOCAL_VIDEOS: Record<string, string> = {
-  SSBM: "/videos/full_video_Zoomzike.mp4",
-  SSBB: "/videos/full_video_brawl.mp4",
-  SSB4: "/videos/full_video_ssb4_wiiu.mp4",
-  SSB4_WIIU: "/videos/full_video_ssb4_wiiu.mp4",
-  SSB4_3DS: "/videos/full_video_ssb4_3ds.mp4",
-};
 
 interface Props {
   trophies:     TrophyItem[];
@@ -378,7 +371,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
             {displayed.assetRender2Url && displayed.assetRender2Url.endsWith('.webm') && (
               <div data-video-box className="relative w-full max-w-[360px] md:max-w-[440px] h-auto flex justify-center mt-2 mb-2">
                 <video
-                  src={displayed.assetRender2Url}
+                  src={cdnUrl(displayed.assetRender2Url)}
                   autoPlay
                   loop
                   muted
@@ -392,8 +385,8 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
             {/* Local Video Player — trophy rotation */}
             {(() => {
               const isSharedSsb4 = displayed.smashGameVersion === 'SSB4';
-              const wiiuSrc = LOCAL_VIDEOS[displayed.smashGameVersion]; // SSB4 → wiiu, SSB4_WIIU → wiiu, SSB4_3DS → 3ds
-              const ds3Src  = '/videos/full_video_ssb4_3ds.mp4';
+              const wiiuSrc = FULL_VIDEOS[displayed.smashGameVersion] ?? "";
+              const ds3Src  = FULL_VIDEOS.SSB4_3DS ?? "";
 
               // Clipe Wii U (ou vídeo único para jogos sem versão dupla)
               const wiiuClip = displayed.videoStartSec != null && displayed.videoEndSec != null && wiiuSrc ? (
@@ -420,7 +413,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
             {displayed.smashGameVersion === "SSBM" && displayed.videoStartSec == null && displayed.fighterBioVideoStartSec != null && displayed.fighterBioVideoEndSec != null && (
               <div data-video-box className="relative w-full aspect-video flex justify-center mt-3 rounded-xl overflow-hidden border border-vault-accent/20 shadow-xl bg-black/50">
                 <LocalVideoGif
-                  src="/videos/full_video_Zoomzike.mp4"
+                  src={FULL_VIDEOS.SSBM ?? ""}
                   startSec={displayed.fighterBioVideoStartSec}
                   endSec={displayed.fighterBioVideoEndSec}
                   onError={(v) => { const p = v.closest('[data-video-box]') as HTMLElement; if (p) p.style.display = 'none'; }}
