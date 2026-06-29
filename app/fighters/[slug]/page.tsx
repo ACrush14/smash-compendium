@@ -312,8 +312,8 @@ export default async function FighterPage({ params }: PageProps) {
     videoEndSec:         b.videoEndSec,
   }));
 
-  const serializeCollectible = (c: { id: string; name: string; nameJp?: string | null; description?: string | null; descriptionPt?: string | null; descriptionJp?: string | null; descriptionJpEn?: string | null; smashGameVersion: string; sourceType: string; assetRenderUrl?: string | null; videoStartSec?: number | null; videoEndSec?: number | null; videoStartSec2?: number | null; videoEndSec2?: number | null; }): SerializedCollectible => ({
-    id: c.id, name: c.name, nameJp: c.nameJp ?? null, description: c.description ?? null, descriptionPt: c.descriptionPt ?? null, descriptionJp: c.descriptionJp ?? null, descriptionJpEn: c.descriptionJpEn ?? null, smashGameVersion: c.smashGameVersion, sourceType: c.sourceType, assetRenderUrl: c.assetRenderUrl ?? null,
+  const serializeCollectible = (c: { id: string; name: string; nameJp?: string | null; description?: string | null; descriptionEn?: string | null; descriptionPt?: string | null; descriptionJp?: string | null; descriptionJpEn?: string | null; smashGameVersion: string; sourceType: string; assetRenderUrl?: string | null; videoStartSec?: number | null; videoEndSec?: number | null; videoStartSec2?: number | null; videoEndSec2?: number | null; }): SerializedCollectible => ({
+    id: c.id, name: c.name, nameJp: c.nameJp ?? null, description: c.descriptionEn ?? c.description ?? null, descriptionPt: c.descriptionPt ?? null, descriptionJp: c.descriptionJp ?? null, descriptionJpEn: c.descriptionJpEn ?? null, smashGameVersion: c.smashGameVersion, sourceType: c.sourceType, assetRenderUrl: c.assetRenderUrl ?? null,
     videoStartSec: c.videoStartSec ?? null, videoEndSec: c.videoEndSec ?? null,
     videoStartSec2: (c as any).videoStartSec2 ?? null, videoEndSec2: (c as any).videoEndSec2 ?? null,
   });
