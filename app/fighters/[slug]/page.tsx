@@ -440,6 +440,11 @@ export default async function FighterPage({ params }: PageProps) {
       { title: "Donkey Kong Country", console: "Super Nintendo Entertainment System" },
       { title: "Mario Kart 64", console: "Nintendo 64" },
     ],
+    "Link": [
+      { title: "The Legend of Zelda", console: "Nintendo Entertainment System" },
+      { title: "The Legend of Zelda: A Link to the Past", console: "Super Nintendo Entertainment System" },
+      { title: "The Legend of Zelda: Ocarina of Time", console: "Nintendo 64" },
+    ],
   };
 
   if (SSB64_WORKS[fighter.name]) {
