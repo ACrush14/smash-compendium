@@ -435,6 +435,11 @@ export default async function FighterPage({ params }: PageProps) {
       { title: "Super Mario Kart", console: "Super Nintendo Entertainment System" },
       { title: "Mario Kart 64", console: "Nintendo 64" },
     ],
+    "Donkey Kong": [
+      { title: "Donkey Kong", console: "Nintendo Entertainment System" },
+      { title: "Donkey Kong Country", console: "Super Nintendo Entertainment System" },
+      { title: "Mario Kart 64", console: "Nintendo 64" },
+    ],
   };
 
   if (SSB64_WORKS[fighter.name]) {
