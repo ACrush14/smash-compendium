@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import OriginGamesPanel, { type OriginGame } from "./OriginGamesPanel";
-import FighterDataZone, { type FighterDataZoneData, type Lang } from "./FighterDataZone";
+import FighterDataZone, { LangSelector, type FighterDataZoneData, type Lang } from "./FighterDataZone";
 import FighterSuggestions, { type SerializedSuggestion } from "./FighterSuggestions";
 import { GAME_META } from "@/lib/smash-meta";
 import { t } from "@/lib/ui-i18n";
@@ -110,8 +110,13 @@ export default function FighterRightPanel({ fighterId, fighterSlug, suggestions,
           )}
         </div>
         
+        {/* Language selector — visible on all tabs */}
+        <div className="mt-3 flex justify-end">
+          <LangSelector lang={lang} setLang={setLang} />
+        </div>
+
         {/* TABS */}
-        <div className="mt-4 flex items-center gap-6 border-b border-cyan-500/10">
+        <div className="mt-2 flex items-center gap-6 border-b border-cyan-500/10">
           <button 
             onClick={() => setActiveTab("SMASH")}
             className={`pb-2 font-mono text-[11px] uppercase tracking-widest transition-colors ${activeTab === "SMASH" ? "text-cyan-400 border-b-2 border-cyan-400" : "text-cyan-900 hover:text-cyan-600"}`}

@@ -169,7 +169,7 @@ const TABS: Array<{ id: Lang; flags: React.ReactNode; title: string }> = [
   },
 ];
 
-function LangSelector({
+export function LangSelector({
   lang, setLang,
 }: {
   lang:         Lang;
@@ -392,8 +392,6 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
 
   return (
     <div className="px-10 py-8 flex flex-col gap-8">
-
-      <LangSelector lang={lang} setLang={setLang} />
 
       {activeTab === "PROFILE" && (
       <section>
