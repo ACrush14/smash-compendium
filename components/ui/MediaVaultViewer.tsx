@@ -223,9 +223,6 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
         )}
       </div>
 
-      {/* ── Music Player ─────────────────────────────────────────── */}
-      {music && <MusicPlayer {...music} />}
-
       {/* ── Era Filter Buttons ───────────────────────────────────── */}
       {availableEras.size > 0 && (
         <div
@@ -372,6 +369,9 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
           )}
         </div>
       </div>
+
+      {/* ── Music Player ─────────────────────────────────────────── */}
+      {music && <MusicPlayer {...music} />}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { GAME_META } from "@/lib/smash-meta";
 import SuggestionPanel from "@/components/ui/SuggestionPanel";
 import LocalVideoGif from "@/components/ui/LocalVideoGif";
 import { t } from "@/lib/ui-i18n";
+import { FULL_VIDEOS } from "@/lib/media-config";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export type Lang = "EN" | "PT" | "JP" | "JP_EN";
@@ -356,6 +357,21 @@ function EraHeader({ gameVer, isDebut, lang }: { gameVer: string; isDebut: boole
   );
 }
 
+// ─── VideoSection ─────────────────────────────────────────────────────────────
+
+function VideoSection({ src, startSec, endSec, badge, className = "mb-5", borderClass = "border-cyan-500/20" }: {
+  src: string; startSec: number; endSec: number; badge?: string; className?: string; borderClass?: string;
+}) {
+  const [hidden, setHidden] = useState(false);
+  if (hidden || !src) return null;
+  return (
+    <div className={`relative w-full aspect-video flex justify-center rounded-xl overflow-hidden border shadow-xl bg-black/50 ${className} ${borderClass}`}>
+      {badge && <span className="absolute top-2 left-2 z-10 text-xs font-bold bg-black/70 text-yellow-300 px-2 py-0.5 rounded">{badge}</span>}
+      <LocalVideoGif src={src} startSec={startSec} endSec={endSec} onError={() => setHidden(true)} />
+    </div>
+  );
+}
+
 // ─── FighterDataZone ──────────────────────────────────────────────────────────
 
 export default function FighterDataZone(props: FighterDataZoneProps) {
@@ -447,15 +463,10 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
 
         <div className="flex flex-col gap-3">
           {erasToShow.map((gameVer, index) => {
-            const LOCAL_VIDEOS: Record<string, string> = {
-              SSB64: "/videos/full_SSB64_video.mp4",
-              SSBM: "/videos/full_video_Zoomzike.mp4",
-            };
-
             const TROPHY_LOCAL_VIDEOS: Record<string, string> = {
-              SSBM: "/videos/full_video_Zoomzike.mp4",
-              SSBB: "/videos/full_video_brawl.mp4",
-              SSB4: "/videos/full_video_ssb4_wiiu.mp4",
+              SSBM: FULL_VIDEOS.SSBM ?? "",
+              SSBB: FULL_VIDEOS.SSBB ?? "",
+              SSB4: FULL_VIDEOS.SSB4_WIIU ?? "",
             };
 
             const meta      = GAME_META[gameVer];
@@ -482,33 +493,29 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                 <EraHeader gameVer={gameVer} isDebut={isDebut} lang={lang} />
 
                 <div className="px-6 pt-5 pb-4">
-                  {bio?.videoStartSec != null && bio?.videoEndSec != null && LOCAL_VIDEOS[gameVer] ? (
-                    <div className="relative w-full aspect-video flex justify-center mb-5 rounded-xl overflow-hidden border border-cyan-500/20 shadow-xl bg-black/50">
-                      <LocalVideoGif
-                        src={LOCAL_VIDEOS[gameVer]}
-                        startSec={bio.videoStartSec}
-                        endSec={bio.videoEndSec}
-                      />
-                    </div>
+                  {bio?.videoStartSec != null && bio?.videoEndSec != null && FULL_VIDEOS[gameVer] ? (
+                    <VideoSection
+                      src={FULL_VIDEOS[gameVer] ?? ""}
+                      startSec={bio.videoStartSec}
+                      endSec={bio.videoEndSec}
+                    />
                   ) : mainTrophyWithVideo && TROPHY_LOCAL_VIDEOS[gameVer] ? (
                     <>
-                      <div className="relative w-full aspect-video flex justify-center mb-3 rounded-xl overflow-hidden border border-cyan-500/20 shadow-xl bg-black/50">
-                        {mainTrophyWithVideo.videoStartSec2 != null && <span className="absolute top-2 left-2 z-10 text-xs font-bold bg-black/70 text-yellow-300 px-2 py-0.5 rounded">Wii U</span>}
-                        <LocalVideoGif
-                          src={TROPHY_LOCAL_VIDEOS[gameVer]}
-                          startSec={mainTrophyWithVideo.videoStartSec!}
-                          endSec={mainTrophyWithVideo.videoEndSec!}
-                        />
-                      </div>
+                      <VideoSection
+                        src={TROPHY_LOCAL_VIDEOS[gameVer]!}
+                        startSec={mainTrophyWithVideo.videoStartSec!}
+                        endSec={mainTrophyWithVideo.videoEndSec!}
+                        badge={mainTrophyWithVideo.videoStartSec2 != null ? "Wii U" : undefined}
+                        className="mb-3"
+                      />
                       {mainTrophyWithVideo.videoStartSec2 != null && mainTrophyWithVideo.videoEndSec2 != null && (
-                        <div className="relative w-full aspect-video flex justify-center mb-5 rounded-xl overflow-hidden border border-red-500/20 shadow-xl bg-black/50">
-                          <span className="absolute top-2 left-2 z-10 text-xs font-bold bg-black/70 text-red-300 px-2 py-0.5 rounded">3DS</span>
-                          <LocalVideoGif
-                            src="/videos/full_video_ssb4_3ds.mp4"
-                            startSec={mainTrophyWithVideo.videoStartSec2}
-                            endSec={mainTrophyWithVideo.videoEndSec2}
-                          />
-                        </div>
+                        <VideoSection
+                          src={FULL_VIDEOS.SSB4_3DS ?? ""}
+                          startSec={mainTrophyWithVideo.videoStartSec2}
+                          endSec={mainTrophyWithVideo.videoEndSec2}
+                          badge="3DS"
+                          borderClass="border-red-500/20"
+                        />
                       )}
                     </>
                   ) : null}
