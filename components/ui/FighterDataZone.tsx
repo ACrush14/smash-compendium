@@ -571,10 +571,12 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                     </span>
 
                     {eraTrophy.map((t) => {
-                      if (lang === "JP" && !t.descriptionJp) return null;
-                      if (lang === "JP_EN" && !t.descriptionJpEn && !t.descriptionJp) return null;
-                      if (lang === "PT" && !t.descriptionPt && !t.description) return null;
-                      const desc = lang === "PT" ? (t.descriptionPt || t.description) : lang === "JP_EN" ? (t.descriptionJpEn || t.description) : lang === "JP" ? (t.descriptionJp || t.description) : t.description;
+                      const desc =
+                        lang === "PT"    ? (t.descriptionPt ?? null) :
+                        lang === "JP"    ? (t.descriptionJp ?? null) :
+                        lang === "JP_EN" ? (t.descriptionJpEn ?? t.descriptionJp ?? null) :
+                                           (t.description ?? null);
+                      if (!desc) return null;
                       const title = lang === "JP_EN" && t.nameJp ? t.nameJp.replace(/ネス/g, "Ness") : lang === "JP" && t.nameJp ? t.nameJp : t.name;
                       return desc ? (
                         <div key={t.id} className="border-l-2 pl-4" style={{ borderLeftColor: `${meta?.eraTextColor}30` }}>
@@ -587,10 +589,12 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                     })}
 
                     {eraStic.map((s) => {
-                      if (lang === "JP" && !s.descriptionJp) return null;
-                      if (lang === "JP_EN" && !s.descriptionJpEn && !s.descriptionJp) return null;
-                      if (lang === "PT" && !s.descriptionPt && !s.description) return null;
-                      const desc = lang === "PT" ? (s.descriptionPt || s.description) : lang === "JP_EN" ? (s.descriptionJpEn || s.description) : lang === "JP" ? (s.descriptionJp || s.description) : s.description;
+                      const desc =
+                        lang === "PT"    ? (s.descriptionPt ?? null) :
+                        lang === "JP"    ? (s.descriptionJp ?? null) :
+                        lang === "JP_EN" ? (s.descriptionJpEn ?? s.descriptionJp ?? null) :
+                                           (s.description ?? null);
+                      if (!desc) return null;
                       const title = lang === "JP_EN" && s.nameJp ? s.nameJp.replace(/ネス/g, "Ness") : lang === "JP" && s.nameJp ? s.nameJp : s.name;
                       return desc ? (
                         <div key={s.id} className="border-l-2 border-purple-500/20 pl-4">
