@@ -445,6 +445,11 @@ export default async function FighterPage({ params }: PageProps) {
       { title: "The Legend of Zelda: A Link to the Past", console: "Super Nintendo Entertainment System" },
       { title: "The Legend of Zelda: Ocarina of Time", console: "Nintendo 64" },
     ],
+    "Samus": [
+      { title: "Metroid", console: "Nintendo Entertainment System" },
+      { title: "Metroid II: Return of Samus", console: "Game Boy" },
+      { title: "Super Metroid", console: "Super Nintendo Entertainment System" },
+    ],
   };
 
   if (SSB64_WORKS[fighter.name]) {
