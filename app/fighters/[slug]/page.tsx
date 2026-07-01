@@ -455,6 +455,11 @@ export default async function FighterPage({ params }: PageProps) {
       { title: "Super Mario World 2: Yoshi's Island", console: "Super Nintendo Entertainment System" },
       { title: "Yoshi's Story", console: "Nintendo 64" },
     ],
+    "Kirby": [
+      { title: "Kirby's Dream Land", console: "Game Boy" },
+      { title: "Kirby's Adventure", console: "Nintendo Entertainment System" },
+      { title: "Kirby Super Star", console: "Super Nintendo Entertainment System" },
+    ],
   };
 
   if (SSB64_WORKS[fighter.name]) {
