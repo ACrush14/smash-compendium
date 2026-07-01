@@ -473,6 +473,10 @@ export default async function FighterPage({ params }: PageProps) {
       { title: "Super Mario Bros. 2", console: "Nintendo Entertainment System" },
       { title: "Super Mario Bros. 3", console: "Nintendo Entertainment System" },
     ],
+    "Captain Falcon": [
+      { title: "F-Zero", console: "Super Nintendo Entertainment System" },
+      { title: "F-Zero X", console: "Nintendo 64" },
+    ],
   };
 
   if (SSB64_WORKS[fighter.name]) {
