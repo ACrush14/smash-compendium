@@ -464,6 +464,10 @@ export default async function FighterPage({ params }: PageProps) {
       { title: "Star Fox", console: "Super Nintendo Entertainment System" },
       { title: "Star Fox 64", console: "Nintendo 64" },
     ],
+    "Pikachu": [
+      { title: "Pokémon Red Version", console: "Game Boy" },
+      { title: "Pokémon Yellow: Special Pikachu Edition", console: "Game Boy" },
+    ],
   };
 
   if (SSB64_WORKS[fighter.name]) {
