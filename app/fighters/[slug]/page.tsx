@@ -477,6 +477,9 @@ export default async function FighterPage({ params }: PageProps) {
       { title: "F-Zero", console: "Super Nintendo Entertainment System" },
       { title: "F-Zero X", console: "Nintendo 64" },
     ],
+    "Jigglypuff": [
+      { title: "Pokémon Red Version", console: "Game Boy" },
+    ],
   };
 
   if (SSB64_WORKS[fighter.name]) {
