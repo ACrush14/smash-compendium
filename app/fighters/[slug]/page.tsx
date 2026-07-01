@@ -460,6 +460,10 @@ export default async function FighterPage({ params }: PageProps) {
       { title: "Kirby's Adventure", console: "Nintendo Entertainment System" },
       { title: "Kirby Super Star", console: "Super Nintendo Entertainment System" },
     ],
+    "Fox": [
+      { title: "Star Fox", console: "Super Nintendo Entertainment System" },
+      { title: "Star Fox 64", console: "Nintendo 64" },
+    ],
   };
 
   if (SSB64_WORKS[fighter.name]) {
