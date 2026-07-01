@@ -450,6 +450,11 @@ export default async function FighterPage({ params }: PageProps) {
       { title: "Metroid II: Return of Samus", console: "Game Boy" },
       { title: "Super Metroid", console: "Super Nintendo Entertainment System" },
     ],
+    "Yoshi": [
+      { title: "Super Mario World", console: "Super Nintendo Entertainment System" },
+      { title: "Super Mario World 2: Yoshi's Island", console: "Super Nintendo Entertainment System" },
+      { title: "Yoshi's Story", console: "Nintendo 64" },
+    ],
   };
 
   if (SSB64_WORKS[fighter.name]) {
