@@ -478,9 +478,11 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
               .filter((x) => x.text);
             const eraWorkGames: WorkGame[] = (worksPerGame && worksPerGame[gameVer]) ? worksPerGame[gameVer]! : (originWorkGames ?? []);
 
-            const mainTrophyWithVideo = 
-              eraTrophy.find(t => t.name === meta?.short && t.videoStartSec != null && t.videoEndSec != null) || 
-              eraTrophy.find(t => t.videoStartSec != null && t.videoEndSec != null);
+            const mainTrophyWithVideo =
+              eraTrophy.find(t => t.name === meta?.short && t.videoStartSec != null && t.videoEndSec != null) ||
+              eraTrophy.find(t => t.videoStartSec != null && t.videoEndSec != null) ||
+              // Fallback: some SSB4 trophies only have 3DS footage (no Wii U trophy exists)
+              eraTrophy.find(t => t.videoStartSec2 != null && t.videoEndSec2 != null);
 
             return (
               <div
@@ -497,12 +499,12 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                       startSec={bio.videoStartSec}
                       endSec={bio.videoEndSec}
                     />
-                  ) : mainTrophyWithVideo && TROPHY_LOCAL_VIDEOS[gameVer] ? (
+                  ) : mainTrophyWithVideo && mainTrophyWithVideo.videoStartSec != null && mainTrophyWithVideo.videoEndSec != null && TROPHY_LOCAL_VIDEOS[gameVer] ? (
                     <>
                       <VideoSection
                         src={TROPHY_LOCAL_VIDEOS[gameVer]!}
-                        startSec={mainTrophyWithVideo.videoStartSec!}
-                        endSec={mainTrophyWithVideo.videoEndSec!}
+                        startSec={mainTrophyWithVideo.videoStartSec}
+                        endSec={mainTrophyWithVideo.videoEndSec}
                         badge={mainTrophyWithVideo.videoStartSec2 != null ? "Wii U" : undefined}
                         className="mb-3"
                       />
@@ -516,6 +518,15 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                         />
                       )}
                     </>
+                  ) : mainTrophyWithVideo && mainTrophyWithVideo.videoStartSec2 != null && mainTrophyWithVideo.videoEndSec2 != null && gameVer === "SSB4" ? (
+                    // Trophy only has 3DS footage (no Wii U trophy exists for this fighter)
+                    <VideoSection
+                      src={FULL_VIDEOS.SSB4_3DS ?? ""}
+                      startSec={mainTrophyWithVideo.videoStartSec2}
+                      endSec={mainTrophyWithVideo.videoEndSec2}
+                      badge="3DS"
+                      borderClass="border-red-500/20"
+                    />
                   ) : null}
 
                   {gameVer === "SSB64" && (
