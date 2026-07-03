@@ -83,6 +83,29 @@ async function main() {
     console.log("✅ \"Rosalina & Luma (Alt.)\" [SSB4]: linkado (vídeo já era válido, mantido)");
   }
 
+  // SSB4 bio was missing entirely — official JP text found via smashwiki.info screenshot
+  const existingSSB4Bio = await db.fighterBio.findFirst({ where: { fighterId: rosalina.id, smashGameVersion: "SSB4" } });
+  if (!existingSSB4Bio) {
+    await db.fighterBio.create({
+      data: {
+        fighterId: rosalina.id,
+        smashGameVersion: "SSB4",
+        contentEn: "Rosalina, the mistress of the \"Comet Observatory,\" is a mysterious woman who travels with the star child Luma. In Smash Bros., Rosalina and Luma's greatest feature is their ability to attack simultaneously while separated. Skillfully pincering an opponent between them can deal unexpectedly high damage. Make good use of \"Luma Shot,\" which can launch Luma far away or call it back.",
+        contentJp: "「ほうき星の天文台」の主であるロゼッタは、星の子のチコとともに旅をする謎の女性だ。『スマブラ』のロゼッタとチコは、離れて同時に攻撃できるのが最大の特徴。相手を上手く挟み込み攻撃すれば思いがけないダメージを与えることもある。チコを遠くまで飛ばしたり、戻したりできる「チコシュート」を上手に使おう。",
+        contentJpEn: "Rosalina, the mistress of the \"Comet Observatory,\" is a mysterious woman who travels with the star child Luma. In Smash Bros., Rosalina and Luma's greatest feature is their ability to attack simultaneously while separated. Skillfully pincering an opponent between them can deal unexpectedly high damage. Make good use of \"Luma Shot,\" which can launch Luma far away or call it back.",
+        contentPt: "A Rosalina, senhora do \"Comet Observatory,\" é uma mulher misteriosa que viaja com a criança-estrela Luma. Em Smash Bros., a maior característica da Rosalina e do Luma é a capacidade de atacar simultaneamente enquanto separados. Encurralar habilmente um adversário entre os dois pode causar dano inesperadamente alto. Use bem o \"Luma Shot,\" que pode lançar o Luma para longe ou chamá-lo de volta.",
+      },
+    });
+    console.log("✅ Bio [SSB4]: criada com EN+JP+PT+JpEn (estava faltando inteiramente)");
+  }
+
+  // "Power Star" (SSB4_WIIU) orphan — Final Smash icon trophy, missed by earlier "Rosalina" name search
+  const powerStar = await db.collectible.findFirst({ where: { name: "Power Star", smashGameVersion: "SSB4_WIIU" }, select: { id: true } });
+  if (powerStar) {
+    await db.collectible.update({ where: { id: powerStar.id }, data: { smashGameVersion: "SSB4", fighterId: rosalina.id } });
+    console.log("✅ \"Power Star\": normalizado SSB4, linkado");
+  }
+
   await db.$disconnect();
 }
 main().catch(console.error);
