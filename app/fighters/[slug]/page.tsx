@@ -114,7 +114,7 @@ export default async function FighterPage({ params }: PageProps) {
 
   // Ordena corretamente: "1","2",...,"33","33a","33b","33c","34",...
   function parseRoster(r: string): [number, string] {
-    const m = r.match(/^(\d+)([a-z]*)$/);
+    const m = r.match(/^(\d+)(.*)$/);
     return m ? [Number(m[1]), m[2] ?? ""] : [9999, r];
   }
   const sortedFighters = [...allFightersRaw].sort((a, b) => {
@@ -235,22 +235,40 @@ export default async function FighterPage({ params }: PageProps) {
       assetType: "art", era: "SSBM" });
   }
   for (const t of trophiesByGame.get("SSBM") ?? []) {
-    if (!t.assetRenderUrl) continue;
-    vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
-      sublabel: "Troféu 3D oficial · Super Smash Bros. Melee (GameCube, 2001)", assetType: "trophy",
-      era: "SSBM", href: `/collectibles?type=TROPHY&game=SSBM&trophy=${t.id}` });
+    if (t.assetRenderUrl) {
+      vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
+        sublabel: "Troféu 3D oficial · Super Smash Bros. Melee (GameCube, 2001)", assetType: "trophy",
+        era: "SSBM", href: `/collectibles?type=TROPHY&game=SSBM&trophy=${t.id}` });
+    }
+    if (t.assetRender2Url) {
+      vaultAssets.push({ url: t.assetRender2Url, label: `${t.name} (360°)`,
+        sublabel: "Troféu 3D em rotação · Super Smash Bros. Melee (GameCube, 2001)", assetType: "trophy",
+        era: "SSBM", href: `/collectibles?type=TROPHY&game=SSBM&trophy=${t.id}` });
+    }
   }
   for (const t of trophiesByGame.get("SSBB") ?? []) {
-    if (!t.assetRenderUrl) continue;
-    vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
-      sublabel: "Troféu 3D oficial · Super Smash Bros. Brawl (Wii, 2008)", assetType: "trophy",
-      era: "SSBB", href: `/collectibles?type=TROPHY&game=SSBB&trophy=${t.id}` });
+    if (t.assetRenderUrl) {
+      vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
+        sublabel: "Troféu 3D oficial · Super Smash Bros. Brawl (Wii, 2008)", assetType: "trophy",
+        era: "SSBB", href: `/collectibles?type=TROPHY&game=SSBB&trophy=${t.id}` });
+    }
+    if (t.assetRender2Url) {
+      vaultAssets.push({ url: t.assetRender2Url, label: `${t.name} (360°)`,
+        sublabel: "Troféu 3D em rotação · Super Smash Bros. Brawl (Wii, 2008)", assetType: "trophy",
+        era: "SSBB", href: `/collectibles?type=TROPHY&game=SSBB&trophy=${t.id}` });
+    }
   }
   for (const t of trophiesByGame.get("SSB4") ?? []) {
-    if (!t.assetRenderUrl) continue;
-    vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
-      sublabel: "Troféu 3D oficial · Super Smash Bros. for Wii U / 3DS (2014)", assetType: "trophy",
-      era: "SSB4", href: `/collectibles?type=TROPHY&game=SSB4&trophy=${t.id}` });
+    if (t.assetRenderUrl) {
+      vaultAssets.push({ url: t.assetRenderUrl, label: t.name,
+        sublabel: "Troféu 3D oficial · Super Smash Bros. for Wii U / 3DS (2014)", assetType: "trophy",
+        era: "SSB4", href: `/collectibles?type=TROPHY&game=SSB4&trophy=${t.id}` });
+    }
+    if (t.assetRender2Url) {
+      vaultAssets.push({ url: t.assetRender2Url, label: `${t.name} (360°)`,
+        sublabel: "Troféu 3D em rotação · Super Smash Bros. for Wii U / 3DS (2014)", assetType: "trophy",
+        era: "SSB4", href: `/collectibles?type=TROPHY&game=SSB4&trophy=${t.id}` });
+    }
   }
 
   // 3. Spirits (SSBU) — render oficial → spirits
