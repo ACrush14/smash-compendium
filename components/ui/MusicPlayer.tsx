@@ -37,7 +37,7 @@ export interface MusicTrack {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function MusicPlayer({ youtubeId, title, artist, autoPlay }: MusicTrack & { autoPlay?: boolean }) {
+export default function MusicPlayer({ youtubeId, title, artist, autoPlay, onEnded }: MusicTrack & { autoPlay?: boolean; onEnded?: () => void }) {
   const mountRef   = useRef<HTMLDivElement>(null);
   const playerRef  = useRef<YTPlayer | null>(null);
   const tickRef    = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -48,6 +48,9 @@ export default function MusicPlayer({ youtubeId, title, artist, autoPlay }: Musi
   const [duration,    setDuration]    = useState(0);
   const [volume,      setVolumeState] = useState(1);
   const [loading,     setLoading]     = useState(true);
+
+  const onEndedRef = useRef(onEnded);
+  onEndedRef.current = onEnded;
 
   const setVolume = (v: number) => {
     setVolumeState(v);
@@ -103,7 +106,10 @@ export default function MusicPlayer({ youtubeId, title, artist, autoPlay }: Musi
             } else {
               setPlaying(false);
               stopTick();
-              if (e.data === window.YT.PlayerState.ENDED) setCurrentTime(0);
+              if (e.data === window.YT.PlayerState.ENDED) {
+                setCurrentTime(0);
+                onEndedRef.current?.();
+              }
             }
           },
         },
