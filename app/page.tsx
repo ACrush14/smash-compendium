@@ -6,7 +6,6 @@ import {
   Tag,
   BookOpen,
   Music2,
-  Image as ImageIcon,
   ChevronRight,
   Terminal,
   CircleDot,
@@ -17,6 +16,7 @@ import {
 } from "lucide-react";
 import { Suspense } from "react";
 import { SearchBar } from "@/components/ui/SearchBar";
+import { RandomAssetShowcase } from "@/components/ui/RandomAssetShowcase";
 import { db } from "@/lib/db";
 import type { Fighter, Franchise } from "@prisma/client";
 
@@ -104,7 +104,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
   const query = (q ?? "").trim();
 
   // Queries paralelas ao banco
-  const [fighterCount, franchiseCount, gameCount, trophyCount, spiritCount, stickerCount, musicCount, approvedCount, searchResults] = await Promise.all([
+  const [fighterCount, franchiseCount, gameCount, trophyCount, spiritCount, stickerCount, musicCount, approvedCount, searchResults, showcaseAssets] = await Promise.all([
     db.fighter.count(),
     db.franchise.count(),
     db.chronicleEntry.count(),
@@ -126,6 +126,11 @@ export default async function VaultPage({ searchParams }: PageProps) {
           orderBy: { rosterNumber: "asc" },
         })
       : Promise.resolve([]),
+    db.$queryRaw<{ name: string; assetRenderUrl: string }[]>`
+      SELECT name, "assetRenderUrl" FROM "Collectible"
+      WHERE type = 'TROPHY' AND "assetRenderUrl" IS NOT NULL
+      ORDER BY RANDOM() LIMIT 20
+    `,
   ]);
 
   const curationPct = fighterCount > 0 ? Math.round((approvedCount / fighterCount) * 100) : 0;
@@ -316,8 +321,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
                 }}
               >
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
-                <ImageIcon className="mb-3 h-16 w-16 text-slate-700 md:h-20 md:w-20" strokeWidth={1} />
-                <span className="text-center font-mono text-xs text-slate-600">RENDER 3D<br />AGUARDANDO ASSET</span>
+                <RandomAssetShowcase assets={showcaseAssets.map(a => ({ name: a.name, url: a.assetRenderUrl }))} />
                 <span className="absolute left-2 top-2 h-4 w-4 border-l border-t border-amber-500/40" />
                 <span className="absolute right-2 top-2 h-4 w-4 border-r border-t border-amber-500/40" />
                 <span className="absolute bottom-2 left-2 h-4 w-4 border-b border-l border-amber-500/40" />
