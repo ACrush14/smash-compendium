@@ -391,7 +391,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
     :                  curatorOverviewEn;
 
   return (
-    <div className="px-10 py-8 flex flex-col gap-8">
+    <div className="px-4 py-8 flex flex-col gap-8 lg:px-10">
 
       {activeTab === "PROFILE" && (
       <section>
@@ -410,7 +410,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
           <span className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-cyan-500/40" />
 
           <div className="p-6 flex flex-col gap-5">
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               {[
                 { label: t(lang, "eras"),     value: fichaCounters.eras     },
                 { label: t(lang, "trophies"), value: fichaCounters.trophies },

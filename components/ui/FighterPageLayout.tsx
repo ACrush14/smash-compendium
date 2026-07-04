@@ -36,12 +36,12 @@ export default function FighterPageLayout({
   return (
     <>
       {/* ZONA ESQUERDA — MediaVault (5 cols) */}
-      <aside className="col-span-5 relative border-r border-cyan-500/10">
+      <aside className="relative col-span-1 h-[60vh] border-b border-cyan-500/10 lg:col-span-5 lg:h-auto lg:border-b-0 lg:border-r">
         <MediaVaultViewer assets={assets} music={music} lang={lang} />
       </aside>
 
       {/* ZONA DIREITA — FighterRightPanel */}
-      <div className="col-span-7 relative">
+      <div className="relative col-span-1 lg:col-span-7">
         <FighterRightPanel
           fighterId={fighterId}
           fighterSlug={fighterSlug}

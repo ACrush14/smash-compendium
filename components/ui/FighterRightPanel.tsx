@@ -37,15 +37,15 @@ export default function FighterRightPanel({ fighterId, fighterSlug, suggestions,
 
   return (
     <div
-      className="absolute inset-0 overflow-y-auto"
+      className="static overflow-visible lg:absolute lg:inset-0 lg:overflow-y-auto"
       style={{ scrollbarWidth: "thin", scrollbarColor: "rgba(64,180,255,0.08) transparent" }}
     >
       {/* ── Fighter Header (sticky — compacto) ────────────────────── */}
       <div
-        className="sticky top-0 z-20 border-b border-cyan-500/10 px-10 py-4"
+        className="sticky top-0 z-20 border-b border-cyan-500/10 px-4 py-4 lg:px-10"
         style={{ background: "rgba(5,5,24,0.96)", backdropFilter: "blur(12px)" }}
       >
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
           {/* Meta + Nome */}
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-2 mb-1">
@@ -95,7 +95,7 @@ export default function FighterRightPanel({ fighterId, fighterSlug, suggestions,
 
           {/* Badges compactos no header sticky */}
           {header.appearances.length > 0 && (
-            <div className="flex items-center gap-1.5 flex-wrap justify-end shrink-0">
+            <div className="flex flex-wrap items-center gap-1.5 justify-start sm:justify-end shrink-0">
               {header.appearances.map((ver, i) => {
                 const meta = GAME_META[ver];
                 if (!meta) return null;
@@ -116,22 +116,22 @@ export default function FighterRightPanel({ fighterId, fighterSlug, suggestions,
         </div>
 
         {/* TABS */}
-        <div className="mt-2 flex items-center gap-6 border-b border-cyan-500/10">
+        <div className="mt-2 flex items-center gap-3 overflow-x-auto border-b border-cyan-500/10 sm:gap-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <button 
             onClick={() => setActiveTab("SMASH")}
-            className={`pb-2 font-mono text-[11px] uppercase tracking-widest transition-colors ${activeTab === "SMASH" ? "text-cyan-400 border-b-2 border-cyan-400" : "text-cyan-900 hover:text-cyan-600"}`}
+            className={`shrink-0 whitespace-nowrap pb-2 font-mono text-[11px] uppercase tracking-widest transition-colors ${activeTab === "SMASH" ? "text-cyan-400 border-b-2 border-cyan-400" : "text-cyan-900 hover:text-cyan-600"}`}
           >
             Série Smash
           </button>
           <button 
             onClick={() => setActiveTab("ORIGINS")}
-            className={`pb-2 font-mono text-[11px] uppercase tracking-widest transition-colors ${activeTab === "ORIGINS" ? "text-cyan-400 border-b-2 border-cyan-400" : "text-cyan-900 hover:text-cyan-600"}`}
+            className={`shrink-0 whitespace-nowrap pb-2 font-mono text-[11px] uppercase tracking-widest transition-colors ${activeTab === "ORIGINS" ? "text-cyan-400 border-b-2 border-cyan-400" : "text-cyan-900 hover:text-cyan-600"}`}
           >
             Aparições Originais
           </button>
           <button 
             onClick={() => setActiveTab("PROFILE")}
-            className={`pb-2 font-mono text-[11px] uppercase tracking-widest transition-colors ${activeTab === "PROFILE" ? "text-cyan-400 border-b-2 border-cyan-400" : "text-cyan-900 hover:text-cyan-600"}`}
+            className={`shrink-0 whitespace-nowrap pb-2 font-mono text-[11px] uppercase tracking-widest transition-colors ${activeTab === "PROFILE" ? "text-cyan-400 border-b-2 border-cyan-400" : "text-cyan-900 hover:text-cyan-600"}`}
           >
             Perfil & Dados
           </button>
@@ -140,7 +140,7 @@ export default function FighterRightPanel({ fighterId, fighterSlug, suggestions,
 
       {/* ── Showcase: Jogos de Origem ──────────── */}
       {activeTab === "ORIGINS" && (
-        <div className="px-10 pt-8 pb-6 flex flex-col gap-6">
+        <div className="px-4 pt-8 pb-6 flex flex-col gap-6 lg:px-10">
 
           {/* Jogos de Origem com placeholders */}
           {originGames.length > 0 && (
@@ -191,7 +191,7 @@ export default function FighterRightPanel({ fighterId, fighterSlug, suggestions,
       {associatedCardsNode}
 
       {/* ── Footer ─────────────────────────────────────────────── */}
-      <footer className="border-t border-cyan-500/10 px-10 py-5">
+      <footer className="border-t border-cyan-500/10 px-4 py-5 lg:px-10">
         <div className="flex items-center justify-between">
           <Link href="/" className="font-black italic text-[10px] tracking-tight text-slate-700 hover:text-slate-500 transition-colors">
             SMASH<span className="text-amber-900">COMPENDIUM</span>

@@ -142,7 +142,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
 
       {/* HEADER */}
       <header className="sticky top-0 z-50 border-b border-white/5 bg-slate-950/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center gap-6 px-6 py-3">
+        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:gap-6 sm:px-6">
           <div className="flex shrink-0 items-center gap-2.5">
             <Zap className="h-5 w-5 text-amber-400" strokeWidth={2.5} />
             <span className="font-black italic tracking-tight text-white" style={{ fontSize: "1.15rem", letterSpacing: "-0.02em" }}>
@@ -151,7 +151,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
           </div>
           <Suspense
             fallback={
-              <div className="relative flex-1 max-w-xl mx-auto">
+              <div className="relative min-w-0 flex-1 sm:max-w-xl sm:mx-auto">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-600" />
                 <div className="w-full rounded-none border border-slate-700/60 bg-slate-900/80 py-2 pl-9 pr-4 text-sm text-slate-600">
                   Buscar lutador, franquia...
@@ -161,7 +161,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
           >
             <SearchBar />
           </Suspense>
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="hidden shrink-0 items-center gap-2 sm:flex">
             <PulsingDot />
             <span className="text-xs font-medium text-slate-400">Acervo Sincronizado</span>
           </div>
@@ -170,20 +170,20 @@ export default async function VaultPage({ searchParams }: PageProps) {
 
       {/* BARRA DE CURADORIA */}
       <div className="border-b border-white/[0.06] bg-[#020510]">
-        <div className="mx-auto max-w-7xl px-6 py-2.5 flex items-center gap-4">
+        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-2.5 sm:gap-4 sm:px-6">
 
           {/* Label */}
-          <div className="flex items-center gap-1.5 shrink-0">
+          <div className="flex shrink-0 items-center gap-1.5">
             <span className={`h-1.5 w-1.5 rounded-full ${
               curationPct === 100 ? "bg-emerald-400 animate-pulse" : "bg-amber-500/50"
             }`} />
-            <span className="font-mono text-[10px] uppercase tracking-widest text-slate-600">
+            <span className="hidden font-mono text-[10px] uppercase tracking-widest text-slate-600 sm:inline">
               Curadoria do Acervo
             </span>
           </div>
 
           {/* Bar */}
-          <div className="flex-1 h-1 bg-white/[0.04] rounded-full overflow-hidden">
+          <div className="h-1 min-w-0 flex-1 overflow-hidden rounded-full bg-white/[0.04]">
             <div
               className={`h-full rounded-full transition-all duration-700 ${
                 curationPct === 100
@@ -205,7 +205,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
               {approvedCount}
             </span>
             <span className="text-slate-700">/</span>
-            <span className="text-slate-600">{fighterCount} fighters</span>
+            <span className="text-slate-600">{fighterCount}<span className="hidden sm:inline"> fighters</span></span>
             <span className="text-slate-700 mx-1">·</span>
             <span className={`font-bold ${
               curationPct === 100 ? "text-emerald-400" :
@@ -213,13 +213,13 @@ export default async function VaultPage({ searchParams }: PageProps) {
             }`}>
               {curationPct}%
             </span>
-            <span className="text-slate-700">curados</span>
+            <span className="hidden text-slate-700 sm:inline">curados</span>
           </div>
 
           {/* Admin link */}
           <a
             href="/admin/fighters"
-            className="shrink-0 font-mono text-[9px] text-slate-700 hover:text-slate-400 border border-white/5 hover:border-white/15 px-2 py-0.5 transition-all"
+            className="hidden shrink-0 font-mono text-[9px] text-slate-700 hover:text-slate-400 border border-white/5 hover:border-white/15 px-2 py-0.5 transition-all sm:inline-block"
           >
             gerenciar ↗
           </a>

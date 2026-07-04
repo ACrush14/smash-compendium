@@ -135,25 +135,26 @@ export default async function FranchisePage({ params }: PageProps) {
 
       {/* ── Global nav ──────────────────────────────────────────────────── */}
       <header className="relative z-50 border-b border-cyan-500/10 bg-[#050518]/92 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto flex items-center gap-4 px-6 py-3">
+        <div className="max-w-7xl mx-auto flex items-center gap-2 px-4 py-3 sm:gap-4 sm:px-6">
           <Link href="/" className="flex shrink-0 items-center gap-2">
             <Zap className="h-4 w-4 text-amber-400" strokeWidth={2.5} />
-            <span className="font-black italic text-sm tracking-tight text-white">
+            <span className="hidden font-black italic text-sm tracking-tight text-white sm:inline">
               SMASH<span className="text-amber-400">COMPENDIUM</span>
             </span>
           </Link>
-          <div className="flex items-center gap-1 font-mono text-[10px] text-cyan-900">
-            <ChevronRight className="h-3 w-3" />
-            <Link href="/franchise" className="hover:text-cyan-500 transition-colors">Franquias</Link>
-            <ChevronRight className="h-3 w-3" />
-            <span className="text-cyan-700">{franchise.name}</span>
+          <div className="flex min-w-0 items-center gap-1 font-mono text-[10px] text-cyan-900">
+            <ChevronRight className="h-3 w-3 shrink-0" />
+            <Link href="/franchise" className="hidden shrink-0 hover:text-cyan-500 transition-colors sm:inline">Franquias</Link>
+            <ChevronRight className="hidden h-3 w-3 shrink-0 sm:block" />
+            <span className="truncate text-cyan-700">{franchise.name}</span>
           </div>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex shrink-0 items-center gap-2">
             <Link
               href="/fighters"
               className="font-mono text-[9px] text-slate-600 hover:text-slate-400 transition-colors"
             >
-              Todos os Fighters →
+              <span className="sm:hidden">Fighters →</span>
+              <span className="hidden sm:inline">Todos os Fighters →</span>
             </Link>
           </div>
         </div>

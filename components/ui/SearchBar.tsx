@@ -53,7 +53,7 @@ export function SearchBar() {
   useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
 
   return (
-    <div className="relative flex-1 max-w-xl mx-auto">
+    <div className="relative min-w-0 flex-1 sm:max-w-xl sm:mx-auto">
       {/* Ícone esquerdo: spinner durante transição, lupa em repouso */}
       <div className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">
         {isPending

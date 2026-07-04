@@ -552,7 +552,7 @@ export default async function FighterPage({ params }: PageProps) {
   // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col text-slate-100 antialiased relative" style={{ background: "#0a0a2a" }}>
+    <div className="flex min-h-screen flex-col overflow-y-auto text-slate-100 antialiased relative lg:h-screen lg:overflow-hidden" style={{ background: "#0a0a2a" }}>
 
       {/* ── Grid em perspectiva (fundo) ─────────────────────────────── */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
@@ -577,22 +577,22 @@ export default async function FighterPage({ params }: PageProps) {
 
       {/* ── Global Header ───────────────────────────────────────────── */}
       <header className="shrink-0 z-50 border-b border-cyan-500/10 bg-[#050518]/92 backdrop-blur-sm relative">
-        <div className="flex items-center gap-4 px-6 py-3">
+        <div className="flex items-center gap-2 px-4 py-3 sm:gap-4 sm:px-6">
           <Link href="/" className="flex shrink-0 items-center gap-2">
             <Zap className="h-4 w-4 text-amber-400" strokeWidth={2.5} />
-            <span className="font-black italic text-sm tracking-tight text-white">
+            <span className="hidden font-black italic text-sm tracking-tight text-white sm:inline">
               SMASH<span className="text-amber-400">COMPENDIUM</span>
             </span>
           </Link>
-          <div className="flex items-center gap-1 font-mono text-[10px] text-cyan-900">
-            <ChevronRight className="h-3 w-3" />
-            <Link href="/fighters" className="hover:text-cyan-500 transition-colors">Lutadores</Link>
-            <ChevronRight className="h-3 w-3" />
-            <span className="text-cyan-700">{fighter.name}</span>
+          <div className="flex min-w-0 items-center gap-1 font-mono text-[10px] text-cyan-900">
+            <ChevronRight className="h-3 w-3 shrink-0" />
+            <Link href="/fighters" className="hidden shrink-0 hover:text-cyan-500 transition-colors sm:inline">Lutadores</Link>
+            <ChevronRight className="hidden h-3 w-3 shrink-0 sm:block" />
+            <span className="truncate text-cyan-700">{fighter.name}</span>
           </div>
 
           {/* Curation status badge */}
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex shrink-0 items-center gap-2">
             {fighter.curationStatus === "approved" ? (
               <span className="font-mono text-[9px] text-emerald-500/50 border border-emerald-500/15 px-1.5 py-0.5">
                 ✓ CURADO
@@ -604,7 +604,7 @@ export default async function FighterPage({ params }: PageProps) {
             )}
             <Link
               href="/admin/fighters"
-              className="font-mono text-[9px] text-slate-700 hover:text-slate-400 border border-white/5 hover:border-white/15 px-1.5 py-0.5 transition-all"
+              className="hidden font-mono text-[9px] text-slate-700 hover:text-slate-400 border border-white/5 hover:border-white/15 px-1.5 py-0.5 transition-all sm:inline-block"
             >
               ADMIN ↗
             </Link>
@@ -613,7 +613,7 @@ export default async function FighterPage({ params }: PageProps) {
       </header>
 
       {/* ── Split Body ──────────────────────────────────────────────── */}
-      <main className="flex-1 grid grid-cols-12 overflow-hidden min-h-0 relative z-10">
+      <main className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-visible lg:overflow-hidden min-h-0 relative z-10">
         <FighterPageLayout
           fighterId={fighter.id}
           fighterSlug={name}
