@@ -166,7 +166,9 @@ async function buildJpNameIndex(): Promise<Map<string, string>> {
 
 // ─── Upsert principal ─────────────────────────────────────────────────────────
 
-export async function scrapeAndUpsertCollectibles(): Promise<void> {
+export async function scrapeAndUpsertCollectibles(
+  typeFilter?: "TROPHY" | "SPIRIT" | "STICKER",
+): Promise<void> {
   const fighters   = await db.fighter.findMany();
   const fighterIdx = buildFighterIndex(fighters);
 
@@ -187,7 +189,9 @@ export async function scrapeAndUpsertCollectibles(): Promise<void> {
 
   let totalProcessed = 0;
 
-  for (const source of SOURCES) {
+  const activeSources = typeFilter ? SOURCES.filter(s => s.type === typeFilter) : SOURCES;
+
+  for (const source of activeSources) {
     const items = await scrapeCollectiblePage(source.url, source.type, source.version);
 
     for (const item of items) {
