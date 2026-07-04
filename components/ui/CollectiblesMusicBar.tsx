@@ -17,9 +17,11 @@ const TRACKS: Track[] = [
   { youtubeId: "E2hAVnmPXjI", title: "Spirits: Collection", artist: "Super Smash Bros. Ultimate" },
 ];
 
+const FIRST_TRACK = TRACKS[0]!;
+
 function pickRandomTrack(excludeId?: string): Track {
   const pool = excludeId ? TRACKS.filter(t => t.youtubeId !== excludeId) : TRACKS;
-  return pool[Math.floor(Math.random() * pool.length)];
+  return pool[Math.floor(Math.random() * pool.length)] ?? FIRST_TRACK;
 }
 
 export default function CollectiblesMusicBar() {
@@ -27,7 +29,7 @@ export default function CollectiblesMusicBar() {
   const showMusic = pathname === "/" || pathname === "/collectibles" || pathname === "/chronicles" || pathname.startsWith("/fighters") || pathname === "/music";
 
   // Começa com a primeira faixa (evita mismatch de hidratação) e sorteia após montar no cliente.
-  const [track, setTrack] = useState<Track>(TRACKS[0]);
+  const [track, setTrack] = useState<Track>(FIRST_TRACK);
   useEffect(() => {
     setTrack(pickRandomTrack());
   }, []);
