@@ -7,6 +7,8 @@ import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 import AssociatedCards from "./AssociatedCards";
 import LocalVideoGif from "./LocalVideoGif";
 import { FULL_VIDEOS, cdnUrl } from "@/lib/media-config";
+import { LangSelector, type Lang } from "./FighterDataZone";
+import { pickCollectibleDescription } from "@/lib/collectible-lang";
 
 export interface ChronicleLink {
   id:         string;
@@ -23,6 +25,9 @@ export interface TrophyItem {
   assetRenderUrl:   string | null;
   assetRender2Url:  string | null;  // Imagem 3DS (somente para SSB4 Both)
   descriptionEn:    string | null;
+  descriptionPt?:   string | null;
+  descriptionJp?:   string | null;
+  descriptionJpEn?: string | null;
   sourceGame:       string | null;
   svgIconUrl:       string | null;
   franchiseId:      string | null;
@@ -62,6 +67,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
   const [index, setIndex]         = useState(initialIndex);
   const [direction, setDirection] = useState<"next" | "prev" | null>(null);
   const [query, setQuery]         = useState("");
+  const [lang, setLang]           = useState<Lang>("EN");
   const activeRef     = useRef<HTMLButtonElement>(null);
   const lastCurrentRef = useRef<TrophyItem | null>(null);
 
@@ -449,12 +455,21 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
         {/* ── DIREITA: descrição ── */}
         <div className="flex flex-col gap-3 pt-1">
           {displayed.descriptionEn && (
-            <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
-              <span className="text-[10px] font-bold uppercase tracking-widest text-vault-accent/70 block mb-1.5">
-                Descrição
-              </span>
-              <p className="text-sm text-slate-300 leading-snug">{displayed.descriptionEn}</p>
-            </div>
+            <>
+              <div className="flex justify-end">
+                <LangSelector lang={lang} setLang={setLang} />
+              </div>
+              <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-vault-accent/70 block mb-1.5">
+                  Descrição
+                </span>
+                <p className="text-sm text-slate-300 leading-snug">
+                  {pickCollectibleDescription(displayed, lang) ?? (
+                    <span className="italic text-slate-600">Ainda não traduzido para este idioma.</span>
+                  )}
+                </p>
+              </div>
+            </>
           )}
 
           {/* Jogos de origem — GameCards com capa se disponível */}

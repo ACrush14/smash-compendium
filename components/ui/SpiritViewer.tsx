@@ -5,6 +5,8 @@ import AssociatedCards from "./AssociatedCards";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
+import { LangSelector, type Lang } from "./FighterDataZone";
+import { pickCollectibleDescription } from "@/lib/collectible-lang";
 
 export interface SpiritItem {
   id: string;
@@ -29,6 +31,9 @@ export interface SpiritItem {
   firstWikiUrl: string | null;
   sourceWikiUrl?: string | null;
   descriptionEn: string | null;
+  descriptionPt?: string | null;
+  descriptionJp?: string | null;
+  descriptionJpEn?: string | null;
   relatedItems: RelatedItem[];
 }
 
@@ -38,6 +43,7 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
   const [index, setIndex]         = useState(initialIndex);
   const [direction, setDirection] = useState<"next" | "prev" | null>(null);
   const [query, setQuery]         = useState("");
+  const [lang, setLang]           = useState<Lang>("EN");
   const activeRef = useRef<HTMLButtonElement>(null);
 
   const filtered = query.trim()
@@ -315,12 +321,21 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
                 </div>
               )}
               {current.descriptionEn && (
-                <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-1.5">
-                    Inspiração da Batalha
-                  </span>
-                  <p className="text-sm text-slate-400 leading-snug whitespace-pre-wrap">{current.descriptionEn}</p>
-                </div>
+                <>
+                  <div className="flex justify-end">
+                    <LangSelector lang={lang} setLang={setLang} />
+                  </div>
+                  <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600 block mb-1.5">
+                      Inspiração da Batalha
+                    </span>
+                    <p className="text-sm text-slate-400 leading-snug whitespace-pre-wrap">
+                      {pickCollectibleDescription(current, lang) ?? (
+                        <span className="italic text-slate-700">Ainda não traduzido para este idioma.</span>
+                      )}
+                    </p>
+                  </div>
+                </>
               )}
               {current.spiritCuratorComment && (
                 <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">

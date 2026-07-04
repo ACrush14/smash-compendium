@@ -6,6 +6,8 @@ import { ChevronLeft, ChevronRight, Search, X, Shield, Sword, Heart } from "luci
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 import AssociatedCards from "./AssociatedCards";
 import { ChronicleLink } from "./TrophyViewer";
+import { LangSelector, type Lang } from "./FighterDataZone";
+import { pickCollectibleDescription } from "@/lib/collectible-lang";
 
 export interface StickerItem {
   id: string;
@@ -13,6 +15,10 @@ export interface StickerItem {
   nameJp: string | null;
   orderIndex: number | null;
   assetRenderUrl: string | null;
+  descriptionEn?: string | null;
+  descriptionPt?: string | null;
+  descriptionJp?: string | null;
+  descriptionJpEn?: string | null;
   sourceGame: string | null;
   svgIconUrl: string | null;
   franchiseId: string | null;
@@ -39,6 +45,7 @@ export default function StickerViewer({ stickers, initialIndex = 0 }: Props) {
   const [index, setIndex]         = useState(initialIndex);
   const [direction, setDirection] = useState<"next" | "prev" | null>(null);
   const [query, setQuery]         = useState("");
+  const [lang, setLang]           = useState<Lang>("EN");
   const activeRef     = useRef<HTMLButtonElement>(null);
   const lastCurrentRef = useRef<StickerItem | null>(null);
 
@@ -291,6 +298,25 @@ export default function StickerViewer({ stickers, initialIndex = 0 }: Props) {
                 <p className="text-[10px] font-mono text-vault-accent/50 mt-1">↩ clique para ir à posição</p>
               )}
             </div>
+
+            {/* Descrição */}
+            {displayed.descriptionEn && (
+              <div className="w-full max-w-md flex flex-col gap-2">
+                <div className="flex justify-end">
+                  <LangSelector lang={lang} setLang={setLang} />
+                </div>
+                <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-vault-accent/70 block mb-1.5">
+                    Descrição
+                  </span>
+                  <p className="text-sm text-slate-300 leading-snug">
+                    {pickCollectibleDescription(displayed, lang) ?? (
+                      <span className="italic text-slate-600">Ainda não traduzido para este idioma.</span>
+                    )}
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Jogos de origem — GameCards */}
             {displayed.chronicleLinks.length > 0 ? (
