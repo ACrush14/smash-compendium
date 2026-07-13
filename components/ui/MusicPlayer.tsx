@@ -193,12 +193,12 @@ export default function MusicPlayer({ youtubeId, title, artist, autoPlay, onEnde
       <div className="flex items-center gap-2 mb-2.5">
         <Music2 className="w-3 h-3 text-amber-400 shrink-0" strokeWidth={1.5} />
         <span className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] text-amber-400/80">
-          Trilha Sonora
+          Soundtrack
         </span>
         <div className="flex-1 h-px" style={{ background: "rgba(64,180,255,0.08)" }} />
         {loading && (
           <span className="font-mono text-[8px] text-slate-600 animate-pulse tracking-wide">
-            carregando...
+            loading...
           </span>
         )}
       </div>
@@ -210,7 +210,7 @@ export default function MusicPlayer({ youtubeId, title, artist, autoPlay, onEnde
         <button
           onClick={toggle}
           disabled={!ready}
-          aria-label={playing ? "Pausar" : "Reproduzir"}
+          aria-label={playing ? "Pause" : "Play"}
           className="relative shrink-0 w-9 h-9 flex items-center justify-center text-amber-400 transition-all duration-150 disabled:opacity-20 disabled:cursor-not-allowed group"
           style={{
             background: playing ? "rgba(251,191,36,0.12)" : "rgba(251,191,36,0.05)",

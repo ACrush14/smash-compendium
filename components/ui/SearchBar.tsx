@@ -66,8 +66,8 @@ export function SearchBar() {
         type="search"
         value={value}
         onChange={handleChange}
-        placeholder="Buscar lutador, troféu, spirit…"
-        aria-label="Buscar no acervo"
+        placeholder="Search fighter, trophy, spirit…"
+        aria-label="Search the vault"
         className={[
           "w-full rounded-none border bg-slate-900/80 py-2 pl-9 pr-8",
           "text-sm text-slate-300 placeholder:text-slate-600",
@@ -82,7 +82,7 @@ export function SearchBar() {
       {value && (
         <button
           onClick={handleClear}
-          aria-label="Limpar busca"
+          aria-label="Clear search"
           className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-300 transition-colors"
         >
           <X className="h-3.5 w-3.5" />

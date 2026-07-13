@@ -34,7 +34,7 @@ export function RandomAssetShowcase({ assets }: { assets: ShowcaseAsset[] }) {
     return (
       <>
         <ImageIcon className="mb-3 h-16 w-16 text-slate-700 md:h-20 md:w-20" strokeWidth={1} />
-        <span className="text-center font-mono text-xs text-slate-600">RENDER 3D<br />AGUARDANDO ASSET</span>
+        <span className="text-center font-mono text-xs text-slate-600">3D RENDER<br />AWAITING ASSET</span>
       </>
     );
   }
