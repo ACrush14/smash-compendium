@@ -8,13 +8,13 @@ interface Track { youtubeId: string; title: string; artist: string; }
 
 // Rotação de menus/galerias de troféus & spirits pela história da série
 const TRACKS: Track[] = [
-  { youtubeId: "omS360U3g6Y", title: "Menu",               artist: "Super Smash Bros." },
-  { youtubeId: "XesLSGRTwxM", title: "How to Play",         artist: "Super Smash Bros." },
-  { youtubeId: "kaXGfHXl-q8", title: "Menu",                artist: "Super Smash Bros. Melee" },
-  { youtubeId: "N480Ogy1_Go", title: "Trophies",            artist: "Super Smash Bros. Melee" },
-  { youtubeId: "PCAjipTpk3k", title: "Trophy Gallery",      artist: "Super Smash Bros. Brawl" },
-  { youtubeId: "KmsHxQlVoSk", title: "Trophy Shop",         artist: "Super Smash Bros. for Nintendo 3DS / Wii U" },
-  { youtubeId: "E2hAVnmPXjI", title: "Spirits: Collection", artist: "Super Smash Bros. Ultimate" },
+  { youtubeId: "1rjnjVF5GQk", title: "Menu",          artist: "Super Smash Bros." },
+  { youtubeId: "2LN2xc-RSYo", title: "How to Play",    artist: "Super Smash Bros." },
+  { youtubeId: "5lczYg24vxU", title: "Menu",           artist: "Super Smash Bros. Melee" },
+  { youtubeId: "5ENRqXwIsXM", title: "Trophies",       artist: "Super Smash Bros. Melee" },
+  { youtubeId: "PCAjipTpk3k", title: "Trophy Gallery",  artist: "Super Smash Bros. Brawl" },
+  { youtubeId: "XXCARdf64H4", title: "Trophy Rush",     artist: "Super Smash Bros. for Nintendo 3DS / Wii U" },
+  { youtubeId: "6znq-EYa8C0", title: "Menu",            artist: "Super Smash Bros. Ultimate" },
 ];
 
 const FIRST_TRACK = TRACKS[0]!;

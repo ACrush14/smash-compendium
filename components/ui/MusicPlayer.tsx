@@ -46,7 +46,7 @@ export default function MusicPlayer({ youtubeId, title, artist, autoPlay, onEnde
   const [playing,     setPlaying]     = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration,    setDuration]    = useState(0);
-  const [volume,      setVolumeState] = useState(1);
+  const [volume,      setVolumeState] = useState(5);
   const [loading,     setLoading]     = useState(true);
 
   const onEndedRef = useRef(onEnded);
@@ -92,10 +92,10 @@ export default function MusicPlayer({ youtubeId, title, artist, autoPlay, onEnde
               // Inicia mutado (bypass de bloqueio do browser), depois desmuta com volume baixo
               e.target.playVideo();
               setTimeout(() => {
-                if (!destroyed) { e.target.unMute(); e.target.setVolume(1); }
+                if (!destroyed) { e.target.unMute(); e.target.setVolume(5); }
               }, 800);
             } else {
-              e.target.setVolume(1);
+              e.target.setVolume(5);
             }
           },
           onStateChange: (e: { data: number }) => {
@@ -111,6 +111,14 @@ export default function MusicPlayer({ youtubeId, title, artist, autoPlay, onEnde
                 onEndedRef.current?.();
               }
             }
+          },
+          onError: () => {
+            // Vídeo indisponível/embed bloqueado: pula para a próxima faixa em vez de travar
+            if (destroyed) return;
+            setLoading(false);
+            setPlaying(false);
+            stopTick();
+            onEndedRef.current?.();
           },
         },
       });
