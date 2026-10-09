@@ -25,7 +25,7 @@ O **SmashCompendium** é um museu digital e enciclopédia interativa, desenvolvi
 
 Diferente de wikis tradicionais, o compêndio oferece uma **experiência multilíngue avançada (EN, PT-BR, JP e JP→EN)**, imersão audiovisual através do **MediaVault** (player integrado de trilhas sonoras por lutador) e interconexão direta com o **Nintendo Chronicles** — um catálogo relacional com mais de 1.270 jogos que serve como fonte única de verdade para as origens de cada personagem e colecionável.
 
-> Projeto acadêmico, fan-made e de preservação digital desenvolvido com paixão por **[Anderson Crush](https://andersoncrushdev.vercel.app)**.
+> Projeto acadêmico, fan-made e de preservação digital desenvolvido com paixão por **[Anderson Crush](https://www.andersoncrush.dev)**.
 
 ---
 
@@ -283,10 +283,10 @@ Abaixo está o registro cronológico de todas as grandes evoluções e funcional
 
 <div align="center">
   <p>Desenvolvido com dedicação, rigor técnico e carinho pelos games clássicos por:</p>
-  <h3><a href="https://andersoncrushdev.vercel.app">⚡ Anderson Crush</a></h3>
+  <h3><a href="https://www.andersoncrush.dev">⚡ Anderson Crush</a></h3>
   <p>
     <a href="https://github.com/ACrush14">GitHub</a> • 
-    <a href="https://andersoncrushdev.vercel.app">Portfólio</a>
+    <a href="https://www.andersoncrush.dev">Portfólio</a>
   </p>
   <p><i>SmashCompendium • Versão V00.201 Alpha • 2026</i></p>
 </div>
