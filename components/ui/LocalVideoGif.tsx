@@ -34,20 +34,22 @@ export default function LocalVideoGif({
 
     attemptPlay();
 
-    // Check time repeatedly
-    let animationFrameId: number;
-    const loopCheck = () => {
-      if (video.currentTime >= endSec) {
+    // Repete o trecho usando eventos do próprio vídeo (funciona até em aba oculta, ao contrário de
+    // requestAnimationFrame). O fragmento #t=início,fim faz o navegador pausar exatamente no fim ('pause').
+    const loopIfAtEnd = () => {
+      if (video.currentTime >= endSec - 0.05 || video.currentTime < startSec - 0.5) {
         video.currentTime = startSec;
         attemptPlay();
       }
-      animationFrameId = requestAnimationFrame(loopCheck);
     };
-
-    animationFrameId = requestAnimationFrame(loopCheck);
+    video.addEventListener("timeupdate", loopIfAtEnd);
+    video.addEventListener("pause", loopIfAtEnd);
+    video.addEventListener("ended", loopIfAtEnd);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      video.removeEventListener("timeupdate", loopIfAtEnd);
+      video.removeEventListener("pause", loopIfAtEnd);
+      video.removeEventListener("ended", loopIfAtEnd);
     };
   }, [src, startSec, endSec]);
 

@@ -21,7 +21,8 @@ export function cdnUrl(localPath: string): string {
 }
 
 /**
- * Full-length showcase videos (2–2.7 GB each, never in git).
+ * Full-length showcase videos em WebM 720p sem áudio (gerados por scripts/admin/convert-videos-webm.ts;
+ * os MP4 originais continuam em public/videos/ para os scripts de timestamp). Nunca vão para o git.
  * These are referenced by timestamp (videoStartSec/videoEndSec) from the DB.
  *
  * Upload path: split per fighter with scripts/admin/split-fighters-video.ts,
@@ -29,12 +30,12 @@ export function cdnUrl(localPath: string): string {
  * OR upload full videos to a CDN with ≥ 3 GB free (Cloudflare R2 paid).
  */
 export const FULL_VIDEOS: Record<string, string> = {
-  SSBM:      cdnUrl("/videos/full_video_Zoomzike.mp4"),
-  SSBB:      cdnUrl("/videos/full_video_brawl.mp4"),
-  SSB4:      cdnUrl("/videos/full_video_ssb4_wiiu.mp4"),
-  SSB4_WIIU: cdnUrl("/videos/full_video_ssb4_wiiu.mp4"),
-  SSB4_3DS:  cdnUrl("/videos/full_video_ssb4_3ds.mp4"),
-  SSB64:     cdnUrl("/videos/full_SSB64_video.mp4"),
+  SSBM:      cdnUrl("/videos/full_video_Zoomzike_720p.webm"),
+  SSBB:      cdnUrl("/videos/full_video_brawl_720p.webm"),
+  SSB4:      cdnUrl("/videos/full_video_ssb4_wiiu_720p.webm"),
+  SSB4_WIIU: cdnUrl("/videos/full_video_ssb4_wiiu_720p.webm"),
+  SSB4_3DS:  cdnUrl("/videos/full_video_ssb4_3ds_720p.webm"),
+  SSB64:     cdnUrl("/videos/full_SSB64_video_720p.webm"),
 };
 
 /**
