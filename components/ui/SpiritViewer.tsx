@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import AssociatedCards from "./AssociatedCards";
-import Image from "next/image";
+import SkeletonImage from "@/components/ui/SkeletonImage";
+import { usePreloadImages } from "@/hooks/usePreloadImages";
+import { thumbUrl } from "@/lib/media-config";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 import { LangSelector, type Lang } from "./FighterDataZone";
@@ -60,6 +62,8 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
 
   const safeIndex = Math.min(index, Math.max(0, filtered.length - 1));
   const current   = filtered[safeIndex];
+
+  usePreloadImages([filtered[safeIndex - 1]?.assetRenderUrl, filtered[safeIndex + 1]?.assetRenderUrl, filtered[safeIndex + 2]?.assetRenderUrl]);
 
   // O usuário solicitou um scroll com todos os itens, então não precisamos mais cortar a lista.
   // Renderiza todos os itens filtrados na sidebar scrollable.
@@ -173,8 +177,8 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
                   >
                     <div className="relative w-8 h-8 shrink-0 rounded bg-slate-900/60 overflow-hidden">
                       {spirit.assetRenderUrl && (
-                        <Image
-                          src={spirit.assetRenderUrl}
+                        <SkeletonImage
+                          src={thumbUrl(spirit.assetRenderUrl)}
                           alt={spirit.name}
                           fill
                           className="object-contain"
@@ -266,7 +270,7 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
                     <span className="spirit-rise sr-3"  /><span className="spirit-rise sr-4"  />
                   </div>
                   {current.assetRenderUrl ? (
-                    <Image
+                    <SkeletonImage
                       src={current.assetRenderUrl}
                       alt={current.name}
                       fill

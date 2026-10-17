@@ -1,316 +1,199 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import { Play, Pause, Music2, Volume2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Play, Pause, Music2, Volume2, ChevronDown, AlertTriangle } from "lucide-react";
 
-// ─── YouTube IFrame API types ──────────────────────────────────────────────────
-
-interface YTPlayer {
-  playVideo(): void;
-  pauseVideo(): void;
-  seekTo(seconds: number, allowSeekAhead: boolean): void;
-  getCurrentTime(): number;
-  getDuration(): number;
-  setVolume(volume: number): void;
-  getVolume(): number;
-  unMute(): void;
-  destroy(): void;
-}
-
-declare global {
-  interface Window {
-    YT: {
-      Player: new (el: HTMLElement, opts: object) => YTPlayer;
-      PlayerState: { PLAYING: number; PAUSED: number; ENDED: number; BUFFERING: number };
-    };
-    onYouTubeIframeAPIReady?: () => void;
-  }
-}
-
-// ─── Props ─────────────────────────────────────────────────────────────────────
-
+/** Tipo legado usado pela página do lutador (campo `music`); o player do site usa `AudioSource`. */
 export interface MusicTrack {
   youtubeId: string;
   title:     string;
   artist?:   string;
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+export interface AudioSource {
+  src:  string;
+  type: string;
+}
 
-export default function MusicPlayer({ youtubeId, title, artist, autoPlay, onEnded }: MusicTrack & { autoPlay?: boolean; onEnded?: () => void }) {
-  const mountRef   = useRef<HTMLDivElement>(null);
-  const playerRef  = useRef<YTPlayer | null>(null);
-  const tickRef    = useRef<ReturnType<typeof setInterval> | null>(null);
+interface Props {
+  title:     string;
+  artist?:   string;
+  sources:   AudioSource[];
+  loop?:     boolean;
+  collapsed: boolean;
+  onToggleCollapse: () => void;
+}
 
-  const [ready,       setReady]       = useState(false);
-  const [playing,     setPlaying]     = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration,    setDuration]    = useState(0);
-  const [volume,      setVolumeState] = useState(5);
-  const [loading,     setLoading]     = useState(true);
+const fmt = (s: number) => {
+  if (!isFinite(s) || s <= 0) return "0:00";
+  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = Math.floor(s % 60);
+  return h > 0
+    ? `${h}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`
+    : `${m}:${String(sec).padStart(2, "0")}`;
+};
 
-  const onEndedRef = useRef(onEnded);
-  onEndedRef.current = onEnded;
-
-  const setVolume = (v: number) => {
-    setVolumeState(v);
-    playerRef.current?.setVolume(v);
-  };
-
-  const stopTick = useCallback(() => {
-    if (tickRef.current) { clearInterval(tickRef.current); tickRef.current = null; }
-  }, []);
-
-  const startTick = useCallback(() => {
-    stopTick();
-    tickRef.current = setInterval(() => {
-      setCurrentTime(playerRef.current?.getCurrentTime() ?? 0);
-    }, 200);
-  }, [stopTick]);
+/**
+ * Player de áudio do site. O <audio> fica sempre montado (mesmo recolhido) e pré-carrega o arquivo,
+ * mas só toca quando a pessoa aperta play — nenhum áudio automático.
+ */
+export default function MusicPlayer({ title, artist, sources, loop, collapsed, onToggleCollapse }: Props) {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [playing, setPlaying]   = useState(false);
+  const [current, setCurrent]   = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume]     = useState(10);
+  const [ready, setReady]       = useState(false);
+  const [failed, setFailed]     = useState(false);
 
   useEffect(() => {
-    let destroyed = false;
+    if (audioRef.current) audioRef.current.volume = volume / 100;
+  }, [volume]);
 
-    const init = () => {
-      if (destroyed || !mountRef.current) return;
-      const div = document.createElement("div");
-      mountRef.current.appendChild(div);
-
-      const p = new window.YT.Player(div, {
-        videoId: youtubeId,
-        width:   "1",
-        height:  "1",
-        playerVars: { autoplay: autoPlay ? 1 : 0, mute: autoPlay ? 1 : 0, controls: 0, rel: 0, fs: 0, disablekb: 1, modestbranding: 1, iv_load_policy: 3 },
-        events: {
-          onReady: (e: { target: YTPlayer }) => {
-            if (destroyed) return;
-            playerRef.current = e.target;
-            setDuration(e.target.getDuration());
-            setReady(true);
-            setLoading(false);
-            if (autoPlay) {
-              // Inicia mutado (bypass de bloqueio do browser), depois desmuta com volume baixo
-              e.target.playVideo();
-              setTimeout(() => {
-                if (!destroyed) { e.target.unMute(); e.target.setVolume(5); }
-              }, 800);
-            } else {
-              e.target.setVolume(5);
-            }
-          },
-          onStateChange: (e: { data: number }) => {
-            if (destroyed) return;
-            if (e.data === window.YT.PlayerState.PLAYING) {
-              setPlaying(true);
-              startTick();
-            } else {
-              setPlaying(false);
-              stopTick();
-              if (e.data === window.YT.PlayerState.ENDED) {
-                setCurrentTime(0);
-                onEndedRef.current?.();
-              }
-            }
-          },
-          onError: () => {
-            // Vídeo indisponível/embed bloqueado: pula para a próxima faixa em vez de travar
-            if (destroyed) return;
-            setLoading(false);
-            setPlaying(false);
-            stopTick();
-            onEndedRef.current?.();
-          },
-        },
-      });
-
-      return p;
-    };
-
-    let player: YTPlayer | undefined;
-
-    if (typeof window !== "undefined") {
-      if (window.YT?.Player) {
-        player = init();
-      } else {
-        const prev = window.onYouTubeIframeAPIReady;
-        window.onYouTubeIframeAPIReady = () => {
-          prev?.();
-          player = init();
-        };
-        if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
-          const s    = document.createElement("script");
-          s.src      = "https://www.youtube.com/iframe_api";
-          s.async    = true;
-          document.head.appendChild(s);
-        }
-      }
-    }
-
-    return () => {
-      destroyed = true;
-      stopTick();
-      player?.destroy();
-      playerRef.current = null;
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [youtubeId]);
+  // O áudio pode terminar de carregar antes da hidratação (eventos perdidos): sincroniza o estado ao montar.
+  useEffect(() => {
+    const a = audioRef.current;
+    if (!a) return;
+    if (a.readyState >= 1 && isFinite(a.duration)) setDuration(a.duration);
+    if (a.readyState >= 3) setReady(true);
+  }, []);
 
   const toggle = () => {
-    if (!ready || !playerRef.current) return;
-    playing ? playerRef.current.pauseVideo() : playerRef.current.playVideo();
+    const a = audioRef.current;
+    if (!a || failed) return;
+    if (a.paused) a.play().catch(() => setPlaying(false));
+    else a.pause();
   };
 
   const seek = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ready || !playerRef.current || !duration) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const pct  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-    const t    = pct * duration;
-    playerRef.current.seekTo(t, true);
-    setCurrentTime(t);
+    const a = audioRef.current;
+    if (!a || !duration) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    a.currentTime = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * duration;
   };
 
-  const fmt = (s: number) =>
-    `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+  const pct = duration > 0 ? (current / duration) * 100 : 0;
 
-  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
-
-  return (
-    <div
-      className="shrink-0 px-4 pt-3 pb-3.5"
+  const playButton = (size: string) => (
+    <button
+      onClick={toggle}
+      disabled={!ready || failed}
+      aria-label={playing ? "Pausar música" : "Tocar música"}
+      className={`relative shrink-0 ${size} flex items-center justify-center text-amber-400 transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed`}
       style={{
-        borderTop:  "1px solid rgba(64,180,255,0.07)",
-        background: "linear-gradient(to bottom, rgba(10,8,32,0.95), rgba(5,5,20,0.98))",
+        background: playing ? "rgba(251,191,36,0.14)" : "rgba(251,191,36,0.06)",
+        border:     "1px solid rgba(251,191,36,0.4)",
+        clipPath:   "polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))",
       }}
     >
-      {/* Hidden YT iframe mount point */}
-      <div
-        ref={mountRef}
-        aria-hidden
-        style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", opacity: 0, pointerEvents: "none" }}
-      />
+      {playing ? <Pause className="w-4 h-4" strokeWidth={2.5} /> : <Play className="w-4 h-4 ml-0.5" strokeWidth={2.5} />}
+    </button>
+  );
 
-      {/* ── Header ── */}
-      <div className="flex items-center gap-2 mb-2.5">
-        <Music2 className="w-3 h-3 text-amber-400 shrink-0" strokeWidth={1.5} />
-        <span className="font-mono text-[9px] font-bold uppercase tracking-[0.22em] text-amber-400/80">
-          Soundtrack
-        </span>
-        <div className="flex-1 h-px" style={{ background: "rgba(64,180,255,0.08)" }} />
-        {loading && (
-          <span className="font-mono text-[8px] text-slate-600 animate-pulse tracking-wide">
-            loading...
-          </span>
-        )}
-      </div>
+  return (
+    <>
+      <audio
+        ref={audioRef}
+        preload="auto"
+        loop={loop}
+        onLoadedMetadata={e => setDuration(e.currentTarget.duration)}
+        onCanPlay={() => { setReady(true); setFailed(false); }}
+        onTimeUpdate={e => setCurrent(e.currentTarget.currentTime)}
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        onEnded={() => setPlaying(false)}
+      >
+        {sources.map(s => (
+          <source key={s.src} src={s.src} type={s.type}
+            onError={e => {
+              // o erro só é definitivo quando a ÚLTIMA fonte falha
+              if (e.currentTarget === e.currentTarget.parentElement?.lastElementChild) setFailed(true);
+            }} />
+        ))}
+      </audio>
 
-      {/* ── Controls ── */}
-      <div className="flex items-center gap-3">
-
-        {/* Play / Pause button — estilo HUD angular */}
-        <button
-          onClick={toggle}
-          disabled={!ready}
-          aria-label={playing ? "Pause" : "Play"}
-          className="relative shrink-0 w-9 h-9 flex items-center justify-center text-amber-400 transition-all duration-150 disabled:opacity-20 disabled:cursor-not-allowed group"
-          style={{
-            background: playing ? "rgba(251,191,36,0.12)" : "rgba(251,191,36,0.05)",
-            border:     "1px solid rgba(251,191,36,0.35)",
-            clipPath:   "polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))",
-          }}
+      {collapsed ? (
+        /* ── Modo recolhido: só uma pílula pequena no canto ── */
+        <div
+          className="fixed bottom-3 right-3 z-50 flex items-center gap-1.5 rounded-full border border-amber-400/25 bg-[#050514]/95 p-1.5 shadow-lg backdrop-blur"
         >
-          <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
-            style={{ background: "rgba(251,191,36,0.08)" }} />
-          {playing
-            ? <Pause className="relative w-3.5 h-3.5 z-10" strokeWidth={2.5} />
-            : <Play  className="relative w-3.5 h-3.5 z-10 ml-0.5" strokeWidth={2.5} />
-          }
-        </button>
-
-        {/* Progress bar + time */}
-        <div className="flex-1 flex flex-col gap-1.5">
-          <div
-            className="relative h-[3px] cursor-pointer group"
-            style={{ background: "rgba(255,255,255,0.06)" }}
-            onClick={seek}
-            role="slider"
-            aria-valuenow={Math.round(currentTime)}
-            aria-valuemin={0}
-            aria-valuemax={Math.round(duration)}
+          {playButton("h-11 w-11")}
+          <button
+            onClick={onToggleCollapse}
+            aria-label="Mostrar player de música"
+            title={title}
+            className="flex h-11 w-11 items-center justify-center text-amber-400/80 hover:text-amber-300"
           >
-            {/* Track fill */}
-            <div
-              className="absolute inset-y-0 left-0 transition-none"
-              style={{
-                width:      `${progress}%`,
-                background: "linear-gradient(to right, rgba(251,191,36,0.6), rgba(251,191,36,0.9))",
-              }}
-            />
-            {/* Scrub thumb */}
-            <div
-              className="absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-              style={{
-                left:       `calc(${progress}% - 5px)`,
-                background: "#fbbf24",
-                clipPath:   "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
-              }}
-            />
-          </div>
+            <Music2 className="w-5 h-5" strokeWidth={1.75} />
+          </button>
+        </div>
+      ) : (
+        /* ── Modo completo ── */
+        <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto w-full max-w-2xl">
+          <div
+            className="px-4 pt-3 pb-3.5"
+            style={{ borderTop: "1px solid rgba(64,180,255,0.07)", background: "linear-gradient(to bottom, rgba(10,8,32,0.97), rgba(5,5,20,0.99))" }}
+          >
+            <div className="flex items-center gap-2 mb-2.5">
+              <Music2 className="w-3 h-3 text-amber-400 shrink-0" strokeWidth={1.5} />
+              <span className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-amber-400/80">Soundtrack</span>
+              <div className="flex-1 h-px" style={{ background: "rgba(64,180,255,0.08)" }} />
+              {!ready && !failed && <span className="font-mono text-[10px] text-slate-500 animate-pulse">carregando…</span>}
+              <button
+                onClick={onToggleCollapse}
+                aria-label="Recolher player de música"
+                className="flex h-8 w-8 items-center justify-center text-slate-400 hover:text-amber-300"
+              >
+                <ChevronDown className="w-4 h-4" strokeWidth={2} />
+              </button>
+            </div>
 
-          {/* Time stamps */}
-          <div className="flex justify-between font-mono tabular-nums leading-none" style={{ fontSize: 9 }}>
-            <span className="text-slate-500">{fmt(currentTime)}</span>
-            <span className="text-slate-700">{duration > 0 ? fmt(duration) : "─ : ─ ─"}</span>
+            {failed ? (
+              <p className="flex items-center gap-2 font-mono text-[11px] text-amber-300/80">
+                <AlertTriangle className="w-4 h-4 shrink-0" />
+                Áudio não encontrado. Coloque o arquivo em <code>public/audio/trophy-gallery.mp3</code>.
+              </p>
+            ) : (
+              <>
+                <div className="flex items-center gap-3">
+                  {playButton("h-11 w-11")}
+                  <div className="flex-1 flex flex-col gap-1.5">
+                    <div
+                      className="relative h-2 cursor-pointer group flex items-center"
+                      onClick={seek}
+                      role="slider"
+                      aria-label="Posição da música"
+                      aria-valuenow={Math.round(current)}
+                      aria-valuemin={0}
+                      aria-valuemax={Math.round(duration)}
+                    >
+                      <div className="absolute inset-x-0 h-[3px]" style={{ background: "rgba(255,255,255,0.08)" }} />
+                      <div className="absolute left-0 h-[3px]" style={{ width: `${pct}%`, background: "linear-gradient(to right, rgba(251,191,36,0.6), rgba(251,191,36,0.95))" }} />
+                    </div>
+                    <div className="flex justify-between font-mono tabular-nums leading-none text-[10px]">
+                      <span className="text-slate-500">{fmt(current)}</span>
+                      <span className="text-slate-600">{duration > 0 ? fmt(duration) : "–:––"}</span>
+                    </div>
+                  </div>
+                  {/* Volume: escondido no celular (o sistema controla o volume) */}
+                  <div className="hidden sm:flex w-24 items-center gap-2 shrink-0 pl-2">
+                    <Volume2 className="w-3.5 h-3.5 text-slate-500 shrink-0" strokeWidth={2} />
+                    <input
+                      type="range" min={0} max={100} value={volume}
+                      onChange={e => setVolume(Number(e.target.value))}
+                      aria-label="Volume"
+                      className="w-full accent-amber-400"
+                    />
+                  </div>
+                </div>
+                <div className="mt-2.5 pl-14 flex flex-col gap-0.5">
+                  <p className="font-mono text-[13px] text-slate-200 truncate leading-tight tracking-wide">{title}</p>
+                  {artist && <p className="font-mono text-[11px] text-slate-500 truncate leading-tight">{artist}</p>}
+                </div>
+              </>
+            )}
           </div>
         </div>
-
-        {/* Volume slider */}
-        <div className="w-24 flex items-center gap-2 shrink-0 pl-2">
-          <Volume2 className="w-3 h-3 text-slate-500 shrink-0" strokeWidth={2} />
-          <div
-            className="relative flex-1 h-[3px] cursor-pointer group"
-            style={{ background: "rgba(255,255,255,0.06)" }}
-            onClick={(e) => {
-              if (!ready || !playerRef.current) return;
-              const rect = e.currentTarget.getBoundingClientRect();
-              const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-              setVolume(Math.round(pct * 100));
-            }}
-            role="slider"
-            aria-valuenow={volume}
-            aria-valuemin={0}
-            aria-valuemax={100}
-          >
-            <div
-              className="absolute inset-y-0 left-0 transition-none"
-              style={{
-                width: `${volume}%`,
-                background: "rgba(148, 163, 184, 0.8)",
-              }}
-            />
-            <div
-              className="absolute top-1/2 -translate-y-1/2 w-2 h-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-              style={{
-                left: `calc(${volume}% - 4px)`,
-                background: "#94a3b8",
-                clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* ── Track info ── */}
-      <div className="mt-2.5 pl-12 flex flex-col gap-0.5">
-        <p
-          className="font-mono text-[13px] text-slate-200 truncate leading-tight tracking-wide"
-          style={{ textShadow: "0 0 12px rgba(251,191,36,0.15)" }}
-        >
-          {title}
-        </p>
-        {artist && (
-          <p className="font-mono text-[11px] text-slate-600 truncate leading-tight">{artist}</p>
-        )}
-      </div>
-    </div>
+      )}
+    </>
   );
 }

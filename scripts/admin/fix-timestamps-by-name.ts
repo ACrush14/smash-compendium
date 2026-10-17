@@ -6,10 +6,10 @@ const db = new PrismaClient();
 const ROOT_DIR = process.cwd();
 
 const files = [
-  { name: 'Melee', path: 'melee-timestamps.json', gameVer: 'SSBM' },
-  { name: 'Brawl', path: 'brawl-timestamps.json', gameVer: 'SSBB' },
-  { name: '3DS', path: 'ssb4-3ds-timestamps.json', gameVer: 'SSB4' },
-  { name: 'Wii U', path: 'ssb4-wiiu-timestamps.json', gameVer: 'SSB4' }
+  { name: 'Melee', path: 'data/timestamps/melee-timestamps.json', gameVer: 'SSBM' },
+  { name: 'Brawl', path: 'data/timestamps/brawl-timestamps.json', gameVer: 'SSBB' },
+  { name: '3DS', path: 'data/timestamps/ssb4-3ds-timestamps.json', gameVer: 'SSB4' },
+  { name: 'Wii U', path: 'data/timestamps/ssb4-wiiu-timestamps.json', gameVer: 'SSB4' }
 ];
 
 async function run() {

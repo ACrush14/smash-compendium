@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
+import SkeletonImage from "@/components/ui/SkeletonImage";
+import { usePreloadImages } from "@/hooks/usePreloadImages";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 import AssociatedCards from "./AssociatedCards";
@@ -84,6 +85,8 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
   const current    = filtered[safeIndex];
   // When search yields no results, keep displaying the last valid trophy
   const displayed  = current ?? lastCurrentRef.current ?? trophies[0];
+
+  usePreloadImages([filtered[safeIndex - 1]?.assetRenderUrl, filtered[safeIndex + 1]?.assetRenderUrl, filtered[safeIndex + 2]?.assetRenderUrl]);
 
   useEffect(() => {
     if (current) lastCurrentRef.current = current;
@@ -207,7 +210,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
               >
                 <div className="relative w-8 h-8 shrink-0 rounded bg-slate-900/60 overflow-hidden">
                   {t.assetRenderUrl && (
-                    <Image src={t.assetRenderUrl} alt={t.name} fill className="object-contain" sizes="32px" />
+                    <SkeletonImage src={t.assetRenderUrl} alt={t.name} fill className="object-contain" sizes="32px" />
                   )}
                 </div>
                 <div className="min-w-0 flex-1 flex items-center justify-between">
@@ -288,7 +291,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
                       <span className="spirit-orb so-7"  /><span className="spirit-orb so-10" />
                       <span className="spirit-rise sr-1" /><span className="spirit-rise sr-3" />
                     </div>
-                    <Image
+                    <SkeletonImage
                       src={displayed.assetRender2Url}
                       alt={`${displayed.name} (3DS)`}
                       fill
@@ -313,7 +316,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
                       <span className="spirit-rise sr-2" /><span className="spirit-rise sr-4" />
                     </div>
                     {displayed.assetRenderUrl ? (
-                      <Image
+                      <SkeletonImage
                         src={displayed.assetRenderUrl}
                         alt={`${displayed.name} (Wii U)`}
                         fill
@@ -359,7 +362,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
                   <span className="spirit-rise sr-3"  /><span className="spirit-rise sr-4"  />
                 </div>
                 {displayed.assetRenderUrl ? (
-                  <Image
+                  <SkeletonImage
                     src={displayed.assetRenderUrl}
                     alt={displayed.name}
                     fill

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import SkeletonImage from "@/components/ui/SkeletonImage";
 import { Image as ImageIcon } from "lucide-react";
 
 export interface ShowcaseAsset {
@@ -45,7 +45,7 @@ export function RandomAssetShowcase({ assets }: { assets: ShowcaseAsset[] }) {
       style={{ opacity: visible ? 1 : 0, transitionDuration: `${FADE_MS}ms` }}
     >
       <div className="relative h-32 w-32 md:h-44 md:w-44" style={{ filter: "drop-shadow(0 0 20px rgba(245,158,11,0.25))" }}>
-        <Image src={current.url} alt={current.name} fill className="object-contain" sizes="176px" />
+        <SkeletonImage src={current.url} alt={current.name} fill className="object-contain" sizes="176px" />
       </div>
       <span className="max-w-[180px] text-center font-mono text-[10px] uppercase tracking-wider text-slate-500">
         {current.name}

@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
+import SkeletonImage from "@/components/ui/SkeletonImage";
+import { usePreloadImages } from "@/hooks/usePreloadImages";
+import { thumbUrl } from "@/lib/media-config";
 import { ChevronLeft, ChevronRight, Search, X, Shield, Sword, Heart } from "lucide-react";
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 import AssociatedCards from "./AssociatedCards";
@@ -61,6 +63,8 @@ export default function StickerViewer({ stickers, initialIndex = 0 }: Props) {
   const safeIndex  = Math.min(index, Math.max(0, filtered.length - 1));
   const current    = filtered[safeIndex];
   const displayed  = current ?? lastCurrentRef.current ?? stickers[0];
+
+  usePreloadImages([filtered[safeIndex - 1]?.assetRenderUrl, filtered[safeIndex + 1]?.assetRenderUrl, filtered[safeIndex + 2]?.assetRenderUrl]);
 
   useEffect(() => {
     if (current) lastCurrentRef.current = current;
@@ -180,7 +184,7 @@ export default function StickerViewer({ stickers, initialIndex = 0 }: Props) {
               >
                 <div className="relative w-8 h-8 shrink-0 rounded bg-slate-900/60 overflow-hidden">
                   {s.assetRenderUrl && (
-                    <Image src={s.assetRenderUrl} alt={s.name} fill className="object-contain" sizes="32px" />
+                    <SkeletonImage src={thumbUrl(s.assetRenderUrl)} alt={s.name} fill className="object-contain" sizes="32px" />
                   )}
                 </div>
                 <div className="min-w-0 flex-1">
@@ -267,7 +271,7 @@ export default function StickerViewer({ stickers, initialIndex = 0 }: Props) {
                 <span className="spirit-rise sr-3"  /><span className="spirit-rise sr-4"  />
               </div>
               {displayed.assetRenderUrl ? (
-                <Image
+                <SkeletonImage
                   src={displayed.assetRenderUrl}
                   alt={displayed.name}
                   fill

@@ -7,7 +7,7 @@ import { createWorker, createScheduler } from 'tesseract.js';
 const db = new PrismaClient();
 const VIDEO_PATH = 'full_video_ssb4_wiiu.mp4';
 const FRAMES_DIR = path.join(process.cwd(), 'temp_ssb4_wiiu_frames');
-const OUTPUT_JSON = path.join(process.cwd(), 'ssb4-wiiu-timestamps.json');
+const OUTPUT_JSON = path.join(process.cwd(), 'data/timestamps/ssb4-wiiu-timestamps.json');
 
 // Limpa texto do OCR
 function cleanText(text: string): string {

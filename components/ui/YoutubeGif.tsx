@@ -2,6 +2,14 @@
 
 import { useEffect, useRef } from "react";
 
+// API do YouTube carregada dinamicamente (antes tipada pelo MusicPlayer, que não usa mais o YouTube).
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    YT: any;
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
 
 export default function YoutubeGif({
   videoId,

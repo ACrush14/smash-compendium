@@ -121,7 +121,7 @@ async function main(): Promise<void> {
   ensureOutputDir();
 
   // Lê o índice
-  const indexPath = path.join(process.cwd(), "media_index.json");
+  const indexPath = path.join(process.cwd(), "data", "media_index.json");
   if (!fs.existsSync(indexPath)) {
     log.error(`media_index.json não encontrado em: ${indexPath}`);
     process.exit(1);

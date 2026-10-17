@@ -33,10 +33,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`${inter.variable} ${outfit.variable}`}>
+      <head>
+        {/* Conexão antecipada com os servidores de imagens dos troféus */}
+        <link rel="preconnect" href="https://ssb.wiki.gallery" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.ssbwiki.com" />
+      </head>
       <body className="min-h-screen bg-vault-bg text-vault-text antialiased">
         {children}
         <CollectiblesMusicBar />
-        <footer className="w-full text-center py-3 font-mono text-[10px] text-cyan-900/60 tracking-widest uppercase border-t border-cyan-500/5 select-none">
+        <footer className="w-full text-center pt-3 pb-28 font-mono text-[10px] text-cyan-900/60 tracking-widest uppercase border-t border-cyan-500/5 select-none">
           <span className="text-cyan-800/50 mr-3">{APP_VERSION}</span>
           <span className="text-cyan-900/40 mr-3">·</span>
           <span className="mr-3">Beta Phase</span>

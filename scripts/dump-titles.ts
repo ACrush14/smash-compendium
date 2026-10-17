@@ -10,8 +10,8 @@ async function run() {
   
   const fighters = await db.fighter.findMany({ select: { name: true } });
   
-  fs.writeFileSync('chronicle_titles.json', JSON.stringify(entries, null, 2));
-  fs.writeFileSync('fighter_names.json', JSON.stringify(fighters.map(f => f.name), null, 2));
+  fs.writeFileSync('data/chronicle_titles.json', JSON.stringify(entries, null, 2));
+  fs.writeFileSync('data/fighter_names.json', JSON.stringify(fighters.map(f => f.name), null, 2));
   console.log('Saved data.');
   await db.$disconnect();
 }

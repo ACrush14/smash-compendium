@@ -2,49 +2,47 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import MusicPlayer from "./MusicPlayer";
+import MusicPlayer, { type AudioSource } from "./MusicPlayer";
+import { cdnUrl } from "@/lib/media-config";
 
-interface Track { youtubeId: string; title: string; artist: string; }
+// Trilha única do site: "Trophy Gallery" (Brawl), versão de 1 hora, em loop.
+// O arquivo de áudio é baixado manualmente e colocado em public/audio/ (ver public/audio/LEIA-ME.md).
+// O navegador usa a primeira fonte que conseguir tocar.
+const TRACK = {
+  title:  "Trophy Gallery",
+  artist: "Super Smash Bros. Brawl · 1 Hour Ambience Loop",
+  sources: [
+    { src: cdnUrl("/audio/trophy-gallery.webm"), type: "audio/webm" },
+    { src: cdnUrl("/audio/trophy-gallery.ogg"),  type: "audio/ogg"  },
+    { src: cdnUrl("/audio/trophy-gallery.mp3"),  type: "audio/mpeg" },
+  ] satisfies AudioSource[],
+};
 
-// Rotação de menus/galerias de troféus & spirits pela história da série
-const TRACKS: Track[] = [
-  { youtubeId: "1rjnjVF5GQk", title: "Menu",          artist: "Super Smash Bros." },
-  { youtubeId: "2LN2xc-RSYo", title: "How to Play",    artist: "Super Smash Bros." },
-  { youtubeId: "5lczYg24vxU", title: "Menu",           artist: "Super Smash Bros. Melee" },
-  { youtubeId: "5ENRqXwIsXM", title: "Trophies",       artist: "Super Smash Bros. Melee" },
-  { youtubeId: "PCAjipTpk3k", title: "Trophy Gallery",  artist: "Super Smash Bros. Brawl" },
-  { youtubeId: "XXCARdf64H4", title: "Trophy Rush",     artist: "Super Smash Bros. for Nintendo 3DS / Wii U" },
-  { youtubeId: "6znq-EYa8C0", title: "Menu",            artist: "Super Smash Bros. Ultimate" },
-];
-
-const FIRST_TRACK = TRACKS[0]!;
-
-function pickRandomTrack(excludeId?: string): Track {
-  const pool = excludeId ? TRACKS.filter(t => t.youtubeId !== excludeId) : TRACKS;
-  return pool[Math.floor(Math.random() * pool.length)] ?? FIRST_TRACK;
-}
+const STORAGE_KEY = "smash-music-collapsed";
 
 export default function CollectiblesMusicBar() {
   const pathname = usePathname();
-  const showMusic = pathname === "/" || pathname === "/collectibles" || pathname === "/chronicles" || pathname.startsWith("/fighters") || pathname === "/music";
+  const [collapsed, setCollapsed] = useState(false);
 
-  // Começa com a primeira faixa (evita mismatch de hidratação) e sorteia após montar no cliente.
-  const [track, setTrack] = useState<Track>(FIRST_TRACK);
+  // Lembra se a pessoa recolheu o player (ignora falhas de localStorage, ex.: aba anônima).
   useEffect(() => {
-    setTrack(pickRandomTrack());
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      // Sem preferência salva: no celular começa recolhido (o player completo ocupa muita tela).
+      setCollapsed(saved !== null ? saved === "1" : window.innerWidth < 640);
+    } catch { /* ignora */ }
   }, []);
 
-  if (!showMusic) return null;
+  const toggle = () => {
+    setCollapsed(c => {
+      const next = !c;
+      try { localStorage.setItem(STORAGE_KEY, next ? "1" : "0"); } catch { /* ignora */ }
+      return next;
+    });
+  };
 
-  return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 max-w-2xl mx-auto w-full pointer-events-auto">
-      <MusicPlayer
-        youtubeId={track.youtubeId}
-        title={track.title}
-        artist={track.artist}
-        autoPlay
-        onEnded={() => setTrack(prev => pickRandomTrack(prev.youtubeId))}
-      />
-    </div>
-  );
+  // O layout raiz não remonta entre páginas, então a música segue tocando ao navegar.
+  if (pathname.startsWith("/admin")) return null;
+
+  return <MusicPlayer {...TRACK} loop collapsed={collapsed} onToggleCollapse={toggle} />;
 }

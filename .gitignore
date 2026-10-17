@@ -69,3 +69,14 @@ scratch/
 
 # Google Service Account (credenciais sensíveis — nunca commitar)
 google-service-account.json
+
+# miniaturas WebP (geradas por scripts/admin/optimize-images.ts) — mesmas exclusões das imagens originais
+public/assets/collectibles/thumbs/TROPHY-*
+public/assets/collectibles/thumbs/SPRITE-*.webp.part
+public/assets/collectibles/thumbs/SPIRIT-SSBU-[A-Za-z]*
+public/assets/collectibles/thumbs/STICKER-SSBB-[A-Za-z]*
+# áudio da trilha e vídeos convertidos (hospedar no CDN, não no git)
+public/audio/*.mp3
+public/audio/*.ogg
+public/audio/*.webm
+data/timestamps/*.csv

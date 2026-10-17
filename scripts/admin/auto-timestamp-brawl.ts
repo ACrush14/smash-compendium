@@ -7,7 +7,7 @@ import { createWorker, createScheduler } from 'tesseract.js';
 const db = new PrismaClient();
 const VIDEO_PATH = 'full_video_brawl.mp4';
 const FRAMES_DIR = path.join(process.cwd(), 'temp_brawl_frames');
-const OUTPUT_JSON = path.join(process.cwd(), 'brawl-timestamps.json');
+const OUTPUT_JSON = path.join(process.cwd(), 'data/timestamps/brawl-timestamps.json');
 
 // Função para converter "string suja" do OCR no nome mais provável
 function cleanText(text: string): string {

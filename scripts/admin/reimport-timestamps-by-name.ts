@@ -5,13 +5,13 @@ import path from 'path';
 const ROOT = process.cwd();
 
 const TROPHY_FILES = [
-  { file: 'melee-timestamps.json',     versions: ['SSBM'] },
-  { file: 'brawl-timestamps.json',     versions: ['SSBB'] },
-  { file: 'ssb4-wiiu-timestamps.json', versions: ['SSB4_WIIU', 'SSB4'] },
-  { file: 'ssb4-3ds-timestamps.json',  versions: ['SSB4_3DS', 'SSB4'] },
+  { file: 'data/timestamps/melee-timestamps.json',     versions: ['SSBM'] },
+  { file: 'data/timestamps/brawl-timestamps.json',     versions: ['SSBB'] },
+  { file: 'data/timestamps/ssb4-wiiu-timestamps.json', versions: ['SSB4_WIIU', 'SSB4'] },
+  { file: 'data/timestamps/ssb4-3ds-timestamps.json',  versions: ['SSB4_3DS', 'SSB4'] },
 ];
 
-const SSB64_FILE = 'ssb64-timestamps.json';
+const SSB64_FILE = 'data/timestamps/ssb64-timestamps.json';
 
 async function run() {
   let totalUpdated = 0;

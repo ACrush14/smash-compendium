@@ -7,7 +7,7 @@ import { createWorker, createScheduler } from 'tesseract.js';
 const db = new PrismaClient();
 const VIDEO_PATH = path.join(process.cwd(), 'full_SSB64_video.mp4');
 const FRAMES_DIR = path.join(process.cwd(), 'temp_ssb64_frames');
-const OUTPUT_JSON = path.join(process.cwd(), 'ssb64-timestamps.json');
+const OUTPUT_JSON = path.join(process.cwd(), 'data/timestamps/ssb64-timestamps.json');
 
 function cleanText(text: string): string {
   return text.replace(/[^a-zA-Z0-9\.\-&é]/g, ' ')

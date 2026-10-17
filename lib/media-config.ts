@@ -36,3 +36,13 @@ export const FULL_VIDEOS: Record<string, string> = {
   SSB4_3DS:  cdnUrl("/videos/full_video_ssb4_3ds.mp4"),
   SSB64:     cdnUrl("/videos/full_SSB64_video.mp4"),
 };
+
+/**
+ * Miniatura WebP (≤128px) gerada por scripts/admin/optimize-images.ts para imagens locais de
+ * /assets/collectibles. Use nas listas e carrosséis (32–44px). Outras URLs passam sem mudança.
+ */
+export function thumbUrl(url: string | null | undefined): string {
+  if (!url) return "";
+  const m = url.match(/^\/assets\/collectibles\/([^/]+)\.(?:png|jpe?g)$/i);
+  return m ? `/assets/collectibles/thumbs/${m[1]}.webp` : url;
+}

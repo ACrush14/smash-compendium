@@ -15,7 +15,7 @@ interface ClipConfig {
 }
 
 async function run() {
-  const configPath = path.join(process.cwd(), 'youtube-clips.json');
+  const configPath = path.join(process.cwd(), 'data', 'youtube-clips.json');
   if (!fs.existsSync(configPath)) {
     console.error('youtube-clips.json não encontrado!');
     process.exit(1);

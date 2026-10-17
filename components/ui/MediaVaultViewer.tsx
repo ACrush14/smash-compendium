@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Image from "next/image";
+import SkeletonImage from "@/components/ui/SkeletonImage";
+import { thumbUrl } from "@/lib/media-config";
 import { ImageIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
-import MusicPlayer, { type MusicTrack } from "@/components/ui/MusicPlayer";
+import { type MusicTrack } from "@/components/ui/MusicPlayer";
 import { t, type UILang } from "@/lib/ui-i18n";
 
 export type EraFilter = "N64" | "SSBM" | "SSBB" | "SSB4" | "SSBU" | "WORKS";
@@ -169,7 +170,7 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
               )
             ) : active.href ? (
               <a href={active.href} className="w-full h-full relative z-10 block group cursor-pointer" title={`Ver página de ${active.label}`}>
-                <Image
+                <SkeletonImage
                   src={active.url}
                   alt={active.label}
                   width={800}
@@ -184,7 +185,7 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
                 />
               </a>
             ) : (
-              <Image
+              <SkeletonImage
                 src={active.url}
                 alt={active.label}
                 width={800}
@@ -332,8 +333,8 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
                       className="object-cover h-11 w-11 relative z-10 pointer-events-none"
                     />
                   ) : (
-                    <Image
-                      src={asset.url}
+                    <SkeletonImage
+                      src={IS_GIF(asset.url) ? asset.url : thumbUrl(asset.url)}
                       alt={asset.label}
                       width={44}
                       height={44}
@@ -370,8 +371,8 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
         </div>
       </div>
 
-      {/* ── Music Player ─────────────────────────────────────────── */}
-      {music && <MusicPlayer {...music} />}
+      {/* Música: a trilha única do site (CollectiblesMusicBar) toca em todas as páginas;
+          o player por lutador foi removido para não sobrepor áudios. */}
     </div>
   );
 }

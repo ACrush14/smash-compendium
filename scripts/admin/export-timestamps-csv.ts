@@ -75,34 +75,34 @@ async function exportGame(cfg: {
 async function main() {
   await Promise.all([
     exportGame({
-      file: 'timestamps-melee-trofeus.csv',
+      file: 'data/timestamps/timestamps-melee-trofeus.csv',
       label: 'Melee Troféus',
       type: 'collectible',
       versions: ['SSBM'],
       posCol: 'posicaoTrofeuMelee',
     }),
     exportGame({
-      file: 'timestamps-melee-lutadores.csv',
+      file: 'data/timestamps/timestamps-melee-lutadores.csv',
       label: 'Melee Lutadores (FighterBio)',
       type: 'fighterBio',
       smashGameVersion: 'SSBM',
     }),
     exportGame({
-      file: 'timestamps-brawl.csv',
+      file: 'data/timestamps/timestamps-brawl.csv',
       label: 'Brawl Troféus',
       type: 'collectible',
       versions: ['SSBB'],
       posCol: 'posicaoTrofeuBrawl',
     }),
     exportGame({
-      file: 'timestamps-wiiu.csv',
+      file: 'data/timestamps/timestamps-wiiu.csv',
       label: 'Wii U Troféus',
       type: 'collectible',
       versions: ['SSB4_WIIU', 'SSB4'],
       posCol: 'posicaoTrofeuSsb4',
     }),
     exportGame({
-      file: 'timestamps-3ds.csv',
+      file: 'data/timestamps/timestamps-3ds.csv',
       label: '3DS Troféus',
       type: 'collectible',
       versions: ['SSB4_3DS'],
