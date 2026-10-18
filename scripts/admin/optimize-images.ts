@@ -13,6 +13,7 @@ import path from "node:path";
 
 const DIR = path.join(process.cwd(), "public", "assets", "collectibles");
 const THUMBS = path.join(DIR, "thumbs");
+const MD = path.join(DIR, "md"); // versão WebP de ≤512px dos spirits (imagem aberta no viewer)
 const BACKUP = path.join(process.cwd(), "scratch", "images-originals");
 const MAX_SIDE = 600;   // maior exibição é ~256px CSS; 600px cobre telas 2x com folga
 const THUMB_SIDE = 128; // listas mostram 32–44px; 128px cobre telas 3x
@@ -20,6 +21,7 @@ const DRY = process.argv.includes("--dry-run");
 
 async function main() {
   mkdirSync(THUMBS, { recursive: true });
+  mkdirSync(MD, { recursive: true });
   mkdirSync(BACKUP, { recursive: true });
   const files = readdirSync(DIR).filter(f => /\.(png|jpe?g)$/i.test(f));
   let before = 0, after = 0, resized = 0, thumbs = 0, bad = 0;
@@ -62,6 +64,12 @@ async function main() {
     if (!DRY && !existsSync(thumbPath)) {
       await sharp(src).resize({ width: THUMB_SIDE, height: THUMB_SIDE, fit: "inside" }).webp({ quality: 82, alphaQuality: 90 }).toFile(thumbPath);
       thumbs++;
+    }
+
+    // 3) versão ≤512px em WebP para os spirits (PNG de ~160 KB -> ~23 KB)
+    const mdPath = path.join(MD, f.replace(/\.(png|jpe?g)$/i, ".webp"));
+    if (!DRY && /^SPIRIT-/.test(f) && !existsSync(mdPath)) {
+      await sharp(src).resize({ width: 512, height: 512, fit: "inside", withoutEnlargement: true }).webp({ quality: 84, effort: 5 }).toFile(mdPath);
     }
   }
   const mb = (n: number) => (n / 1048576).toFixed(0);

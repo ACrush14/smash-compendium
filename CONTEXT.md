@@ -1697,3 +1697,8 @@ Ultimate Fighter Tips JP:
 - **Spirits/troféus/stickers:** listas laterais com `<img>` simples (sem componente por item) + `content-visibility:auto`; `/fighters`: primeiras 6 renders com `priority`.
 - **Acessibilidade:** contraste (overrides em `globals.css` para `text-slate-500/600/700`, `zinc-500`, `cyan-800/900`), `aria-label` nos logos, h3→h2, `role="main"` na home e em `/fighters`, links sublinhados no rodapé/textos.
 - **Build:** com a pré-geração (184 páginas) o build da Vercel leva ~9 min (antes ~2–3).
+
+## 39. Sessão 33b — Spirits em WebP (2026-10-18, V00.237)
+
+- `scripts/admin/optimize-images.ts` agora também gera `public/assets/collectibles/md/SPIRIT-*.webp` (≤512px, ~35 KB vs ~280 KB do PNG). `localImageUrl()` mapeia `SPIRIT-*.png` → `md/` (tiers `md`/`full`); o `SpiritViewer` pré-carrega os vizinhos pela versão WebP. Só os spirits numéricos (`SPIRIT-SSBU-0001`…) vão ao deploy; os PNGs nomeados antigos (`SPIRIT-SSBU-Mario.png`, 75px) continuam ignorados no git.
+- **Lighthouse no alias de produção (antes → depois das sessões 32–33):** `/fighters` 81→92, ficha do Mario 72→73 (rede 10,4→5,9 MB, LCP 16→7,2 s; o que sobra é o clipe de gameplay de 2,6 MB que abre sozinho no palco), spirits 54→67 (TBT 690→230 ms), home 97→93 (variação). SEO 100 e acessibilidade 96–100 em todas. O único erro de console restante é o 404 do áudio (`public/audio/trophy-gallery.*`).

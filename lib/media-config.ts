@@ -72,6 +72,11 @@ export function localImageUrl(url: string | null | undefined, tier: ImageTier): 
     const m = url.match(/^\/assets\/collectibles\/([^/]+)\.(?:png|jpe?g)$/i);
     if (m) return `/assets/collectibles/thumbs/${m[1]}.webp`;
   }
+  // Spirits abertos no viewer: WebP de ≤512px (o PNG original tem ~160 KB; o WebP ~23 KB)
+  if (tier !== "thumb") {
+    const sp = url.match(/^\/assets\/collectibles\/(SPIRIT-[^/]+)\.png$/i);
+    if (sp) return `/assets/collectibles/md/${sp[1]}.webp`;
+  }
   const key = wikiImageKey(url);
   if (key && isTrophyKey(key)) return `/assets/trophies/${tier === "thumb" ? "thumbs/" : ""}${key}.webp`;
   if (key && isRenderKey(key)) return `/assets/renders/${tier === "full" ? "" : tier === "md" ? "md/" : "thumbs/"}${key}.webp`;

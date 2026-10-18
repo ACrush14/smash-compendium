@@ -5,7 +5,7 @@ import AssociatedCards from "./AssociatedCards";
 import SkeletonImage, { Skeleton } from "@/components/ui/SkeletonImage";
 import { usePreloadImages } from "@/hooks/usePreloadImages";
 import { imgFallback } from "./imgFallback";
-import { thumbUrl, boxArtLocalUrl } from "@/lib/media-config";
+import { thumbUrl, fullImageUrl, boxArtLocalUrl } from "@/lib/media-config";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import RelatedItemsGrid from "./RelatedItemsGrid";
 import { LangSelector, type Lang } from "./FighterDataZone";
@@ -64,7 +64,7 @@ export default function SpiritViewer({ spirits, initialIndex = 0, initialDetail 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listCurrent?.id]);
 
-  usePreloadImages([filtered[safeIndex - 1]?.assetRenderUrl, filtered[safeIndex + 1]?.assetRenderUrl, filtered[safeIndex + 2]?.assetRenderUrl]);
+  usePreloadImages([filtered[safeIndex - 1], filtered[safeIndex + 1], filtered[safeIndex + 2]].map(sp => fullImageUrl(sp?.assetRenderUrl)));
 
   // O usuário solicitou um scroll com todos os itens, então não precisamos mais cortar a lista.
   // Renderiza todos os itens filtrados na sidebar scrollable.

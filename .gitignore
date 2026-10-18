@@ -85,3 +85,4 @@ data/timestamps/*.csv
 
 # pasta de build para testes (NEXT_DIST_DIR=.next-test)
 .next-test/
+public/assets/collectibles/md/SPIRIT-SSBU-[A-Za-z]*
