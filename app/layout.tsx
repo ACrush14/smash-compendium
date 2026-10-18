@@ -14,6 +14,7 @@ const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
+  preload: false, // só poucas páginas usam; carrega sob demanda em vez de pesar todas as visitas
 });
 
 export const metadata: Metadata = {
@@ -39,7 +40,10 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.ssbwiki.com" />
       </head>
       <body className="min-h-screen bg-vault-bg text-vault-text antialiased">
-        {children}
+        <a href="#conteudo" className="skip-link">Pular para o conteúdo</a>
+        <div id="conteudo" tabIndex={-1} className="outline-none">
+          {children}
+        </div>
         <CollectiblesMusicBar />
         <footer className="w-full text-center pt-3 pb-28 font-mono text-[10px] text-cyan-900/60 tracking-widest uppercase border-t border-cyan-500/5 select-none">
           <span className="text-cyan-800/50 mr-3">{APP_VERSION}</span>

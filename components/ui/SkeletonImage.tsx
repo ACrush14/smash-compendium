@@ -52,6 +52,11 @@ export default function SkeletonImage({ skeletonClassName = "", className = "", 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initial]);
 
+  // Vídeos (.webm/.mp4) não são imagens: não baixa nada, só mostra um bloco neutro.
+  if (original && /\.(webm|mp4)(\?|$)/i.test(original)) {
+    return <div aria-hidden className="absolute inset-0 bg-slate-800/30" />;
+  }
+
   return (
     <>
       {!done && <Skeleton className={`absolute inset-0 pointer-events-none rounded-sm ${skeletonClassName}`} />}

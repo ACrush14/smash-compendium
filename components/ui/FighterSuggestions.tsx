@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Send, MessageSquare, AlertCircle, CheckCircle2 } from "lucide-react";
 import { submitSuggestion } from "@/app/fighters/[slug]/actions";
 
@@ -112,30 +111,22 @@ export default function FighterSuggestions({ fighterId, fighterSlug, fighterName
                 />
               </div>
 
-              <AnimatePresence>
                 {status === "error" && (
-                  <motion.div 
-                    initial={{ opacity: 0, height: 0 }} 
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="flex items-center gap-2 text-red-400 bg-red-500/10 p-3 rounded-xl text-sm"
+                  <div 
+                    className="animate-vault-in flex items-center gap-2 text-red-400 bg-red-500/10 p-3 rounded-xl text-sm"
                   >
                     <AlertCircle className="w-4 h-4" />
                     {errorMsg}
-                  </motion.div>
+                  </div>
                 )}
                 {status === "success" && (
-                  <motion.div 
-                    initial={{ opacity: 0, height: 0 }} 
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="flex items-center gap-2 text-emerald-400 bg-emerald-500/10 p-3 rounded-xl text-sm"
+                  <div 
+                    className="animate-vault-in flex items-center gap-2 text-emerald-400 bg-emerald-500/10 p-3 rounded-xl text-sm"
                   >
                     <CheckCircle2 className="w-4 h-4" />
                     Curiosidade enviada para moderação! Obrigado por contribuir.
-                  </motion.div>
+                  </div>
                 )}
-              </AnimatePresence>
 
               <button 
                 type="submit" 
@@ -169,11 +160,9 @@ export default function FighterSuggestions({ fighterId, fighterSlug, fighterName
             ) : (
               <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/10">
                 {suggestions.map((suggestion) => (
-                  <motion.div 
+                  <div
                     key={suggestion.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="bg-black/40 border border-white/5 rounded-2xl p-5 hover:border-white/10 transition-colors"
+                    className="animate-vault-in bg-black/40 border border-white/5 rounded-2xl p-5 hover:border-white/10 transition-colors"
                   >
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
@@ -194,7 +183,7 @@ export default function FighterSuggestions({ fighterId, fighterSlug, fighterName
                     <p className="text-zinc-300 text-sm font-light leading-relaxed whitespace-pre-wrap">
                       {suggestion.message}
                     </p>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             )}

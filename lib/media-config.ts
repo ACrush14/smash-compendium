@@ -82,3 +82,25 @@ export function localImageUrl(url: string | null | undefined, tier: ImageTier): 
 export const thumbUrl = (url: string | null | undefined) => localImageUrl(url, "thumb");
 export const fullImageUrl = (url: string | null | undefined) => localImageUrl(url, "full");
 export const mdImageUrl = (url: string | null | undefined) => localImageUrl(url, "md");
+
+/** Hash curto e estável (16 hex) de uma URL — nome do arquivo local de capas de jogos (hosts variados). */
+export function urlKey(url: string): string {
+  let h1 = 0x811c9dc5, h2 = 0x9e3779b9;
+  for (let i = 0; i < url.length; i++) {
+    const c = url.charCodeAt(i);
+    h1 = Math.imul(h1 ^ c, 16777619) >>> 0;
+    h2 = Math.imul(h2 ^ c, 2246822519) >>> 0;
+    h2 = (h2 ^ (h2 >>> 13)) >>> 0;
+  }
+  return h1.toString(16).padStart(8, "0") + h2.toString(16).padStart(8, "0");
+}
+
+/**
+ * Capa de jogo local (WebP): `md` ≤360px, `sm` ≤160px. Só para URLs http(s); caminhos locais passam sem mudança.
+ * Geradas por scripts/admin/download-boxarts.ts. Use com fallback para a URL original (FallbackImg).
+ */
+export function boxArtLocalUrl(url: string | null | undefined, size: "md" | "sm" = "md"): string {
+  if (!url) return "";
+  if (!/^https?:\/\//i.test(url)) return url;
+  return `/assets/boxarts/${size === "sm" ? "sm/" : ""}${urlKey(url)}.webp`;
+}

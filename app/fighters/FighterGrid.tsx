@@ -3,7 +3,6 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import SkeletonImage from "@/components/ui/SkeletonImage";
-import { motion, AnimatePresence } from "framer-motion";
 import { Search, FilterX } from "lucide-react";
 
 export interface FighterItem {
@@ -131,20 +130,12 @@ export default function FighterGrid({ fighters }: { fighters: FighterItem[] }) {
         <span>Showing {filtered.length} Fighters</span>
       </div>
 
-      <motion.div 
-        layout
+      <div
         className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6"
       >
-        <AnimatePresence>
           {filtered.map((fighter) => (
-            <motion.div
-              key={fighter.id}
-              layout
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2 }}
-            >
+            // CSS no lugar do framer-motion: ~40 KB a menos de JavaScript e sem animar o layout de 90 cartões
+            <div key={fighter.id} className="animate-vault-in opacity-0">
               <Link href={`/fighters/${fighter.slug}`} className="block group">
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-gradient-to-b from-zinc-800/50 to-zinc-950 border border-white/5 group-hover:border-white/20 transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]">
                   
@@ -192,9 +183,8 @@ export default function FighterGrid({ fighters }: { fighters: FighterItem[] }) {
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </div>
           ))}
-        </AnimatePresence>
 
         {filtered.length === 0 && (
           <div className="col-span-full py-24 flex flex-col items-center justify-center text-zinc-500">
@@ -202,7 +192,7 @@ export default function FighterGrid({ fighters }: { fighters: FighterItem[] }) {
             <p className="text-xl font-light">Nenhum lutador encontrado.</p>
           </div>
         )}
-      </motion.div>
+      </div>
     </div>
   );
 }

@@ -1650,3 +1650,13 @@ Ultimate Fighter Tips JP:
 - **Cache:** `lib/cache.ts` — `cachedQuery` (cache de dados, 1 h) e `cachedQueryZ` (gzip+base64; o Next ignora entradas >2 MB). `/fighters/[slug]` e `/franchise/[name]` usam ISR (`revalidate = 600` + `generateStaticParams` vazio). Edições no admin chamam `revalidateSite()` (wrapper nas rotas `app/api/admin/**`); botão "Atualizar site agora" em `/admin` e `POST /api/admin/revalidate`. Scripts que editam o banco direto NÃO limpam o cache: use o botão ou espere o TTL.
 - **Segurança do admin (CORRIGIDO):** `/api/admin/*` estava sem proteção (o middleware só cobria `/admin`) e a senha padrão estava no código. Agora `middleware.ts` protege também `/api/admin/*` (401), `lib/admin-auth.ts` guarda um token SHA-256 no cookie (não a senha) e, **em produção, sem `ADMIN_PASSWORD` (≥ 8 caracteres) o admin fica trancado**. Defina `ADMIN_PASSWORD` no `.env.local` e na Vercel. A senha antiga ("padrão") está no histórico do git — não use.
 - **Testes sem derrubar o site local:** `NEXT_DIST_DIR=.next-test npx next build` / `next start -p 3902`. Nunca rode `next dev`/`next build` na pasta `.next` enquanto o `next start` da porta 3000 (tunnel) estiver no ar — isso o quebra.
+
+## 33. Sessão 28 — Capas, JavaScript, acessibilidade e transição (2026-10-18, V00.231)
+
+- **Capas de jogos (Chronicles):** `scripts/admin/download-boxarts.ts` baixa `ChronicleEntry.boxArtUrl` (1.272 URLs, hosts variados, muitos bloqueiam com 403) e gera WebP `public/assets/boxarts/<hash>.webp` (≤360px) e `sm/` (≤160px); nome = `urlKey(url)` (`lib/media-config.ts`). `boxArtLocalUrl()` + `FallbackImg localSrc=` usam a versão local e caem para a URL original. O script é retomável: rode de novo para completar e commite os arquivos novos. Falhas ficam em `data/boxarts-failed.json`.
+- **JavaScript:** `framer-motion` removido (CSS `animate-vault-in`): ficha do lutador 159→119 KB, `/fighters` 145→104 KB (gzip, 1ª visita).
+- **Fontes:** Outfit com `preload: false` (carrega só onde é usada).
+- **Acessibilidade:** `:focus-visible` dourado; link "Pular para o conteúdo" (`#conteudo` no layout); textos `text-[7|8|9px]` forçados a 11px (globals.css); em telas de toque, botões/campos com ≥44px e utilitário `.hit-area` (amplia só a área de toque).
+- **Transição:** `app/template.tsx` com fade (`.page-fade`, de 55%→100% — nunca começa invisível).
+- **Corrigido:** `/franchise/[name]` carregava 335 itens (incl. clipes `.webm` como `<img>`, ~75 MB); `SkeletonImage` e `FranchiseCollectibles` agora ignoram URLs de vídeo (→ 1,6 MB).
+- **Nota de teste:** o painel de navegador oculto pausa animações e `loading="lazy"`; testes visuais de imagens/fade exigem painel visível (ou verifique por DOM/HEAD).

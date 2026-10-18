@@ -267,3 +267,67 @@ body {
   .skeleton-shimmer { animation: none; }
   .skeleton-fade-in { animation: none; }
 }
+
+/* ── Acessibilidade ─────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -64px;
+  z-index: 100;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #fbbf24;
+  color: #000;
+  font-weight: 600;
+  transition: top 0.15s;
+}
+.skip-link:focus { top: 8px; }
+
+/* Textos de 7–9px ficam ilegíveis: mínimo de 11px em todo o site. */
+[class*="text-[7px]"],
+[class*="text-[8px]"],
+[class*="text-[9px]"] {
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+}
+
+/* Telas de toque: alvos de pelo menos 44×44px (botões, campos e links de navegação). */
+@media (pointer: coarse) {
+  button:not([role="slider"]),
+  [role="button"],
+  summary,
+  select,
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]) {
+    min-height: 44px;
+  }
+  header a,
+  nav a,
+  a.touch-44 {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* ── Transição entre páginas (apenas opacidade: não cria bloco de contenção para elementos fixed/sticky) ── */
+.page-fade {
+  animation: page-fade-in 0.22s ease-out;
+}
+@keyframes page-fade-in {
+  from { opacity: 0.55; } /* nunca começa invisível (aba oculta/leitores de tela pausam animações) */
+  to   { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-fade { animation: none; }
+}
+
+/* Amplia só a área de toque (sem mudar o visual) de controles pequenos em telas de toque. */
+@media (pointer: coarse) {
+  .hit-area { position: relative; }
+  .hit-area::after { content: ""; position: absolute; inset: -8px; }
+}

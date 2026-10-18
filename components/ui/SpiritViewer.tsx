@@ -4,12 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import AssociatedCards from "./AssociatedCards";
 import SkeletonImage from "@/components/ui/SkeletonImage";
 import { usePreloadImages } from "@/hooks/usePreloadImages";
-import { thumbUrl } from "@/lib/media-config";
+import { thumbUrl, boxArtLocalUrl } from "@/lib/media-config";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 import { LangSelector, type Lang } from "./FighterDataZone";
 import { pickCollectibleDescription } from "@/lib/collectible-lang";
 
+import FallbackImg from "@/components/ui/FallbackImg";
 export interface SpiritItem {
   id: string;
   name: string;
@@ -418,8 +419,7 @@ function GameCard({
     }`}>
       {coverUrl && (
         <div className="relative shrink-0 w-14 aspect-[3/4] bg-slate-900 rounded overflow-hidden border border-vault-border/40 shadow-md">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img loading="lazy" decoding="async" src={coverUrl} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
+          <FallbackImg src={coverUrl} localSrc={boxArtLocalUrl(coverUrl, "sm")} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
         </div>
       )}
       <div className="min-w-0">

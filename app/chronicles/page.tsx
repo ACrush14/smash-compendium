@@ -4,6 +4,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 
+import FallbackImg from "@/components/ui/FallbackImg";
+import { boxArtLocalUrl } from "@/lib/media-config";
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
@@ -80,7 +82,7 @@ export default async function ChroniclesPage({ searchParams }: Props) {
         <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
           <div className="max-w-7xl mx-auto px-4 md:px-6 py-4">
             <div className="mb-4">
-              <Link href="/" className="inline-flex items-center gap-2 transition-opacity hover:opacity-80">
+              <Link href="/" className="hit-area inline-flex items-center gap-2 transition-opacity hover:opacity-80">
                 <Zap className="h-4 w-4 text-amber-400" strokeWidth={2.5} />
                 <span className="font-black italic tracking-tight text-white text-sm" style={{ letterSpacing: "-0.02em" }}>
                   SMASH<span className="text-amber-400">COMPENDIUM</span>
@@ -116,8 +118,7 @@ export default async function ChroniclesPage({ searchParams }: Props) {
                       className={`relative block aspect-[3/4] w-full bg-gradient-to-br from-slate-800 to-slate-950 border-2 border-vault-border rounded-sm overflow-hidden group-hover:border-vault-accent transition-colors shadow-lg${game.wikiUrl ? " cursor-pointer" : " cursor-default"}`}
                     >
                       {game.boxArtUrl ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img loading="lazy" decoding="async" src={game.boxArtUrl} alt={game.titleNtsc} className="absolute inset-0 w-full h-full object-cover object-top" />
+                        <FallbackImg src={game.boxArtUrl} localSrc={boxArtLocalUrl(game.boxArtUrl, "md")} alt={game.titleNtsc} className="absolute inset-0 w-full h-full object-cover object-top" />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
                           <span className="font-bold text-slate-400 text-lg font-serif group-hover:text-amber-500 transition-colors">
@@ -222,7 +223,7 @@ export default async function ChroniclesPage({ searchParams }: Props) {
       <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-4">
           <div className="mb-4">
-            <Link href="/" className="inline-flex items-center gap-2 transition-opacity hover:opacity-80">
+            <Link href="/" className="hit-area inline-flex items-center gap-2 transition-opacity hover:opacity-80">
               <Zap className="h-4 w-4 text-amber-400" strokeWidth={2.5} />
               <span className="font-black italic tracking-tight text-white text-sm" style={{ letterSpacing: "-0.02em" }}>
                 SMASH<span className="text-amber-400">COMPENDIUM</span>
@@ -290,9 +291,9 @@ export default async function ChroniclesPage({ searchParams }: Props) {
                   className={`relative block aspect-[3/4] w-full bg-gradient-to-br from-slate-800 to-slate-950 border-2 border-vault-border rounded-sm overflow-hidden group-hover:border-vault-accent transition-colors shadow-lg${game.wikiUrl ? " cursor-pointer" : " cursor-default"}`}
                 >
                   {game.boxArtUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img loading="lazy" decoding="async"
+                    <FallbackImg
                       src={game.boxArtUrl}
+                      localSrc={boxArtLocalUrl(game.boxArtUrl, "md")}
                       alt={game.titleNtsc}
                       className="absolute inset-0 w-full h-full object-cover object-top"
                     />
@@ -345,7 +346,7 @@ export default async function ChroniclesPage({ searchParams }: Props) {
                       href={game.wikiUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 text-center text-[9px] font-mono font-bold uppercase tracking-widest py-1.5 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors rounded-sm"
+                      className="hit-area flex-1 text-center text-[9px] font-mono font-bold uppercase tracking-widest py-1.5 border border-cyan-500/40 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400 transition-colors rounded-sm"
                     >
                       WIKI
                     </a>

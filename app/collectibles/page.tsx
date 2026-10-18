@@ -503,7 +503,7 @@ function CollectiblesHeader({
     <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
       <div className={activeType === "GRID" ? "max-w-[1600px] mx-auto px-4 md:px-6 py-4" : "max-w-5xl mx-auto px-4 md:px-6 py-4"}>
         <div className="mb-4">
-          <Link href="/" className="inline-flex items-center gap-2 transition-opacity hover:opacity-80">
+          <Link href="/" className="hit-area inline-flex items-center gap-2 transition-opacity hover:opacity-80">
             <Zap className="h-4 w-4 text-amber-400" strokeWidth={2.5} />
             <span className="font-black italic tracking-tight text-white text-sm" style={{ letterSpacing: "-0.02em" }}>
               SMASH<span className="text-amber-400">COMPENDIUM</span>
@@ -533,7 +533,7 @@ function CollectiblesHeader({
         <div className="flex gap-1 flex-wrap border-b border-vault-border/30 pb-0">
           <Link
             href="/collectibles"
-            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
+            className={`px-4 py-3 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
               activeType === "GRID"
                 ? "bg-vault-surface border-vault-accent text-slate-100"
                 : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
@@ -544,7 +544,7 @@ function CollectiblesHeader({
           
           <Link
             href="/collectibles?type=TROPHY&game=SSBM"
-            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
+            className={`px-4 py-3 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
               activeType === "TROPHY" && activeGame === "SSBM"
                 ? "bg-vault-surface border-vault-accent text-slate-100"
                 : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
@@ -555,7 +555,7 @@ function CollectiblesHeader({
           
           <Link
             href="/collectibles?type=TROPHY&game=SSBB"
-            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
+            className={`px-4 py-3 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
               activeType === "TROPHY" && activeGame === "SSBB"
                 ? "bg-vault-surface border-vault-accent text-slate-100"
                 : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
@@ -566,7 +566,7 @@ function CollectiblesHeader({
           
           <Link
             href="/collectibles?type=TROPHY&game=SSB4"
-            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
+            className={`px-4 py-3 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
               activeType === "TROPHY" && ["SSB4", "SSB4_3DS", "SSB4_WIIU"].includes(activeGame)
                 ? "bg-vault-surface border-vault-accent text-slate-100"
                 : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
@@ -577,7 +577,7 @@ function CollectiblesHeader({
           
           <Link
             href="/collectibles?type=STICKER&game=SSBB"
-            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
+            className={`px-4 py-3 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
               activeType === "STICKER"
                 ? "bg-vault-surface border-vault-accent text-slate-100"
                 : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"
@@ -588,7 +588,7 @@ function CollectiblesHeader({
           
           <Link
             href="/collectibles?type=SPIRIT"
-            className={`px-4 py-2 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
+            className={`px-4 py-3 text-xs font-mono font-medium rounded-t-lg transition-colors border-b-2 ${
               activeType === "SPIRIT"
                 ? "bg-vault-surface border-vault-accent text-slate-100"
                 : "border-transparent text-slate-400 hover:text-slate-200 hover:bg-vault-surface/50"

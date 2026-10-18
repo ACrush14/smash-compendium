@@ -7,15 +7,17 @@ type Props = Omit<ImgHTMLAttributes<HTMLImageElement>, "src"> & {
   /** URL original (ex.: do wiki). A versão local leve é escolhida pelo `tier`. */
   src: string;
   tier?: ImageTier;
+  /** Versão local explícita (ex.: capa de jogo); sobrepõe o `tier`. */
+  localSrc?: string;
 };
 
 /**
  * <img> leve para listas pequenas: usa a versão local WebP e volta para a URL original se faltar.
  * Para servidores (páginas) que não podem ter onError inline.
  */
-export default function FallbackImg({ src, tier = "thumb", alt = "", ...rest }: Props) {
+export default function FallbackImg({ src, tier = "thumb", localSrc, alt = "", ...rest }: Props) {
   const [failed, setFailed] = useState(false);
-  const local = localImageUrl(src, tier);
+  const local = localSrc ?? localImageUrl(src, tier);
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img

@@ -56,7 +56,7 @@ function CollectibleCard({ item, lang }: { item: FranchiseCollectible; lang: "EN
       <div className="flex items-start gap-2.5 p-3">
         {/* Image */}
         <div className="shrink-0 w-10 h-10 border border-white/5 bg-black/20 flex items-center justify-center overflow-hidden">
-          {item.assetRenderUrl ? (
+          {item.assetRenderUrl && !/\.(webm|mp4)(\?|$)/i.test(item.assetRenderUrl) ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img loading="lazy" decoding="async"
               src={thumbUrl(item.assetRenderUrl)}
