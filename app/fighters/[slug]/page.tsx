@@ -19,9 +19,11 @@ import {
 // Página gerada sob demanda e guardada por 10 min (ISR); admin pode forçar em /api/admin/revalidate.
 export const revalidate = 600;
 
-// Sem páginas pré-geradas: cada slug é renderizado na 1ª visita e guardado (ISR) pelo tempo de `revalidate`.
-export function generateStaticParams() {
-  return [];
+// Todas as fichas são geradas no build (1ª visita já é instantânea) e renovadas a cada `revalidate` (ISR).
+// Nomes novos criados depois continuam funcionando: são gerados na 1ª visita (dynamicParams).
+export async function generateStaticParams() {
+  const rows = await db.fighter.findMany({ select: { name: true } });
+  return rows.map(r => ({ slug: r.name })); // nome puro: o Next codifica o caminho sozinho
 }
 
 // ─── Jogos de origem por franquia ─────────────────────────────────────────────

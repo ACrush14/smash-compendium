@@ -1681,3 +1681,11 @@ Ultimate Fighter Tips JP:
 - **SEO/infra:** `app/robots.ts`, `app/sitemap.ts` (155 URLs: fixas + lutadores + franquias), `app/icon.svg` (favicon), metadados Open Graph/`metadataBase` (`NEXT_PUBLIC_SITE_URL`, padrão https://smashcompendium.com).
 - **Cabeçalhos (next.config.mjs):** `nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy`, `Permissions-Policy`; `/assets/*` com cache de 7 dias (+30 d SWR); `/videos` e `/audio` só 1 h (um 404 antigo não pode ficar preso no navegador).
 - **Observações dos testes:** páginas `/fighters/<inexistente>` e `/franchise/<inexistente>` respondem 200 com a tela 404 + `noindex` (efeito do `loading.tsx` com streaming); qualquer outra rota inexistente dá 404 real. `/api/translate` é público e sem proteção (hoje inofensivo: sem `ANTHROPIC_API_KEY` responde 500) — proteja-o antes de configurar a chave.
+
+## 37. Sessão 32 — Troféus/stickers sob demanda, pré-geração e limpeza (2026-10-18, V00.235)
+
+- **Troféus e stickers em duas camadas** (como os spirits): `lib/collectible-items.ts` (`getTrophyList`, `getStickerList`, `getCollectibleDetail`), `lib/collectible-types.ts`, `app/api/collectibles/[id]/route.ts`, hook `hooks/useCollectibleDetails.ts`. A página leva só a lista leve (+ o detalhe do item inicial); o detalhe vem de `/api/collectibles/[id]` ao abrir/navegar (com prefetch dos vizinhos e skeleton). Peso gz: troféus Brawl 280→40 KB, SSB4 → 75 KB, stickers 89→41 KB. Os 2.690 ids foram testados na API (0 falhas).
+- **Pré-geração:** `generateStaticParams` em `/fighters/[slug]` e `/franchise/[name]` devolve o NOME PURO (o Next codifica o caminho; passar `encodeURIComponent` quebra o cache para nomes com espaço/acento). 184 páginas estáticas; `revalidate = 600` mantém o ISR.
+- **GIFs:** `public/assets/media/ness/gif2.gif` (7,1 MB) → `gif2.webm` (764 KB); a linha `MEDIA-Ness-gif2` do banco foi atualizada. Os 11 GIFs de `public/assets/gifs` (25 MB, sem nenhuma referência) foram movidos para `archive/unused-gifs/` (fora do deploy).
+- **YouTube:** `YoutubeGif.tsx` (único a carregar a IFrame API) removido; o `/music` só cria um `<iframe>` embed quando uma faixa é tocada.
+- **Métricas:** `@vercel/analytics` e `@vercel/speed-insights` montados em `app/layout.tsx` (só enviam dados depois de ativados no painel da Vercel).

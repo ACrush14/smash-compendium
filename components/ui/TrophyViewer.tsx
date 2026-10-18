@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import SkeletonImage from "@/components/ui/SkeletonImage";
+import SkeletonImage, { Skeleton } from "@/components/ui/SkeletonImage";
 import { usePreloadImages } from "@/hooks/usePreloadImages";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
-import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
+import RelatedItemsGrid from "./RelatedItemsGrid";
+import type { CollectibleListItem, CollectibleDetail } from "@/lib/collectible-types";
+import { useCollectibleDetails } from "@/hooks/useCollectibleDetails";
 import AssociatedCards from "./AssociatedCards";
 import LocalVideoGif from "./LocalVideoGif";
 import ClipVideo from "./ClipVideo";
@@ -13,38 +15,21 @@ import { LangSelector, type Lang } from "./FighterDataZone";
 import { pickCollectibleDescription } from "@/lib/collectible-lang";
 
 import FallbackImg from "@/components/ui/FallbackImg";
-export interface ChronicleLink {
-  id:         string;
-  titleNtsc:  string;
-  boxArtUrl:  string | null;
-  wikiUrl:    string | null;
-}
+export type { ChronicleLink } from "@/lib/collectible-types";
 
-export interface TrophyItem {
-  id:               string;
-  name:             string;
-  nameJp:           string | null;
-  orderIndex:       number | null;
-  assetRenderUrl:   string | null;
-  assetRender2Url:  string | null;  // Imagem 3DS (somente para SSB4 Both)
-  descriptionEn:    string | null;
-  descriptionPt?:   string | null;
-  descriptionJp?:   string | null;
-  descriptionJpEn?: string | null;
-  sourceGame:       string | null;
-  svgIconUrl:       string | null;
-  franchiseId:      string | null;
-  franchiseName:    string | null;
-  smashGameVersion: string;
-  videoStartSec?:           number | null;
-  videoEndSec?:             number | null;
-  videoStartSec2?:          number | null;
-  videoEndSec2?:            number | null;
-  fighterBioVideoStartSec?: number | null;
-  fighterBioVideoEndSec?:   number | null;
-  relatedItems:     RelatedItem[];
-  chronicleLinks:   ChronicleLink[];
-}
+/** Item composto usado na renderização: dados da lista + detalhe (valores vazios até o detalhe chegar). */
+export type TrophyItem = CollectibleListItem & Omit<CollectibleDetail, "id">;
+
+const EMPTY_DETAIL: Omit<CollectibleDetail, "id"> = {
+  nameJp: null, descriptionEn: null, descriptionPt: null, descriptionJp: null, descriptionJpEn: null,
+  sourceGame: null, svgIconUrl: null, franchiseId: null,
+  videoStartSec: null, videoEndSec: null, videoStartSec2: null, videoEndSec2: null,
+  fighterBioVideoStartSec: null, fighterBioVideoEndSec: null,
+  relatedItems: [], chronicleLinks: [],
+};
+
+const mergeItem = (list: CollectibleListItem, detail?: CollectibleDetail): TrophyItem =>
+  ({ ...list, ...EMPTY_DETAIL, ...(detail ?? {}), id: list.id });
 
 // Parse "Super Mario Bros. (NES) / New Super Mario Bros. (NDS)" → ["Super Mario Bros. (NES)", ...]
 // Splits only on " / " (space-slash-space) to avoid breaking "Pokémon Red/Blue"
@@ -62,17 +47,18 @@ function gameSearchTitle(entry: string): string {
 const SIDEBAR_SIZE = 14;
 
 interface Props {
-  trophies:     TrophyItem[];
-  initialIndex?: number;
+  trophies:       CollectibleListItem[];
+  initialIndex?:  number;
+  initialDetail?: CollectibleDetail | null;
 }
 
-export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
+export default function TrophyViewer({ trophies, initialIndex = 0, initialDetail = null }: Props) {
   const [index, setIndex]         = useState(initialIndex);
   const [direction, setDirection] = useState<"next" | "prev" | null>(null);
   const [query, setQuery]         = useState("");
   const [lang, setLang]           = useState<Lang>("EN");
   const activeRef     = useRef<HTMLButtonElement>(null);
-  const lastCurrentRef = useRef<TrophyItem | null>(null);
+  const lastCurrentRef = useRef<CollectibleListItem | null>(null);
 
   const filtered = query.trim()
     ? trophies.filter(t =>
@@ -84,15 +70,25 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
 
   const noResults  = query.trim().length > 0 && filtered.length === 0;
   const safeIndex  = Math.min(index, Math.max(0, filtered.length - 1));
-  const current    = filtered[safeIndex];
+  const listCurrent   = filtered[safeIndex];
   // When search yields no results, keep displaying the last valid trophy
-  const displayed  = current ?? lastCurrentRef.current ?? trophies[0];
+  const listDisplayed = listCurrent ?? lastCurrentRef.current ?? trophies[0];
+
+  // Detalhe (descrições, vídeos, jogos de origem...) vem sob demanda; vizinhos são pré-carregados.
+  const details = useCollectibleDetails(
+    listDisplayed?.id,
+    [filtered[safeIndex + 1]?.id, filtered[safeIndex - 1]?.id, filtered[safeIndex + 2]?.id],
+    initialDetail,
+  );
+  const detailReady = !!listDisplayed && !!details[listDisplayed.id];
+  const current   = listCurrent   ? mergeItem(listCurrent,   details[listCurrent.id])   : undefined;
+  const displayed = listDisplayed ? mergeItem(listDisplayed, details[listDisplayed.id]) : undefined;
 
   usePreloadImages([filtered[safeIndex - 1], filtered[safeIndex + 1], filtered[safeIndex + 2]].map(t => fullImageUrl(t?.assetRenderUrl)));
 
   useEffect(() => {
-    if (current) lastCurrentRef.current = current;
-  }, [current]);
+    if (listCurrent) lastCurrentRef.current = listCurrent;
+  }, [listCurrent]);
 
   // O usuário solicitou um scroll com todos os itens, então não precisamos mais cortar a lista.
   // Renderiza todos os itens filtrados na sidebar scrollable.
@@ -458,6 +454,13 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
 
         {/* ── DIREITA: descrição ── */}
         <div className="flex flex-col gap-3 pt-1">
+          {!detailReady ? (
+            <>
+              <Skeleton className="h-24 rounded-xl" />
+              <Skeleton className="h-16 rounded-xl" />
+            </>
+          ) : (
+          <>
           {displayed.descriptionEn && (
             <>
               <div className="flex justify-end">
@@ -507,10 +510,12 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
           {!displayed.descriptionEn && displayed.chronicleLinks.length === 0 && games.length === 0 && (
             <p className="text-xs text-slate-700 italic text-center mt-8">Sem informações adicionais</p>
           )}
+          </>
+          )}
         </div>
       </div>
 
-      {displayed.franchiseId && (
+      {detailReady && displayed.franchiseId && (
         <AssociatedCards
           currentId={displayed.id}
           name={displayed.name}

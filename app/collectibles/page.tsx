@@ -5,9 +5,10 @@ import { Metadata } from "next";
 import Link from "next/link";
 import SkeletonImage from "@/components/ui/SkeletonImage";
 import SpiritViewer from "@/components/ui/SpiritViewer";
+import { getTrophyList, getStickerList, getCollectibleDetail } from "@/lib/collectible-items";
 import { getSpiritList, getSpiritDetail } from "@/lib/spirits";
-import TrophyViewer, { type TrophyItem } from "@/components/ui/TrophyViewer";
-import StickerViewer, { type StickerItem } from "@/components/ui/StickerViewer";
+import TrophyViewer from "@/components/ui/TrophyViewer";
+import StickerViewer from "@/components/ui/StickerViewer";
 
 export const revalidate = 3600;
 
@@ -83,114 +84,22 @@ export default async function CollectiblesPage({ searchParams }: Props) {
   /* Trophy View — one at a time, like SpiritViewer             */
   /* ─────────────────────────────────────────────────────────── */
   if (typeFilter === "TROPHY") {
-    const SSB4_VERSIONS = ["SSB4", "SSB4_3DS", "SSB4_WIIU"];
-    const trophyVersions = SSB4_VERSIONS.includes(activeGame)
-      ? SSB4_VERSIONS
-      : [activeGame];
-
-    type ChrLink = { collectibleId: string; id: string; titleNtsc: string; boxArtUrl: string | null; wikiUrl: string | null };
-    const { rawTrophies, chronicleLinksRaw } = await cachedQueryZ(["collectibles-trophies", trophyVersions.join(",")], async () => {
-    const rawTrophies = await db.collectible.findMany({
-      where:   { type: "TROPHY", smashGameVersion: { in: trophyVersions } },
-      orderBy: [{ posicaoTrofeuMelee: "asc" }, { posicaoTrofeuBrawl: "asc" }, { posicaoTrofeuSsb4: "asc" }, { name: "asc" }],
-      include: {
-        franchise: { select: { svgIconUrl: true, name: true } },
-        fighter: {
-          select: {
-            id: true, name: true, imageUrl: true,
-            bios: {
-              where: { smashGameVersion: 'SSBM' },
-              select: { videoStartSec: true, videoEndSec: true },
-            },
-          },
-        },
-        relationsFrom: {
-          include: { to: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
-        },
-        relationsTo: {
-          include: { from: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
-        },
-      },
-    });
-
-    // Load chronicle links via raw SQL (Prisma client not yet regenerated for new relation)
-    let chronicleLinksRaw: ChrLink[] = [];
-    if (rawTrophies.length > 0) {
-      const ids = rawTrophies.map(t => t.id);
-      chronicleLinksRaw = await (db as any).$queryRawUnsafe(
-        `SELECT ccl."collectibleId", ce.id, ce."titleNtsc", ce."boxArtUrl", ce."wikiUrl"
-         FROM "CollectibleChronicleLink" ccl
-         JOIN "ChronicleEntry" ce ON ccl."chronicleEntryId" = ce.id
-         WHERE ccl."collectibleId" = ANY($1::text[])
-         ORDER BY ce."titleNtsc"`,
-        ids
-      ) as ChrLink[];
-    }
-    return { rawTrophies, chronicleLinksRaw };
-    });
-    const linksByTrophy = new Map<string, ChrLink[]>();
-    for (const lnk of chronicleLinksRaw) {
-      if (!linksByTrophy.has(lnk.collectibleId)) linksByTrophy.set(lnk.collectibleId, []);
-      linksByTrophy.get(lnk.collectibleId)!.push(lnk);
-    }
-
-    // Resolve initial index from ?trophy=<id> param
+    // Lista leve para a lateral/busca; o detalhe completo vem sob demanda de /api/collectibles/[id].
+    const trophyList = await getTrophyList(activeGame);
     const trophyIdParam = searchParams.trophy;
     const initialIndex  = trophyIdParam
-      ? Math.max(0, rawTrophies.findIndex(t => t.id === trophyIdParam))
+      ? Math.max(0, trophyList.findIndex(t => t.id === trophyIdParam))
       : 0;
-
-    const trophyItems: TrophyItem[] = rawTrophies.map(t => ({
-      id:               t.id,
-      name:             t.name,
-      nameJp:           t.nameJp          ?? null,
-      orderIndex:       t.posicaoTrofeuMelee ?? t.posicaoTrofeuBrawl ?? t.posicaoTrofeuSsb4 ?? t.orderIndex ?? null,
-      assetRenderUrl:   t.assetRenderUrl  ?? null,
-      assetRender2Url:  t.assetRender2Url ?? null,
-      descriptionEn:    t.descriptionEn   ?? null,
-      descriptionPt:    t.descriptionPt   ?? null,
-      descriptionJp:    t.descriptionJp   ?? null,
-      descriptionJpEn:  t.descriptionJpEn ?? null,
-      sourceGame:       t.sourceGame      ?? null,
-      svgIconUrl:       t.franchise?.svgIconUrl ?? null,
-      franchiseId:      t.franchiseId           ?? null,
-      franchiseName:    t.franchise?.name       ?? null,
-      smashGameVersion: t.smashGameVersion,
-      videoStartSec:             t.videoStartSec                    ?? null,
-      videoEndSec:               t.videoEndSec                      ?? null,
-      videoStartSec2:            (t as any).videoStartSec2          ?? null,
-      videoEndSec2:              (t as any).videoEndSec2            ?? null,
-      fighterBioVideoStartSec:   t.fighter?.bios?.[0]?.videoStartSec ?? null,
-      fighterBioVideoEndSec:     t.fighter?.bios?.[0]?.videoEndSec   ?? null,
-      relatedItems: [
-        ...(t.fighter ? [{
-          id: t.fighter.id, name: t.fighter.name, smashGameVersion: "SSBU",
-          assetRenderUrl: t.fighter.imageUrl, type: "FIGHTER"
-        }] : []),
-        ...t.relationsFrom.map(r => ({
-          id: r.to.id, name: r.to.name, smashGameVersion: r.to.smashGameVersion,
-          assetRenderUrl: r.to.assetRenderUrl, type: r.to.type,
-        })),
-        ...t.relationsTo.map(r => ({
-          id: r.from.id, name: r.from.name, smashGameVersion: r.from.smashGameVersion,
-          assetRenderUrl: r.from.assetRenderUrl, type: r.from.type,
-        })),
-      ].slice(0, 8),
-      chronicleLinks: (linksByTrophy.get(t.id) ?? []).map(lnk => ({
-        id:        lnk.id,
-        titleNtsc: lnk.titleNtsc,
-        boxArtUrl: lnk.boxArtUrl,
-        wikiUrl:   lnk.wikiUrl,
-      })),
-    }));
+    const first = trophyList[initialIndex];
+    const initialDetail = first ? await getCollectibleDetail(first.id) : null;
 
     return (
       <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body pb-28">
         {/* Header */}
-        <CollectiblesHeader activeType="TROPHY" activeGame={activeGame} itemCount={trophyItems.length} />
+        <CollectiblesHeader activeType="TROPHY" activeGame={activeGame} itemCount={trophyList.length} />
         {/* Viewer */}
         <div className="flex-1 max-w-5xl mx-auto px-4 md:px-6 py-8 w-full">
-          <TrophyViewer trophies={trophyItems} initialIndex={initialIndex} />
+          <TrophyViewer trophies={trophyList} initialIndex={initialIndex} initialDetail={initialDetail} />
         </div>
       </main>
     );
@@ -200,91 +109,19 @@ export default async function CollectiblesPage({ searchParams }: Props) {
   /* Sticker View — one at a time, like SpiritViewer            */
   /* ─────────────────────────────────────────────────────────── */
   if (typeFilter === "STICKER") {
-    type ChrLink = { collectibleId: string; id: string; titleNtsc: string; boxArtUrl: string | null; wikiUrl: string | null };
-    const { rawStickers, chronicleLinksRaw } = await cachedQueryZ(["collectibles-stickers", activeGame], async () => {
-    const rawStickers = await db.collectible.findMany({
-      where:   { type: "STICKER", smashGameVersion: activeGame },
-      orderBy: [{ orderIndex: "asc" }, { name: "asc" }],
-      include: {
-        franchise: { select: { svgIconUrl: true, name: true } },
-        fighter: { select: { id: true, name: true, imageUrl: true } },
-        relationsFrom: {
-          include: { to: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
-        },
-        relationsTo: {
-          include: { from: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
-        },
-      },
-    });
-
-    // Load chronicle links via raw SQL
-    let chronicleLinksRaw: ChrLink[] = [];
-    if (rawStickers.length > 0) {
-      const ids = rawStickers.map(s => s.id);
-      chronicleLinksRaw = await (db as any).$queryRawUnsafe(
-        `SELECT ccl."collectibleId", ce.id, ce."titleNtsc", ce."boxArtUrl", ce."wikiUrl"
-         FROM "CollectibleChronicleLink" ccl
-         JOIN "ChronicleEntry" ce ON ccl."chronicleEntryId" = ce.id
-         WHERE ccl."collectibleId" = ANY($1::text[])
-         ORDER BY ce."titleNtsc"`,
-        ids
-      ) as ChrLink[];
-    }
-    return { rawStickers, chronicleLinksRaw };
-    });
-    const linksBySticker = new Map<string, ChrLink[]>();
-    for (const lnk of chronicleLinksRaw) {
-      if (!linksBySticker.has(lnk.collectibleId)) linksBySticker.set(lnk.collectibleId, []);
-      linksBySticker.get(lnk.collectibleId)!.push(lnk);
-    }
-
-    // Resolve initial index from ?trophy=<id> param (reusing the param name for consistency if needed, or ?sticker=)
+    const stickerList = await getStickerList(activeGame);
     const itemIdParam = searchParams.trophy;
     const initialIndex  = itemIdParam
-      ? Math.max(0, rawStickers.findIndex(s => s.id === itemIdParam))
+      ? Math.max(0, stickerList.findIndex(s => s.id === itemIdParam))
       : 0;
-
-    const stickerItems: StickerItem[] = rawStickers.map(s => ({
-      id:               s.id,
-      name:             s.name,
-      nameJp:           s.nameJp          ?? null,
-      orderIndex:       s.orderIndex      ?? null,
-      assetRenderUrl:   s.assetRenderUrl  ?? null,
-      descriptionEn:    s.descriptionEn   ?? null,
-      descriptionPt:    s.descriptionPt   ?? null,
-      descriptionJp:    s.descriptionJp   ?? null,
-      descriptionJpEn:  s.descriptionJpEn ?? null,
-      sourceGame:       s.sourceGame      ?? null,
-      svgIconUrl:       s.franchise?.svgIconUrl ?? null,
-      franchiseId:      s.franchiseId           ?? null,
-      franchiseName:    s.franchise?.name       ?? null,
-      chronicleLinks: (linksBySticker.get(s.id) ?? []).map(lnk => ({
-        id:        lnk.id,
-        titleNtsc: lnk.titleNtsc,
-        boxArtUrl: lnk.boxArtUrl,
-        wikiUrl:   lnk.wikiUrl,
-      })),
-      relatedItems: [
-        ...(s.fighter ? [{
-          id: s.fighter.id, name: s.fighter.name, smashGameVersion: "SSBU",
-          assetRenderUrl: s.fighter.imageUrl, type: "FIGHTER"
-        }] : []),
-        ...s.relationsFrom.map(r => ({
-          id: r.to.id, name: r.to.name, smashGameVersion: r.to.smashGameVersion,
-          assetRenderUrl: r.to.assetRenderUrl, type: r.to.type,
-        })),
-        ...s.relationsTo.map(r => ({
-          id: r.from.id, name: r.from.name, smashGameVersion: r.from.smashGameVersion,
-          assetRenderUrl: r.from.assetRenderUrl, type: r.from.type,
-        })),
-      ].slice(0, 8),
-    }));
+    const first = stickerList[initialIndex];
+    const initialDetail = first ? await getCollectibleDetail(first.id) : null;
 
     return (
       <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body pb-28">
-        <CollectiblesHeader activeType="STICKER" activeGame={activeGame} itemCount={stickerItems.length} />
+        <CollectiblesHeader activeType="STICKER" activeGame={activeGame} itemCount={stickerList.length} />
         <div className="flex-1 max-w-4xl mx-auto px-4 md:px-6 py-8 w-full">
-          <StickerViewer stickers={stickerItems} initialIndex={initialIndex} />
+          <StickerViewer stickers={stickerList} initialIndex={initialIndex} initialDetail={initialDetail} />
         </div>
       </main>
     );

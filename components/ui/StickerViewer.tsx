@@ -1,34 +1,31 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import SkeletonImage from "@/components/ui/SkeletonImage";
+import SkeletonImage, { Skeleton } from "@/components/ui/SkeletonImage";
 import { usePreloadImages } from "@/hooks/usePreloadImages";
 import { thumbUrl, boxArtLocalUrl } from "@/lib/media-config";
 import { ChevronLeft, ChevronRight, Search, X, Shield, Sword, Heart } from "lucide-react";
-import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
+import RelatedItemsGrid from "./RelatedItemsGrid";
+import type { CollectibleListItem, CollectibleDetail } from "@/lib/collectible-types";
+import { useCollectibleDetails } from "@/hooks/useCollectibleDetails";
 import AssociatedCards from "./AssociatedCards";
-import { ChronicleLink } from "./TrophyViewer";
 import { LangSelector, type Lang } from "./FighterDataZone";
 import { pickCollectibleDescription } from "@/lib/collectible-lang";
 
 import FallbackImg from "@/components/ui/FallbackImg";
-export interface StickerItem {
-  id: string;
-  name: string;
-  nameJp: string | null;
-  orderIndex: number | null;
-  assetRenderUrl: string | null;
-  descriptionEn?: string | null;
-  descriptionPt?: string | null;
-  descriptionJp?: string | null;
-  descriptionJpEn?: string | null;
-  sourceGame: string | null;
-  svgIconUrl: string | null;
-  franchiseId: string | null;
-  franchiseName: string | null;
-  chronicleLinks: ChronicleLink[];
-  relatedItems: RelatedItem[];
-}
+/** Item composto usado na renderização: dados da lista + detalhe (valores vazios até o detalhe chegar). */
+export type StickerItem = CollectibleListItem & Omit<CollectibleDetail, "id">;
+
+const EMPTY_DETAIL: Omit<CollectibleDetail, "id"> = {
+  nameJp: null, descriptionEn: null, descriptionPt: null, descriptionJp: null, descriptionJpEn: null,
+  sourceGame: null, svgIconUrl: null, franchiseId: null,
+  videoStartSec: null, videoEndSec: null, videoStartSec2: null, videoEndSec2: null,
+  fighterBioVideoStartSec: null, fighterBioVideoEndSec: null,
+  relatedItems: [], chronicleLinks: [],
+};
+
+const mergeItem = (list: CollectibleListItem, detail?: CollectibleDetail): StickerItem =>
+  ({ ...list, ...EMPTY_DETAIL, ...(detail ?? {}), id: list.id });
 
 function parseSourceGames(raw: string | null): string[] {
   if (!raw || raw.toUpperCase() === "SMASH") return [];
@@ -40,17 +37,18 @@ function gameSearchTitle(entry: string): string {
 }
 
 interface Props {
-  stickers: StickerItem[];
+  stickers: CollectibleListItem[];
   initialIndex?: number;
+  initialDetail?: CollectibleDetail | null;
 }
 
-export default function StickerViewer({ stickers, initialIndex = 0 }: Props) {
+export default function StickerViewer({ stickers, initialIndex = 0, initialDetail = null }: Props) {
   const [index, setIndex]         = useState(initialIndex);
   const [direction, setDirection] = useState<"next" | "prev" | null>(null);
   const [query, setQuery]         = useState("");
   const [lang, setLang]           = useState<Lang>("EN");
   const activeRef     = useRef<HTMLButtonElement>(null);
-  const lastCurrentRef = useRef<StickerItem | null>(null);
+  const lastCurrentRef = useRef<CollectibleListItem | null>(null);
 
   const filtered = query.trim()
     ? stickers.filter(s =>
@@ -62,14 +60,24 @@ export default function StickerViewer({ stickers, initialIndex = 0 }: Props) {
 
   const noResults  = query.trim().length > 0 && filtered.length === 0;
   const safeIndex  = Math.min(index, Math.max(0, filtered.length - 1));
-  const current    = filtered[safeIndex];
-  const displayed  = current ?? lastCurrentRef.current ?? stickers[0];
+  const listCurrent   = filtered[safeIndex];
+  const listDisplayed = listCurrent ?? lastCurrentRef.current ?? stickers[0];
+
+  // Detalhe (descrição, jogos de origem, relacionados...) vem sob demanda; vizinhos são pré-carregados.
+  const details = useCollectibleDetails(
+    listDisplayed?.id,
+    [filtered[safeIndex + 1]?.id, filtered[safeIndex - 1]?.id, filtered[safeIndex + 2]?.id],
+    initialDetail,
+  );
+  const detailReady = !!listDisplayed && !!details[listDisplayed.id];
+  const current   = listCurrent   ? mergeItem(listCurrent,   details[listCurrent.id])   : undefined;
+  const displayed = listDisplayed ? mergeItem(listDisplayed, details[listDisplayed.id]) : undefined;
 
   usePreloadImages([filtered[safeIndex - 1]?.assetRenderUrl, filtered[safeIndex + 1]?.assetRenderUrl, filtered[safeIndex + 2]?.assetRenderUrl]);
 
   useEffect(() => {
-    if (current) lastCurrentRef.current = current;
-  }, [current]);
+    if (listCurrent) lastCurrentRef.current = listCurrent;
+  }, [listCurrent]);
 
   // URL sync — update ?trophy=<id> sem recarregar a página (reutiliza o param "trophy" por simplicidade de roteamento)
   useEffect(() => {
@@ -304,6 +312,8 @@ export default function StickerViewer({ stickers, initialIndex = 0 }: Props) {
               )}
             </div>
 
+            {!detailReady && <Skeleton className="h-24 w-full max-w-md rounded-xl" />}
+
             {/* Descrição */}
             {displayed.descriptionEn && (
               <div className="w-full max-w-md flex flex-col gap-2">
@@ -357,7 +367,7 @@ export default function StickerViewer({ stickers, initialIndex = 0 }: Props) {
 
       </div>
 
-      {displayed.franchiseId && (
+      {detailReady && displayed.franchiseId && (
         <AssociatedCards
           currentId={displayed.id}
           name={displayed.name}

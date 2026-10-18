@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import CollectiblesMusicBar from "@/components/ui/CollectiblesMusicBar";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { APP_VERSION } from "@/lib/version";
 
 const inter = Inter({
@@ -54,6 +56,9 @@ export default function RootLayout({
           {children}
         </div>
         <CollectiblesMusicBar />
+        {/* Métricas reais de visitantes (só enviam dados depois de ativadas no painel da Vercel) */}
+        <Analytics />
+        <SpeedInsights />
         <footer className="w-full text-center pt-3 pb-28 font-mono text-[10px] text-cyan-900/60 tracking-widest uppercase border-t border-cyan-500/5 select-none">
           <span className="text-cyan-800/50 mr-3">{APP_VERSION}</span>
           <span className="text-cyan-900/40 mr-3">·</span>

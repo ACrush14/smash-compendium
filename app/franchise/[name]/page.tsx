@@ -9,9 +9,10 @@ import FranchiseCollectibles, { type FranchiseCollectible } from "./FranchiseCol
 // Página gerada sob demanda e guardada por 10 min (ISR); admin pode forçar em /api/admin/revalidate.
 export const revalidate = 600;
 
-// Sem páginas pré-geradas: cada slug é renderizado na 1ª visita e guardado (ISR) pelo tempo de `revalidate`.
-export function generateStaticParams() {
-  return [];
+// Todas as franquias são geradas no build (1ª visita já é instantânea) e renovadas a cada `revalidate` (ISR).
+export async function generateStaticParams() {
+  const rows = await db.franchise.findMany({ select: { name: true } });
+  return rows.map(r => ({ name: r.name })); // nome puro: o Next codifica o caminho sozinho
 }
 
 interface PageProps {
