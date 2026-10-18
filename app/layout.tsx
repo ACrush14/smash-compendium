@@ -18,6 +18,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://smashcompendium.com"),
   title: {
     default: "Smash Compendium",
     template: "%s | Smash Compendium",
@@ -25,6 +26,14 @@ export const metadata: Metadata = {
   description:
     "Museu digital da franquia Super Smash Bros — troféus, spirits, stickers e a história de cada personagem.",
   keywords: ["Super Smash Bros", "Nintendo", "troféus", "spirits", "museum"],
+  openGraph: {
+    type: "website",
+    siteName: "Smash Compendium",
+    locale: "pt_BR",
+    title: "Smash Compendium",
+    description:
+      "Museu digital da franquia Super Smash Bros — troféus, spirits, stickers e a história de cada personagem.",
+  },
 };
 
 export default function RootLayout({

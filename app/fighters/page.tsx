@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { smashDebutEra } from "@/lib/fighter-debut";
 import FighterGrid from "./FighterGrid";
 
 
@@ -34,7 +35,8 @@ export default async function FightersPage() {
       franchise: f.franchise.name,
       // Usamos o título do jogo como chave de debut
       debutGame: debutLink ? debutLink.chronicleEntry.titleNtsc : "Unknown",
-      debutVersion: debutLink ? debutLink.chronicleEntry.consoleName : "Unknown",
+      // id da era em que estreou como jogável (SSB64/SSBM/SSBB/SSB4/SSBU) — usado pelo filtro "ERA" da grade
+      debutVersion: smashDebutEra(f.rosterNumber, f.name) ?? "Unknown",
     };
   });
 
