@@ -1702,3 +1702,11 @@ Ultimate Fighter Tips JP:
 
 - `scripts/admin/optimize-images.ts` agora também gera `public/assets/collectibles/md/SPIRIT-*.webp` (≤512px, ~35 KB vs ~280 KB do PNG). `localImageUrl()` mapeia `SPIRIT-*.png` → `md/` (tiers `md`/`full`); o `SpiritViewer` pré-carrega os vizinhos pela versão WebP. Só os spirits numéricos (`SPIRIT-SSBU-0001`…) vão ao deploy; os PNGs nomeados antigos (`SPIRIT-SSBU-Mario.png`, 75px) continuam ignorados no git.
 - **Lighthouse no alias de produção (antes → depois das sessões 32–33):** `/fighters` 81→92, ficha do Mario 72→73 (rede 10,4→5,9 MB, LCP 16→7,2 s; o que sobra é o clipe de gameplay de 2,6 MB que abre sozinho no palco), spirits 54→67 (TBT 690→230 ms), home 97→93 (variação). SEO 100 e acessibilidade 96–100 em todas. O único erro de console restante é o 404 do áudio (`public/audio/trophy-gallery.*`).
+
+## 40. Sessão 34 — Capas de clipes, lista virtual e visão geral (2026-10-18, V00.238)
+
+- **Capas (posters) dos clipes:** `scripts/admin/make-clip-posters.ts` gera `<clipe>.poster.webp` (≤640px, ~21 KB) para os 325 clipes locais; `clipPoster()` (`lib/media-config.ts`) devolve a capa; o palco do `MediaVaultViewer` usa `poster` e as miniaturas usam só a capa (`PosterThumb`, sem baixar vídeo; se a capa não existe, o item sai do carrossel). Só as capas dos clipes versionados vão ao deploy (`git add -f`).
+- **Lista virtual:** `components/ui/VirtualList.tsx` (altura de linha fixa 48px) nas laterais de spirits/troféus/stickers — ~31 linhas montadas em vez de 1.582, e quase nada quando a lista está escondida no celular.
+- **Visão geral `/collectibles`:** TBT de 41 s (1.725 cartões × 2 componentes de cliente) → 30 ms: `<img>` simples gerado no servidor + `content-visibility:auto`; 240 cartões por vez com link "Mostrar mais" (`?limit=`), sem JavaScript; primeiras imagens `eager`/`fetchPriority=high`.
+- **Corrigido:** relacionados duplicados em troféus/spirits (vínculo nos dois sentidos) — `getSpiritDetail`/`getCollectibleDetail` removem repetidos. Landmark `main` em `/music`.
+- **Lighthouse produção (V00.237) das demais páginas:** troféus Brawl 95, música 94, Chronicles 88, stickers 85, franquia 69, visão geral 55 (corrigida aqui).

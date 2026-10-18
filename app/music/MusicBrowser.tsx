@@ -95,7 +95,7 @@ export default function MusicBrowser({ tracks }: Props) {
   const withVideo = tracks.filter(t => t.youtubeId).length;
 
   return (
-    <div className="min-h-screen bg-[#070718] text-slate-200 font-mono flex flex-col">
+    <div role="main" className="min-h-screen bg-[#070718] text-slate-200 font-mono flex flex-col">
 
       {/* ── Header ── */}
       <div className="border-b border-cyan-500/10 px-6 md:px-12 py-5 flex items-center gap-4 shrink-0">

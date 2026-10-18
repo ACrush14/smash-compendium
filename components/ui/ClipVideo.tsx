@@ -28,3 +28,20 @@ export default function ClipVideo({ onFail, ...props }: VideoHTMLAttributes<HTML
   // eslint-disable-next-line jsx-a11y/media-has-caption
   return <video ref={ref} {...props} />;
 }
+
+/**
+ * Miniatura de clipe: só a capa leve (WebP), sem baixar o vídeo. Se a capa não existe (o clipe também não existe
+ * no deploy sem CDN), avisa o pai para tirar o item do carrossel. Confere `complete` ao montar porque o erro
+ * pode ter acontecido antes da hidratação.
+ */
+export function PosterThumb({ src, className, onFail }: { src: string; className?: string; onFail: () => void }) {
+  const ref = useRef<HTMLImageElement>(null);
+  const onFailRef = useRef(onFail);
+  onFailRef.current = onFail;
+  useEffect(() => {
+    const img = ref.current;
+    if (img && img.complete && img.naturalWidth === 0) onFailRef.current();
+  }, [src]);
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img ref={ref} src={src} alt="" loading="lazy" decoding="async" onError={() => onFailRef.current()} className={className} />;
+}

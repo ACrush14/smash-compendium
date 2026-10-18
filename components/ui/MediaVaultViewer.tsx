@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-import ClipVideo from "@/components/ui/ClipVideo";
+import ClipVideo, { PosterThumb } from "@/components/ui/ClipVideo";
 import SkeletonImage from "@/components/ui/SkeletonImage";
-import { thumbUrl } from "@/lib/media-config";
+import { thumbUrl, clipPoster } from "@/lib/media-config";
 import { ImageIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
 import { type MusicTrack } from "@/components/ui/MusicPlayer";
 import { t, type UILang } from "@/lib/ui-i18n";
@@ -172,10 +172,10 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
             IS_VIDEO(active.url) ? (
               active.href ? (
                 <a href={active.href} className="w-full h-full relative z-10 block group cursor-pointer" title={`Ver página de ${active.label}`}>
-                  <ClipVideo onFail={() => markBroken(active.url)} src={active.url} autoPlay loop muted playsInline className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-300" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
+                  <ClipVideo onFail={() => markBroken(active.url)} src={active.url} poster={clipPoster(active.url)} autoPlay loop muted playsInline className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-300" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
                 </a>
               ) : (
-                <ClipVideo onFail={() => markBroken(active.url)} src={active.url} autoPlay loop muted playsInline className="w-full h-full object-contain object-center relative z-10" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
+                <ClipVideo onFail={() => markBroken(active.url)} src={active.url} poster={clipPoster(active.url)} autoPlay loop muted playsInline className="w-full h-full object-contain object-center relative z-10" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
               )
             ) : active.href ? (
               <a href={active.href} className="w-full h-full relative z-10 block group cursor-pointer" title={`Ver página de ${active.label}`}>
@@ -336,14 +336,21 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
                   </div>
                 ) : asset.url ? (
                   IS_VIDEO(asset.url) ? (
-                    <ClipVideo
-                      onFail={() => markBroken(asset.url)}
-                      src={asset.url}
-                      // miniatura: só o 1º quadro (preload=metadata) — não baixa o clipe inteiro; o vídeo ativo toca no palco
-                      preload="metadata"
-                      muted playsInline
-                      className="object-cover h-11 w-11 relative z-10 pointer-events-none"
-                    />
+                    clipPoster(asset.url) ? (
+                      <PosterThumb
+                        src={clipPoster(asset.url)!}
+                        onFail={() => markBroken(asset.url)}
+                        className="object-cover h-11 w-11 relative z-10 pointer-events-none"
+                      />
+                    ) : (
+                      <ClipVideo
+                        onFail={() => markBroken(asset.url)}
+                        src={asset.url}
+                        preload="metadata"
+                        muted playsInline
+                        className="object-cover h-11 w-11 relative z-10 pointer-events-none"
+                      />
+                    )
                   ) : (
                     <SkeletonImage
                       src={IS_GIF(asset.url) ? asset.url : thumbUrl(asset.url)}

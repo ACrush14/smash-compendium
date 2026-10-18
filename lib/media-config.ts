@@ -113,3 +113,12 @@ export function boxArtLocalUrl(url: string | null | undefined, size: "md" | "sm"
   if (!/^https?:\/\//i.test(url)) return url;
   return `/assets/boxarts/${size === "sm" ? "sm/" : ""}${urlKey(url)}.webp`;
 }
+
+/**
+ * Capa WebP leve de um clipe local (gerada por scripts/admin/make-clip-posters.ts), usada como `poster` do <video>.
+ * Só para clipes de /assets/media; outras URLs não têm capa.
+ */
+export function clipPoster(url: string | null | undefined): string | undefined {
+  if (!url || !url.startsWith("/assets/media/") || !/\.webm$/i.test(url)) return undefined;
+  return url.replace(/\.webm$/i, ".poster.webp");
+}

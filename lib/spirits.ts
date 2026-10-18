@@ -117,7 +117,8 @@ export async function getSpiritDetail(id: string): Promise<SpiritDetail | null> 
           id: r.from.id, name: r.from.name, smashGameVersion: r.from.smashGameVersion,
           assetRenderUrl: r.from.assetRenderUrl, type: r.from.type,
         })),
-      ].slice(0, 8),
+      ].filter((r, i, all) => all.findIndex(x => x.id === r.id) === i) // o vínculo existe nos dois sentidos: sem repetidos
+       .slice(0, 8),
     };
     return detail;
   });

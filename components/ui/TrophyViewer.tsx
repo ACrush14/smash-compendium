@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import VirtualList from "./VirtualList";
 import SkeletonImage, { Skeleton } from "@/components/ui/SkeletonImage";
 import { usePreloadImages } from "@/hooks/usePreloadImages";
 import { imgFallback } from "./imgFallback";
@@ -192,16 +193,20 @@ export default function TrophyViewer({ trophies, initialIndex = 0, initialDetail
       <div className="grid grid-cols-1 md:grid-cols-[200px_1fr_280px] gap-3 md:gap-5 items-start">
 
         {/* ── ESQUERDA: sidebar ── */}
-        <div className="hidden md:flex flex-col gap-0.5 bg-slate-900/40 rounded-xl border border-vault-border/30 p-1.5 max-h-[700px] overflow-y-auto scrollbar-thin scrollbar-thumb-vault-accent/30 scrollbar-track-transparent">
-          {filtered.map((t, filteredIdx) => {
+        <VirtualList
+            count={filtered.length}
+            rowHeight={48}
+            activeIndex={safeIndex}
+            className="hidden md:block bg-slate-900/40 rounded-xl border border-vault-border/30 p-1.5 max-h-[700px] overflow-y-auto scrollbar-thin scrollbar-thumb-vault-accent/30 scrollbar-track-transparent"
+            renderRow={(filteredIdx) => {
+              const t = filtered[filteredIdx]!;
             const isActive    = filteredIdx === safeIndex;
             return (
               <button
                 key={t.id}
-                ref={isActive ? activeRef : undefined}
                 onClick={() => (isSearchActive && isActive) ? jumpToFull() : goTo(filteredIdx)}
                 title={isSearchActive && isActive ? "Clique para ir à posição na lista completa" : t.name}
-                className={`[content-visibility:auto] [contain-intrinsic-size:auto_44px] flex items-center gap-2 px-2 py-1.5 rounded-lg text-left w-full transition-all ${
+                className={`h-[46px] flex items-center gap-2 px-2 py-1.5 rounded-lg text-left w-full transition-all ${
                   isActive
                     ? "bg-vault-accent/15 border border-vault-accent/30"
                     : "hover:bg-slate-800/60 border border-transparent"
@@ -235,8 +240,8 @@ export default function TrophyViewer({ trophies, initialIndex = 0, initialDetail
                 )}
               </button>
             );
-          })}
-        </div>
+            }}
+          />
 
         {/* ── CENTRO: troféu + navegação ── */}
         <div className="flex flex-col items-center gap-3">

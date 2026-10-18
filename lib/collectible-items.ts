@@ -120,7 +120,8 @@ export async function getCollectibleDetail(id: string): Promise<CollectibleDetai
           id: r.from.id, name: r.from.name, smashGameVersion: r.from.smashGameVersion,
           assetRenderUrl: r.from.assetRenderUrl, type: r.from.type,
         })),
-      ].slice(0, 8),
+      ].filter((r, i, all) => all.findIndex(x => x.id === r.id) === i) // o vínculo existe nos dois sentidos: sem repetidos
+       .slice(0, 8),
       chronicleLinks: links.map(l => ({ id: l.id, titleNtsc: l.titleNtsc, boxArtUrl: l.boxArtUrl, wikiUrl: l.wikiUrl })),
     };
     return detail;

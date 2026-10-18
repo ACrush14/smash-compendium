@@ -3,10 +3,10 @@ import { cachedQueryZ } from "@/lib/cache";
 import { Zap } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
-import SkeletonImage from "@/components/ui/SkeletonImage";
 import SpiritViewer from "@/components/ui/SpiritViewer";
 import { getTrophyList, getStickerList, getCollectibleDetail } from "@/lib/collectible-items";
 import { getSpiritList, getSpiritDetail } from "@/lib/spirits";
+import { localImageUrl } from "@/lib/media-config";
 import TrophyViewer from "@/components/ui/TrophyViewer";
 import StickerViewer from "@/components/ui/StickerViewer";
 
@@ -43,7 +43,7 @@ const orderBy = [
 ];
 
 interface Props {
-  searchParams: { game?: string; type?: string; trophy?: string };
+  searchParams: { game?: string; type?: string; trophy?: string; limit?: string };
 }
 
 export default async function CollectiblesPage({ searchParams }: Props) {
@@ -164,6 +164,16 @@ export default async function CollectiblesPage({ searchParams }: Props) {
 
   const title = isTypeView ? (TYPE_LABELS[typeFilter!] ?? "Coleções") : "Coleções";
 
+  // A visão geral tem 1.700+ cartões: mostra 240 por vez (link "Mostrar mais", sem JavaScript) para o DOM ficar leve.
+  const PAGE = 240;
+  const limit = Math.min(collectibles.length, Math.max(PAGE, Number(searchParams.limit) || PAGE));
+  const shown = collectibles.slice(0, limit);
+  const remaining = collectibles.length - limit;
+  const moreParams = new URLSearchParams();
+  if (searchParams.type) moreParams.set("type", searchParams.type);
+  if (searchParams.game) moreParams.set("game", searchParams.game);
+  moreParams.set("limit", String(limit + PAGE));
+
   return (
     <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body">
 
@@ -179,7 +189,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
           </div>
         ) : (
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-4 md:gap-6">
-            {collectibles.map(item => {
+            {shown.map((item, idx) => {
               const targetUrl = item.type === "SPIRIT"
                 ? `/collectibles?type=SPIRIT&trophy=${item.id}`
                 : item.type === "STICKER" || item.type === "TROPHY"
@@ -187,7 +197,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                 : `/collectibles`; // Fallback for MEDIA/SPRITE
 
               return (
-              <Link href={targetUrl} key={item.id} className="group relative flex flex-col items-center">
+              <Link href={targetUrl} key={item.id} className="group relative flex flex-col items-center [content-visibility:auto] [contain-intrinsic-size:auto_230px]">
                 <div className="relative w-full aspect-square bg-slate-800/40 rounded-xl overflow-hidden border border-vault-border/50 group-hover:border-vault-accent group-hover:bg-vault-surface transition-all duration-300 shadow-sm group-hover:shadow-vault-accent/20 group-hover:-translate-y-1">
                   <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '12px 12px' }} />
                   <div className="absolute top-2 right-2 z-10">
@@ -197,23 +207,26 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                   </div>
                   {"franchise" in item && item.franchise?.svgIconUrl && (
                     <div className="absolute bottom-2 left-2 z-10 w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity">
-                      <SkeletonImage
+                      {/* <img> simples (servidor): sem componente de cliente por cartão — são 1.700+ cartões */}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
                         src={item.franchise.svgIconUrl}
                         alt={item.franchise.name ?? ""}
-                        fill
-                        className="object-contain"
-                        sizes="20px"
+                        width={20} height={20}
+                        loading="lazy" decoding="async"
+                        className="absolute inset-0 h-full w-full object-contain"
                       />
                     </div>
                   )}
                   <div className="absolute inset-4 flex items-center justify-center">
                     {item.assetRenderUrl ? (
-                      <SkeletonImage
-                        src={item.assetRenderUrl}
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={localImageUrl(item.assetRenderUrl, "md")}
                         alt={item.name}
-                        fill
-                        className="object-contain drop-shadow-lg transition-transform duration-500 group-hover:scale-110"
-                        sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, 15vw"
+                        // primeiras fileiras (acima da dobra) carregam já e com prioridade — melhora o LCP; o resto é lazy
+                        loading={idx < 12 ? "eager" : "lazy"} fetchPriority={idx < 6 ? "high" : undefined} decoding="async"
+                        className="max-h-full max-w-full object-contain drop-shadow-lg transition-transform duration-500 group-hover:scale-110"
                       />
                     ) : (
                       <div className="text-4xl opacity-10">?</div>
@@ -235,6 +248,18 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                 </div>
               </Link>
             )})}
+          </div>
+        )}
+
+        {remaining > 0 && (
+          <div className="mt-10 flex justify-center">
+            <Link
+              href={`/collectibles?${moreParams.toString()}`}
+              scroll={false}
+              className="rounded-lg border border-vault-accent/40 px-6 py-3 font-mono text-sm text-vault-accent hover:bg-vault-accent/10"
+            >
+              Mostrar mais ({remaining} restantes)
+            </Link>
           </div>
         )}
       </div>
