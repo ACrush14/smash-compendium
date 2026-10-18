@@ -1660,3 +1660,10 @@ Ultimate Fighter Tips JP:
 - **Transição:** `app/template.tsx` com fade (`.page-fade`, de 55%→100% — nunca começa invisível).
 - **Corrigido:** `/franchise/[name]` carregava 335 itens (incl. clipes `.webm` como `<img>`, ~75 MB); `SkeletonImage` e `FranchiseCollectibles` agora ignoram URLs de vídeo (→ 1,6 MB).
 - **Nota de teste:** o painel de navegador oculto pausa animações e `loading="lazy"`; testes visuais de imagens/fade exigem painel visível (ou verifique por DOM/HEAD).
+
+## 34. Sessão 29 — Região da Vercel, spirits sob demanda e vídeos ausentes (2026-10-18, V00.232)
+
+- **Região das funções:** `vercel.json` fixa `gru1` (mesma região do Supabase, São Paulo). Antes as funções rodavam em `iad1` e cada consulta cruzava o continente: 1ª visita 5–7 s → ~0,6 s. Confira com `x-vercel-id: gru1::gru1::...`.
+- **Spirits em duas camadas** (`lib/spirits.ts`, `lib/spirit-types.ts`, `app/api/spirits/[id]/route.ts`): a lista dos 1.582 (id, nome, número, miniatura, franquia) vai na página; o detalhe completo de cada um (descrições 4 idiomas, música, jogos de origem, relacionados) vem de `/api/spirits/[id]` quando o spirit é aberto (com prefetch dos vizinhos). A página caiu de 722 KB para ~81 KB gz. Só ids que existem na lista são aceitos (os ids reais têm espaços/pontuação).
+- **Vídeos ausentes** (deploy sem CDN): `ClipVideo` e `LocalVideoGif` checam `video.error` ao montar (o erro de um 404 rápido chega antes da hidratação e o React perdia o evento). Caixas de vídeo somem e o carrossel do lutador (`MediaVaultViewer`) remove clipes que falham.
+- **Capas do Chronicles:** 1.257 de 1.272 baixadas; `download-boxarts.ts` agora usa Referer da origem (Wikia) e ritmo lento para a Wikimedia (429). Restam 15 permanentes (404/403) em `data/boxarts-failed.json`.

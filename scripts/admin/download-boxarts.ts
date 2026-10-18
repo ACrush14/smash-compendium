@@ -19,12 +19,20 @@ const FAILED = path.join(process.cwd(), "data", "boxarts-failed.json");
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 const WORKERS = 6;
 const HOST_GAP_MS = 1200;
+// Hosts que limitam pedidos (429 com 1,2 s): a Wikimedia pede ritmo baixo e User-Agent identificável.
+const SLOW_HOSTS: Record<string, number> = { "upload.wikimedia.org": 4000 };
+const UA = "SmashCompendium/1.0 (https://github.com/ACrush14/smash-compendium; projeto academico fan-made) node-fetch";
 
 async function fetchBuffer(url: string): Promise<Buffer> {
   for (let attempt = 1; ; attempt++) {
-    const res = await fetch(url, { headers: { "User-Agent": "SmashCompendium/1.0 (projeto academico fan-made)" }, signal: AbortSignal.timeout(30000) });
+    // Alguns hosts (ex.: Wikia) exigem Referer da própria origem; é inofensivo nos demais.
+    const res = await fetch(url, { headers: { "User-Agent": UA, Referer: new URL(url).origin + "/" }, signal: AbortSignal.timeout(30000) });
     if (res.ok) return Buffer.from(await res.arrayBuffer());
-    if ((res.status === 429 || res.status >= 500) && attempt < 4) { await sleep(3000 * 2 ** attempt); continue; }
+    if ((res.status === 429 || res.status >= 500) && attempt < 5) {
+      const ra = Number(res.headers.get("retry-after"));
+      await sleep(Number.isFinite(ra) && ra > 0 ? Math.min(ra, 60) * 1000 : 5000 * 2 ** attempt);
+      continue;
+    }
     throw new Error(`HTTP ${res.status}`);
   }
 }
@@ -45,8 +53,9 @@ async function main() {
       const url = todo[next++];
       if (!url) return;
       let host = "x"; try { host = new URL(url).host; } catch { /* ignora */ }
-      const wait = (lastByHost.get(host) ?? 0) + HOST_GAP_MS - Date.now();
-      lastByHost.set(host, Math.max(Date.now(), (lastByHost.get(host) ?? 0) + HOST_GAP_MS));
+      const gap = SLOW_HOSTS[host] ?? HOST_GAP_MS;
+      const wait = (lastByHost.get(host) ?? 0) + gap - Date.now();
+      lastByHost.set(host, Math.max(Date.now(), (lastByHost.get(host) ?? 0) + gap));
       if (wait > 0) await sleep(wait);
       try {
         const buf = await fetchBuffer(url);

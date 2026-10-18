@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 import AssociatedCards from "./AssociatedCards";
 import LocalVideoGif from "./LocalVideoGif";
+import ClipVideo from "./ClipVideo";
 import { FULL_VIDEOS, cdnUrl, fullImageUrl, boxArtLocalUrl } from "@/lib/media-config";
 import { LangSelector, type Lang } from "./FighterDataZone";
 import { pickCollectibleDescription } from "@/lib/collectible-lang";
@@ -380,14 +381,13 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
             {/* Vídeo 360 do troféu se existir (WebM) */}
             {displayed.assetRender2Url && displayed.assetRender2Url.endsWith('.webm') && (
               <div data-video-box className="relative w-full max-w-[360px] md:max-w-[440px] h-auto flex justify-center mt-2 mb-2">
-                <video
+                <ClipVideo
                   src={cdnUrl(displayed.assetRender2Url)}
                   autoPlay
                   loop
                   muted
                   playsInline
                   className="w-full h-auto object-contain rounded-xl border-2 border-vault-accent/40 shadow-xl shadow-vault-accent/20 bg-slate-900/50"
-                  onError={(e) => { const p = (e.currentTarget as HTMLElement).closest('[data-video-box]') as HTMLElement; if (p) p.style.display = 'none'; }}
                 />
               </div>
             )}

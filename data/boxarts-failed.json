@@ -1,0 +1,62 @@
+[
+  {
+    "url": "https://gamefaqs.gamespot.com/a/box/8/5/0/71850_front.jpg",
+    "error": "Error: HTTP 403"
+  },
+  {
+    "url": "https://mario.wiki.gallery/resources/assets/poweredby_mediawiki_88x31.png",
+    "error": "Error: Input buffer contains unsupported image format"
+  },
+  {
+    "url": "https://upload.wikimedia.org/wikipedia/en/3/38/Vball_game_flyer.png",
+    "error": "Error: HTTP 404"
+  },
+  {
+    "url": "https://gamefaqs.gamespot.com/a/box/7/9/7/46797_front.jpg",
+    "error": "Error: HTTP 403"
+  },
+  {
+    "url": "https://www.gamecash.fr/thumbnail-600/game-watch-helmet-e137236.jpg",
+    "error": "Error: HTTP 403"
+  },
+  {
+    "url": "https://gamefaqs.gamespot.com/a/box/0/8/5/96085_front.jpg",
+    "error": "Error: HTTP 403"
+  },
+  {
+    "url": "https://gamefaqs.gamespot.com/a/box/2/0/6/80206_front.jpg",
+    "error": "Error: HTTP 403"
+  },
+  {
+    "url": "https://cdn.awsli.com.br/1385/1385452/produto/332876483/mechamg-m366r20akl.webp",
+    "error": "Error: HTTP 404"
+  },
+  {
+    "url": "https://www.furu1.online/storage/product/10000095/00.webp",
+    "error": "Error: HTTP 404"
+  },
+  {
+    "url": "https://www.furu1.online/storage/product/10000233/00.webp",
+    "error": "Error: HTTP 404"
+  },
+  {
+    "url": "https://www.furu1.online/storage/product/10000241/00.webp",
+    "error": "Error: HTTP 404"
+  },
+  {
+    "url": "https://www.furu1.online/storage/product/10136448/00.webp",
+    "error": "Error: HTTP 404"
+  },
+  {
+    "url": "https://www.furu1.online/storage/product/10000206/00.webp",
+    "error": "Error: HTTP 404"
+  },
+  {
+    "url": "https://www.furu1.online/storage/product/10000211/00.webp",
+    "error": "Error: HTTP 404"
+  },
+  {
+    "url": "https://www.furu1.online/storage/product/10133532/00.webp",
+    "error": "Error: HTTP 404"
+  }
+]

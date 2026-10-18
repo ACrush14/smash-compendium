@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
+import ClipVideo from "@/components/ui/ClipVideo";
 import SkeletonImage from "@/components/ui/SkeletonImage";
 import { thumbUrl } from "@/lib/media-config";
 import { ImageIcon, Package, ChevronLeft, ChevronRight } from "lucide-react";
@@ -84,11 +85,19 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
   const [activeIndex, setActiveIndex] = useState(0);
   const stripRef = useRef<HTMLDivElement>(null);
 
-  const filteredAssets = activeEra
-    ? assets.filter((a) => a.era === activeEra)
-    : assets;
+  // Clipes que falham ao carregar (ex.: arquivo ausente no deploy sem CDN) saem do carrossel em vez de ficar em branco.
+  const [broken, setBroken] = useState<Set<string>>(() => new Set());
+  const markBroken = useCallback((url: string | null) => {
+    if (!url) return;
+    setBroken(prev => (prev.has(url) ? prev : new Set(prev).add(url)));
+  }, []);
+  const usable = broken.size ? assets.filter(a => !a.url || !broken.has(a.url)) : assets;
 
-  const active = filteredAssets[activeIndex] ?? null;
+  const filteredAssets = activeEra
+    ? usable.filter((a) => a.era === activeEra)
+    : usable;
+
+  const active = filteredAssets[Math.min(activeIndex, Math.max(0, filteredAssets.length - 1))] ?? null;
 
   // Reset active index when era changes
   const handleEraClick = (era: EraFilter) => {
@@ -97,7 +106,7 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
   };
 
   // Eras that actually have assets
-  const availableEras = new Set(assets.map((a) => a.era).filter(Boolean) as EraFilter[]);
+  const availableEras = new Set(usable.map((a) => a.era).filter(Boolean) as EraFilter[]);
 
   function scrollStrip(dir: "left" | "right") {
     const el = stripRef.current;
@@ -163,10 +172,10 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
             IS_VIDEO(active.url) ? (
               active.href ? (
                 <a href={active.href} className="w-full h-full relative z-10 block group cursor-pointer" title={`Ver página de ${active.label}`}>
-                  <video src={active.url} autoPlay loop muted playsInline className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-300" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
+                  <ClipVideo onFail={() => markBroken(active.url)} src={active.url} autoPlay loop muted playsInline className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-300" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
                 </a>
               ) : (
-                <video src={active.url} autoPlay loop muted playsInline className="w-full h-full object-contain object-center relative z-10" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
+                <ClipVideo onFail={() => markBroken(active.url)} src={active.url} autoPlay loop muted playsInline className="w-full h-full object-contain object-center relative z-10" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
               )
             ) : active.href ? (
               <a href={active.href} className="w-full h-full relative z-10 block group cursor-pointer" title={`Ver página de ${active.label}`}>
@@ -327,7 +336,8 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
                   </div>
                 ) : asset.url ? (
                   IS_VIDEO(asset.url) ? (
-                    <video
+                    <ClipVideo
+                      onFail={() => markBroken(asset.url)}
                       src={asset.url}
                       // miniatura: só o 1º quadro (preload=metadata) — não baixa o clipe inteiro; o vídeo ativo toca no palco
                       preload="metadata"

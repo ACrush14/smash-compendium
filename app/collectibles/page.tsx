@@ -4,7 +4,8 @@ import { Zap } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 import SkeletonImage from "@/components/ui/SkeletonImage";
-import SpiritViewer, { type SpiritItem } from "@/components/ui/SpiritViewer";
+import SpiritViewer from "@/components/ui/SpiritViewer";
+import { getSpiritList, getSpiritDetail } from "@/lib/spirits";
 import TrophyViewer, { type TrophyItem } from "@/components/ui/TrophyViewer";
 import StickerViewer, { type StickerItem } from "@/components/ui/StickerViewer";
 
@@ -57,108 +58,22 @@ export default async function CollectiblesPage({ searchParams }: Props) {
   /* Spirit View — one at a time, client-side navigation        */
   /* ─────────────────────────────────────────────────────────── */
   if (typeFilter === "SPIRIT") {
-    const [rawSpirits, chronicleEntries] = await cachedQueryZ(["collectibles-spirits"], () => Promise.all([
-      db.collectible.findMany({
-        where:   { type: "SPIRIT" },
-        orderBy,
-        include: { 
-          franchise: { select: { svgIconUrl: true, name: true } },
-          fighter: { select: { id: true, name: true, imageUrl: true } },
-          relationsFrom: {
-            include: { to: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
-          },
-          relationsTo: {
-            include: { from: { select: { id: true, name: true, smashGameVersion: true, assetRenderUrl: true, type: true } } },
-          },
-        },
-      }),
-      db.chronicleEntry.findMany({
-        where:  { OR: [{ boxArtUrl: { not: null } }, { wikiUrl: { not: null } }] },
-        select: { titleNtsc: true, boxArtUrl: true, wikiUrl: true },
-      }),
-    ]));
-
-    // Chronicle cover art + wiki URL lookup
-    const artMap  = new Map<string, string>();
-    const wikiMap = new Map<string, string>();
-    for (const e of chronicleEntries) {
-      const norm = e.titleNtsc.toLowerCase().replace(/[^a-z0-9]/g, "");
-      if (e.boxArtUrl && !artMap.has(norm))  artMap.set(norm, e.boxArtUrl);
-      if (e.wikiUrl  && !wikiMap.has(norm))  wikiMap.set(norm, e.wikiUrl);
-    }
-    const findCover = (source: string | null): string | null => {
-      if (!source) return null;
-      const norm = source.replace(/\s*\(\d{4}\)$/, "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
-      return artMap.get(norm) ?? null;
-    };
-    const findWiki = (source: string | null): string | null => {
-      if (!source) return null;
-      const norm = source.replace(/\s*\(\d{4}\)$/, "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
-      return wikiMap.get(norm) ?? null;
-    };
-
-    // Deduplicate by orderIndex
-    const seenIdx = new Set<number>();
-    const deduped = rawSpirits.filter(item => {
-      if (!item.orderIndex) return true;
-      if (seenIdx.has(item.orderIndex)) return false;
-      seenIdx.add(item.orderIndex);
-      return true;
-    });
-
-    const spiritItems: SpiritItem[] = deduped.map(item => ({
-      id:                   item.id,
-      name:                 item.name,
-      nameJp:               item.nameJp               ?? null,
-      posicaoSpiritSsbu:    item.posicaoSpiritSsbu    ?? null,
-      assetRenderUrl:       item.assetRenderUrl        ?? null,
-      spiritArtworkSource:  item.spiritArtworkSource   ?? null,
-      spiritFirstAppearance:item.spiritFirstAppearance ?? null,
-      spiritMusicTitle:     item.spiritMusicTitle      ?? null,
-      spiritMusicArtist:    item.spiritMusicArtist     ?? null,
-      spiritMusicDuration:  item.spiritMusicDuration   ?? null,
-      spiritCuratorComment: item.spiritCuratorComment  ?? null,
-      sourceGame:           item.sourceGame            ?? null,
-      svgIconUrl:           item.franchise?.svgIconUrl ?? null,
-      franchiseId:          item.franchiseId           ?? null,
-      franchiseName:        item.franchise?.name       ?? null,
-      artCoverUrl:          findCover(item.spiritArtworkSource   ?? null),
-      firstCoverUrl:        findCover(item.spiritFirstAppearance ?? null),
-      sourceCoverUrl:       findCover(item.sourceGame            ?? null),
-      artWikiUrl:           findWiki(item.spiritArtworkSource    ?? null),
-      firstWikiUrl:         findWiki(item.spiritFirstAppearance  ?? null),
-      sourceWikiUrl:        findWiki(item.sourceGame             ?? null),
-      descriptionEn:        item.descriptionEn                   ?? null,
-      descriptionPt:        item.descriptionPt                   ?? null,
-      descriptionJp:        item.descriptionJp                   ?? null,
-      descriptionJpEn:      item.descriptionJpEn                 ?? null,
-      relatedItems: [
-        ...(item.fighter ? [{
-          id: item.fighter.id, name: item.fighter.name, smashGameVersion: "SSBU",
-          assetRenderUrl: item.fighter.imageUrl, type: "FIGHTER"
-        }] : []),
-        ...item.relationsFrom.map(r => ({
-          id: r.to.id, name: r.to.name, smashGameVersion: r.to.smashGameVersion,
-          assetRenderUrl: r.to.assetRenderUrl, type: r.to.type,
-        })),
-        ...item.relationsTo.map(r => ({
-          id: r.from.id, name: r.from.name, smashGameVersion: r.from.smashGameVersion,
-          assetRenderUrl: r.from.assetRenderUrl, type: r.from.type,
-        })),
-      ].slice(0, 8),
-    }));
-
+    // Lista leve (1.582 itens) para a lateral/busca; o detalhe completo vem sob demanda de /api/spirits/[id].
+    // Só o detalhe do spirit inicial é embutido na página.
+    const spiritList = await getSpiritList();
     const itemIdParam = searchParams.trophy;
-    const initialIndex  = itemIdParam
-      ? Math.max(0, spiritItems.findIndex(s => s.id === itemIdParam))
+    const initialIndex = itemIdParam
+      ? Math.max(0, spiritList.findIndex(s => s.id === itemIdParam))
       : 0;
+    const first = spiritList[initialIndex];
+    const initialDetail = first ? await getSpiritDetail(first.id) : null;
 
     return (
       <main className="min-h-screen bg-vault-bg text-vault-text flex flex-col font-body pb-28">
-        <CollectiblesHeader activeType="SPIRIT" activeGame={activeGame} itemCount={spiritItems.length} />
+        <CollectiblesHeader activeType="SPIRIT" activeGame={activeGame} itemCount={spiritList.length} />
 
         <div className="flex-1 max-w-4xl mx-auto px-4 md:px-6 py-8 w-full">
-          <SpiritViewer spirits={spiritItems} initialIndex={initialIndex} />
+          <SpiritViewer spirits={spiritList} initialIndex={initialIndex} initialDetail={initialDetail} />
         </div>
       </main>
     );

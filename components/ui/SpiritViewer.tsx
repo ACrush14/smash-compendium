@@ -2,52 +2,31 @@
 
 import { useState, useEffect, useRef } from "react";
 import AssociatedCards from "./AssociatedCards";
-import SkeletonImage from "@/components/ui/SkeletonImage";
+import SkeletonImage, { Skeleton } from "@/components/ui/SkeletonImage";
 import { usePreloadImages } from "@/hooks/usePreloadImages";
 import { thumbUrl, boxArtLocalUrl } from "@/lib/media-config";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
-import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
+import RelatedItemsGrid from "./RelatedItemsGrid";
 import { LangSelector, type Lang } from "./FighterDataZone";
 import { pickCollectibleDescription } from "@/lib/collectible-lang";
+import type { SpiritListItem, SpiritDetail } from "@/lib/spirit-types";
 
 import FallbackImg from "@/components/ui/FallbackImg";
-export interface SpiritItem {
-  id: string;
-  name: string;
-  nameJp: string | null;
-  posicaoSpiritSsbu: number | null;
-  assetRenderUrl: string | null;
-  spiritArtworkSource: string | null;
-  spiritFirstAppearance: string | null;
-  spiritMusicTitle: string | null;
-  spiritMusicArtist: string | null;
-  spiritMusicDuration: string | null;
-  spiritCuratorComment: string | null;
-  sourceGame: string | null;
-  svgIconUrl: string | null;
-  franchiseId: string | null;
-  franchiseName: string | null;
-  artCoverUrl: string | null;
-  firstCoverUrl: string | null;
-  sourceCoverUrl?: string | null;
-  artWikiUrl: string | null;
-  firstWikiUrl: string | null;
-  sourceWikiUrl?: string | null;
-  descriptionEn: string | null;
-  descriptionPt?: string | null;
-  descriptionJp?: string | null;
-  descriptionJpEn?: string | null;
-  relatedItems: RelatedItem[];
-}
+export type { SpiritListItem, SpiritDetail } from "@/lib/spirit-types";
+/** Item "composto" usado na renderização: dados da lista + detalhe (quando já carregado). */
+export type SpiritItem = SpiritListItem & Partial<SpiritDetail>;
 
 const SIDEBAR_SIZE = 14;
 
-export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: SpiritItem[], initialIndex?: number }) {
+export default function SpiritViewer({ spirits, initialIndex = 0, initialDetail = null }: { spirits: SpiritListItem[]; initialIndex?: number; initialDetail?: SpiritDetail | null }) {
   const [index, setIndex]         = useState(initialIndex);
   const [direction, setDirection] = useState<"next" | "prev" | null>(null);
   const [query, setQuery]         = useState("");
   const [lang, setLang]           = useState<Lang>("EN");
   const activeRef = useRef<HTMLButtonElement>(null);
+  // Detalhes carregados sob demanda (o primeiro vem do servidor); `inflight` evita pedidos repetidos.
+  const [details, setDetails] = useState<Record<string, SpiritDetail>>(() => (initialDetail ? { [initialDetail.id]: initialDetail } : {}));
+  const inflight = useRef<Set<string>>(new Set());
 
   const filtered = query.trim()
     ? spirits.filter(s => {
@@ -62,7 +41,27 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
     : spirits;
 
   const safeIndex = Math.min(index, Math.max(0, filtered.length - 1));
-  const current   = filtered[safeIndex];
+  const listCurrent = filtered[safeIndex];
+  const current: SpiritItem | undefined = listCurrent ? { ...listCurrent, ...(details[listCurrent.id] ?? {}) } : undefined;
+  const detailReady = !!listCurrent && !!details[listCurrent.id];
+
+  // Busca o detalhe do spirit aberto e, em tempo ocioso, dos vizinhos (navegação instantânea).
+  useEffect(() => {
+    const load = (id: string) => {
+      if (details[id] || inflight.current.has(id)) return;
+      inflight.current.add(id);
+      fetch(`/api/spirits/${encodeURIComponent(id)}`)
+        .then(r => (r.ok ? r.json() : null))
+        .then((d: SpiritDetail | null) => { if (d) setDetails(prev => ({ ...prev, [d.id]: d })); })
+        .catch(() => { /* sem rede: tenta de novo ao voltar a este spirit */ })
+        .finally(() => inflight.current.delete(id));
+    };
+    if (listCurrent) load(listCurrent.id);
+    const w = window as Window & { requestIdleCallback?: (cb: () => void) => number };
+    const neighbors = () => [filtered[safeIndex + 1], filtered[safeIndex - 1], filtered[safeIndex + 2]].forEach(n => n && load(n.id));
+    if (w.requestIdleCallback) w.requestIdleCallback(neighbors); else setTimeout(neighbors, 300);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listCurrent?.id]);
 
   usePreloadImages([filtered[safeIndex - 1]?.assetRenderUrl, filtered[safeIndex + 1]?.assetRenderUrl, filtered[safeIndex + 2]?.assetRenderUrl]);
 
@@ -303,12 +302,20 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
                   )}
                 </div>
 
-                <RelatedItemsGrid items={current.relatedItems} />
+                {detailReady && <RelatedItemsGrid items={current.relatedItems ?? []} />}
               </div>
             </div>
 
             {/* ── DIREITA: música + texto ── */}
             <div className="flex flex-col gap-3 pt-1">
+              {!detailReady ? (
+                <>
+                  <Skeleton className="h-16 rounded-xl" />
+                  <Skeleton className="h-36 rounded-xl" />
+                  <Skeleton className="h-20 rounded-xl" />
+                </>
+              ) : (
+              <>
               {current.spiritMusicTitle && (
                 <div className="bg-slate-900/50 rounded-xl border border-vault-border/30 p-3">
                   <span className="text-[10px] font-bold uppercase tracking-widest text-vault-accent/70 block mb-1.5">
@@ -357,16 +364,16 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
                     <GameCard
                       label="Arte"
                       title={current.spiritArtworkSource}
-                      coverUrl={current.artCoverUrl}
-                      wikiUrl={current.artWikiUrl}
+                      coverUrl={current.artCoverUrl ?? null}
+                      wikiUrl={current.artWikiUrl ?? null}
                     />
                   )}
                   {current.spiritFirstAppearance && current.spiritFirstAppearance !== current.spiritArtworkSource && (
                     <GameCard
                       label="1ª Aparição"
                       title={current.spiritFirstAppearance}
-                      coverUrl={current.firstCoverUrl}
-                      wikiUrl={current.firstWikiUrl}
+                      coverUrl={current.firstCoverUrl ?? null}
+                      wikiUrl={current.firstWikiUrl ?? null}
                     />
                   )}
                   {current.sourceGame && current.sourceGame !== current.spiritArtworkSource && current.sourceGame !== current.spiritFirstAppearance && (
@@ -383,13 +390,15 @@ export default function SpiritViewer({ spirits, initialIndex = 0 }: { spirits: S
               {!current.spiritMusicTitle && !current.spiritCuratorComment && !current.descriptionEn && !current.spiritArtworkSource && !current.spiritFirstAppearance && !current.sourceGame && (
                 <p className="text-xs text-slate-700 italic text-center mt-8">Sem informações adicionais</p>
               )}
+              </>
+              )}
             </div>
           </div>
 
         </>
       )}
 
-      {current && current.franchiseId && (
+      {current && current.franchiseId && detailReady && (
         <AssociatedCards
           currentId={current.id}
           name={current.name}

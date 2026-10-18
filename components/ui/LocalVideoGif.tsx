@@ -18,10 +18,17 @@ export default function LocalVideoGif({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [ready, setReady] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+
+    // Arquivo ausente (ex.: 404 no deploy sem CDN): o evento de erro pode ter disparado antes da hidratação,
+    // então confere o estado atual e também escuta erros futuros.
+    const fail = () => { setFailed(true); onError?.(video); };
+    if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) { fail(); return; }
+    video.addEventListener("error", fail);
 
     // Ensure we start at the right time
     video.currentTime = startSec;
@@ -47,11 +54,14 @@ export default function LocalVideoGif({
     video.addEventListener("ended", loopIfAtEnd);
 
     return () => {
+      video.removeEventListener("error", fail);
       video.removeEventListener("timeupdate", loopIfAtEnd);
       video.removeEventListener("pause", loopIfAtEnd);
       video.removeEventListener("ended", loopIfAtEnd);
     };
   }, [src, startSec, endSec]);
+
+  if (failed) return null;
 
   return (
     <div className="relative w-full h-full">
@@ -67,7 +77,6 @@ export default function LocalVideoGif({
       loop={false}
       controls={false}
       disablePictureInPicture
-      onError={onError ? (e) => onError(e.currentTarget) : undefined}
       // We scale it slightly in case the local video has tiny black borders
       className={`pointer-events-none w-full h-full object-cover ${className}`}
       style={{ transform: "scale(1.05)", opacity: ready ? 1 : 0 }}
