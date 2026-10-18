@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import SkeletonImage, { Skeleton } from "@/components/ui/SkeletonImage";
 import { usePreloadImages } from "@/hooks/usePreloadImages";
+import { imgFallback } from "./imgFallback";
 import { thumbUrl, boxArtLocalUrl } from "@/lib/media-config";
 import { ChevronLeft, ChevronRight, Search, X, Shield, Sword, Heart } from "lucide-react";
 import RelatedItemsGrid from "./RelatedItemsGrid";
@@ -185,7 +186,7 @@ export default function StickerViewer({ stickers, initialIndex = 0, initialDetai
                 ref={isActive ? activeRef : undefined}
                 onClick={() => (isSearchActive && isActive) ? jumpToFull() : goTo(filteredIdx)}
                 title={isSearchActive && isActive ? "Clique para ir à posição na lista completa" : s.name}
-                className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-left w-full transition-all ${
+                className={`[content-visibility:auto] [contain-intrinsic-size:auto_44px] flex items-center gap-2 px-2 py-1.5 rounded-lg text-left w-full transition-all ${
                   isActive
                     ? "bg-vault-accent/15 border border-vault-accent/30"
                     : "hover:bg-slate-800/60 border border-transparent"
@@ -193,7 +194,7 @@ export default function StickerViewer({ stickers, initialIndex = 0, initialDetai
               >
                 <div className="relative w-8 h-8 shrink-0 rounded bg-slate-900/60 overflow-hidden">
                   {s.assetRenderUrl && (
-                    <SkeletonImage src={thumbUrl(s.assetRenderUrl)} alt={s.name} fill className="object-contain" sizes="32px" />
+                    <img src={thumbUrl(s.assetRenderUrl)} alt={s.name} width={32} height={32} loading="lazy" decoding="async" onError={imgFallback(s.assetRenderUrl)} className="absolute inset-0 h-full w-full object-contain" />
                   )}
                 </div>
                 <div className="min-w-0 flex-1">

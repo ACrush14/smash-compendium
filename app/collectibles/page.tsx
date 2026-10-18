@@ -255,7 +255,7 @@ function CollectiblesHeader({
     <div className="sticky top-0 z-40 bg-vault-bg/95 backdrop-blur-md border-b border-vault-border shadow-xl">
       <div className={activeType === "GRID" ? "max-w-[1600px] mx-auto px-4 md:px-6 py-4" : "max-w-5xl mx-auto px-4 md:px-6 py-4"}>
         <div className="mb-4">
-          <Link href="/" className="hit-area inline-flex items-center gap-2 transition-opacity hover:opacity-80">
+          <Link href="/" aria-label="Smash Compendium — início" className="hit-area inline-flex items-center gap-2 transition-opacity hover:opacity-80">
             <Zap className="h-4 w-4 text-amber-400" strokeWidth={2.5} />
             <span className="font-black italic tracking-tight text-white text-sm" style={{ letterSpacing: "-0.02em" }}>
               SMASH<span className="text-amber-400">COMPENDIUM</span>

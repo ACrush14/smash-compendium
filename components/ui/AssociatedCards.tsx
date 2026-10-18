@@ -44,9 +44,9 @@ export default function AssociatedCards({ currentId, name, franchiseId }: Associ
 
   return (
     <div className="mt-8 mb-4 border-t border-vault-border/20 pt-6 px-4">
-      <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-cyan-800 mb-4 px-2 text-center md:text-left">
+      <h2 className="text-[11px] font-bold uppercase tracking-[0.2em] text-cyan-800 mb-4 px-2 text-center md:text-left">
         Associações · {baseName}
-      </h3>
+      </h2>
       <div className="flex gap-3 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden px-2 md:justify-start justify-center">
         {items.map((item) => (
           <Link

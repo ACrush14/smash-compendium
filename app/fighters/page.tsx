@@ -41,7 +41,7 @@ export default async function FightersPage() {
   });
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 md:p-12 lg:p-16 selection:bg-white/20 pt-24 md:pt-32">
+    <div role="main" className="min-h-screen bg-black text-white p-6 md:p-12 lg:p-16 selection:bg-white/20 pt-24 md:pt-32">
       <div className="max-w-[1400px] mx-auto space-y-12 md:space-y-16">
         <header className="space-y-4 md:space-y-6">
           <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-500">

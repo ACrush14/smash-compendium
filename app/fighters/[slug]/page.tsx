@@ -589,7 +589,7 @@ export default async function FighterPage({ params }: PageProps) {
       {/* ── Global Header ───────────────────────────────────────────── */}
       <header className="shrink-0 z-50 border-b border-cyan-500/10 bg-[#050518]/92 backdrop-blur-sm relative">
         <div className="flex items-center gap-2 px-4 py-3 sm:gap-4 sm:px-6">
-          <Link href="/" className="hit-area flex shrink-0 items-center gap-2">
+          <Link href="/" aria-label="Smash Compendium — início" className="hit-area flex shrink-0 items-center gap-2">
             <Zap className="h-4 w-4 text-amber-400" strokeWidth={2.5} />
             <span className="hidden font-black italic text-sm tracking-tight text-white sm:inline">
               SMASH<span className="text-amber-400">COMPENDIUM</span>

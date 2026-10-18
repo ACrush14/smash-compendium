@@ -2,6 +2,8 @@
 
 import { t } from "@/lib/ui-i18n";
 
+import FallbackImg from "@/components/ui/FallbackImg";
+import { boxArtLocalUrl } from "@/lib/media-config";
 export type OriginGame = {
   name:             string;
   titleJp?:         string;
@@ -148,9 +150,9 @@ export default function OriginGamesPanel({ games, lang = "EN" }: { games: Origin
                   const artSrc = (useJpMode && game.boxArtPathJp) ? game.boxArtPathJp : (game.boxArtPath ?? game.boxArtUrl);
                   return artSrc ? (
                   <div className="overflow-hidden border border-white/15 shadow-lg shadow-black/50 self-start">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img loading="lazy" decoding="async"
+                    <FallbackImg
                       src={artSrc}
+                      localSrc={boxArtLocalUrl(artSrc, "md")}
                       alt={`${title} — Box Art`}
                       style={{ height: BOX_H, width: "auto", display: "block" }}
                     />

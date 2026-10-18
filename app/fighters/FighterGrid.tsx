@@ -133,7 +133,7 @@ export default function FighterGrid({ fighters }: { fighters: FighterItem[] }) {
       <div
         className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6"
       >
-          {filtered.map((fighter) => (
+          {filtered.map((fighter, idx) => (
             // CSS no lugar do framer-motion: ~40 KB a menos de JavaScript e sem animar o layout de 90 cartões
             <div key={fighter.id} className="animate-vault-in opacity-0">
               <Link href={`/fighters/${fighter.slug}`} className="block group">
@@ -157,6 +157,7 @@ export default function FighterGrid({ fighters }: { fighters: FighterItem[] }) {
                       <SkeletonImage
                         src={fighter.imageUrl}
                         variant="md"
+                        priority={idx < 6} // primeiras renders (acima da dobra) carregam já, melhorando o LCP
                         alt={fighter.name}
                         fill
                         className="object-contain drop-shadow-2xl group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-500 ease-out"

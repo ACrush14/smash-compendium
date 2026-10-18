@@ -331,3 +331,15 @@ body {
   .hit-area { position: relative; }
   .hit-area::after { content: ""; position: absolute; inset: -8px; }
 }
+
+/* ── Contraste mínimo (WCAG AA 4,5:1) para textos "apagados" sobre o fundo escuro ── */
+.text-slate-500 { color: #8493a8; }
+.text-slate-600 { color: #7d8a9e; }
+.text-slate-700 { color: #77849a; }
+.text-zinc-500  { color: #8d8d97; }
+.text-cyan-800  { color: #3a9ab8; }
+.text-cyan-900\/60, .text-cyan-800\/50, .text-cyan-700\/70 { color: #5a8ea3; }
+footer, footer span, footer a { color: #6f98aa; }
+
+/* Links dentro de texto/rodapé não podem depender só da cor */
+footer a, p a, li > a:not([class*="block"]):not([class*="flex"]) { text-decoration: underline; text-underline-offset: 3px; }

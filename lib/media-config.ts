@@ -73,9 +73,13 @@ export function localImageUrl(url: string | null | undefined, tier: ImageTier): 
     if (m) return `/assets/collectibles/thumbs/${m[1]}.webp`;
   }
   const key = wikiImageKey(url);
-  if (!key) return url;
-  if (isTrophyKey(key)) return `/assets/trophies/${tier === "thumb" ? "thumbs/" : ""}${key}.webp`;
-  if (isRenderKey(key)) return `/assets/renders/${tier === "full" ? "" : tier === "md" ? "md/" : "thumbs/"}${key}.webp`;
+  if (key && isTrophyKey(key)) return `/assets/trophies/${tier === "thumb" ? "thumbs/" : ""}${key}.webp`;
+  if (key && isRenderKey(key)) return `/assets/renders/${tier === "full" ? "" : tier === "md" ? "md/" : "thumbs/"}${key}.webp`;
+  // Capas de jogos (hosts variados, baixadas por scripts/admin/download-boxarts.ts): miniatura/tamanho médio local.
+  // Se o arquivo não existir (URL que não é capa), o componente cai para a URL original. Animações ficam como estão.
+  if (tier !== "full" && /^https?:\/\//i.test(url) && !/\.(gif|webm|mp4)(\?|$)/i.test(url)) {
+    return boxArtLocalUrl(url, tier === "thumb" ? "sm" : "md");
+  }
   return url;
 }
 

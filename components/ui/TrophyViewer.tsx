@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import SkeletonImage, { Skeleton } from "@/components/ui/SkeletonImage";
 import { usePreloadImages } from "@/hooks/usePreloadImages";
+import { imgFallback } from "./imgFallback";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import RelatedItemsGrid from "./RelatedItemsGrid";
 import type { CollectibleListItem, CollectibleDetail } from "@/lib/collectible-types";
@@ -10,7 +11,7 @@ import { useCollectibleDetails } from "@/hooks/useCollectibleDetails";
 import AssociatedCards from "./AssociatedCards";
 import LocalVideoGif from "./LocalVideoGif";
 import ClipVideo from "./ClipVideo";
-import { FULL_VIDEOS, cdnUrl, fullImageUrl, boxArtLocalUrl } from "@/lib/media-config";
+import { FULL_VIDEOS, cdnUrl, fullImageUrl, boxArtLocalUrl, thumbUrl } from "@/lib/media-config";
 import { LangSelector, type Lang } from "./FighterDataZone";
 import { pickCollectibleDescription } from "@/lib/collectible-lang";
 
@@ -200,7 +201,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0, initialDetail
                 ref={isActive ? activeRef : undefined}
                 onClick={() => (isSearchActive && isActive) ? jumpToFull() : goTo(filteredIdx)}
                 title={isSearchActive && isActive ? "Clique para ir à posição na lista completa" : t.name}
-                className={`flex items-center gap-2 px-2 py-1.5 rounded-lg text-left w-full transition-all ${
+                className={`[content-visibility:auto] [contain-intrinsic-size:auto_44px] flex items-center gap-2 px-2 py-1.5 rounded-lg text-left w-full transition-all ${
                   isActive
                     ? "bg-vault-accent/15 border border-vault-accent/30"
                     : "hover:bg-slate-800/60 border border-transparent"
@@ -208,7 +209,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0, initialDetail
               >
                 <div className="relative w-8 h-8 shrink-0 rounded bg-slate-900/60 overflow-hidden">
                   {t.assetRenderUrl && (
-                    <SkeletonImage src={t.assetRenderUrl} alt={t.name} fill className="object-contain" sizes="32px" />
+                    <img src={thumbUrl(t.assetRenderUrl)} alt={t.name} width={32} height={32} loading="lazy" decoding="async" onError={imgFallback(t.assetRenderUrl)} className="absolute inset-0 h-full w-full object-contain" />
                   )}
                 </div>
                 <div className="min-w-0 flex-1 flex items-center justify-between">

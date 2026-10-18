@@ -147,7 +147,7 @@ export default async function VaultPage({ searchParams }: PageProps) {
   const filteredLog = filterLog(ETL_LOG, query);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 antialiased">
+    <div role="main" className="min-h-screen bg-slate-950 text-slate-100 antialiased">
 
       {/* HEADER */}
       <header className="sticky top-0 z-50 border-b border-white/5 bg-slate-950/90 backdrop-blur-md">

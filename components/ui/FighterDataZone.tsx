@@ -126,12 +126,12 @@ function getBioText(
 
 // ─── Language Selector ────────────────────────────────────────────────────────
 
-// Flag image component using flagcdn.com
+// Bandeiras do seletor de idioma: arquivos locais (public/assets/flags) — sem conexão externa
 function Flag({ code, size = 24 }: { code: string; size?: number }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img loading="lazy" decoding="async"
-      src={`https://flagcdn.com/w40/${code}.png`}
+      src={`/assets/flags/${code}.png`}
       alt={code.toUpperCase()}
       width={size}
       height={size * 0.667}

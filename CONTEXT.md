@@ -1689,3 +1689,11 @@ Ultimate Fighter Tips JP:
 - **GIFs:** `public/assets/media/ness/gif2.gif` (7,1 MB) → `gif2.webm` (764 KB); a linha `MEDIA-Ness-gif2` do banco foi atualizada. Os 11 GIFs de `public/assets/gifs` (25 MB, sem nenhuma referência) foram movidos para `archive/unused-gifs/` (fora do deploy).
 - **YouTube:** `YoutubeGif.tsx` (único a carregar a IFrame API) removido; o `/music` só cria um `<iframe>` embed quando uma faixa é tocada.
 - **Métricas:** `@vercel/analytics` e `@vercel/speed-insights` montados em `app/layout.tsx` (só enviam dados depois de ativados no painel da Vercel).
+
+## 38. Sessão 33 — Lighthouse e correções (2026-10-18, V00.236)
+
+- **Lighthouse (mobile, rede lenta) no deploy de prévia, antes das correções:** home 97/91/100 (desempenho/acessibilidade/boas práticas), `/fighters` 81, ficha do Mario 72 (LCP 16 s, 10,4 MB de rede), spirits 54 (TBT 690 ms). SEO 66 em todas era artefato: deploys de PRÉVIA da Vercel enviam `X-Robots-Tag: noindex`; o alias de produção `smashcompedium.vercel.app` não envia. Meça sempre no alias de produção.
+- **Peso da ficha:** as capas dos jogos de origem (painel `OriginGamesPanel` e miniaturas do carrossel) vinham de hosts remotos (~4 MB, cookie de terceiros do Wikimedia). Agora `FallbackImg` + `boxArtLocalUrl` e `localImageUrl()` (que passou a mapear qualquer URL http(s) não animada para `/assets/boxarts/...`, com fallback para a original). Bandeiras de idioma agora locais (`public/assets/flags/`).
+- **Spirits/troféus/stickers:** listas laterais com `<img>` simples (sem componente por item) + `content-visibility:auto`; `/fighters`: primeiras 6 renders com `priority`.
+- **Acessibilidade:** contraste (overrides em `globals.css` para `text-slate-500/600/700`, `zinc-500`, `cyan-800/900`), `aria-label` nos logos, h3→h2, `role="main"` na home e em `/fighters`, links sublinhados no rodapé/textos.
+- **Build:** com a pré-geração (184 páginas) o build da Vercel leva ~9 min (antes ~2–3).
