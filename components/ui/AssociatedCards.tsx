@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import SkeletonImage from "@/components/ui/SkeletonImage";
 
 interface AssociatedCardsProps {
   currentId: string;
@@ -56,7 +56,7 @@ export default function AssociatedCards({ currentId, name, franchiseId }: Associ
           >
             <div className="relative w-20 h-20 rounded-xl bg-slate-900/40 border border-vault-border/30 overflow-hidden flex items-center justify-center group-hover:border-cyan-500/50 group-hover:bg-slate-900/80 transition-all shadow-md">
               {item.url ? (
-                <Image
+                <SkeletonImage
                   src={item.url}
                   alt={item.name}
                   fill

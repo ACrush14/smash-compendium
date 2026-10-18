@@ -1,4 +1,5 @@
 import Link from "next/link";
+import RevalidateButton from "./RevalidateButton";
 
 export default function AdminDashboard() {
   return (
@@ -36,6 +37,7 @@ export default function AdminDashboard() {
           <p className="text-gray-500 text-sm">Revisar e corrigir timestamps de vídeo — Melee, Brawl, Smash 4.</p>
         </Link>
       </div>
+      <RevalidateButton />
     </div>
   );
 }

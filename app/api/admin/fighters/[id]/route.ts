@@ -1,9 +1,10 @@
+import { revalidateSite } from "@/lib/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
 // PATCH /api/admin/fighters/[id]
 // Accepts any subset of fighter scalar fields.
-export async function PATCH(
+async function _PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
@@ -41,4 +42,10 @@ export async function PATCH(
   });
 
   return NextResponse.json(updated);
+}
+
+export async function PATCH(...args: Parameters<typeof _PATCH>) {
+  const res = await _PATCH(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
 }

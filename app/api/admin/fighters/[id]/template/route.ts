@@ -1,8 +1,9 @@
+import { revalidateSite } from "@/lib/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { parseFighterTemplate } from "@/lib/template-parser";
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+async function _POST(req: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
   const body = await req.json() as { text?: string; data?: any };
   if (!body.text && !body.data) return NextResponse.json({ error: "Text or Data is required" }, { status: 400 });
@@ -162,4 +163,10 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
   await processTips(data.ultimateTipsEn, data.ultimateTipsJp);
 
   return NextResponse.json({ success: true, parsed: data });
+}
+
+export async function POST(...args: Parameters<typeof _POST>) {
+  const res = await _POST(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
 }

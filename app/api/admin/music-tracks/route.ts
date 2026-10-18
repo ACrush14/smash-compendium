@@ -1,3 +1,4 @@
+import { revalidateSite } from "@/lib/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
@@ -45,7 +46,7 @@ export async function GET(req: NextRequest) {
 }
 
 // POST /api/admin/music-tracks → create music track
-export async function POST(req: NextRequest) {
+async function _POST(req: NextRequest) {
   const body = await req.json() as {
     title:            string;
     franchiseId:      string;
@@ -88,4 +89,10 @@ export async function POST(req: NextRequest) {
     id,
   );
   return NextResponse.json(rows[0], { status: 201 });
+}
+
+export async function POST(...args: Parameters<typeof _POST>) {
+  const res = await _POST(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
 }

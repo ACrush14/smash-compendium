@@ -1,8 +1,18 @@
 import { notFound } from "next/navigation";
+import FallbackImg from "@/components/ui/FallbackImg";
 import Link from "next/link";
 import { ChevronRight, Zap, Users, Trophy, Music2, Map } from "lucide-react";
 import { db } from "@/lib/db";
 import FranchiseCollectibles, { type FranchiseCollectible } from "./FranchiseCollectibles";
+
+
+// Página gerada sob demanda e guardada por 10 min (ISR); admin pode forçar em /api/admin/revalidate.
+export const revalidate = 600;
+
+// Sem páginas pré-geradas: cada slug é renderizado na 1ª visita e guardado (ISR) pelo tempo de `revalidate`.
+export function generateStaticParams() {
+  return [];
+}
 
 interface PageProps {
   params: Promise<{ name: string }>;
@@ -124,7 +134,7 @@ export default async function FranchisePage({ params }: PageProps) {
         {franchise.svgIconUrl && (
           <div className="absolute inset-0 flex items-center justify-center opacity-[0.04] pointer-events-none">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <img loading="lazy" decoding="async"
               src={franchise.svgIconUrl}
               alt=""
               className="w-[70vw] h-[70vw] max-w-[800px] max-h-[800px] object-contain brightness-0 invert"
@@ -167,7 +177,7 @@ export default async function FranchisePage({ params }: PageProps) {
           {franchise.svgIconUrl && (
             <div className="shrink-0 w-16 h-16 flex items-center justify-center opacity-80">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <img loading="lazy" decoding="async"
                 src={franchise.svgIconUrl}
                 alt={`${franchise.name} logo`}
                 className="w-14 h-14 object-contain"
@@ -228,8 +238,7 @@ export default async function FranchisePage({ params }: PageProps) {
                 >
                   <div className="w-10 h-12 flex items-end justify-center overflow-hidden">
                     {fighter.imageUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <FallbackImg
                         src={fighter.imageUrl}
                         alt={fighter.name}
                         className="w-full h-full object-contain object-bottom group-hover:scale-105 transition-transform"

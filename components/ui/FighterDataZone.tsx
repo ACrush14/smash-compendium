@@ -130,7 +130,7 @@ function getBioText(
 function Flag({ code, size = 24 }: { code: string; size?: number }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <img loading="lazy" decoding="async"
       src={`https://flagcdn.com/w40/${code}.png`}
       alt={code.toUpperCase()}
       width={size}
@@ -222,7 +222,7 @@ function EraHeader({ gameVer, isDebut, lang }: { gameVer: string; isDebut: boole
         <a href={infoUrl || "#"} target={infoUrl ? "_blank" : undefined} rel={infoUrl ? "noopener noreferrer" : undefined} className="flex items-center gap-5 px-6 shrink-0 relative hover:brightness-125 transition-all cursor-pointer flex-1" style={{ background: meta.consoleBg }}>
           {meta.consoleIcon && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={`/assets/consoles/${meta.consoleIcon}`} alt={meta.consoleFull} style={{ width: 80, height: 48, objectFit: "contain", filter: "brightness(0) invert(1)", opacity: 0.7 }} />
+            <img loading="lazy" decoding="async" src={`/assets/consoles/${meta.consoleIcon}`} alt={meta.consoleFull} style={{ width: 80, height: 48, objectFit: "contain", filter: "brightness(0) invert(1)", opacity: 0.7 }} />
           )}
           <div className="flex flex-col">
             <span className="font-black uppercase leading-none tracking-tight" style={{ color: meta.eraTextColor, fontSize: "1.8rem" }}>{meta.short}</span>
@@ -234,25 +234,25 @@ function EraHeader({ gameVer, isDebut, lang }: { gameVer: string; isDebut: boole
           {meta.boxArtUsa && (
             <a href={meta.wikiUrlUsa || "#"} target="_blank" rel="noopener noreferrer" className="shrink-0 overflow-hidden border-l border-white/10 self-stretch flex items-center hover:brightness-110 transition-all cursor-pointer">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={meta.boxArtUsa} alt={`${meta.short} — Box USA`} style={{ height: 110, width: "auto", display: "block" }} />
+              <img loading="lazy" decoding="async" src={meta.boxArtUsa} alt={`${meta.short} — Box USA`} style={{ height: 110, width: "auto", display: "block" }} />
             </a>
           )}
           {meta.boxArtJp && (
             <a href={meta.wikiUrlJp || "#"} target="_blank" rel="noopener noreferrer" className="shrink-0 overflow-hidden border-l border-white/[0.08] self-stretch flex items-center hover:brightness-110 transition-all cursor-pointer" style={{ opacity: 0.88 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={meta.boxArtJp} alt={`${meta.short} — Box JP`} style={{ height: 110, width: "auto", display: "block" }} />
+              <img loading="lazy" decoding="async" src={meta.boxArtJp} alt={`${meta.short} — Box JP`} style={{ height: 110, width: "auto", display: "block" }} />
             </a>
           )}
           {meta.boxArtAlt && (
             <a href={meta.wikiUrlUsa || "#"} target="_blank" rel="noopener noreferrer" className="shrink-0 overflow-hidden border-l border-white/10 self-stretch flex items-center hover:brightness-110 transition-all cursor-pointer">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={meta.boxArtAlt} alt={`${meta.short} — Box Alt`} style={{ height: 110, width: "auto", display: "block" }} />
+              <img loading="lazy" decoding="async" src={meta.boxArtAlt} alt={`${meta.short} — Box Alt`} style={{ height: 110, width: "auto", display: "block" }} />
             </a>
           )}
           {meta.boxArtAltJp && (
             <a href={meta.wikiUrlJp || "#"} target="_blank" rel="noopener noreferrer" className="shrink-0 overflow-hidden border-l border-white/[0.08] self-stretch flex items-center hover:brightness-110 transition-all cursor-pointer" style={{ opacity: 0.88 }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={meta.boxArtAltJp} alt={`${meta.short} — Box Alt JP`} style={{ height: 110, width: "auto", display: "block" }} />
+              <img loading="lazy" decoding="async" src={meta.boxArtAltJp} alt={`${meta.short} — Box Alt JP`} style={{ height: 110, width: "auto", display: "block" }} />
             </a>
           )}
         </div>
@@ -289,7 +289,7 @@ function EraHeader({ gameVer, isDebut, lang }: { gameVer: string; isDebut: boole
 
         {meta.consoleIcon && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <img loading="lazy" decoding="async"
             src={`/assets/consoles/${meta.consoleIcon}`}
             alt={meta.consoleFull}
             style={{ width: 120, height: 72, objectFit: "contain", filter: "brightness(0) invert(1)", opacity: 0.80, marginTop: isDebut ? 24 : 0 }}
@@ -324,7 +324,7 @@ function EraHeader({ gameVer, isDebut, lang }: { gameVer: string; isDebut: boole
           <a href={meta.wikiUrlUsa || "#"} target="_blank" rel="noopener noreferrer"
             className="shrink-0 overflow-hidden border-l border-white/10 self-stretch flex items-center hover:brightness-110 transition-all cursor-pointer">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={meta.boxArtUsa} alt={`${meta.short} — Box USA`}
+            <img loading="lazy" decoding="async" src={meta.boxArtUsa} alt={`${meta.short} — Box USA`}
               style={{ height: 300, width: "auto", display: "block" }} />
           </a>
         )}
@@ -332,7 +332,7 @@ function EraHeader({ gameVer, isDebut, lang }: { gameVer: string; isDebut: boole
           <a href={meta.wikiUrlJp || "#"} target="_blank" rel="noopener noreferrer"
             className="shrink-0 overflow-hidden border-l border-white/[0.08] self-stretch flex items-center hover:brightness-110 transition-all cursor-pointer" style={{ opacity: 0.88 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={meta.boxArtJp} alt={`${meta.short} — Box JP`}
+            <img loading="lazy" decoding="async" src={meta.boxArtJp} alt={`${meta.short} — Box JP`}
               style={{ height: 300, width: "auto", display: "block" }} />
           </a>
         )}
@@ -340,7 +340,7 @@ function EraHeader({ gameVer, isDebut, lang }: { gameVer: string; isDebut: boole
           <a href={meta.wikiUrlUsa || "#"} target="_blank" rel="noopener noreferrer"
             className="shrink-0 overflow-hidden border-l border-white/10 self-stretch flex items-center hover:brightness-110 transition-all cursor-pointer">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={meta.boxArtAlt} alt={`${meta.short} — Box Alt`}
+            <img loading="lazy" decoding="async" src={meta.boxArtAlt} alt={`${meta.short} — Box Alt`}
               style={{ height: 300, width: "auto", display: "block" }} />
           </a>
         )}
@@ -348,7 +348,7 @@ function EraHeader({ gameVer, isDebut, lang }: { gameVer: string; isDebut: boole
           <a href={meta.wikiUrlJp || "#"} target="_blank" rel="noopener noreferrer"
             className="shrink-0 overflow-hidden border-l border-white/[0.08] self-stretch flex items-center hover:brightness-110 transition-all cursor-pointer" style={{ opacity: 0.88 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={meta.boxArtAltJp} alt={`${meta.short} — Box Alt JP`}
+            <img loading="lazy" decoding="async" src={meta.boxArtAltJp} alt={`${meta.short} — Box Alt JP`}
               style={{ height: 300, width: "auto", display: "block" }} />
           </a>
         )}
@@ -640,7 +640,7 @@ export default function FighterDataZone(props: FighterDataZoneProps) {
                           >
                             {artSrc && (
                               // eslint-disable-next-line @next/next/no-img-element
-                              <img
+                              <img loading="lazy" decoding="async"
                                 src={artSrc}
                                 alt={title}
                                 style={{ height: 48, width: "auto", display: "block", opacity: 0.9 }}

@@ -245,7 +245,7 @@ export default function StickerViewer({ stickers, initialIndex = 0 }: Props) {
             <div className="relative w-56 h-56 md:w-64 md:h-64 flex items-center justify-center shrink-0">
               {displayed.svgIconUrl && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <img loading="lazy" decoding="async"
                   src={displayed.svgIconUrl}
                   alt=""
                   aria-hidden
@@ -385,7 +385,7 @@ function GameCard({
       {coverUrl && (
         <div className="relative shrink-0 w-14 aspect-[3/4] bg-slate-900 rounded overflow-hidden border border-vault-border/40 shadow-md">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={coverUrl} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
+          <img loading="lazy" decoding="async" src={coverUrl} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
         </div>
       )}
       <div className="min-w-0">

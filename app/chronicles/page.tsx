@@ -117,7 +117,7 @@ export default async function ChroniclesPage({ searchParams }: Props) {
                     >
                       {game.boxArtUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img src={game.boxArtUrl} alt={game.titleNtsc} className="absolute inset-0 w-full h-full object-cover object-top" />
+                        <img loading="lazy" decoding="async" src={game.boxArtUrl} alt={game.titleNtsc} className="absolute inset-0 w-full h-full object-cover object-top" />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
                           <span className="font-bold text-slate-400 text-lg font-serif group-hover:text-amber-500 transition-colors">
@@ -291,7 +291,7 @@ export default async function ChroniclesPage({ searchParams }: Props) {
                 >
                   {game.boxArtUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={game.boxArtUrl}
                       alt={game.titleNtsc}
                       className="absolute inset-0 w-full h-full object-cover object-top"

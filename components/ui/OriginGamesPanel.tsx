@@ -44,7 +44,7 @@ function ConsoleIcon({ iconFile, console: consoleName, color }: {
         style={{ width: 100, height: 64, background: `${color}22`, border: `1px solid ${color}44` }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <img loading="lazy" decoding="async"
           src={`/assets/consoles/${iconFile}`}
           alt={consoleName}
           width={88}
@@ -149,7 +149,7 @@ export default function OriginGamesPanel({ games, lang = "EN" }: { games: Origin
                   return artSrc ? (
                   <div className="overflow-hidden border border-white/15 shadow-lg shadow-black/50 self-start">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={artSrc}
                       alt={`${title} — Box Art`}
                       style={{ height: BOX_H, width: "auto", display: "block" }}

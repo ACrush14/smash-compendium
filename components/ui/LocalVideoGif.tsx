@@ -58,7 +58,7 @@ export default function LocalVideoGif({
     {!ready && <Skeleton className="absolute inset-0 pointer-events-none" />}
     <video
       ref={videoRef}
-      preload="auto"
+      preload="metadata"
       onLoadedData={() => setReady(true)}
       // Provide the media fragment so the browser requests only this chunk initially
       src={`${src}#t=${startSec},${endSec}`}

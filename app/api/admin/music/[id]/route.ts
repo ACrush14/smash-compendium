@@ -1,8 +1,9 @@
+import { revalidateSite } from "@/lib/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
 // PATCH /api/admin/music/[id] — update a fighter's music data
-export async function PATCH(
+async function _PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
@@ -21,4 +22,10 @@ export async function PATCH(
   });
 
   return NextResponse.json(fighter);
+}
+
+export async function PATCH(...args: Parameters<typeof _PATCH>) {
+  const res = await _PATCH(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
 }

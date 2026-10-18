@@ -170,7 +170,7 @@ DIRECT_URL="postgresql://usuario:senha@host:5432/database?schema=public"
 GEMINI_API_KEY="sua_chave_do_google_gemini_aqui"
 
 # Cookie secreto de autenticação para as páginas de Admin
-ADMIN_SECRET_COOKIE="smash_admin_secret_token"
+ADMIN_PASSWORD="troque-por-uma-senha-longa"   # senha do /admin (obrigatória em produção)
 ```
 
 ### 4. Preparando o Banco de Dados e Rodando o Projeto

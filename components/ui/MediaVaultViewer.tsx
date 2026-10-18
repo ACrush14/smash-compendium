@@ -329,7 +329,9 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
                   IS_VIDEO(asset.url) ? (
                     <video
                       src={asset.url}
-                      autoPlay loop muted playsInline
+                      // miniatura: só o 1º quadro (preload=metadata) — não baixa o clipe inteiro; o vídeo ativo toca no palco
+                      preload="metadata"
+                      muted playsInline
                       className="object-cover h-11 w-11 relative z-10 pointer-events-none"
                     />
                   ) : (

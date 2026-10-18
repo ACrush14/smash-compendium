@@ -1,3 +1,4 @@
+import { revalidateSite } from "@/lib/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
@@ -12,7 +13,7 @@ export async function GET() {
 
 // POST /api/admin/franchises → create franchise
 // Body: { name, svgIconUrl? }
-export async function POST(req: NextRequest) {
+async function _POST(req: NextRequest) {
   const { name, svgIconUrl } = await req.json() as {
     name: string;
     svgIconUrl?: string | null;
@@ -30,4 +31,10 @@ export async function POST(req: NextRequest) {
   });
 
   return NextResponse.json(franchise, { status: 201 });
+}
+
+export async function POST(...args: Parameters<typeof _POST>) {
+  const res = await _POST(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
 }

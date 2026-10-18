@@ -1,8 +1,9 @@
 import { db } from "@/lib/db";
+import { cachedQueryZ } from "@/lib/cache";
 import { Zap } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import SkeletonImage from "@/components/ui/SkeletonImage";
 import SpiritViewer, { type SpiritItem } from "@/components/ui/SpiritViewer";
 import TrophyViewer, { type TrophyItem } from "@/components/ui/TrophyViewer";
 import StickerViewer, { type StickerItem } from "@/components/ui/StickerViewer";
@@ -56,7 +57,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
   /* Spirit View — one at a time, client-side navigation        */
   /* ─────────────────────────────────────────────────────────── */
   if (typeFilter === "SPIRIT") {
-    const [rawSpirits, chronicleEntries] = await Promise.all([
+    const [rawSpirits, chronicleEntries] = await cachedQueryZ(["collectibles-spirits"], () => Promise.all([
       db.collectible.findMany({
         where:   { type: "SPIRIT" },
         orderBy,
@@ -75,7 +76,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
         where:  { OR: [{ boxArtUrl: { not: null } }, { wikiUrl: { not: null } }] },
         select: { titleNtsc: true, boxArtUrl: true, wikiUrl: true },
       }),
-    ]);
+    ]));
 
     // Chronicle cover art + wiki URL lookup
     const artMap  = new Map<string, string>();
@@ -172,6 +173,8 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       ? SSB4_VERSIONS
       : [activeGame];
 
+    type ChrLink = { collectibleId: string; id: string; titleNtsc: string; boxArtUrl: string | null; wikiUrl: string | null };
+    const { rawTrophies, chronicleLinksRaw } = await cachedQueryZ(["collectibles-trophies", trophyVersions.join(",")], async () => {
     const rawTrophies = await db.collectible.findMany({
       where:   { type: "TROPHY", smashGameVersion: { in: trophyVersions } },
       orderBy: [{ posicaoTrofeuMelee: "asc" }, { posicaoTrofeuBrawl: "asc" }, { posicaoTrofeuSsb4: "asc" }, { name: "asc" }],
@@ -196,7 +199,6 @@ export default async function CollectiblesPage({ searchParams }: Props) {
     });
 
     // Load chronicle links via raw SQL (Prisma client not yet regenerated for new relation)
-    type ChrLink = { collectibleId: string; id: string; titleNtsc: string; boxArtUrl: string | null; wikiUrl: string | null };
     let chronicleLinksRaw: ChrLink[] = [];
     if (rawTrophies.length > 0) {
       const ids = rawTrophies.map(t => t.id);
@@ -209,6 +211,8 @@ export default async function CollectiblesPage({ searchParams }: Props) {
         ids
       ) as ChrLink[];
     }
+    return { rawTrophies, chronicleLinksRaw };
+    });
     const linksByTrophy = new Map<string, ChrLink[]>();
     for (const lnk of chronicleLinksRaw) {
       if (!linksByTrophy.has(lnk.collectibleId)) linksByTrophy.set(lnk.collectibleId, []);
@@ -281,6 +285,8 @@ export default async function CollectiblesPage({ searchParams }: Props) {
   /* Sticker View — one at a time, like SpiritViewer            */
   /* ─────────────────────────────────────────────────────────── */
   if (typeFilter === "STICKER") {
+    type ChrLink = { collectibleId: string; id: string; titleNtsc: string; boxArtUrl: string | null; wikiUrl: string | null };
+    const { rawStickers, chronicleLinksRaw } = await cachedQueryZ(["collectibles-stickers", activeGame], async () => {
     const rawStickers = await db.collectible.findMany({
       where:   { type: "STICKER", smashGameVersion: activeGame },
       orderBy: [{ orderIndex: "asc" }, { name: "asc" }],
@@ -297,7 +303,6 @@ export default async function CollectiblesPage({ searchParams }: Props) {
     });
 
     // Load chronicle links via raw SQL
-    type ChrLink = { collectibleId: string; id: string; titleNtsc: string; boxArtUrl: string | null; wikiUrl: string | null };
     let chronicleLinksRaw: ChrLink[] = [];
     if (rawStickers.length > 0) {
       const ids = rawStickers.map(s => s.id);
@@ -310,6 +315,8 @@ export default async function CollectiblesPage({ searchParams }: Props) {
         ids
       ) as ChrLink[];
     }
+    return { rawStickers, chronicleLinksRaw };
+    });
     const linksBySticker = new Map<string, ChrLink[]>();
     for (const lnk of chronicleLinksRaw) {
       if (!linksBySticker.has(lnk.collectibleId)) linksBySticker.set(lnk.collectibleId, []);
@@ -386,13 +393,13 @@ export default async function CollectiblesPage({ searchParams }: Props) {
       ? [{ posicaoTrofeuSsb4: "asc" as const }, { name: "asc" as const }]
     : orderBy;
 
-  const raw = await db.collectible.findMany({
+  const raw = await cachedQueryZ(["collectibles-grid", activeGame, typeFilter ?? "ALL"], () => db.collectible.findMany({
     where,
     orderBy: typeFilter === "TROPHY" ? trophyOrderBy : orderBy,
     include: {
       franchise: { select: { svgIconUrl: true, name: true } },
     },
-  });
+  }));
 
   // Deduplicate by orderIndex
   const seenIdx = new Set<number>();
@@ -438,7 +445,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                   </div>
                   {"franchise" in item && item.franchise?.svgIconUrl && (
                     <div className="absolute bottom-2 left-2 z-10 w-5 h-5 opacity-60 group-hover:opacity-100 transition-opacity">
-                      <Image
+                      <SkeletonImage
                         src={item.franchise.svgIconUrl}
                         alt={item.franchise.name ?? ""}
                         fill
@@ -449,7 +456,7 @@ export default async function CollectiblesPage({ searchParams }: Props) {
                   )}
                   <div className="absolute inset-4 flex items-center justify-center">
                     {item.assetRenderUrl ? (
-                      <Image
+                      <SkeletonImage
                         src={item.assetRenderUrl}
                         alt={item.name}
                         fill

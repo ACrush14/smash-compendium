@@ -1,3 +1,4 @@
+import { revalidateSite } from "@/lib/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
@@ -54,7 +55,7 @@ export async function GET(req: NextRequest) {
 // POST /api/admin/fighters → create a new fighter (+ optional FighterWork entries)
 // Body: { name, rosterNumber, franchiseId, imageUrl?, musicYoutubeId?, musicTitle?, musicArtist?,
 //          works?: { gameId: string; isDebut?: boolean }[] }
-export async function POST(req: NextRequest) {
+async function _POST(req: NextRequest) {
   const body = await req.json() as {
     name:           string;
     rosterNumber:   string;
@@ -99,4 +100,10 @@ export async function POST(req: NextRequest) {
     ...fighter,
     franchise: fighter.franchise.name,
   }, { status: 201 });
+}
+
+export async function POST(...args: Parameters<typeof _POST>) {
+  const res = await _POST(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
 }

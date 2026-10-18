@@ -18,6 +18,7 @@ import { Suspense } from "react";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { RandomAssetShowcase } from "@/components/ui/RandomAssetShowcase";
 import { db } from "@/lib/db";
+import { cachedQuery } from "@/lib/cache";
 import type { Fighter, Franchise } from "@prisma/client";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -104,15 +105,21 @@ export default async function VaultPage({ searchParams }: PageProps) {
   const query = (q ?? "").trim();
 
   // Queries paralelas ao banco
-  const [fighterCount, franchiseCount, gameCount, trophyCount, spiritCount, stickerCount, musicCount, approvedCount, searchResults, showcaseAssets] = await Promise.all([
-    db.fighter.count(),
-    db.franchise.count(),
-    db.chronicleEntry.count(),
-    db.collectible.count({ where: { type: "TROPHY" } }),
-    db.collectible.count({ where: { type: "SPIRIT" } }),
-    db.collectible.count({ where: { type: "STICKER" } }),
-    db.music.count(),
-    db.fighter.count({ where: { curationStatus: "approved" } }),
+  const [stats, searchResults, showcaseAssets] = await Promise.all([
+    // contagens mudam raramente: 1 h de cache
+    cachedQuery(["home-stats"], async () => {
+      const [fighterCount, franchiseCount, gameCount, trophyCount, spiritCount, stickerCount, musicCount, approvedCount] = await Promise.all([
+        db.fighter.count(),
+        db.franchise.count(),
+        db.chronicleEntry.count(),
+        db.collectible.count({ where: { type: "TROPHY" } }),
+        db.collectible.count({ where: { type: "SPIRIT" } }),
+        db.collectible.count({ where: { type: "STICKER" } }),
+        db.music.count(),
+        db.fighter.count({ where: { curationStatus: "approved" } }),
+      ]);
+      return { fighterCount, franchiseCount, gameCount, trophyCount, spiritCount, stickerCount, musicCount, approvedCount };
+    }),
     query
       ? db.fighter.findMany({
           where: {
@@ -126,12 +133,14 @@ export default async function VaultPage({ searchParams }: PageProps) {
           orderBy: { rosterNumber: "asc" },
         })
       : Promise.resolve([]),
-    db.$queryRaw<{ name: string; assetRenderUrl: string }[]>`
+    // sorteio de 20 troféus guardado por 10 min (o cliente já alterna entre eles a cada 10 s)
+    cachedQuery(["home-showcase"], () => db.$queryRaw<{ name: string; assetRenderUrl: string }[]>`
       SELECT name, "assetRenderUrl" FROM "Collectible"
       WHERE type = 'TROPHY' AND "assetRenderUrl" IS NOT NULL
       ORDER BY RANDOM() LIMIT 20
-    `,
+    `, 600),
   ]);
+  const { fighterCount, franchiseCount, gameCount, trophyCount, spiritCount, stickerCount, musicCount, approvedCount } = stats;
 
   const curationPct = fighterCount > 0 ? Math.round((approvedCount / fighterCount) * 100) : 0;
 

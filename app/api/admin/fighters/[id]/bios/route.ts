@@ -1,3 +1,4 @@
+import { revalidateSite } from "@/lib/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
@@ -16,7 +17,7 @@ export async function GET(
 
 // POST /api/admin/fighters/[id]/bios → upsert bio (create or update)
 // Body: { smashGameVersion, contentEn?, contentPt?, contentJp?, contentJpEn? }
-export async function POST(
+async function _POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
@@ -50,4 +51,10 @@ export async function POST(
   });
 
   return NextResponse.json(bio);
+}
+
+export async function POST(...args: Parameters<typeof _POST>) {
+  const res = await _POST(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
 }

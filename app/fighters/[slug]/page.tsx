@@ -15,6 +15,15 @@ import {
   type WorkGame,
 } from "@/components/ui/FighterDataZone";
 
+
+// Página gerada sob demanda e guardada por 10 min (ISR); admin pode forçar em /api/admin/revalidate.
+export const revalidate = 600;
+
+// Sem páginas pré-geradas: cada slug é renderizado na 1ª visita e guardado (ISR) pelo tempo de `revalidate`.
+export function generateStaticParams() {
+  return [];
+}
+
 // ─── Jogos de origem por franquia ─────────────────────────────────────────────
 
 // Origens removidas e migradas para o banco (FighterChronicleLink).
@@ -570,7 +579,7 @@ export default async function FighterPage({ params }: PageProps) {
           className="absolute inset-0 z-0 pointer-events-none opacity-10 flex items-center justify-center"
           style={{ overflow: 'hidden' }}
         >
-          <img src={fighter.franchise.svgIconUrl} alt="" className="w-full h-full object-contain scale-[1.5] blur-[1px] brightness-0 invert" />
+          <img loading="lazy" decoding="async" src={fighter.franchise.svgIconUrl} alt="" className="w-full h-full object-contain scale-[1.5] blur-[1px] brightness-0 invert" />
         </div>
       )}
       </div>

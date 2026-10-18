@@ -1,4 +1,4 @@
-import Image from "next/image";
+import SkeletonImage from "@/components/ui/SkeletonImage";
 import Link from "next/link";
 
 export interface RelatedItem {
@@ -35,7 +35,7 @@ export default function RelatedItemsGrid({ items }: { items: RelatedItem[] }) {
             >
               <div className="relative w-full aspect-square mb-1 rounded bg-slate-950/50 flex items-center justify-center overflow-hidden">
                 {rel.assetRenderUrl ? (
-                  <Image
+                  <SkeletonImage
                     src={rel.assetRenderUrl}
                     alt={rel.name}
                     fill

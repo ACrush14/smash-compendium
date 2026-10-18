@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { thumbUrl } from "@/lib/media-config";
 
 type CollectibleType = "ALL" | "TROPHY" | "SPIRIT" | "STICKER";
 type EraFilter = "ALL" | "SSB64" | "SSBM" | "SSBB" | "SSB4" | "SSBU";
@@ -57,8 +58,8 @@ function CollectibleCard({ item, lang }: { item: FranchiseCollectible; lang: "EN
         <div className="shrink-0 w-10 h-10 border border-white/5 bg-black/20 flex items-center justify-center overflow-hidden">
           {item.assetRenderUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={item.assetRenderUrl}
+            <img loading="lazy" decoding="async"
+              src={thumbUrl(item.assetRenderUrl)}
               alt={item.name}
               className="w-full h-full object-contain"
             />

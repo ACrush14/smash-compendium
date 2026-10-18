@@ -1,27 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
+import { ADMIN_COOKIE, adminToken, safeEqual } from "@/lib/admin-auth";
 
-const COOKIE_NAME = "smash_admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "Senhaimprovisada123";
-
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (
-    pathname.startsWith("/admin") &&
-    pathname !== "/admin/login" &&
-    !pathname.startsWith("/api/admin/auth")
-  ) {
-    const cookie = request.cookies.get(COOKIE_NAME);
-    if (cookie?.value !== ADMIN_PASSWORD) {
-      const loginUrl = new URL("/admin/login", request.url);
-      loginUrl.searchParams.set("from", pathname);
-      return NextResponse.redirect(loginUrl);
-    }
-  }
+  const isAdminPage = pathname.startsWith("/admin") && pathname !== "/admin/login";
+  // /api/admin/auth é o próprio login/logout; todo o resto de /api/admin exige sessão.
+  const isAdminApi  = pathname.startsWith("/api/admin") && !pathname.startsWith("/api/admin/auth");
+  if (!isAdminPage && !isAdminApi) return NextResponse.next();
 
-  return NextResponse.next();
+  const expected = await adminToken();
+  const given    = request.cookies.get(ADMIN_COOKIE)?.value ?? "";
+  const ok       = expected !== null && safeEqual(given, expected);
+  if (ok) return NextResponse.next();
+
+  if (isAdminApi) {
+    return NextResponse.json({ error: "Não autorizado" }, { status: 401 });
+  }
+  const loginUrl = new URL("/admin/login", request.url);
+  loginUrl.searchParams.set("from", pathname);
+  return NextResponse.redirect(loginUrl);
 }
 
 export const config = {
-  matcher: ["/admin", "/admin/:path*"],
+  matcher: ["/admin", "/admin/:path*", "/api/admin/:path*"],
 };

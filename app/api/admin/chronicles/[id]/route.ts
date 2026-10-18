@@ -1,8 +1,9 @@
+import { revalidateSite } from "@/lib/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
 // PATCH /api/admin/chronicles/[id]
-export async function PATCH(
+async function _PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -33,7 +34,7 @@ export async function PATCH(
 }
 
 // DELETE /api/admin/chronicles/[id]/boxart  — limpa só o boxArtUrl
-export async function DELETE(
+async function _DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -43,4 +44,16 @@ export async function DELETE(
     data: { boxArtUrl: null },
   });
   return NextResponse.json(updated);
+}
+
+export async function PATCH(...args: Parameters<typeof _PATCH>) {
+  const res = await _PATCH(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
+}
+
+export async function DELETE(...args: Parameters<typeof _DELETE>) {
+  const res = await _DELETE(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
 }

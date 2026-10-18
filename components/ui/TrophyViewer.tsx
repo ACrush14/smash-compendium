@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import RelatedItemsGrid, { RelatedItem } from "./RelatedItemsGrid";
 import AssociatedCards from "./AssociatedCards";
 import LocalVideoGif from "./LocalVideoGif";
-import { FULL_VIDEOS, cdnUrl } from "@/lib/media-config";
+import { FULL_VIDEOS, cdnUrl, fullImageUrl } from "@/lib/media-config";
 import { LangSelector, type Lang } from "./FighterDataZone";
 import { pickCollectibleDescription } from "@/lib/collectible-lang";
 
@@ -86,7 +86,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
   // When search yields no results, keep displaying the last valid trophy
   const displayed  = current ?? lastCurrentRef.current ?? trophies[0];
 
-  usePreloadImages([filtered[safeIndex - 1]?.assetRenderUrl, filtered[safeIndex + 1]?.assetRenderUrl, filtered[safeIndex + 2]?.assetRenderUrl]);
+  usePreloadImages([filtered[safeIndex - 1], filtered[safeIndex + 1], filtered[safeIndex + 2]].map(t => fullImageUrl(t?.assetRenderUrl)));
 
   useEffect(() => {
     if (current) lastCurrentRef.current = current;
@@ -336,7 +336,7 @@ export default function TrophyViewer({ trophies, initialIndex = 0 }: Props) {
               <div className="relative w-56 h-56 md:w-64 md:h-64 flex items-center justify-center shrink-0">
                 {displayed.svgIconUrl && (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={displayed.svgIconUrl}
                     alt=""
                     aria-hidden
@@ -538,7 +538,7 @@ function GameCard({
       {coverUrl && (
         <div className="relative shrink-0 w-14 aspect-[3/4] bg-slate-900 rounded overflow-hidden border border-vault-border/40 shadow-md">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={coverUrl} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
+          <img loading="lazy" decoding="async" src={coverUrl} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
         </div>
       )}
       <div className="min-w-0">

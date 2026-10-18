@@ -1,8 +1,9 @@
+import { revalidateSite } from "@/lib/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
 // PATCH /api/admin/music-tracks/[id]
-export async function PATCH(
+async function _PATCH(
   req: NextRequest,
   { params }: { params: { id: string } },
 ) {
@@ -59,7 +60,7 @@ export async function PATCH(
 }
 
 // DELETE /api/admin/music-tracks/[id]
-export async function DELETE(
+async function _DELETE(
   _req: NextRequest,
   { params }: { params: { id: string } },
 ) {
@@ -74,4 +75,16 @@ export async function DELETE(
   await db.$executeRawUnsafe(`DELETE FROM "Music" WHERE id = $1`, params.id);
 
   return NextResponse.json({ ok: true });
+}
+
+export async function PATCH(...args: Parameters<typeof _PATCH>) {
+  const res = await _PATCH(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
+}
+
+export async function DELETE(...args: Parameters<typeof _DELETE>) {
+  const res = await _DELETE(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
 }

@@ -1,6 +1,10 @@
 import { db } from "@/lib/db";
 import FighterGrid from "./FighterGrid";
 
+
+// Página gerada sob demanda e guardada por 10 min (ISR); admin pode forçar em /api/admin/revalidate.
+export const revalidate = 600;
+
 export const metadata = {
   title: "Roster | Super Smash Bros Museum",
   description: "Explore todos os lutadores que compõem o panteão de Super Smash Bros.",

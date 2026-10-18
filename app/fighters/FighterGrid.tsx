@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import SkeletonImage from "@/components/ui/SkeletonImage";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, FilterX } from "lucide-react";
 
@@ -163,8 +163,9 @@ export default function FighterGrid({ fighters }: { fighters: FighterItem[] }) {
                   {/* Fighter Image */}
                   <div className="absolute inset-x-2 bottom-12 top-6 flex items-center justify-center">
                     {fighter.imageUrl ? (
-                      <Image
+                      <SkeletonImage
                         src={fighter.imageUrl}
+                        variant="md"
                         alt={fighter.name}
                         fill
                         className="object-contain drop-shadow-2xl group-hover:scale-110 group-hover:-translate-y-2 transition-transform duration-500 ease-out"

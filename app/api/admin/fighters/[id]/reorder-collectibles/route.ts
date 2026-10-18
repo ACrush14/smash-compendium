@@ -1,3 +1,4 @@
+import { revalidateSite } from "@/lib/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
@@ -11,7 +12,7 @@ const GAME_TO_FIELD: Record<string, string> = {
 // POST /api/admin/fighters/[id]/reorder-collectibles
 // Body: { game: "SSBM"|"SSBB"|"SSB4"|"SSBU", ids: string[] }
 // Saves the position of each collectible ID based on its array index.
-export async function POST(
+async function _POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
@@ -33,4 +34,10 @@ export async function POST(
   );
 
   return NextResponse.json({ ok: true, updated: ids.length });
+}
+
+export async function POST(...args: Parameters<typeof _POST>) {
+  const res = await _POST(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
 }

@@ -80,3 +80,6 @@ public/audio/*.mp3
 public/audio/*.ogg
 public/audio/*.webm
 data/timestamps/*.csv
+
+# pasta de build para testes (NEXT_DIST_DIR=.next-test)
+.next-test/

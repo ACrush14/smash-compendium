@@ -1,6 +1,11 @@
 import Link from "next/link";
+import FallbackImg from "@/components/ui/FallbackImg";
 import { ChevronRight, Zap } from "lucide-react";
 import { db } from "@/lib/db";
+
+
+// Página gerada sob demanda e guardada por 10 min (ISR); admin pode forçar em /api/admin/revalidate.
+export const revalidate = 600;
 
 export const metadata = {
   title: "Franquias · SmashCompendium",
@@ -111,7 +116,7 @@ export default async function FranchisesPage() {
                 <div className="flex items-center gap-2.5">
                   {franchise.svgIconUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <img loading="lazy" decoding="async"
                       src={franchise.svgIconUrl}
                       alt=""
                       className="w-7 h-7 object-contain opacity-70 group-hover:opacity-100 transition-opacity"
@@ -134,8 +139,7 @@ export default async function FranchisesPage() {
                     {franchise.fighters.map(f => (
                       <div key={f.id} className="w-8 h-10 flex items-end justify-center overflow-hidden opacity-60 group-hover:opacity-90 transition-opacity">
                         {f.imageUrl ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
+                          <FallbackImg
                             src={f.imageUrl}
                             alt={f.name}
                             className="w-full h-full object-contain object-bottom"

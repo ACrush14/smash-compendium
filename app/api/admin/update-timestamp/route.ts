@@ -1,7 +1,8 @@
+import { revalidateSite } from "@/lib/cache";
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
-export async function POST(req: NextRequest) {
+async function _POST(req: NextRequest) {
   const body = await req.json();
   const { type, id, videoStartSec, videoEndSec } = body as {
     type: 'collectible' | 'fighterBio';
@@ -19,4 +20,10 @@ export async function POST(req: NextRequest) {
   }
 
   return NextResponse.json({ ok: true });
+}
+
+export async function POST(...args: Parameters<typeof _POST>) {
+  const res = await _POST(...args);
+  revalidateSite(); // mostra a edição no site público sem esperar o cache expirar
+  return res;
 }
