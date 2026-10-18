@@ -16,6 +16,8 @@ prisma/migrations/
 # media gerada (binários grandes)
 public/assets/fighters/
 public/assets/collectibles/SPRITE-*.png
+# exceto os sprites de origem dos lutadores (exibidos no carrossel do lutador; precisam ir ao deploy)
+!public/assets/collectibles/SPRITE-*-origin.png
 public/assets/collectibles/TROPHY-*.png
 # spirits e stickers com nome (antigos, 75px)
 public/assets/collectibles/SPIRIT-SSBU-[A-Za-z]*.png

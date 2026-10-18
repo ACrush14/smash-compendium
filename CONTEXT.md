@@ -1667,3 +1667,10 @@ Ultimate Fighter Tips JP:
 - **Spirits em duas camadas** (`lib/spirits.ts`, `lib/spirit-types.ts`, `app/api/spirits/[id]/route.ts`): a lista dos 1.582 (id, nome, número, miniatura, franquia) vai na página; o detalhe completo de cada um (descrições 4 idiomas, música, jogos de origem, relacionados) vem de `/api/spirits/[id]` quando o spirit é aberto (com prefetch dos vizinhos). A página caiu de 722 KB para ~81 KB gz. Só ids que existem na lista são aceitos (os ids reais têm espaços/pontuação).
 - **Vídeos ausentes** (deploy sem CDN): `ClipVideo` e `LocalVideoGif` checam `video.error` ao montar (o erro de um 404 rápido chega antes da hidratação e o React perdia o evento). Caixas de vídeo somem e o carrossel do lutador (`MediaVaultViewer`) remove clipes que falham.
 - **Capas do Chronicles:** 1.257 de 1.272 baixadas; `download-boxarts.ts` agora usa Referer da origem (Wikia) e ritmo lento para a Wikimedia (429). Restam 15 permanentes (404/403) em `data/boxarts-failed.json`.
+
+## 35. Sessão 30 — Varredura de testes (2026-10-18, V00.233)
+
+- **Varredura no deploy:** 1.759 rotas (93 de lutadores, 55 de franquias, 20 do Chronicles, 1.587 de coleções) → 1.758 ok, 0 problemas. 8.223 arquivos locais citados nas páginas → faltavam só os clipes (sem CDN), 28 sprites de origem e capas permanentemente 404.
+- **BUG achado — sprites de origem ignorados pelo git:** `public/assets/collectibles/SPRITE-*.png` estava no `.gitignore`, então os 28 `SPRITE-*-origin.png` (carrossel do lutador) nunca iam ao deploy. Agora há `!SPRITE-*-origin.png`.
+- **BUG achado — EMAXCONN:** o pooler do Supabase aceita 200 conexões de cliente; cada função da Vercel abria até 5 (`connection_limit=5`) e a varredura esgotou o limite (APIs 500; funções congeladas seguram conexões). `lib/db.ts` agora limita a 2 conexões por instância na Vercel (`datasourceUrl`). **Não rode varreduras gigantes em paralelo no site publicado**; use concorrência baixa.
+- **Como repetir a varredura:** scripts temporários usados estão descritos aqui (descobrir rotas por links + HEAD em todos os `/assets/...` citados). Nunca usar mais de ~4 requisições simultâneas contra a Vercel.
