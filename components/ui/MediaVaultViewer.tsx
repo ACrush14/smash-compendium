@@ -172,10 +172,10 @@ export default function MediaVaultViewer({ assets, music, lang = "EN" }: MediaVa
             IS_VIDEO(active.url) ? (
               active.href ? (
                 <a href={active.href} className="w-full h-full relative z-10 block group cursor-pointer" title={`Ver página de ${active.label}`}>
-                  <ClipVideo onFail={() => markBroken(active.url)} src={active.url} poster={clipPoster(active.url)} autoPlay loop muted playsInline className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-300" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
+                  <ClipVideo onFail={() => markBroken(active.url)} src={active.url} poster={clipPoster(active.url)} deferPlay={!!clipPoster(active.url)} autoPlay loop muted playsInline className="w-full h-full object-contain object-center group-hover:scale-105 transition-transform duration-300" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
                 </a>
               ) : (
-                <ClipVideo onFail={() => markBroken(active.url)} src={active.url} poster={clipPoster(active.url)} autoPlay loop muted playsInline className="w-full h-full object-contain object-center relative z-10" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
+                <ClipVideo onFail={() => markBroken(active.url)} src={active.url} poster={clipPoster(active.url)} deferPlay={!!clipPoster(active.url)} autoPlay loop muted playsInline className="w-full h-full object-contain object-center relative z-10" style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.9)) drop-shadow(0 6px 20px rgba(64,180,255,0.06))" }} />
               )
             ) : active.href ? (
               <a href={active.href} className="w-full h-full relative z-10 block group cursor-pointer" title={`Ver página de ${active.label}`}>

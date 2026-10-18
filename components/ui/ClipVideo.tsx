@@ -7,10 +7,21 @@ import { useEffect, useRef, type VideoHTMLAttributes } from "react";
  * O erro de um 404 rápido pode chegar ANTES da hidratação do React (evento perdido), por isso confere
  * `video.error` ao montar e também escuta o evento depois.
  */
-export default function ClipVideo({ onFail, ...props }: VideoHTMLAttributes<HTMLVideoElement> & { onFail?: () => void }) {
+export default function ClipVideo({
+  onFail,
+  deferPlay,
+  autoPlay,
+  preload,
+  ...props
+}: VideoHTMLAttributes<HTMLVideoElement> & {
+  onFail?: () => void;
+  /** Mostra só o `poster` e começa a baixar/tocar o vídeo depois que a página terminou de carregar (clipes grandes). */
+  deferPlay?: boolean;
+}) {
   const ref = useRef<HTMLVideoElement>(null);
   const onFailRef = useRef(onFail);
   onFailRef.current = onFail;
+  const firstRun = useRef(true);
 
   useEffect(() => {
     const video = ref.current;
@@ -25,8 +36,28 @@ export default function ClipVideo({ onFail, ...props }: VideoHTMLAttributes<HTML
     return () => video.removeEventListener("error", hide);
   }, [props.src]);
 
+  // Início adiado: o clipe (até ~4 MB) não disputa banda com as imagens da página; a capa aparece na hora.
+  useEffect(() => {
+    if (!deferPlay) return;
+    const video = ref.current;
+    if (!video) return;
+    let cancelled = false;
+    const start = () => {
+      if (cancelled) return;
+      video.preload = "auto";
+      video.play().catch(() => { /* autoplay bloqueado: a capa continua à mostra */ });
+    };
+    if (!firstRun.current) { start(); return () => { cancelled = true; }; } // troca de clipe pelo usuário: começa já
+    firstRun.current = false;
+    const w = window as Window & { requestIdleCallback?: (cb: () => void) => number };
+    const kick = () => (w.requestIdleCallback ? w.requestIdleCallback(() => setTimeout(start, 400)) : setTimeout(start, 1200));
+    if (document.readyState === "complete") kick();
+    else window.addEventListener("load", kick, { once: true });
+    return () => { cancelled = true; window.removeEventListener("load", kick); };
+  }, [deferPlay, props.src]);
+
   // eslint-disable-next-line jsx-a11y/media-has-caption
-  return <video ref={ref} {...props} />;
+  return <video ref={ref} {...props} autoPlay={deferPlay ? false : autoPlay} preload={deferPlay ? "none" : preload} />;
 }
 
 /**

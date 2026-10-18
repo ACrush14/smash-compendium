@@ -1710,3 +1710,5 @@ Ultimate Fighter Tips JP:
 - **Visão geral `/collectibles`:** TBT de 41 s (1.725 cartões × 2 componentes de cliente) → 30 ms: `<img>` simples gerado no servidor + `content-visibility:auto`; 240 cartões por vez com link "Mostrar mais" (`?limit=`), sem JavaScript; primeiras imagens `eager`/`fetchPriority=high`.
 - **Corrigido:** relacionados duplicados em troféus/spirits (vínculo nos dois sentidos) — `getSpiritDetail`/`getCollectibleDetail` removem repetidos. Landmark `main` em `/music`.
 - **Lighthouse produção (V00.237) das demais páginas:** troféus Brawl 95, música 94, Chronicles 88, stickers 85, franquia 69, visão geral 55 (corrigida aqui).
+
+**V00.239:** `ClipVideo` ganhou `deferPlay` — o clipe do palco (até ~4 MB, ex.: `mario_intro.webm`) mostra só a capa (`poster`) e começa a baixar/tocar depois do evento `load` da página (+ ociosidade), para não disputar banda com as imagens; troca de clipe pelo usuário continua imediata. Na Vercel a ficha do Mario carrega o primeiro clipe do carrossel (4,4 MB) no LCP — por isso o adiamento. Lighthouse produção V00.238: visão geral 55→79 (TBT 41 s→120 ms), franquia 69→81.
