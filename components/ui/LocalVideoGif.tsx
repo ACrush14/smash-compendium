@@ -27,8 +27,13 @@ export default function LocalVideoGif({
     // Arquivo ausente (ex.: 404 no deploy sem CDN): o evento de erro pode ter disparado antes da hidratação,
     // então confere o estado atual e também escuta erros futuros.
     const fail = () => { setFailed(true); onError?.(video); };
-    if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) { fail(); return; }
+    // Só `video.error` vale como falha imediata. NETWORK_NO_SOURCE aparece por um instante ANTES de o navegador
+    // começar a baixar (mesmo com o arquivo existindo) e escondia clipes bons; por isso só confirma depois de 3 s.
+    if (video.error) { fail(); return; }
     video.addEventListener("error", fail);
+    const late = setTimeout(() => {
+      if (video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE && video.readyState === 0) fail();
+    }, 3000);
 
     // Ensure we start at the right time
     video.currentTime = startSec;
@@ -55,6 +60,7 @@ export default function LocalVideoGif({
 
     return () => {
       video.removeEventListener("error", fail);
+      clearTimeout(late);
       video.removeEventListener("timeupdate", loopIfAtEnd);
       video.removeEventListener("pause", loopIfAtEnd);
       video.removeEventListener("ended", loopIfAtEnd);

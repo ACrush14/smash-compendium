@@ -31,9 +31,15 @@ export default function ClipVideo({
       if (box) box.style.display = "none";
       onFailRef.current?.();
     };
-    if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) hide();
+    // `video.error` só existe quando o carregamento REALMENTE falhou (ex.: 404 que chegou antes da hidratação).
+    // NÃO usar networkState === NETWORK_NO_SOURCE aqui: o navegador passa por esse estado por um instante ANTES
+    // de começar a baixar, e isso escondia vídeos que existem. Só vale como confirmação tardia (abaixo).
+    if (video.error) hide();
     video.addEventListener("error", hide);
-    return () => video.removeEventListener("error", hide);
+    const late = setTimeout(() => {
+      if (video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE && video.readyState === 0) hide();
+    }, 3000);
+    return () => { video.removeEventListener("error", hide); clearTimeout(late); };
   }, [props.src]);
 
   // Início adiado: o clipe (até ~4 MB) não disputa banda com as imagens da página; a capa aparece na hora.
