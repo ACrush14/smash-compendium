@@ -2,9 +2,13 @@
  * Autenticação do admin (usada no middleware/Edge e na rota de login — por isso só Web Crypto, sem Node).
  *
  * - A senha vem de ADMIN_PASSWORD. Em PRODUÇÃO não existe senha padrão: sem a variável, o admin fica trancado.
- * - O cookie guarda um token derivado (SHA-256), nunca a senha em si.
+ * - O cookie guarda um token assinado (HMAC-SHA256) com data de validade, nunca a senha em si.
+ *   Trocar ADMIN_PASSWORD invalida todas as sessões abertas.
  */
 export const ADMIN_COOKIE = "smash_admin";
+
+/** Validade da sessão de admin. */
+export const SESSION_SECONDS = 60 * 60 * 24 * 7; // 7 dias
 
 /** Senha configurada, ou null quando o admin deve ficar trancado. */
 export function getAdminPassword(): string | null {
@@ -14,15 +18,29 @@ export function getAdminPassword(): string | null {
   return process.env.NODE_ENV === "production" ? null : "dev-only-admin-password";
 }
 
-async function sha256Hex(text: string): Promise<string> {
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
-  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+async function hmacHex(key: string, text: string): Promise<string> {
+  const enc = new TextEncoder();
+  const k = await crypto.subtle.importKey("raw", enc.encode(`smash-admin-v2:${key}`), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const sig = await crypto.subtle.sign("HMAC", k, enc.encode(text));
+  return [...new Uint8Array(sig)].map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
-/** Token que vai no cookie; null se o admin está trancado. */
-export async function adminToken(): Promise<string | null> {
+/** Cria o token da sessão (`<expira em segundos>.<assinatura>`); null se o admin está trancado. */
+export async function createAdminToken(): Promise<string | null> {
   const pw = getAdminPassword();
-  return pw ? sha256Hex(`smash-admin-v1:${pw}`) : null;
+  if (!pw) return null;
+  const exp = Math.floor(Date.now() / 1000) + SESSION_SECONDS;
+  return `${exp}.${await hmacHex(pw, String(exp))}`;
+}
+
+/** Confere assinatura e validade do token. */
+export async function verifyAdminToken(token: string): Promise<boolean> {
+  const pw = getAdminPassword();
+  if (!pw || !token) return false;
+  const [expStr, sig] = token.split(".");
+  const exp = Number(expStr);
+  if (!expStr || !sig || !Number.isFinite(exp) || exp < Math.floor(Date.now() / 1000)) return false;
+  return safeEqual(sig, await hmacHex(pw, expStr));
 }
 
 /** Comparação em tempo constante. */

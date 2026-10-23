@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -7,11 +8,32 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "ANTHROPIC_API_KEY not set" }, { status: 500 });
   }
 
-  const client = new Anthropic({ apiKey });
-  const { texts, direction = "EN_TO_PT" } = (await req.json()) as { texts: Record<string, string>; direction?: string };
+  // O middleware já exige a sessão de admin; aqui limitamos tamanho e frequência para proteger a cota.
+  const limit = rateLimit(`translate:${clientIp(req.headers)}`, 20, 60_000);
+  if (!limit.ok) {
+    return NextResponse.json({ error: "Muitas requisições" }, { status: 429, headers: { "Retry-After": String(limit.retryAfterSec) } });
+  }
 
+  const body = (await req.json().catch(() => null)) as { texts?: unknown; direction?: unknown } | null;
+  const direction = body?.direction === "JP_TO_EN" ? "JP_TO_EN" : "EN_TO_PT";
+  const raw0 = body?.texts;
+  if (!raw0 || typeof raw0 !== "object" || Array.isArray(raw0)) {
+    return NextResponse.json({ error: "texts inválido" }, { status: 400 });
+  }
+  const texts: Record<string, string> = {};
+  let total = 0;
+  for (const [k, v] of Object.entries(raw0 as Record<string, unknown>)) {
+    if (typeof v !== "string") return NextResponse.json({ error: "texts deve conter só strings" }, { status: 400 });
+    total += k.length + v.length;
+    texts[k] = v;
+  }
   const keys = Object.keys(texts);
   if (keys.length === 0) return NextResponse.json({ translated: {} });
+  if (keys.length > 50 || total > 20_000) {
+    return NextResponse.json({ error: "Texto grande demais (máx. 50 itens e 20.000 caracteres)" }, { status: 413 });
+  }
+
+  const client = new Anthropic({ apiKey });
 
   let prompt = "";
   if (direction === "JP_TO_EN") {
@@ -24,13 +46,19 @@ ${JSON.stringify(texts, null, 2)}`;
 ${JSON.stringify(texts, null, 2)}`;
   }
 
-  const message = await client.messages.create({
-    model: "claude-haiku-4-5-20251001",
-    max_tokens: 4096,
-    messages: [{ role: "user", content: prompt }],
-  });
+  let message;
+  try {
+    message = await client.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 4096,
+      messages: [{ role: "user", content: prompt }],
+    });
+  } catch {
+    return NextResponse.json({ error: "Falha ao traduzir" }, { status: 502 });
+  }
 
-  const raw = (message.content[0] as { type: "text"; text: string }).text.trim();
+  const first = message.content[0];
+  const raw = (first && first.type === "text" ? first.text : "").trim();
   const json = raw.startsWith("```")
     ? raw.replace(/^```[a-z]*\n?/, "").replace(/\n?```$/, "")
     : raw;

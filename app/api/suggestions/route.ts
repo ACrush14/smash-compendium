@@ -1,21 +1,44 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
 
 const MAX_NAME    = 80;
 const MAX_MESSAGE = 1000;
+const MAX_ID      = 100;
+const MAX_SECTION = 60;
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    // Freio contra spam: 5 sugestões por IP a cada 10 minutos.
+    const limit = rateLimit(`suggestions:${clientIp(req.headers)}`, 5, 10 * 60_000);
+    if (!limit.ok) {
+      return NextResponse.json(
+        { error: "Muitas sugestões em pouco tempo. Tente de novo mais tarde." },
+        { status: 429, headers: { "Retry-After": String(limit.retryAfterSec) } },
+      );
+    }
+
+    const body = await req.json().catch(() => null);
     const { fighterId, section, authorName, message } = body ?? {};
 
-    if (!fighterId || !section || !authorName?.trim() || !message?.trim()) {
+    // Só texto: objetos/arrays no corpo quebrariam o .trim() ou o Prisma.
+    if (![fighterId, section, authorName, message].every(v => typeof v === "string")) {
       return NextResponse.json({ error: "Campos obrigatórios ausentes." }, { status: 400 });
     }
-    if (authorName.trim().length > MAX_NAME) {
+    const name = authorName.trim();
+    const text = message.trim();
+    const sec  = section.trim();
+
+    if (!fighterId || !sec || !name || !text) {
+      return NextResponse.json({ error: "Campos obrigatórios ausentes." }, { status: 400 });
+    }
+    if (fighterId.length > MAX_ID || sec.length > MAX_SECTION) {
+      return NextResponse.json({ error: "Dados inválidos." }, { status: 400 });
+    }
+    if (name.length > MAX_NAME) {
       return NextResponse.json({ error: `Nome muito longo (máx. ${MAX_NAME} chars).` }, { status: 400 });
     }
-    if (message.trim().length > MAX_MESSAGE) {
+    if (text.length > MAX_MESSAGE) {
       return NextResponse.json({ error: `Mensagem muito longa (máx. ${MAX_MESSAGE} chars).` }, { status: 400 });
     }
 
@@ -28,9 +51,9 @@ export async function POST(req: NextRequest) {
     const suggestion = await db.fighterSuggestion.create({
       data: {
         fighterId,
-        section:    section.trim(),
-        authorName: authorName.trim(),
-        message:    message.trim(),
+        section:    sec,
+        authorName: name,
+        message:    text,
       },
       select: { id: true, authorName: true, message: true, createdAt: true },
     });
