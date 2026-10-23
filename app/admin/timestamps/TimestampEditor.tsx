@@ -39,8 +39,14 @@ export default function TimestampEditor({ tabs }: { tabs: Tab[] }) {
   const [edits, setEdits]         = useState<Record<string, { start: string; end: string }>>({});
   const [saving, setSaving]       = useState<Record<string, boolean>>({});
   const [saved,  setSaved]        = useState<Record<string, boolean>>({});
-  const [preview, setPreview]     = useState<{ src: string; start: number; end: number; name: string } | null>(null);
+  // `bounded`: a linha tem trecho (início/fim) e o preview toca só esse trecho. Sem trecho, o vídeo fica livre para o usuário procurar.
+  const [preview, setPreview]     = useState<{ src: string; start: number; end: number; name: string; bounded: boolean } | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  // true quando o usuário navegou por conta própria (barra de tempo ou "Ir para segundo"): não volta mais ao início do trecho.
+  const freeRef = useRef(false);
+  // quantos pulos de tempo foram feitos pelo código (para não confundi-los com pulos do usuário)
+  const progRef = useRef(0);
+  const seekTo = (v: HTMLVideoElement, t: number) => { progRef.current++; v.currentTime = t; };
 
   const tab = tabs[activeTab]!;
 
@@ -51,24 +57,41 @@ export default function TimestampEditor({ tabs }: { tabs: Tab[] }) {
     setSearch('');
   }, [activeTab]);
 
-  // Seek video when preview changes
+  // Ao escolher uma linha: carrega o vídeo só se ele mudou; se já é o mesmo arquivo, apenas pula para o trecho
+  // (antes recarregava o MP4 inteiro a cada clique e voltava ao começo).
   useEffect(() => {
     if (!preview || !videoRef.current) return;
     const v = videoRef.current;
+    freeRef.current = !preview.bounded;
+    const target = preview.bounded ? preview.start : null;
+    const sameFile = !!v.getAttribute('src') && v.getAttribute('src') === preview.src;
+    if (sameFile) {
+      if (target !== null) seekTo(v, target);
+      v.play().catch(() => {});
+      return;
+    }
     v.src = preview.src;
     v.load();
-    const onLoaded = () => { v.currentTime = preview.start; v.play().catch(() => {}); };
+    const onLoaded = () => { if (target !== null) seekTo(v, target); v.play().catch(() => {}); };
     v.addEventListener('loadedmetadata', onLoaded, { once: true });
     return () => v.removeEventListener('loadedmetadata', onLoaded);
   }, [preview]);
 
-  // Stop at end
+  // Para no fim do trecho (só quando há trecho e o usuário não está navegando livremente)
   useEffect(() => {
     const v = videoRef.current;
     if (!v || !preview) return;
-    const check = () => { if (v.currentTime >= preview.end) { v.pause(); v.currentTime = preview.start; } };
+    const check = () => {
+      if (preview.bounded && !freeRef.current && v.currentTime >= preview.end) { v.pause(); seekTo(v, preview.start); }
+    };
+    // Pulo feito pelo usuário (barra de tempo) fora do trecho = navegação livre, sem forçar volta ao início
+    const onSeeking = () => {
+      if (progRef.current > 0) { progRef.current--; return; }
+      if (v.currentTime < preview.start - 0.5 || v.currentTime > preview.end + 0.5) freeRef.current = true;
+    };
     v.addEventListener('timeupdate', check);
-    return () => v.removeEventListener('timeupdate', check);
+    v.addEventListener('seeking', onSeeking);
+    return () => { v.removeEventListener('timeupdate', check); v.removeEventListener('seeking', onSeeking); };
   }, [preview]);
 
   const getEdit = (id: string, field: 'start' | 'end', fallback: number | null) => {
@@ -115,9 +138,13 @@ export default function TimestampEditor({ tabs }: { tabs: Tab[] }) {
   const handlePreview = (entry: Entry) => {
     const startRaw = edits[entry.id]?.start;
     const endRaw   = edits[entry.id]?.end;
-    const start = startRaw !== undefined ? parseInt(startRaw) : (entry.videoStartSec ?? 0);
-    const end   = endRaw   !== undefined ? parseInt(endRaw)   : (entry.videoEndSec   ?? start + 15);
-    setPreview({ src: tab.videoSrc, start, end, name: entry.name });
+    const startNum = startRaw !== undefined ? parseInt(startRaw, 10) : entry.videoStartSec;
+    const hasStart = startNum != null && !Number.isNaN(startNum);
+    const start = hasStart ? (startNum as number) : 0;
+    const endNum = endRaw !== undefined ? parseInt(endRaw, 10) : entry.videoEndSec;
+    const end = endNum != null && !Number.isNaN(endNum) ? endNum : start + 15;
+    // Sem início definido: o vídeo abre livre (sem trecho), para você procurar onde essa linha aparece.
+    setPreview({ src: tab.videoSrc, start, end, name: entry.name, bounded: hasStart });
   };
 
   const filtered = tab.entries.filter(e => {
@@ -299,18 +326,24 @@ export default function TimestampEditor({ tabs }: { tabs: Tab[] }) {
                 />
               </div>
               <div className="text-xs font-mono text-white/50 space-y-1">
-                <div className="flex justify-between">
-                  <span>Início:</span>
-                  <span className="text-cyan-400">{preview.start}s ({fmt(preview.start)})</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Fim:</span>
-                  <span className="text-cyan-400">{preview.end}s ({fmt(preview.end)})</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Duração:</span>
-                  <span className="text-cyan-400">{preview.end - preview.start}s</span>
-                </div>
+                {preview.bounded ? (
+                  <>
+                    <div className="flex justify-between">
+                      <span>Início:</span>
+                      <span className="text-cyan-400">{preview.start}s ({fmt(preview.start)})</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Fim:</span>
+                      <span className="text-cyan-400">{preview.end}s ({fmt(preview.end)})</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Duração:</span>
+                      <span className="text-cyan-400">{preview.end - preview.start}s</span>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-white/40">Esta linha ainda não tem trecho. O vídeo está livre: use a barra de tempo ou "Ir para segundo" para procurar.</p>
+                )}
               </div>
 
               <div className="border-t border-white/10 pt-3">
@@ -322,7 +355,10 @@ export default function TimestampEditor({ tabs }: { tabs: Tab[] }) {
                     className="flex-1 bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs font-mono focus:outline-none focus:border-cyan-500/50"
                     onKeyDown={e => {
                       if (e.key === 'Enter' && videoRef.current) {
-                        videoRef.current.currentTime = parseInt((e.target as HTMLInputElement).value, 10);
+                        const t = parseInt((e.target as HTMLInputElement).value, 10);
+                        if (Number.isNaN(t)) return;
+                        freeRef.current = true;
+                        seekTo(videoRef.current, t);
                         videoRef.current.play().catch(() => {});
                       }
                     }}
@@ -330,8 +366,10 @@ export default function TimestampEditor({ tabs }: { tabs: Tab[] }) {
                   <button
                     onClick={() => {
                       const input = document.querySelector<HTMLInputElement>('input[placeholder="Segundo..."]');
-                      if (input && videoRef.current) {
-                        videoRef.current.currentTime = parseInt(input.value, 10);
+                      const t = input ? parseInt(input.value, 10) : NaN;
+                      if (input && videoRef.current && !Number.isNaN(t)) {
+                        freeRef.current = true;
+                        seekTo(videoRef.current, t);
                         videoRef.current.play().catch(() => {});
                       }
                     }}
