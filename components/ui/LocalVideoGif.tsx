@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Skeleton } from "./SkeletonImage";
+import { cdnUrl } from "@/lib/media-config";
 
 export default function LocalVideoGif({
   src,
@@ -77,7 +78,7 @@ export default function LocalVideoGif({
       preload="metadata"
       onLoadedData={() => setReady(true)}
       // Provide the media fragment so the browser requests only this chunk initially
-      src={`${src}#t=${startSec},${endSec}`}
+      src={`${cdnUrl(src)}#t=${startSec},${endSec}`}
       muted
       playsInline
       loop={false}

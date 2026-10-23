@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type VideoHTMLAttributes } from "react";
+import { cdnUrl } from "@/lib/media-config";
 
 /**
  * <video> que some junto com a caixa `[data-video-box]` quando o arquivo falha (ex.: 404 no deploy sem CDN).
@@ -63,7 +64,8 @@ export default function ClipVideo({
   }, [deferPlay, props.src]);
 
   // eslint-disable-next-line jsx-a11y/media-has-caption
-  return <video ref={ref} {...props} autoPlay={deferPlay ? false : autoPlay} preload={deferPlay ? "none" : preload} />;
+  // `cdnUrl` só muda o endereço quando NEXT_PUBLIC_CDN_BASE_URL está definida (clipes no Cloudflare R2).
+  return <video ref={ref} {...props} src={props.src ? cdnUrl(props.src) : props.src} autoPlay={deferPlay ? false : autoPlay} preload={deferPlay ? "none" : preload} />;
 }
 
 /**
