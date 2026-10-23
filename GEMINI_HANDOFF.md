@@ -12,7 +12,7 @@ Preserva troféus, spirits, stickers, biografias bilíngues, colecionáveis e jo
 
 - **Path:** `D:\Super Smash Bros Museum`
 - **Branch:** `master`
-- **Versão:** V00.087 Alpha (em `lib/version.ts` — incrementar a cada commit)
+- **Versão:** V00.087 Alpha no momento deste resumo (histórico). A versão atual está em `lib/version.ts` e o estado mais recente do projeto, em `CONTEXT.md`. Incremente a cada commit.
 
 ---
 
@@ -37,6 +37,7 @@ Preserva troféus, spirits, stickers, biografias bilíngues, colecionáveis e jo
 6. **Versão:** incrementar `APP_VERSION` em `lib/version.ts` em cada commit
 7. **PowerShell + colchetes:** usar `-LiteralPath` para caminhos com `[slug]`
 8. **Cache `.next`:** se o SWC der erros impossíveis, parar o servidor e deletar `.next` antes de reiniciar
+9. **Segredos:** nunca escreva senhas, chaves ou `DATABASE_URL` reais em arquivos versionados, no chat ou em logs. `.env` e `.env.local` ficam fora do git. O admin exige `ADMIN_PASSWORD` e `/api/translate` só responde com o admin logado (ver `CONTEXT.md`, seção 41)
 
 ### Dev server
 ```powershell

@@ -12,7 +12,7 @@
 [![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://supabase.com)
 [![Google Gemini](https://img.shields.io/badge/AI-Google%20Gemini%202.5-8E75B2?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev)
-[![Version](https://img.shields.io/badge/Version-V00.201%20Alpha-success?style=for-the-badge)](https://github.com/ACrush14/smash-compendium)
+[![Version](https://img.shields.io/badge/Version-V00.242%20Beta-success?style=for-the-badge)](https://github.com/ACrush14/smash-compendium)
 [![Vercel Deploy](https://img.shields.io/badge/Deploy-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
 
 </div>
@@ -121,7 +121,7 @@ A arquitetura do projeto foi construída priorizando performance, SSR (Server-Si
 | `/collectibles?type=TROPHY&game=SSBB` | **Troféus Brawl** — Catálogo de troféus e stickers da era Wii. |
 | `/franchise/[name]` | **Universo da Franquia** — Agrupamento de personagens, jogos e itens por série (ex: *Mario*, *Zelda*, *Pokémon*). |
 | `/chronicles` | **Nintendo Chronicles** — Catálogo explorável de jogos que construíram o ecossistema Nintendo. |
-| `/admin/*` | **Painel de Curadoria** — Área restrita à administração de faixas de música e dados (requer cookie `smash_admin`). |
+| `/admin/*` | **Painel de Curadoria** — Área restrita à administração de faixas de música e dados (requer cookie `smash_admin`, uma sessão assinada de 7 dias; 5 senhas erradas bloqueiam o IP por 15 min). |
 
 ---
 
@@ -169,9 +169,15 @@ DIRECT_URL="postgresql://usuario:senha@host:5432/database?schema=public"
 # Chave da API de Inteligência Artificial para tradução automática
 GEMINI_API_KEY="sua_chave_do_google_gemini_aqui"
 
-# Cookie secreto de autenticação para as páginas de Admin
-ADMIN_PASSWORD="troque-por-uma-senha-longa"   # senha do /admin (obrigatória em produção)
+# Senha do /admin (obrigatória em produção; mínimo 8 caracteres, use uma aleatória e longa).
+# Trocá-la encerra todas as sessões de admin abertas.
+ADMIN_PASSWORD="troque-por-uma-senha-longa"
+
+# Opcional: tradução automática por /api/translate (só responde com o admin logado)
+ANTHROPIC_API_KEY=""
 ```
+
+> **Segredos:** `.env` e `.env.local` ficam fora do git. Se uma senha vazar (por exemplo, aparecer no histórico), troque-a no provedor e atualize os arquivos `.env*` **e** as variáveis de ambiente da Vercel, depois faça um Redeploy. Veja `CONTEXT.md`, seção 41.
 
 ### 4. Preparando o Banco de Dados e Rodando o Projeto
 
@@ -288,7 +294,7 @@ Abaixo está o registro cronológico de todas as grandes evoluções e funcional
     <a href="https://github.com/ACrush14">GitHub</a> • 
     <a href="https://www.andersoncrush.dev">Portfólio</a>
   </p>
-  <p><i>SmashCompendium • Versão V00.201 Alpha • 2026</i></p>
+  <p><i>SmashCompendium • Versão V00.242 Beta • 2026</i></p>
 </div>
 
 ---

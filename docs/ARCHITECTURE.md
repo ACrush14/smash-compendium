@@ -139,7 +139,8 @@ Solução: **split por lutador** com ffmpeg + upload dos clips individuais.
 | Variável | Uso |
 |---|---|
 | `DATABASE_URL` | Conexão Prisma → Supabase PostgreSQL |
-| `ANTHROPIC_API_KEY` | Scripts de curadoria com Claude |
+| `ADMIN_PASSWORD` | Senha do `/admin` (≥ 8 caracteres). Sem ela, o admin fica trancado em produção. Definir em `.env` e na Vercel |
+| `ANTHROPIC_API_KEY` | Scripts de curadoria com Claude e `/api/translate` (só admin logado) |
 | `GEMINI_API_KEY` | Tradução de bios/moves |
 | `YOUTUBE_API_KEY` | Busca de músicas |
 | `NEXT_PUBLIC_CDN_BASE_URL` | Base URL do CDN (Cloudflare R2) para vídeos/assets |
@@ -150,9 +151,18 @@ Solução: **split por lutador** com ffmpeg + upload dos clips individuais.
 
 ---
 
+## Segurança
+
+- `middleware.ts` exige o cookie `smash_admin` em `/admin/*`, `/api/admin/*` (exceto `/api/admin/auth`) e `/api/translate`.
+- Cookie = token assinado (HMAC-SHA256, validade 7 dias) criado em `lib/admin-auth.ts`; trocar `ADMIN_PASSWORD` invalida todas as sessões.
+- `lib/rate-limit.ts` (em memória, por instância): login 5 erros/15 min por IP, `/api/suggestions` 5/10 min, `/api/translate` 20/min.
+- Detalhes, rotação de senhas e armadilhas de deploy: `CONTEXT.md`, seção 41.
+
+---
+
 ## Deploy
 
-- **Vercel** — push na branch `master` dispara deploy automático
+- **Vercel** — push na branch `master` dispara deploy automático. Variáveis de ambiente novas só valem em um deploy novo (Redeploy)
 - `unoptimized: true` em `next.config.mjs` — evita consumir cota de Image Optimization (5.000/mês)
 - Só um branch (`master`) — sem feature branches por enquanto
 - Repositório: `ACrush14/smash-compendium`
