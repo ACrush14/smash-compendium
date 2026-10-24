@@ -1,0 +1,1080 @@
+# Duplicados em todo o catálogo (2026-10-24)
+
+## Resumo
+
+- **MEDIA / SSBB**: 1 itens | mesmo nome: 0 | só muda o "(n)": 0 | mesma posição: 0 | vazios com par preenchido: 0
+- **MEDIA / SSBM**: 134 itens | mesmo nome: 3 | só muda o "(n)": 26 | mesma posição: 0 | vazios com par preenchido: 0
+- **MEDIA / SSBU**: 7 itens | mesmo nome: 0 | só muda o "(n)": 0 | mesma posição: 0 | vazios com par preenchido: 0
+- **SPIRIT / SSBU**: 1582 itens | mesmo nome: 54 | só muda o "(n)": 0 | mesma posição: 0 | vazios com par preenchido: 0
+- **SPRITE / ORIGIN**: 37 itens | mesmo nome: 0 | só muda o "(n)": 0 | mesma posição: 0 | vazios com par preenchido: 0
+- **STICKER / SSBB**: 759 itens | mesmo nome: 111 | só muda o "(n)": 0 | mesma posição: 75 | vazios com par preenchido: 0
+- **TROPHY / SSB4**: 434 itens | mesmo nome: 0 | só muda o "(n)": 3 | mesma posição: 10 | vazios com par preenchido: 0
+- **TROPHY / SSB4_3DS**: 293 itens | mesmo nome: 0 | só muda o "(n)": 0 | mesma posição: 0 | vazios com par preenchido: 0
+- **TROPHY / SSB4_WIIU**: 317 itens | mesmo nome: 0 | só muda o "(n)": 0 | mesma posição: 0 | vazios com par preenchido: 0
+- **TROPHY / SSBB**: 549 itens | mesmo nome: 0 | só muda o "(n)": 0 | mesma posição: 5 | vazios com par preenchido: 0
+- **TROPHY / SSBM**: 296 itens | mesmo nome: 0 | só muda o "(n)": 28 | mesma posição: 6 | vazios com par preenchido: 0
+- **FIGHTER**: 90 lutadores | nomes repetidos: 0
+
+## MEDIA / SSBM (134 itens)
+
+### Mesmo nome
+
+- CLIP - Gameplay 1
+  - `cmqjkjr1w0001h1vh8e90kw19` "CLIP - Gameplay 1" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkk4840005h1vhs6l0vt6r` "CLIP - Gameplay 1" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- CLIP - Intro
+  - `cmqjkmftt000ph1vhpbqsxcvc` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjko34r0013h1vh4vfa1yq5` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkohgn0017h1vhrupvru5c` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkka330007h1vhat9i97oe` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkq4m6001lh1vhnhuvs0l7` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkobbc0015h1vhavmwthvw` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkopbv0019h1vhpe2q8bn2` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkoxk0001bh1vhuwcnfoal` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkp616001dh1vhenia7dij` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkpegi001fh1vhim36qyax` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkpn3h001hh1vhsynimksp` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkpupd001jh1vh6a4rdd1v` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkkz44000dh1vhfgq4ursw` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkl7gf000fh1vh33jki96i` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjklhgg000hh1vhyg9rg0fd` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjklphu000jh1vhbwbuc242` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjklxxg000lh1vhb439zmgz` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkm759000nh1vhj1dpanxo` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkkhi20009h1vhwiu61247` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkkq2r000bh1vh67c10gvc` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkmntb000rh1vhqnkyrpgy` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkmwl3000th1vhbwxpeq0d` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkn53m000vh1vh6qka6ep2` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjkncoy000xh1vhjrg3odpw` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjknkuf000zh1vhsm5jp8cn` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqjknufg0011h1vh17e3sz53` "CLIP - Intro" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- CLIP - Trophy Compendium
+  - `cmqzta4lz00016pdlkxnu6h9h` "CLIP - Trophy Compendium" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqzta4u100036pdlmolq7s0v` "CLIP - Trophy Compendium" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+
+### Mesmo nome sem o "(n)"
+
+- 360trophykirbysmash
+  - `cmql3h2w4000df6xt8xkf9gv1` "360 TROPHY - Kirby SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponh0k000n121ur5ij4je4` "360 TROPHY - Kirby SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophyfoxmccloudsmash
+  - `cmql3hd4l000hf6xtd3cqph7v` "360 TROPHY - Fox McCloud SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponjzs001h121uw6p8os4e` "360 TROPHY - Fox McCloud SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophyiceclimberssmash
+  - `cmql3j6oz0013f6xtx888dzyq` "360 TROPHY - Ice Climbers SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqpongf6000h121uhzf5ax69` "360 TROPHY - Ice Climbers SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophymewtwosmash
+  - `cmql3knsb001nf6xtr55qoele` "360 TROPHY - Mewtwo SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponkld001n121ujccw7vy4` "360 TROPHY - Mewtwo SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophymrgamewatchsmash
+  - `cmql3l7hk001tf6xtfl54tcz3` "360 TROPHY - Mr. Game & Watch SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponksm001p121un2uuicxv` "360 TROPHY - Mr. Game & Watch SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophyganondorfsmash
+  - `cmql3luma0021f6xt2ipl8xfj` "360 TROPHY - Ganondorf SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponj7a0019121uz720gg2j` "360 TROPHY - Ganondorf SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophypichusmash
+  - `cmql3mrez002df6xtx3c2mt2o` "360 TROPHY - Pichu SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponisv0015121ulmeof87f` "360 TROPHY - Pichu SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophypikachusmash
+  - `cmql3hn9u000lf6xtoou6yv3l` "360 TROPHY - Pikachu SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponh7s000p121uh9uqwa8m` "360 TROPHY - Pikachu SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophynesssmash
+  - `cmql3hxza000pf6xtryxk8b8g` "360 TROPHY - Ness SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqpong80000f121u7xb1k225` "360 TROPHY - Ness SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophyfalcolombardismash
+  - `cmql3m6h50025f6xtyylgxw42` "360 TROPHY - Falco Lombardi SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponilp0013121ua7zcbqei` "360 TROPHY - Falco Lombardi SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophyyounglinksmash
+  - `cmql3mgul0029f6xtilru3xym` "360 TROPHY - Young Link SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponiel0011121ug1afe3su` "360 TROPHY - Young Link SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophybowsersmash
+  - `cmql3il4g000vf6xty0yy4m76` "360 TROPHY - Bowser SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponet30001121ufg15ig5x` "360 TROPHY - Bowser SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophypeachsmash
+  - `cmql3ivio000zf6xtxyzwo68d` "360 TROPHY - Peach SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponj060017121umt1vz04d` "360 TROPHY - Peach SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophyzeldasmash
+  - `cmql3jhu80017f6xterut2cc1` "360 TROPHY - Zelda SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponf0y0003121ui9qw460c` "360 TROPHY - Zelda SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophysheiksmash
+  - `cmql3jsjm001bf6xtrfiguehi` "360 TROPHY - Sheik SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponhm2000t121u5bej5rka` "360 TROPHY - Sheik SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophyluigismash
+  - `cmql3k2rs001ff6xtfg5dz4en` "360 TROPHY - Luigi SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqpongma000j121u8v7bd3qx` "360 TROPHY - Luigi SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophyjigglypuffsmash
+  - `cmql3kcwn001jf6xtjctccbpn` "360 TROPHY - Jigglypuff SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponhex000r121uikrmig6h` "360 TROPHY - Jigglypuff SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophydrmariosmash
+  - `cmql3lilr001xf6xtqfdqd60x` "360 TROPHY - Dr. Mario SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponi0f000x121upl7h2wv6` "360 TROPHY - Dr. Mario SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophylinksmash
+  - `cmqponjee001b121uky75acpj` "360 TROPHY - Link SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponjsp001f121uo3a0u20c` "360 TROPHY - Link SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophyroysmash
+  - `cmql3n231002hf6xtius9ssw6` "360 TROPHY - Roy SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponkzt001r121usk9zjfc4` "360 TROPHY - Roy SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophysamusaransmash
+  - `cmqponf860005121uq5rbmotd` "360 TROPHY - Samus Aran SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponk6y001j121u0awg2rmu` "360 TROPHY - Samus Aran SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophymariosmash
+  - `cmqponffc0007121ugsazi481` "360 TROPHY - Mario SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponjlj001d121uod5vw8bq` "360 TROPHY - Mario SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophycaptfalconsmash
+  - `cmqponfmf0009121uy8f9yfcd` "360 TROPHY - Capt. Falcon SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponl72001t121ut6doextq` "360 TROPHY - Capt. Falcon SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophydonkeykongsmash
+  - `cmqponftn000b121um90jkyew` "360 TROPHY - Donkey Kong SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqpongtc000l121uinito92x` "360 TROPHY - Donkey Kong SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophyyoshismash
+  - `cmqpong0u000d121u4gxgz8mi` "360 TROPHY - Yoshi SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponi7i000z121uor2drd1g` "360 TROPHY - Yoshi SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+- 360trophymarthsmash
+  - `cmqponht9000v121u16vpoaf0` "360 TROPHY - Marth SMASH (2)" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `cmqponke5001l121utkhz0hnm` "360 TROPHY - Marth SMASH" pos=- desc=NÃO img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+
+## SPIRIT / SSBU (1582 itens)
+
+### Mesmo nome
+
+- Yoshi
+  - `SPIRIT-SSBU-Yoshi` "Yoshi" pos=297 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=28 chr=0
+  - `SPIRIT-SSBU-Yoshi-297` "Yoshi" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=28 chr=0
+- Mario
+  - `SPIRIT-SSBU-Mario` "Mario" pos=1 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=84 chr=0
+  - `SPIRIT-SSBU-Mario-1` "Mario" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=77 chr=0
+- Daisy
+  - `SPIRIT-SSBU-Daisy` "Daisy" pos=6 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=21 chr=0
+  - `SPIRIT-SSBU-Daisy-6` "Daisy" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=21 chr=0
+- Lucina
+  - `SPIRIT-SSBU-Lucina` "Lucina" pos=611 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+  - `SPIRIT-SSBU-Lucina-611` "Lucina" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+- Chrom
+  - `SPIRIT-SSBU-Chrom` "Chrom" pos=613 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=6 chr=0
+  - `SPIRIT-SSBU-Chrom-613` "Chrom" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=6 chr=0
+- Pit
+  - `SPIRIT-SSBU-Pit` "Pit" pos=703 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+  - `SPIRIT-SSBU-Pit-703` "Pit" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+- Palutena
+  - `SPIRIT-SSBU-Palutena` "Palutena" pos=705 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+  - `SPIRIT-SSBU-Palutena-705` "Palutena" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+- Greninja
+  - `SPIRIT-SSBU-Greninja` "Greninja" pos=418 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+  - `SPIRIT-SSBU-Greninja-418` "Greninja" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+- Dark Pit
+  - `SPIRIT-SSBU-Dark Pit` "Dark Pit" pos=704 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=19 chr=0
+  - `SPIRIT-SSBU-Dark Pit-704` "Dark Pit" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+- Dark Samus
+  - `SPIRIT-SSBU-Dark Samus` "Dark Samus" pos=265 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=17 chr=0
+  - `SPIRIT-SSBU-Dark Samus-265` "Dark Samus" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+- Incineroar
+  - `SPIRIT-SSBU-Incineroar` "Incineroar" pos=419 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=2 chr=0
+  - `SPIRIT-SSBU-Incineroar-419` "Incineroar" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=2 chr=0
+- Peach
+  - `SPIRIT-SSBU-Peach` "Peach" pos=5 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=36 chr=0
+  - `SPIRIT-SSBU-Peach-5` "Peach" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=36 chr=0
+- Ness
+  - `SPIRIT-SSBU-Ness-563` "Ness" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+  - `SPIRIT-SSBU-Ness` "Ness" pos=563 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+- Mii Gunner
+  - `SPIRIT-SSBU-Mii Gunner-1092` "Mii Gunner" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+  - `SPIRIT-SSBU-Mii Gunner` "Mii Gunner" pos=1092 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=15 chr=0
+- Luigi
+  - `SPIRIT-SSBU-Luigi` "Luigi" pos=4 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=30 chr=0
+  - `SPIRIT-SSBU-Luigi-4` "Luigi" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=31 chr=0
+- Mega Man
+  - `SPIRIT-SSBU-Mega Man` "Mega Man" pos=864 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+  - `SPIRIT-SSBU-Mega Man-864` "Mega Man" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=21 chr=0
+- Meta Knight
+  - `SPIRIT-SSBU-Meta Knight` "Meta Knight" pos=324 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=18 chr=0
+  - `SPIRIT-SSBU-Meta Knight-324` "Meta Knight" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=18 chr=0
+- Duck Hunt
+  - `SPIRIT-SSBU-Duck Hunt` "Duck Hunt" pos=974 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+  - `SPIRIT-SSBU-Duck Hunt-974` "Duck Hunt" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+- Wario
+  - `SPIRIT-SSBU-Wario-729` "Wario" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=29 chr=0
+  - `SPIRIT-SSBU-Wario` "Wario" pos=729 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=29 chr=0
+- Diddy Kong
+  - `SPIRIT-SSBU-Diddy Kong` "Diddy Kong" pos=135 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=32 chr=0
+  - `SPIRIT-SSBU-Diddy Kong-135` "Diddy Kong" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=17 chr=0
+- Little Mac
+  - `SPIRIT-SSBU-Little Mac` "Little Mac" pos=932 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=17 chr=0
+  - `SPIRIT-SSBU-Little Mac-932` "Little Mac" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=17 chr=0
+- Ganondorf
+  - `SPIRIT-SSBU-Ganondorf-175` "Ganondorf" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+  - `SPIRIT-SSBU-Ganondorf` "Ganondorf" pos=175 desc=sim img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+- PAC-MAN
+  - `SPIRIT-SSBU-PAC-MAN` "PAC-MAN" pos=946 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+  - `SPIRIT-SSBU-Pac-Man-946` "Pac-Man" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+- Zelda
+  - `SPIRIT-SSBU-Zelda` "Zelda" pos=173 desc=sim img=sim vídeo=NÃO lutador=sim rel=33 chr=0
+  - `SPIRIT-SSBU-Zelda-173` "Zelda" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=32 chr=0
+- Sheik
+  - `SPIRIT-SSBU-Sheik` "Sheik" pos=174 desc=sim img=sim vídeo=NÃO lutador=sim rel=18 chr=0
+  - `SPIRIT-SSBU-Sheik-174` "Sheik" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=18 chr=0
+- Young Link
+  - `SPIRIT-SSBU-Young Link` "Young Link" pos=176 desc=sim img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+  - `SPIRIT-SSBU-Young Link-176` "Young Link" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=12 chr=0
+- Link
+  - `SPIRIT-SSBU-Link` "Link" pos=172 desc=sim img=sim vídeo=NÃO lutador=sim rel=54 chr=0
+  - `SPIRIT-SSBU-Link-172` "Link" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=54 chr=0
+- King Dedede
+  - `SPIRIT-SSBU-King Dedede-325` "King Dedede" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=18 chr=0
+  - `SPIRIT-SSBU-King Dedede` "King Dedede" pos=325 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=21 chr=0
+- Zero Suit Samus
+  - `SPIRIT-SSBU-Zero Suit Samus` "Zero Suit Samus" pos=266 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=27 chr=0
+  - `SPIRIT-SSBU-Zero Suit Samus-266` "Zero Suit Samus" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=21 chr=0
+- Cloud
+  - `SPIRIT-SSBU-Cloud` "Cloud" pos=1004 desc=sim img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+  - `SPIRIT-SSBU-Cloud-1004` "Cloud" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+- Kirby
+  - `SPIRIT-SSBU-Kirby` "Kirby" pos=323 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=28 chr=0
+  - `SPIRIT-SSBU-Kirby-323` "Kirby" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=28 chr=0
+- Marth
+  - `SPIRIT-SSBU-Marth-610` "Marth" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+  - `SPIRIT-SSBU-Marth` "Marth" pos=610 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+- Samus
+  - `SPIRIT-SSBU-Samus` "Samus" pos=264 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=44 chr=0
+  - `SPIRIT-SSBU-Samus-264` "Samus" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=43 chr=0
+- Ice Climbers
+  - `SPIRIT-SSBU-Ice Climbers` "Ice Climbers" pos=606 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `SPIRIT-SSBU-Ice Climbers-606` "Ice Climbers" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- Shulk
+  - `SPIRIT-SSBU-Shulk` "Shulk" pos=951 desc=sim img=sim vídeo=NÃO lutador=sim rel=6 chr=0
+  - `SPIRIT-SSBU-Shulk-951` "Shulk" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=6 chr=0
+- Mythra
+  - `SPIRIT-SSBU-Mythra` "Mythra" pos=968 desc=sim img=sim vídeo=NÃO lutador=sim rel=4 chr=0
+  - `SPIRIT-SSBU-Mythra-968` "Mythra" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=4 chr=0
+- Ryu
+  - `SPIRIT-SSBU-Ryu` "Ryu" pos=977 desc=sim img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+  - `SPIRIT-SSBU-Ryu-977` "Ryu" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+- Mewtwo
+  - `SPIRIT-SSBU-Mewtwo` "Mewtwo" pos=411 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+  - `SPIRIT-SSBU-Mewtwo-411` "Mewtwo" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+- Lucario
+  - `SPIRIT-SSBU-Lucario` "Lucario" pos=417 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+  - `SPIRIT-SSBU-Lucario-417` "Lucario" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+- Lucas
+  - `SPIRIT-SSBU-Lucas` "Lucas" pos=564 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `SPIRIT-SSBU-Lucas-564` "Lucas" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- Olimar
+  - `SPIRIT-SSBU-Olimar` "Olimar" pos=798 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+  - `SPIRIT-SSBU-Olimar-798` "Olimar" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+- Isabelle
+  - `SPIRIT-SSBU-Isabelle` "Isabelle" pos=827 desc=sim img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+  - `SPIRIT-SSBU-Isabelle-827` "Isabelle" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+- Pikachu
+  - `SPIRIT-SSBU-Pikachu-407` "Pikachu" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+  - `SPIRIT-SSBU-Pikachu` "Pikachu" pos=407 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+- Jigglypuff
+  - `SPIRIT-SSBU-Jigglypuff-409` "Jigglypuff" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+  - `SPIRIT-SSBU-Jigglypuff` "Jigglypuff" pos=409 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+- Pichu
+  - `SPIRIT-SSBU-Pichu` "Pichu" pos=410 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `SPIRIT-SSBU-Pichu-410` "Pichu" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- Pyra
+  - `SPIRIT-SSBU-Pyra-967` "Pyra" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=4 chr=0
+  - `SPIRIT-SSBU-Pyra` "Pyra" pos=967 desc=sim img=sim vídeo=NÃO lutador=sim rel=4 chr=0
+- Bowser
+  - `SPIRIT-SSBU-Bowser` "Bowser" pos=7 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=33 chr=0
+  - `SPIRIT-SSBU-Bowser-7` "Bowser" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=30 chr=0
+- Ridley
+  - `SPIRIT-SSBU-Ridley` "Ridley" pos=267 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=18 chr=0
+  - `SPIRIT-SSBU-Ridley-267` "Ridley" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=18 chr=0
+- Mii Swordfighter
+  - `SPIRIT-SSBU-Mii Swordfighter-1091` "Mii Swordfighter" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+  - `SPIRIT-SSBU-Mii Swordfighter` "Mii Swordfighter" pos=1091 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=16 chr=0
+- Donkey Kong
+  - `SPIRIT-SSBU-Donkey Kong-134` "Donkey Kong" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=31 chr=0
+  - `SPIRIT-SSBU-Donkey Kong` "Donkey Kong" pos=134 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=25 chr=0
+- Toon Link
+  - `SPIRIT-SSBU-Toon Link-177` "Toon Link" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+  - `SPIRIT-SSBU-Toon Link` "Toon Link" pos=177 desc=sim img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+- Mii Brawler
+  - `SPIRIT-SSBU-Mii Brawler-1090` "Mii Brawler" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+  - `SPIRIT-SSBU-Mii Brawler` "Mii Brawler" pos=1090 desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+- Ken
+  - `SPIRIT-SSBU-Ken-978` "Ken" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=4 chr=0
+  - `SPIRIT-SSBU-Ken` "Ken" pos=978 desc=sim img=sim vídeo=NÃO lutador=sim rel=4 chr=0
+- Captain Falcon
+  - `SPIRIT-SSBU-Captain Falcon` "Captain Falcon" pos=591 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=18 chr=0
+  - `SPIRIT-SSBU-Captain Falcon-591` "Captain Falcon" pos=- desc=sim img=sim vídeo=NÃO lutador=sim rel=26 chr=0
+
+## STICKER / SSBB (759 itens)
+
+### Mesmo nome
+
+- Ness
+  - `STICKER-SSBB-Ness-Ness` "Ness" pos=403 desc=sim img=sim vídeo=sim lutador=sim rel=16 chr=0
+  - `STICKER-SSBB-Ness` "Ness" pos=403 desc=NÃO img=sim vídeo=sim lutador=sim rel=16 chr=0
+- Mario & Yoshi
+  - `STICKER-SSBB-Mario-Mario & Yoshi` "Mario & Yoshi" pos=24 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=47 chr=0
+  - `STICKER-SSBB-Mario & Yoshi` "Mario & Yoshi" pos=24 desc=sim img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- Ike
+  - `STICKER-SSBB-Ike-Ike` "Ike" pos=484 desc=NÃO img=sim vídeo=sim lutador=sim rel=12 chr=0
+  - `STICKER-SSBB-Ike` "Ike" pos=484 desc=NÃO img=sim vídeo=sim lutador=sim rel=12 chr=0
+- Marth
+  - `STICKER-SSBB-Marth` "Marth" pos=462 desc=sim img=sim vídeo=sim lutador=sim rel=16 chr=0
+  - `STICKER-SSBB-Marth-Marth` "Marth" pos=462 desc=NÃO img=sim vídeo=sim lutador=sim rel=16 chr=0
+- Dr. Lobe
+  - `STICKER-SSBB-Dr. Lobe` "Dr. Lobe" pos=547 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=4 chr=0
+  - `STICKER-SSBB-idx546` "Dr. Lobe" pos=546 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=4 chr=0
+- Link
+  - `STICKER-SSBB-Toon Link-Link` "Link" pos=142 desc=NÃO img=sim vídeo=sim lutador=sim rel=47 chr=0
+  - `STICKER-SSBB-idx184` "Link" pos=184 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=20 chr=0
+  - `STICKER-SSBB-Link-Link` "Link" pos=207 desc=NÃO img=sim vídeo=sim lutador=sim rel=57 chr=0
+  - `STICKER-SSBB-Link` "Link" pos=207 desc=sim img=sim vídeo=sim lutador=NÃO rel=43 chr=0
+- Daisy
+  - `STICKER-SSBB-Daisy` "Daisy" pos=34 desc=sim img=sim vídeo=NÃO lutador=sim rel=18 chr=0
+  - `STICKER-SSBB-Daisy-Daisy` "Daisy" pos=34 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=18 chr=0
+- Dark Samus
+  - `STICKER-SSBB-Dark Samus` "Dark Samus" pos=237 desc=sim img=sim vídeo=NÃO lutador=sim rel=20 chr=0
+  - `STICKER-SSBB-Dark Samus-Dark Samus` "Dark Samus" pos=237 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=20 chr=0
+- Roy
+  - `STICKER-SSBB-Roy-Roy` "Roy" pos=466 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+  - `STICKER-SSBB-Roy` "Roy" pos=466 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+- Girl
+  - `STICKER-SSBB-Villager-Girl` "Girl" pos=625 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=4 chr=0
+  - `STICKER-SSBB-Girl` "Girl" pos=625 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=8 chr=0
+- Eight Yoshis
+  - `STICKER-SSBB-Yoshi-Eight Yoshis` "Eight Yoshis" pos=271 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=7 chr=0
+  - `STICKER-SSBB-Eight Yoshis` "Eight Yoshis" pos=271 desc=sim img=sim vídeo=NÃO lutador=sim rel=7 chr=0
+- Peach
+  - `STICKER-SSBB-Peach-Peach` "Peach" pos=39 desc=NÃO img=sim vídeo=sim lutador=sim rel=35 chr=0
+  - `STICKER-SSBB-idx18` "Peach" pos=18 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=22 chr=0
+  - `STICKER-SSBB-Peach` "Peach" pos=39 desc=NÃO img=sim vídeo=sim lutador=sim rel=35 chr=0
+  - `STICKER-SSBB-idx30` "Peach" pos=30 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=22 chr=0
+- Sonic The Hedgehog
+  - `STICKER-SSBB-Sonic-Sonic The Hedgehog` "Sonic The Hedgehog" pos=674 desc=NÃO img=sim vídeo=sim lutador=sim rel=19 chr=0
+  - `STICKER-SSBB-Sonic The Hedgehog` "Sonic The Hedgehog" pos=674 desc=NÃO img=sim vídeo=sim lutador=sim rel=15 chr=0
+- Fierce Deity Link
+  - `STICKER-SSBB-Young Link-Fierce Deity Link` "Fierce Deity Link" pos=167 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-Fierce Deity Link` "Fierce Deity Link" pos=167 desc=sim img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- King of Red Lions & Link
+  - `STICKER-SSBB-Toon Link-King of Red Lions & Link` "King of Red Lions & Link" pos=178 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+  - `STICKER-SSBB-King of Red Lions & Link` "King of Red Lions & Link" pos=178 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+- DK with Barrel
+  - `STICKER-SSBB-Donkey Kong-DK with Barrel` "DK with Barrel" pos=111 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=6 chr=0
+  - `STICKER-SSBB-DK with Barrel` "DK with Barrel" pos=111 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- Metroid
+  - `STICKER-SSBB-idx230` "Metroid" pos=230 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=12 chr=0
+  - `STICKER-SSBB-Metroid` "Metroid" pos=241 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=12 chr=0
+- Yoshi
+  - `STICKER-SSBB-idx246` "Yoshi" pos=246 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=19 chr=0
+  - `STICKER-SSBB-Yoshi-Yoshi` "Yoshi" pos=90 desc=NÃO img=sim vídeo=sim lutador=sim rel=28 chr=0
+  - `STICKER-SSBB-Yoshi` "Yoshi" pos=257 desc=sim img=sim vídeo=sim lutador=sim rel=28 chr=0
+- Kamek
+  - `STICKER-SSBB-idx264` "Kamek" pos=264 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=6 chr=0
+  - `STICKER-SSBB-Kamek` "Kamek" pos=266 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=6 chr=0
+- Kirby
+  - `STICKER-SSBB-idx280` "Kirby" pos=280 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=48 chr=0
+  - `STICKER-SSBB-Kirby` "Kirby" pos=287 desc=NÃO img=sim vídeo=sim lutador=sim rel=25 chr=0
+  - `STICKER-SSBB-Kirby-Kirby` "Kirby" pos=272 desc=NÃO img=sim vídeo=sim lutador=sim rel=25 chr=0
+- Peppy
+  - `STICKER-SSBB-idx310` "Peppy" pos=310 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=6 chr=0
+  - `STICKER-SSBB-Peppy` "Peppy" pos=324 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=6 chr=0
+- Fox
+  - `STICKER-SSBB-idx312` "Fox" pos=312 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=18 chr=0
+  - `STICKER-SSBB-idx313` "Fox" pos=313 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=18 chr=0
+  - `STICKER-SSBB-idx326` "Fox" pos=326 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=18 chr=0
+  - `STICKER-SSBB-Fox-Fox` "Fox" pos=330 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=26 chr=0
+  - `STICKER-SSBB-Fox` "Fox" pos=330 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=23 chr=0
+- Chibi-Robo
+  - `STICKER-SSBB-idx598` "Chibi-Robo" pos=598 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=8 chr=0
+  - `STICKER-SSBB-Chibi-Robo` "Chibi-Robo" pos=603 desc=sim img=sim vídeo=sim lutador=NÃO rel=12 chr=0
+- Baby Mario
+  - `STICKER-SSBB-Mario-Baby Mario` "Baby Mario" pos=269 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=15 chr=0
+  - `STICKER-SSBB-Baby Mario` "Baby Mario" pos=269 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=14 chr=0
+- Super Mario Bros.
+  - `STICKER-SSBB-Mario-Super Mario Bros.` "Super Mario Bros." pos=1 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+  - `STICKER-SSBB-Super Mario Bros.` "Super Mario Bros." pos=1 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=15 chr=0
+  - `STICKER-SSBB-Bowser-Super Mario Bros.` "Super Mario Bros." pos=1 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=29 chr=0
+- Capt. Falcon
+  - `STICKER-SSBB-Captain Falcon-Capt. Falcon` "Capt. Falcon" pos=384 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=22 chr=0
+  - `STICKER-SSBB-idx379` "Capt. Falcon" pos=379 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=12 chr=0
+  - `STICKER-SSBB-Capt. Falcon` "Capt. Falcon" pos=384 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=13 chr=0
+- Young Zelda
+  - `STICKER-SSBB-Zelda-Young Zelda` "Young Zelda" pos=192 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+  - `STICKER-SSBB-Young Zelda` "Young Zelda" pos=192 desc=sim img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+- Bowser Jr.
+  - `STICKER-SSBB-Bowser Jr.-Bowser Jr.` "Bowser Jr." pos=32 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=17 chr=0
+  - `STICKER-SSBB-Bowser Jr.` "Bowser Jr." pos=32 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=16 chr=0
+- Deku Link
+  - `STICKER-SSBB-Young Link-Deku Link` "Deku Link" pos=170 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=12 chr=0
+  - `STICKER-SSBB-Deku Link` "Deku Link" pos=170 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=12 chr=0
+- Running Zero Suit Samus
+  - `STICKER-SSBB-Zero Suit Samus-Running Zero Suit Samus` "Running Zero Suit Samus" pos=227 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+  - `STICKER-SSBB-Running Zero Suit Samus` "Running Zero Suit Samus" pos=227 desc=sim img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+- Diddy Kong
+  - `STICKER-SSBB-Diddy Kong-Diddy Kong` "Diddy Kong" pos=127 desc=NÃO img=sim vídeo=sim lutador=sim rel=25 chr=0
+  - `STICKER-SSBB-idx110` "Diddy Kong" pos=110 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=29 chr=0
+  - `STICKER-SSBB-idx119` "Diddy Kong" pos=119 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=29 chr=0
+  - `STICKER-SSBB-Diddy Kong` "Diddy Kong" pos=127 desc=sim img=sim vídeo=sim lutador=sim rel=25 chr=0
+- Epona & Link
+  - `STICKER-SSBB-Link-Epona & Link` "Epona & Link" pos=153 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-Epona & Link` "Epona & Link" pos=153 desc=sim img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- Pokémon Trainer
+  - `STICKER-SSBB-Pokémon Trainer-Pokémon Trainer` "Pokémon Trainer" pos=338 desc=NÃO img=sim vídeo=sim lutador=sim rel=18 chr=0
+  - `STICKER-SSBB-Pokémon Trainer` "Pokémon Trainer" pos=338 desc=sim img=sim vídeo=sim lutador=sim rel=18 chr=0
+- King Dedede & Kirby
+  - `STICKER-SSBB-King Dedede-King Dedede & Kirby` "King Dedede & Kirby" pos=284 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=27 chr=0
+  - `STICKER-SSBB-Kirby-King Dedede & Kirby` "King Dedede & Kirby" pos=284 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=11 chr=0
+  - `STICKER-SSBB-King Dedede & Kirby` "King Dedede & Kirby" pos=284 desc=sim img=sim vídeo=NÃO lutador=sim rel=22 chr=0
+- R.O.B.
+  - `STICKER-SSBB-R.O.B.-R.O.B.` "R.O.B." pos=316 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-ROB` "ROB" pos=316 desc=sim img=sim vídeo=NÃO lutador=sim rel=6 chr=0
+  - `STICKER-SSBB-R.O.B.` "R.O.B." pos=51 desc=sim img=sim vídeo=sim lutador=sim rel=10 chr=0
+- Wolf
+  - `STICKER-SSBB-Wolf-Wolf` "Wolf" pos=559 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=20 chr=0
+  - `STICKER-SSBB-idx332` "Wolf" pos=332 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-Wolf` "Wolf" pos=559 desc=NÃO img=sim vídeo=sim lutador=sim rel=19 chr=0
+- Duck
+  - `STICKER-SSBB-Duck Hunt-Duck` "Duck" pos=651 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+  - `STICKER-SSBB-Duck` "Duck" pos=651 desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+- King K. Rool
+  - `STICKER-SSBB-King K. Rool-King K. Rool` "King K. Rool" pos=125 desc=NÃO img=sim vídeo=sim lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-King K. Rool` "King K. Rool" pos=125 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=24 chr=0
+- Ridley
+  - `STICKER-SSBB-Ridley-Ridley` "Ridley" pos=225 desc=NÃO img=sim vídeo=sim lutador=sim rel=18 chr=0
+  - `STICKER-SSBB-Ridley` "Ridley" pos=225 desc=sim img=sim vídeo=sim lutador=sim rel=18 chr=0
+- Petey Piranha
+  - `STICKER-SSBB-Piranha Plant-Petey Piranha` "Petey Piranha" pos=42 desc=NÃO img=sim vídeo=sim lutador=sim rel=14 chr=0
+  - `STICKER-SSBB-Petey Piranha` "Petey Piranha" pos=42 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=12 chr=0
+- Luigi
+  - `STICKER-SSBB-Luigi-Luigi` "Luigi" pos=104 desc=NÃO img=sim vídeo=sim lutador=sim rel=31 chr=0
+  - `STICKER-SSBB-idx98` "Luigi" pos=98 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=22 chr=0
+  - `STICKER-SSBB-Luigi` "Luigi" pos=104 desc=sim img=sim vídeo=sim lutador=sim rel=31 chr=0
+- Sheik
+  - `STICKER-SSBB-Sheik` "Sheik" pos=152 desc=sim img=sim vídeo=sim lutador=sim rel=18 chr=0
+  - `STICKER-SSBB-Sheik-Sheik` "Sheik" pos=152 desc=NÃO img=sim vídeo=sim lutador=sim rel=18 chr=0
+- Skull Kid
+  - `STICKER-SSBB-Skull Kid` "Skull Kid" pos=165 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=18 chr=0
+  - `STICKER-SSBB-idx159` "Skull Kid" pos=159 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=18 chr=0
+- King Dedede
+  - `STICKER-SSBB-King Dedede` "King Dedede" pos=292 desc=NÃO img=sim vídeo=sim lutador=sim rel=29 chr=0
+  - `STICKER-SSBB-King Dedede-King Dedede` "King Dedede" pos=273 desc=NÃO img=sim vídeo=sim lutador=sim rel=15 chr=0
+- Meta Knight
+  - `STICKER-SSBB-Meta Knight` "Meta Knight" pos=295 desc=sim img=sim vídeo=sim lutador=sim rel=18 chr=0
+  - `STICKER-SSBB-Meta Knight-Meta Knight` "Meta Knight" pos=295 desc=NÃO img=sim vídeo=sim lutador=sim rel=19 chr=0
+- Leon
+  - `STICKER-SSBB-Leon` "Leon" pos=335 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-idx318` "Leon" pos=318 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- Wario-Man
+  - `STICKER-SSBB-Wario-Man` "Wario-Man" pos=432 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=12 chr=0
+  - `STICKER-SSBB-Wario-Wario-Man` "Wario-Man" pos=432 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=12 chr=0
+- Pit
+  - `STICKER-SSBB-Pit` "Pit" pos=445 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=20 chr=0
+  - `STICKER-SSBB-Pit-Pit` "Pit" pos=445 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=23 chr=0
+- Ashley
+  - `STICKER-SSBB-Ashley` "Ashley" pos=549 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-idx434` "Ashley" pos=434 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- Car Yoshi
+  - `STICKER-SSBB-Car Yoshi` "Car Yoshi" pos=265 desc=sim img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+  - `STICKER-SSBB-Yoshi-Car Yoshi` "Car Yoshi" pos=265 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+- Mario & Luigi
+  - `STICKER-SSBB-Mario-Mario & Luigi` "Mario & Luigi" pos=103 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-Luigi-Mario & Luigi` "Mario & Luigi" pos=103 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-Mario & Luigi` "Mario & Luigi" pos=103 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- Solid Snake
+  - `STICKER-SSBB-Snake-Solid Snake` "Solid Snake" pos=664 desc=NÃO img=sim vídeo=sim lutador=sim rel=18 chr=0
+  - `STICKER-SSBB-Solid Snake` "Solid Snake" pos=664 desc=NÃO img=sim vídeo=sim lutador=sim rel=16 chr=0
+- Super Sonic
+  - `STICKER-SSBB-Sonic-Super Sonic` "Super Sonic" pos=676 desc=NÃO img=sim vídeo=sim lutador=sim rel=15 chr=0
+  - `STICKER-SSBB-Super Sonic` "Super Sonic" pos=676 desc=sim img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+- Robot
+  - `STICKER-SSBB-Robot` "Robot" pos=50 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+  - `STICKER-SSBB-R.O.B.-Robot` "Robot" pos=50 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+- Bowser
+  - `STICKER-SSBB-Bowser` "Bowser" pos=95 desc=sim img=sim vídeo=sim lutador=sim rel=34 chr=0
+  - `STICKER-SSBB-idx49` "Bowser" pos=49 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=24 chr=0
+  - `STICKER-SSBB-idx48` "Bowser" pos=48 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=24 chr=0
+  - `STICKER-SSBB-Bowser-Bowser` "Bowser" pos=95 desc=NÃO img=sim vídeo=sim lutador=sim rel=34 chr=0
+- Luigi & Baby Luigi
+  - `STICKER-SSBB-Luigi-Luigi & Baby Luigi` "Luigi & Baby Luigi" pos=108 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=22 chr=0
+  - `STICKER-SSBB-Luigi & Baby Luigi` "Luigi & Baby Luigi" pos=108 desc=sim img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+- Bubble Baby Mario
+  - `STICKER-SSBB-Mario-Bubble Baby Mario` "Bubble Baby Mario" pos=268 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=14 chr=0
+  - `STICKER-SSBB-Bubble Baby Mario` "Bubble Baby Mario" pos=268 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- Wario
+  - `STICKER-SSBB-Wario` "Wario" pos=438 desc=sim img=sim vídeo=sim lutador=sim rel=28 chr=0
+  - `STICKER-SSBB-idx421` "Wario" pos=421 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=14 chr=0
+  - `STICKER-SSBB-Wario-Wario` "Wario" pos=438 desc=NÃO img=sim vídeo=sim lutador=sim rel=28 chr=0
+- Kritter
+  - `STICKER-SSBB-idx40` "Kritter" pos=40 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-Kritter` "Kritter" pos=141 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=10 chr=0
+- Lakitu
+  - `STICKER-SSBB-idx12` "Lakitu" pos=12 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-Lakitu` "Lakitu" pos=64 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- Toadsworth
+  - `STICKER-SSBB-idx25` "Toadsworth" pos=25 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=13 chr=0
+  - `STICKER-SSBB-Toadsworth` "Toadsworth" pos=107 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=13 chr=0
+- Waluigi
+  - `STICKER-SSBB-idx31` "Waluigi" pos=31 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=13 chr=0
+  - `STICKER-SSBB-Waluigi` "Waluigi" pos=37 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=14 chr=0
+- Mario
+  - `STICKER-SSBB-idx60` "Mario" pos=60 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=23 chr=0
+  - `STICKER-SSBB-Mario-Mario` "Mario" pos=97 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=83 chr=0
+  - `STICKER-SSBB-Mario` "Mario" pos=97 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=77 chr=0
+- Donkey Kong
+  - `STICKER-SSBB-idx120` "Donkey Kong" pos=120 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=29 chr=0
+  - `STICKER-SSBB-Donkey Kong` "Donkey Kong" pos=131 desc=sim img=sim vídeo=sim lutador=sim rel=30 chr=0
+  - `STICKER-SSBB-Donkey Kong-Donkey Kong` "Donkey Kong" pos=63 desc=NÃO img=sim vídeo=sim lutador=sim rel=22 chr=0
+- Toad
+  - `STICKER-SSBB-idx72` "Toad" pos=72 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=25 chr=0
+  - `STICKER-SSBB-Toad` "Toad" pos=78 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=25 chr=0
+- Dr. Mario
+  - `STICKER-SSBB-Dr. Mario` "Dr. Mario" pos=532 desc=sim img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+  - `STICKER-SSBB-Dr. Mario-Dr. Mario` "Dr. Mario" pos=532 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+- Samus
+  - `STICKER-SSBB-idx224` "Samus" pos=224 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=17 chr=0
+  - `STICKER-SSBB-Samus` "Samus" pos=234 desc=NÃO img=sim vídeo=sim lutador=sim rel=40 chr=0
+  - `STICKER-SSBB-Samus-Samus` "Samus" pos=219 desc=NÃO img=sim vídeo=sim lutador=sim rel=36 chr=0
+- Tingle
+  - `STICKER-SSBB-idx189` "Tingle" pos=189 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-Tingle` "Tingle" pos=214 desc=sim img=sim vídeo=sim lutador=NÃO rel=10 chr=0
+- Postman
+  - `STICKER-SSBB-idx169` "Postman" pos=169 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=4 chr=0
+  - `STICKER-SSBB-Postman` "Postman" pos=196 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=4 chr=0
+- Hylian Shield
+  - `STICKER-SSBB-idx193` "Hylian Shield" pos=193 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=4 chr=0
+  - `STICKER-SSBB-Hylian Shield` "Hylian Shield" pos=208 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=4 chr=0
+- Starship
+  - `STICKER-SSBB-idx223` "Starship" pos=223 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=4 chr=0
+  - `STICKER-SSBB-Starship` "Starship" pos=244 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=4 chr=0
+- Starman
+  - `STICKER-SSBB-idx302` "Starman" pos=302 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=16 chr=0
+  - `STICKER-SSBB-Starman` "Starman" pos=406 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=16 chr=0
+- Slippy
+  - `STICKER-SSBB-idx309` "Slippy" pos=309 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=6 chr=0
+  - `STICKER-SSBB-Slippy` "Slippy" pos=328 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=6 chr=0
+- Mr. Saturn
+  - `STICKER-SSBB-idx402` "Mr. Saturn" pos=402 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-Mr. Saturn` "Mr. Saturn" pos=417 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=10 chr=0
+- Falco
+  - `STICKER-SSBB-idx315` "Falco" pos=315 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=18 chr=0
+  - `STICKER-SSBB-idx320` "Falco" pos=320 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=18 chr=0
+  - `STICKER-SSBB-Falco` "Falco" pos=333 desc=NÃO img=sim vídeo=sim lutador=sim rel=26 chr=0
+  - `STICKER-SSBB-Falco-Falco` "Falco" pos=308 desc=NÃO img=sim vídeo=sim lutador=sim rel=26 chr=0
+- Akari Hayami
+  - `STICKER-SSBB-idx557` "Akari Hayami" pos=557 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-Akari Hayami` "Akari Hayami" pos=609 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- Krystal
+  - `STICKER-SSBB-idx314` "Krystal" pos=314 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-idx322` "Krystal" pos=322 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-Krystal` "Krystal" pos=334 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=10 chr=0
+- Panther
+  - `STICKER-SSBB-idx321` "Panther" pos=321 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=4 chr=0
+  - `STICKER-SSBB-Panther` "Panther" pos=336 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=4 chr=0
+- Samurai Goroh
+  - `STICKER-SSBB-idx377` "Samurai Goroh" pos=377 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=16 chr=0
+  - `STICKER-SSBB-Samurai Goroh` "Samurai Goroh" pos=378 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=16 chr=0
+- Ana
+  - `STICKER-SSBB-idx394` "Ana" pos=394 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=6 chr=0
+  - `STICKER-SSBB-Ana` "Ana" pos=436 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=6 chr=0
+- 9-Volt
+  - `STICKER-SSBB-idx426` "9-Volt" pos=426 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-9-Volt` "9-Volt" pos=431 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- Chef
+  - `STICKER-SSBB-idx494` "Chef" pos=494 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=12 chr=0
+  - `STICKER-SSBB-Chef` "Chef" pos=652 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=12 chr=0
+- Stafy
+  - `STICKER-SSBB-idx612` "Stafy" pos=612 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=4 chr=0
+  - `STICKER-SSBB-Stafy` "Stafy" pos=614 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=4 chr=0
+- Boy
+  - `STICKER-SSBB-idx624` "Boy" pos=624 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=6 chr=0
+  - `STICKER-SSBB-Boy` "Boy" pos=627 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=6 chr=0
+  - `STICKER-SSBB-Villager-Boy` "Boy" pos=496 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+- DK
+  - `STICKER-SSBB-DK` "DK" pos=29 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=2 chr=0
+  - `STICKER-SSBB-Donkey Kong-DK` "DK" pos=29 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=2 chr=0
+- Raccoon Mario
+  - `STICKER-SSBB-Mario-Raccoon Mario` "Raccoon Mario" pos=4 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-Raccoon Mario` "Raccoon Mario" pos=4 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- Gravity Suit Samus
+  - `STICKER-SSBB-Gravity Suit Samus` "Gravity Suit Samus" pos=228 desc=sim img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+  - `STICKER-SSBB-Samus-Gravity Suit Samus` "Gravity Suit Samus" pos=228 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+- Wolfen
+  - `STICKER-SSBB-Wolfen` "Wolfen" pos=319 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+  - `STICKER-SSBB-idx311` "Wolfen" pos=311 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=12 chr=0
+- Jigglypuff
+  - `STICKER-SSBB-Jigglypuff` "Jigglypuff" pos=342 desc=sim img=sim vídeo=sim lutador=sim rel=16 chr=0
+  - `STICKER-SSBB-Jigglypuff-Jigglypuff` "Jigglypuff" pos=342 desc=NÃO img=sim vídeo=sim lutador=sim rel=16 chr=0
+- Pikachu
+  - `STICKER-SSBB-Pikachu` "Pikachu" pos=343 desc=NÃO img=sim vídeo=sim lutador=sim rel=19 chr=0
+  - `STICKER-SSBB-Pikachu-Pikachu` "Pikachu" pos=343 desc=NÃO img=sim vídeo=sim lutador=sim rel=19 chr=0
+- Peach & Daisy
+  - `STICKER-SSBB-Daisy-Peach & Daisy` "Peach & Daisy" pos=75 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=22 chr=0
+  - `STICKER-SSBB-Peach-Peach & Daisy` "Peach & Daisy" pos=75 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=34 chr=0
+  - `STICKER-SSBB-Peach & Daisy` "Peach & Daisy" pos=75 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+- Ganondorf
+  - `STICKER-SSBB-Ganondorf-Ganondorf` "Ganondorf" pos=186 desc=NÃO img=sim vídeo=sim lutador=sim rel=20 chr=0
+  - `STICKER-SSBB-Ganondorf` "Ganondorf" pos=186 desc=NÃO img=sim vídeo=sim lutador=sim rel=20 chr=0
+- Zero Suit Samus
+  - `STICKER-SSBB-Zero Suit Samus-Zero Suit Samus` "Zero Suit Samus" pos=226 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=27 chr=0
+  - `STICKER-SSBB-Zero Suit Samus` "Zero Suit Samus" pos=226 desc=sim img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+- Link with Goron Mask
+  - `STICKER-SSBB-Young Link-Link with Goron Mask` "Link with Goron Mask" pos=168 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=12 chr=0
+  - `STICKER-SSBB-Link with Goron Mask` "Link with Goron Mask" pos=168 desc=sim img=sim vídeo=NÃO lutador=sim rel=12 chr=0
+- Dark Suit Samus
+  - `STICKER-SSBB-Samus-Dark Suit Samus` "Dark Suit Samus" pos=232 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+  - `STICKER-SSBB-Dark Suit Samus` "Dark Suit Samus" pos=232 desc=sim img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+- Robot & Blocks
+  - `STICKER-SSBB-R.O.B.-Robot & Blocks` "Robot & Blocks" pos=643 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+  - `STICKER-SSBB-Robot & Blocks` "Robot & Blocks" pos=643 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+- Midna & Wolf Link
+  - `STICKER-SSBB-Link-Midna & Wolf Link` "Midna & Wolf Link" pos=194 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+  - `STICKER-SSBB-Midna & Wolf Link` "Midna & Wolf Link" pos=194 desc=sim img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+- Cupid Kirby
+  - `STICKER-SSBB-Kirby-Cupid Kirby` "Cupid Kirby" pos=288 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+  - `STICKER-SSBB-Cupid Kirby` "Cupid Kirby" pos=288 desc=sim img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+- Cook Kirby
+  - `STICKER-SSBB-Kirby-Cook Kirby` "Cook Kirby" pos=277 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+  - `STICKER-SSBB-Cook Kirby` "Cook Kirby" pos=277 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- Zelda
+  - `STICKER-SSBB-Zelda-Zelda` "Zelda" pos=161 desc=NÃO img=sim vídeo=sim lutador=sim rel=33 chr=0
+  - `STICKER-SSBB-Zelda` "Zelda" pos=161 desc=sim img=sim vídeo=sim lutador=sim rel=33 chr=0
+- Nana
+  - `STICKER-SSBB-Ice Climbers-Nana` "Nana" pos=420 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=2 chr=0
+  - `STICKER-SSBB-Nana` "Nana" pos=420 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=12 chr=0
+- Lucas
+  - `STICKER-SSBB-Lucas-Lucas` "Lucas" pos=412 desc=NÃO img=sim vídeo=sim lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-Lucas` "Lucas" pos=412 desc=NÃO img=sim vídeo=sim lutador=sim rel=10 chr=0
+- Yoshi Ship
+  - `STICKER-SSBB-Yoshi-Yoshi Ship` "Yoshi Ship" pos=247 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+  - `STICKER-SSBB-Yoshi Ship` "Yoshi Ship" pos=247 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+- Needle Kirby
+  - `STICKER-SSBB-Kirby-Needle Kirby` "Needle Kirby" pos=279 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+  - `STICKER-SSBB-Needle Kirby` "Needle Kirby" pos=279 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=11 chr=0
+- Pauline & Donkey Kong
+  - `STICKER-SSBB-Donkey Kong-Pauline & Donkey Kong` "Pauline & Donkey Kong" pos=113 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=28 chr=0
+  - `STICKER-SSBB-Pauline & Donkey Kong` "Pauline & Donkey Kong" pos=113 desc=sim img=sim vídeo=NÃO lutador=sim rel=11 chr=0
+- Classic Sonic
+  - `STICKER-SSBB-Sonic-Classic Sonic` "Classic Sonic" pos=673 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=17 chr=0
+  - `STICKER-SSBB-Classic Sonic` "Classic Sonic" pos=673 desc=sim img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+- Meta Knight Ball
+  - `STICKER-SSBB-Meta Knight-Meta Knight Ball` "Meta Knight Ball" pos=290 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=17 chr=0
+  - `STICKER-SSBB-Meta Knight Ball` "Meta Knight Ball" pos=290 desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+- Lucario
+  - `STICKER-SSBB-Lucario-Lucario` "Lucario" pos=344 desc=NÃO img=sim vídeo=sim lutador=sim rel=16 chr=0
+  - `STICKER-SSBB-Lucario` "Lucario" pos=344 desc=NÃO img=sim vídeo=sim lutador=sim rel=16 chr=0
+- Link & Pigs
+  - `STICKER-SSBB-Toon Link-Link & Pigs` "Link & Pigs" pos=190 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-Link & Pigs` "Link & Pigs" pos=190 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- Zora Link
+  - `STICKER-SSBB-Zora Link` "Zora Link" pos=172 desc=sim img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-Young Link-Zora Link` "Zora Link" pos=172 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- Tiny Wario
+  - `STICKER-SSBB-Tiny Wario` "Tiny Wario" pos=422 desc=sim img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+  - `STICKER-SSBB-Wario-Tiny Wario` "Tiny Wario" pos=422 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+
+### Mesma posição
+
+- posição 403
+  - `STICKER-SSBB-Ness-Ness` "Ness" pos=403 desc=sim img=sim vídeo=sim lutador=sim rel=16 chr=0
+  - `STICKER-SSBB-Ness` "Ness" pos=403 desc=NÃO img=sim vídeo=sim lutador=sim rel=16 chr=0
+- posição 24
+  - `STICKER-SSBB-Mario-Mario & Yoshi` "Mario & Yoshi" pos=24 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=47 chr=0
+  - `STICKER-SSBB-Mario & Yoshi` "Mario & Yoshi" pos=24 desc=sim img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- posição 484
+  - `STICKER-SSBB-Ike-Ike` "Ike" pos=484 desc=NÃO img=sim vídeo=sim lutador=sim rel=12 chr=0
+  - `STICKER-SSBB-Ike` "Ike" pos=484 desc=NÃO img=sim vídeo=sim lutador=sim rel=12 chr=0
+- posição 462
+  - `STICKER-SSBB-Marth` "Marth" pos=462 desc=sim img=sim vídeo=sim lutador=sim rel=16 chr=0
+  - `STICKER-SSBB-Marth-Marth` "Marth" pos=462 desc=NÃO img=sim vídeo=sim lutador=sim rel=16 chr=0
+- posição 34
+  - `STICKER-SSBB-Daisy` "Daisy" pos=34 desc=sim img=sim vídeo=NÃO lutador=sim rel=18 chr=0
+  - `STICKER-SSBB-Daisy-Daisy` "Daisy" pos=34 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=18 chr=0
+- posição 237
+  - `STICKER-SSBB-Dark Samus` "Dark Samus" pos=237 desc=sim img=sim vídeo=NÃO lutador=sim rel=20 chr=0
+  - `STICKER-SSBB-Dark Samus-Dark Samus` "Dark Samus" pos=237 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=20 chr=0
+- posição 466
+  - `STICKER-SSBB-Roy-Roy` "Roy" pos=466 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+  - `STICKER-SSBB-Roy` "Roy" pos=466 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+- posição 625
+  - `STICKER-SSBB-Villager-Girl` "Girl" pos=625 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=4 chr=0
+  - `STICKER-SSBB-Girl` "Girl" pos=625 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=8 chr=0
+- posição 271
+  - `STICKER-SSBB-Yoshi-Eight Yoshis` "Eight Yoshis" pos=271 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=7 chr=0
+  - `STICKER-SSBB-Eight Yoshis` "Eight Yoshis" pos=271 desc=sim img=sim vídeo=NÃO lutador=sim rel=7 chr=0
+- posição 39
+  - `STICKER-SSBB-Peach-Peach` "Peach" pos=39 desc=NÃO img=sim vídeo=sim lutador=sim rel=35 chr=0
+  - `STICKER-SSBB-Peach` "Peach" pos=39 desc=NÃO img=sim vídeo=sim lutador=sim rel=35 chr=0
+- posição 674
+  - `STICKER-SSBB-Sonic-Sonic The Hedgehog` "Sonic The Hedgehog" pos=674 desc=NÃO img=sim vídeo=sim lutador=sim rel=19 chr=0
+  - `STICKER-SSBB-Sonic The Hedgehog` "Sonic The Hedgehog" pos=674 desc=NÃO img=sim vídeo=sim lutador=sim rel=15 chr=0
+- posição 167
+  - `STICKER-SSBB-Young Link-Fierce Deity Link` "Fierce Deity Link" pos=167 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-Fierce Deity Link` "Fierce Deity Link" pos=167 desc=sim img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- posição 178
+  - `STICKER-SSBB-Toon Link-King of Red Lions & Link` "King of Red Lions & Link" pos=178 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+  - `STICKER-SSBB-King of Red Lions & Link` "King of Red Lions & Link" pos=178 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+- posição 111
+  - `STICKER-SSBB-Donkey Kong-DK with Barrel` "DK with Barrel" pos=111 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=6 chr=0
+  - `STICKER-SSBB-DK with Barrel` "DK with Barrel" pos=111 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- posição 269
+  - `STICKER-SSBB-Mario-Baby Mario` "Baby Mario" pos=269 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=15 chr=0
+  - `STICKER-SSBB-Baby Mario` "Baby Mario" pos=269 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=14 chr=0
+- posição 1
+  - `STICKER-SSBB-Mario-Super Mario Bros.` "Super Mario Bros." pos=1 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+  - `STICKER-SSBB-Super Mario Bros.` "Super Mario Bros." pos=1 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=15 chr=0
+  - `STICKER-SSBB-Bowser-Super Mario Bros.` "Super Mario Bros." pos=1 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=29 chr=0
+- posição 384
+  - `STICKER-SSBB-Captain Falcon-Capt. Falcon` "Capt. Falcon" pos=384 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=22 chr=0
+  - `STICKER-SSBB-Capt. Falcon` "Capt. Falcon" pos=384 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=13 chr=0
+- posição 192
+  - `STICKER-SSBB-Zelda-Young Zelda` "Young Zelda" pos=192 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+  - `STICKER-SSBB-Young Zelda` "Young Zelda" pos=192 desc=sim img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+- posição 32
+  - `STICKER-SSBB-Bowser Jr.-Bowser Jr.` "Bowser Jr." pos=32 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=17 chr=0
+  - `STICKER-SSBB-Bowser Jr.` "Bowser Jr." pos=32 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=16 chr=0
+- posição 170
+  - `STICKER-SSBB-Young Link-Deku Link` "Deku Link" pos=170 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=12 chr=0
+  - `STICKER-SSBB-Deku Link` "Deku Link" pos=170 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=12 chr=0
+- posição 227
+  - `STICKER-SSBB-Zero Suit Samus-Running Zero Suit Samus` "Running Zero Suit Samus" pos=227 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+  - `STICKER-SSBB-Running Zero Suit Samus` "Running Zero Suit Samus" pos=227 desc=sim img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+- posição 127
+  - `STICKER-SSBB-Diddy Kong-Diddy Kong` "Diddy Kong" pos=127 desc=NÃO img=sim vídeo=sim lutador=sim rel=25 chr=0
+  - `STICKER-SSBB-Diddy Kong` "Diddy Kong" pos=127 desc=sim img=sim vídeo=sim lutador=sim rel=25 chr=0
+- posição 153
+  - `STICKER-SSBB-Link-Epona & Link` "Epona & Link" pos=153 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-Epona & Link` "Epona & Link" pos=153 desc=sim img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- posição 338
+  - `STICKER-SSBB-Pokémon Trainer-Pokémon Trainer` "Pokémon Trainer" pos=338 desc=NÃO img=sim vídeo=sim lutador=sim rel=18 chr=0
+  - `STICKER-SSBB-Pokémon Trainer` "Pokémon Trainer" pos=338 desc=sim img=sim vídeo=sim lutador=sim rel=18 chr=0
+- posição 284
+  - `STICKER-SSBB-King Dedede-King Dedede & Kirby` "King Dedede & Kirby" pos=284 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=27 chr=0
+  - `STICKER-SSBB-Kirby-King Dedede & Kirby` "King Dedede & Kirby" pos=284 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=11 chr=0
+  - `STICKER-SSBB-King Dedede & Kirby` "King Dedede & Kirby" pos=284 desc=sim img=sim vídeo=NÃO lutador=sim rel=22 chr=0
+- posição 316
+  - `STICKER-SSBB-R.O.B.-R.O.B.` "R.O.B." pos=316 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-ROB` "ROB" pos=316 desc=sim img=sim vídeo=NÃO lutador=sim rel=6 chr=0
+- posição 559
+  - `STICKER-SSBB-Wolf-Wolf` "Wolf" pos=559 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=20 chr=0
+  - `STICKER-SSBB-Wolf` "Wolf" pos=559 desc=NÃO img=sim vídeo=sim lutador=sim rel=19 chr=0
+- posição 651
+  - `STICKER-SSBB-Duck Hunt-Duck` "Duck" pos=651 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+  - `STICKER-SSBB-Duck` "Duck" pos=651 desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+- posição 125
+  - `STICKER-SSBB-King K. Rool-King K. Rool` "King K. Rool" pos=125 desc=NÃO img=sim vídeo=sim lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-King K. Rool` "King K. Rool" pos=125 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=24 chr=0
+- posição 225
+  - `STICKER-SSBB-Ridley-Ridley` "Ridley" pos=225 desc=NÃO img=sim vídeo=sim lutador=sim rel=18 chr=0
+  - `STICKER-SSBB-Ridley` "Ridley" pos=225 desc=sim img=sim vídeo=sim lutador=sim rel=18 chr=0
+- posição 42
+  - `STICKER-SSBB-Piranha Plant-Petey Piranha` "Petey Piranha" pos=42 desc=NÃO img=sim vídeo=sim lutador=sim rel=14 chr=0
+  - `STICKER-SSBB-Petey Piranha` "Petey Piranha" pos=42 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=12 chr=0
+- posição 104
+  - `STICKER-SSBB-Luigi-Luigi` "Luigi" pos=104 desc=NÃO img=sim vídeo=sim lutador=sim rel=31 chr=0
+  - `STICKER-SSBB-Luigi` "Luigi" pos=104 desc=sim img=sim vídeo=sim lutador=sim rel=31 chr=0
+- posição 152
+  - `STICKER-SSBB-Sheik` "Sheik" pos=152 desc=sim img=sim vídeo=sim lutador=sim rel=18 chr=0
+  - `STICKER-SSBB-Sheik-Sheik` "Sheik" pos=152 desc=NÃO img=sim vídeo=sim lutador=sim rel=18 chr=0
+- posição 295
+  - `STICKER-SSBB-Meta Knight` "Meta Knight" pos=295 desc=sim img=sim vídeo=sim lutador=sim rel=18 chr=0
+  - `STICKER-SSBB-Meta Knight-Meta Knight` "Meta Knight" pos=295 desc=NÃO img=sim vídeo=sim lutador=sim rel=19 chr=0
+- posição 432
+  - `STICKER-SSBB-Wario-Man` "Wario-Man" pos=432 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=12 chr=0
+  - `STICKER-SSBB-Wario-Wario-Man` "Wario-Man" pos=432 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=12 chr=0
+- posição 445
+  - `STICKER-SSBB-Pit` "Pit" pos=445 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=20 chr=0
+  - `STICKER-SSBB-Pit-Pit` "Pit" pos=445 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=23 chr=0
+- posição 265
+  - `STICKER-SSBB-Car Yoshi` "Car Yoshi" pos=265 desc=sim img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+  - `STICKER-SSBB-Yoshi-Car Yoshi` "Car Yoshi" pos=265 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+- posição 103
+  - `STICKER-SSBB-Mario-Mario & Luigi` "Mario & Luigi" pos=103 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-Luigi-Mario & Luigi` "Mario & Luigi" pos=103 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-Mario & Luigi` "Mario & Luigi" pos=103 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- posição 664
+  - `STICKER-SSBB-Snake-Solid Snake` "Solid Snake" pos=664 desc=NÃO img=sim vídeo=sim lutador=sim rel=18 chr=0
+  - `STICKER-SSBB-Solid Snake` "Solid Snake" pos=664 desc=NÃO img=sim vídeo=sim lutador=sim rel=16 chr=0
+- posição 676
+  - `STICKER-SSBB-Sonic-Super Sonic` "Super Sonic" pos=676 desc=NÃO img=sim vídeo=sim lutador=sim rel=15 chr=0
+  - `STICKER-SSBB-Super Sonic` "Super Sonic" pos=676 desc=sim img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+- posição 50
+  - `STICKER-SSBB-Robot` "Robot" pos=50 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+  - `STICKER-SSBB-R.O.B.-Robot` "Robot" pos=50 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+- posição 95
+  - `STICKER-SSBB-Bowser` "Bowser" pos=95 desc=sim img=sim vídeo=sim lutador=sim rel=34 chr=0
+  - `STICKER-SSBB-Bowser-Bowser` "Bowser" pos=95 desc=NÃO img=sim vídeo=sim lutador=sim rel=34 chr=0
+- posição 108
+  - `STICKER-SSBB-Luigi-Luigi & Baby Luigi` "Luigi & Baby Luigi" pos=108 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=22 chr=0
+  - `STICKER-SSBB-Luigi & Baby Luigi` "Luigi & Baby Luigi" pos=108 desc=sim img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+- posição 268
+  - `STICKER-SSBB-Mario-Bubble Baby Mario` "Bubble Baby Mario" pos=268 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=14 chr=0
+  - `STICKER-SSBB-Bubble Baby Mario` "Bubble Baby Mario" pos=268 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- posição 438
+  - `STICKER-SSBB-Wario` "Wario" pos=438 desc=sim img=sim vídeo=sim lutador=sim rel=28 chr=0
+  - `STICKER-SSBB-Wario-Wario` "Wario" pos=438 desc=NÃO img=sim vídeo=sim lutador=sim rel=28 chr=0
+  - `STICKER-SSBB-Wario-Wario & Bike` "Wario & Bike" pos=438 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+- posição 532
+  - `STICKER-SSBB-Dr. Mario` "Dr. Mario" pos=532 desc=sim img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+  - `STICKER-SSBB-Dr. Mario-Dr. Mario` "Dr. Mario" pos=532 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+- posição 29
+  - `STICKER-SSBB-DK` "DK" pos=29 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=2 chr=0
+  - `STICKER-SSBB-Donkey Kong-DK` "DK" pos=29 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=2 chr=0
+- posição 97
+  - `STICKER-SSBB-Mario-Mario` "Mario" pos=97 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=83 chr=0
+  - `STICKER-SSBB-Mario` "Mario" pos=97 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=77 chr=0
+- posição 4
+  - `STICKER-SSBB-Mario-Raccoon Mario` "Raccoon Mario" pos=4 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+  - `STICKER-SSBB-Raccoon Mario` "Raccoon Mario" pos=4 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- posição 228
+  - `STICKER-SSBB-Gravity Suit Samus` "Gravity Suit Samus" pos=228 desc=sim img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+  - `STICKER-SSBB-Samus-Gravity Suit Samus` "Gravity Suit Samus" pos=228 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+- posição 342
+  - `STICKER-SSBB-Jigglypuff` "Jigglypuff" pos=342 desc=sim img=sim vídeo=sim lutador=sim rel=16 chr=0
+  - `STICKER-SSBB-Jigglypuff-Jigglypuff` "Jigglypuff" pos=342 desc=NÃO img=sim vídeo=sim lutador=sim rel=16 chr=0
+- posição 343
+  - `STICKER-SSBB-Pikachu` "Pikachu" pos=343 desc=NÃO img=sim vídeo=sim lutador=sim rel=19 chr=0
+  - `STICKER-SSBB-Pikachu-Pikachu` "Pikachu" pos=343 desc=NÃO img=sim vídeo=sim lutador=sim rel=19 chr=0
+- posição 75
+  - `STICKER-SSBB-Daisy-Peach & Daisy` "Peach & Daisy" pos=75 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=22 chr=0
+  - `STICKER-SSBB-Peach-Peach & Daisy` "Peach & Daisy" pos=75 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=34 chr=0
+  - `STICKER-SSBB-Peach & Daisy` "Peach & Daisy" pos=75 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+- posição 186
+  - `STICKER-SSBB-Ganondorf-Ganondorf` "Ganondorf" pos=186 desc=NÃO img=sim vídeo=sim lutador=sim rel=20 chr=0
+  - `STICKER-SSBB-Ganondorf` "Ganondorf" pos=186 desc=NÃO img=sim vídeo=sim lutador=sim rel=20 chr=0
+- posição 226
+  - `STICKER-SSBB-Zero Suit Samus-Zero Suit Samus` "Zero Suit Samus" pos=226 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=27 chr=0
+  - `STICKER-SSBB-Zero Suit Samus` "Zero Suit Samus" pos=226 desc=sim img=sim vídeo=NÃO lutador=sim rel=19 chr=0
+- posição 168
+  - `STICKER-SSBB-Young Link-Link with Goron Mask` "Link with Goron Mask" pos=168 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=12 chr=0
+  - `STICKER-SSBB-Link with Goron Mask` "Link with Goron Mask" pos=168 desc=sim img=sim vídeo=NÃO lutador=sim rel=12 chr=0
+- posição 232
+  - `STICKER-SSBB-Samus-Dark Suit Samus` "Dark Suit Samus" pos=232 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+  - `STICKER-SSBB-Dark Suit Samus` "Dark Suit Samus" pos=232 desc=sim img=sim vídeo=NÃO lutador=sim rel=15 chr=0
+- posição 643
+  - `STICKER-SSBB-R.O.B.-Robot & Blocks` "Robot & Blocks" pos=643 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+  - `STICKER-SSBB-Robot & Blocks` "Robot & Blocks" pos=643 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=8 chr=0
+- posição 194
+  - `STICKER-SSBB-Link-Midna & Wolf Link` "Midna & Wolf Link" pos=194 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+  - `STICKER-SSBB-Midna & Wolf Link` "Midna & Wolf Link" pos=194 desc=sim img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+- posição 288
+  - `STICKER-SSBB-Kirby-Cupid Kirby` "Cupid Kirby" pos=288 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+  - `STICKER-SSBB-Cupid Kirby` "Cupid Kirby" pos=288 desc=sim img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+- posição 277
+  - `STICKER-SSBB-Kirby-Cook Kirby` "Cook Kirby" pos=277 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+  - `STICKER-SSBB-Cook Kirby` "Cook Kirby" pos=277 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- posição 161
+  - `STICKER-SSBB-Zelda-Zelda` "Zelda" pos=161 desc=NÃO img=sim vídeo=sim lutador=sim rel=33 chr=0
+  - `STICKER-SSBB-Zelda` "Zelda" pos=161 desc=sim img=sim vídeo=sim lutador=sim rel=33 chr=0
+- posição 420
+  - `STICKER-SSBB-Ice Climbers-Nana` "Nana" pos=420 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=2 chr=0
+  - `STICKER-SSBB-Nana` "Nana" pos=420 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=12 chr=0
+- posição 412
+  - `STICKER-SSBB-Lucas-Lucas` "Lucas" pos=412 desc=NÃO img=sim vídeo=sim lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-Lucas` "Lucas" pos=412 desc=NÃO img=sim vídeo=sim lutador=sim rel=10 chr=0
+- posição 207
+  - `STICKER-SSBB-Link-Link` "Link" pos=207 desc=NÃO img=sim vídeo=sim lutador=sim rel=57 chr=0
+  - `STICKER-SSBB-Link` "Link" pos=207 desc=sim img=sim vídeo=sim lutador=NÃO rel=43 chr=0
+- posição 330
+  - `STICKER-SSBB-Fox-Fox` "Fox" pos=330 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=26 chr=0
+  - `STICKER-SSBB-Fox` "Fox" pos=330 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=23 chr=0
+- posição 247
+  - `STICKER-SSBB-Yoshi-Yoshi Ship` "Yoshi Ship" pos=247 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+  - `STICKER-SSBB-Yoshi Ship` "Yoshi Ship" pos=247 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+- posição 279
+  - `STICKER-SSBB-Kirby-Needle Kirby` "Needle Kirby" pos=279 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=13 chr=0
+  - `STICKER-SSBB-Needle Kirby` "Needle Kirby" pos=279 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=11 chr=0
+- posição 113
+  - `STICKER-SSBB-Donkey Kong-Pauline & Donkey Kong` "Pauline & Donkey Kong" pos=113 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=28 chr=0
+  - `STICKER-SSBB-Pauline & Donkey Kong` "Pauline & Donkey Kong" pos=113 desc=sim img=sim vídeo=NÃO lutador=sim rel=11 chr=0
+- posição 673
+  - `STICKER-SSBB-Sonic-Classic Sonic` "Classic Sonic" pos=673 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=17 chr=0
+  - `STICKER-SSBB-Classic Sonic` "Classic Sonic" pos=673 desc=sim img=sim vídeo=NÃO lutador=sim rel=14 chr=0
+- posição 290
+  - `STICKER-SSBB-Meta Knight-Meta Knight Ball` "Meta Knight Ball" pos=290 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=17 chr=0
+  - `STICKER-SSBB-Meta Knight Ball` "Meta Knight Ball" pos=290 desc=sim img=sim vídeo=NÃO lutador=sim rel=16 chr=0
+- posição 344
+  - `STICKER-SSBB-Lucario-Lucario` "Lucario" pos=344 desc=NÃO img=sim vídeo=sim lutador=sim rel=16 chr=0
+  - `STICKER-SSBB-Lucario` "Lucario" pos=344 desc=NÃO img=sim vídeo=sim lutador=sim rel=16 chr=0
+- posição 190
+  - `STICKER-SSBB-Toon Link-Link & Pigs` "Link & Pigs" pos=190 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-Link & Pigs` "Link & Pigs" pos=190 desc=NÃO img=sim vídeo=NÃO lutador=NÃO rel=10 chr=0
+- posição 172
+  - `STICKER-SSBB-Zora Link` "Zora Link" pos=172 desc=sim img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+  - `STICKER-SSBB-Young Link-Zora Link` "Zora Link" pos=172 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=10 chr=0
+- posição 422
+  - `STICKER-SSBB-Tiny Wario` "Tiny Wario" pos=422 desc=sim img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+  - `STICKER-SSBB-Wario-Tiny Wario` "Tiny Wario" pos=422 desc=NÃO img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+
+## TROPHY / SSB4 (434 itens)
+
+### Mesmo nome sem o "(n)"
+
+- roy
+  - `TROPHY-SSB4-Roy_2` "Roy (2)" pos=255 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=9 chr=0
+  - `TROPHY-SSB4-Roy-Roy` "Roy" pos=49 desc=sim img=sim vídeo=sim lutador=sim rel=7 chr=1
+- mewtwo
+  - `TROPHY-SSB4-Mewtwo-Mewtwo` "Mewtwo" pos=179 desc=sim img=sim vídeo=sim lutador=sim rel=16 chr=2
+  - `TROPHY-SSB4-Mewtwo_2` "Mewtwo (2)" pos=228 desc=NÃO img=sim vídeo=sim lutador=NÃO rel=7 chr=0
+- lucas
+  - `TROPHY-SSB4-Lucas_2` "Lucas (2)" pos=246 desc=NÃO img=sim vídeo=sim lutador=sim rel=8 chr=0
+  - `TROPHY-SSB4-Lucas-Lucas-5` "Lucas" pos=239 desc=sim img=sim vídeo=sim lutador=sim rel=16 chr=1
+
+### Mesma posição
+
+- posição 1
+  - `TROPHY-SSB4-3DS-Pichu` "Pichu" pos=1 desc=sim img=sim vídeo=sim lutador=sim rel=10 chr=0
+  - `TROPHY-SSB4-Mii Gunner-Mii Brawler` "Mii Brawler" pos=1 desc=sim img=sim vídeo=sim lutador=sim rel=15 chr=1
+- posição 404
+  - `TROPHY-SSB4-WIIU-Dedede_Burst` "Dedede Burst" pos=404 desc=sim img=sim vídeo=sim lutador=sim rel=7 chr=0
+  - `TROPHY-SSB4-Bayonetta-Bayonetta (Alt.)` "Bayonetta (Alt.)" pos=404 desc=sim img=sim vídeo=sim lutador=sim rel=8 chr=1
+- posição 314
+  - `TROPHY-SSB4-WIIU-Triforce_Slash_Toon_Link` "Triforce Slash (Toon Link)" pos=314 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+  - `TROPHY-SSB4-Able_Sisters` "Able Sisters" pos=314 desc=sim img=sim vídeo=sim lutador=NÃO rel=2 chr=2
+- posição 350
+  - `TROPHY-SSB4-WIIU-Gunship_Zero_Suit_Samus` "Gunship (Zero Suit Samus)" pos=350 desc=sim img=sim vídeo=sim lutador=sim rel=15 chr=0
+  - `TROPHY-SSB4-Devil` "Devil" pos=350 desc=sim img=sim vídeo=sim lutador=NÃO rel=4 chr=1
+- posição 165
+  - `TROPHY-SSB4-WIIU-Power_Star` "Power Star" pos=165 desc=sim img=sim vídeo=sim lutador=sim rel=2 chr=0
+  - `TROPHY-SSB4-Pigma_Dengar` "Pigma Dengar" pos=165 desc=sim img=sim vídeo=sim lutador=NÃO rel=2 chr=3
+- posição 11
+  - `TROPHY-SSB4-Barrels` "Barrels" pos=11 desc=sim img=sim vídeo=sim lutador=NÃO rel=2 chr=2
+  - `TROPHY-SSB4-Peach + Birthday Girl` "Peach + Birthday Girl" pos=11 desc=sim img=NÃO vídeo=NÃO lutador=sim rel=0 chr=0
+- posição 147
+  - `TROPHY-SSB4-Dragoon` "Dragoon" pos=147 desc=sim img=sim vídeo=sim lutador=NÃO rel=4 chr=1
+  - `TROPHY-SSB4-3DS-Daisy_Tennis_Outfit` "Daisy (Tennis Outfit)" pos=147 desc=sim img=sim vídeo=NÃO lutador=sim rel=9 chr=0
+- posição 10
+  - `TROPHY-SSB4-Rolling_Crates` "Rolling Crates" pos=10 desc=sim img=sim vídeo=sim lutador=NÃO rel=6 chr=2
+  - `TROPHY-SSB4-Luigi (With Poltergust 3000)` "Luigi (With Poltergust 3000)" pos=10 desc=sim img=NÃO vídeo=NÃO lutador=sim rel=0 chr=0
+- posição 176
+  - `TROPHY-SSB4-WIIU-Daisy` "Daisy" pos=176 desc=sim img=sim vídeo=sim lutador=sim rel=21 chr=2
+  - `TROPHY-SSB4-Jigglypuff-Jigglypuff (Alt.)` "Jigglypuff (Alt.)" pos=176 desc=sim img=sim vídeo=sim lutador=sim rel=16 chr=2
+- posição 144
+  - `TROPHY-SSB4-3DS-Wario__Bruiser_Wario__Growlster` "Wario + Bruiser Wario + Growlster" pos=144 desc=sim img=sim vídeo=NÃO lutador=sim rel=0 chr=0
+  - `TROPHY-SSB4-Meta Knight-Meta Knight (Alt.)` "Meta Knight (Alt.)" pos=144 desc=sim img=sim vídeo=sim lutador=sim rel=21 chr=3
+
+## TROPHY / SSBB (549 itens)
+
+### Mesma posição
+
+- posição 62
+  - `TROPHY-SSBB-Ticken` "Ticken" pos=62 desc=sim img=sim vídeo=sim lutador=NÃO rel=0 chr=1
+  - `TROPHY-SSBB-Starfy` "Starfy" pos=62 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=0 chr=0
+- posição 66
+  - `TROPHY-SSBB-Armank` "Armank" pos=66 desc=sim img=sim vídeo=sim lutador=NÃO rel=0 chr=1
+  - `TROPHY-SSBB-Ashley Robbins` "Ashley Robbins" pos=66 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=0 chr=0
+- posição 73
+  - `TROPHY-SSBB-Duon` "Duon" pos=73 desc=sim img=sim vídeo=sim lutador=NÃO rel=2 chr=1
+  - `TROPHY-SSBB-Silver the Hedgehog` "Silver the Hedgehog" pos=73 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=0 chr=0
+- posição 60
+  - `TROPHY-SSBB-Nagagog` "Nagagog" pos=60 desc=sim img=sim vídeo=sim lutador=NÃO rel=0 chr=1
+  - `TROPHY-SSBB-Super Scope` "Super Scope" pos=60 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=0 chr=0
+- posição 58
+  - `TROPHY-SSBB-Shellpod` "Shellpod" pos=58 desc=sim img=sim vídeo=sim lutador=NÃO rel=2 chr=1
+  - `TROPHY-SSBB-Pellet` "Pellet" pos=58 desc=sim img=sim vídeo=NÃO lutador=NÃO rel=0 chr=0
+
+## TROPHY / SSBM (296 itens)
+
+### Mesmo nome sem o "(n)"
+
+- mrgamewatchsmash
+  - `TROPHY-SSBM-Mr_Game__Watch_SMASH_2` "Mr. Game & Watch SMASH (2)" pos=189 desc=sim img=sim vídeo=sim lutador=sim rel=10 chr=0
+  - `TROPHY-SSBM-Mr. Game & Watch-Mr. Game & Watch SMASH-1` "Mr. Game & Watch SMASH" pos=59 desc=sim img=sim vídeo=sim lutador=sim rel=10 chr=0
+- roysmash
+  - `TROPHY-SSBM-Roy_SMASH_2` "Roy SMASH (2)" pos=78 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+  - `TROPHY-SSBM-Roy-Roy SMASH-1` "Roy SMASH" pos=77 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+- sheiksmash
+  - `TROPHY-SSBM-Sheik-Sheik SMASH` "Sheik SMASH" pos=44 desc=sim img=sim vídeo=sim lutador=sim rel=10 chr=0
+  - `TROPHY-SSBM-Sheik_SMASH_2` "Sheik SMASH (2)" pos=45 desc=sim img=sim vídeo=sim lutador=sim rel=12 chr=0
+- starman
+  - `TROPHY-SSBM-Starman` "Starman" pos=107 desc=sim img=sim vídeo=sim lutador=NÃO rel=16 chr=1
+  - `TROPHY-SSBM-Starman_2` "Starman (2)" pos=246 desc=sim img=sim vídeo=sim lutador=NÃO rel=14 chr=0
+- younglinksmash
+  - `TROPHY-SSBM-Young_Link_SMASH_2` "Young Link SMASH (2)" pos=72 desc=sim img=sim vídeo=sim lutador=sim rel=12 chr=0
+  - `TROPHY-SSBM-Young Link-Young Link SMASH-1` "Young Link SMASH" pos=71 desc=sim img=sim vídeo=sim lutador=sim rel=12 chr=0
+- zeldasmash
+  - `TROPHY-SSBM-Zelda-Zelda SMASH` "Zelda SMASH" pos=41 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+  - `TROPHY-SSBM-Zelda_SMASH_2` "Zelda SMASH (2)" pos=42 desc=sim img=sim vídeo=sim lutador=sim rel=21 chr=0
+- samusaransmash
+  - `TROPHY-SSBM-Samus_Aran_SMASH_2` "Samus Aran SMASH (2)" pos=12 desc=sim img=sim vídeo=sim lutador=sim rel=11 chr=0
+  - `TROPHY-SSBM-Samus_Aran_SMASH` "Samus Aran SMASH" pos=11 desc=sim img=sim vídeo=sim lutador=sim rel=11 chr=0
+- mariosmash
+  - `TROPHY-SSBM-Mario_SMASH` "Mario SMASH" pos=2 desc=sim img=sim vídeo=sim lutador=sim rel=13 chr=0
+  - `TROPHY-SSBM-Mario_SMASH_2` "Mario SMASH (2)" pos=3 desc=sim img=sim vídeo=sim lutador=sim rel=53 chr=0
+- falcolombardismash
+  - `TROPHY-SSBM-Falco-Falco Lombardi SMASH` "Falco Lombardi SMASH" pos=68 desc=sim img=sim vídeo=sim lutador=sim rel=11 chr=0
+  - `TROPHY-SSBM-Falco_Lombardi_SMASH_2` "Falco Lombardi SMASH (2)" pos=69 desc=sim img=sim vídeo=sim lutador=sim rel=11 chr=0
+- pichusmash
+  - `TROPHY-SSBM-Pichu-Pichu SMASH` "Pichu SMASH" pos=74 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+  - `TROPHY-SSBM-Pichu_SMASH_2` "Pichu SMASH (2)" pos=75 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+- donkeykongsmash
+  - `TROPHY-SSBM-Donkey_Kong_SMASH` "Donkey Kong SMASH" pos=5 desc=sim img=sim vídeo=sim lutador=sim rel=11 chr=0
+  - `TROPHY-SSBM-Donkey_Kong_SMASH_2` "Donkey Kong SMASH (2)" pos=6 desc=sim img=sim vídeo=sim lutador=sim rel=54 chr=0
+- andross
+  - `TROPHY-SSBM-Andross` "Andross" pos=229 desc=sim img=sim vídeo=sim lutador=NÃO rel=10 chr=1
+  - `TROPHY-SSBM-Andross_2` "Andross (2)" pos=230 desc=sim img=sim vídeo=sim lutador=NÃO rel=6 chr=0
+- foxmccloudsmash
+  - `TROPHY-SSBM-Fox-Fox McCloud SMASH-1` "Fox McCloud SMASH" pos=20 desc=sim img=sim vídeo=sim lutador=sim rel=11 chr=0
+  - `TROPHY-SSBM-Fox_McCloud_SMASH_2` "Fox McCloud SMASH (2)" pos=21 desc=sim img=sim vídeo=sim lutador=sim rel=14 chr=0
+- mewtwosmash
+  - `TROPHY-SSBM-Mewtwo-Mewtwo SMASH` "Mewtwo SMASH" pos=53 desc=sim img=sim vídeo=sim lutador=sim rel=10 chr=0
+  - `TROPHY-SSBM-Mewtwo_SMASH_2` "Mewtwo SMASH (2)" pos=54 desc=sim img=sim vídeo=sim lutador=sim rel=10 chr=0
+- kirbysmash
+  - `TROPHY-SSBM-Kirby-Kirby SMASH` "Kirby SMASH" pos=17 desc=sim img=sim vídeo=sim lutador=sim rel=15 chr=0
+  - `TROPHY-SSBM-Kirby_SMASH_2` "Kirby SMASH (2)" pos=238 desc=sim img=sim vídeo=sim lutador=sim rel=28 chr=0
+- nesssmash
+  - `TROPHY-SSBM-Ness-Ness SMASH-1` "Ness SMASH" pos=26 desc=sim img=sim vídeo=sim lutador=sim rel=12 chr=0
+  - `TROPHY-SSBM-Ness_SMASH_2` "Ness SMASH (2)" pos=27 desc=sim img=sim vídeo=sim lutador=sim rel=12 chr=0
+- pikachusmash
+  - `TROPHY-SSBM-Pikachu_SMASH_2` "Pikachu SMASH (2)" pos=24 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+  - `TROPHY-SSBM-Pikachu-Pikachu SMASH` "Pikachu SMASH" pos=23 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+- captfalconsmash
+  - `TROPHY-SSBM-Capt_Falcon_SMASH` "Capt. Falcon SMASH" pos=29 desc=sim img=sim vídeo=sim lutador=sim rel=10 chr=0
+  - `TROPHY-SSBM-Capt_Falcon_SMASH_2` "Capt. Falcon SMASH (2)" pos=30 desc=sim img=sim vídeo=sim lutador=sim rel=12 chr=0
+- jigglypuffsmash
+  - `TROPHY-SSBM-Jigglypuff_SMASH_2` "Jigglypuff SMASH (2)" pos=51 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+  - `TROPHY-SSBM-Jigglypuff-Jigglypuff SMASH-1` "Jigglypuff SMASH" pos=50 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+- yoshismash
+  - `TROPHY-SSBM-Yoshi_SMASH_2` "Yoshi SMASH (2)" pos=15 desc=sim img=sim vídeo=sim lutador=sim rel=14 chr=0
+  - `TROPHY-SSBM-Yoshi_SMASH` "Yoshi SMASH" pos=14 desc=sim img=sim vídeo=sim lutador=sim rel=11 chr=0
+- linksmash
+  - `TROPHY-SSBM-Link_SMASH_2` "Link SMASH (2)" pos=9 desc=sim img=sim vídeo=sim lutador=sim rel=11 chr=0
+  - `TROPHY-SSBM-Link_SMASH` "Link SMASH" pos=8 desc=sim img=sim vídeo=sim lutador=sim rel=11 chr=0
+- bowsersmash
+  - `TROPHY-SSBM-Bowser_SMASH_2` "Bowser SMASH (2)" pos=83 desc=sim img=sim vídeo=sim lutador=sim rel=45 chr=0
+  - `TROPHY-SSBM-Bowser-Bowser SMASH-1` "Bowser SMASH" pos=32 desc=sim img=sim vídeo=sim lutador=sim rel=10 chr=0
+- peachsmash
+  - `TROPHY-SSBM-Peach_SMASH_2` "Peach SMASH (2)" pos=36 desc=sim img=sim vídeo=sim lutador=sim rel=40 chr=0
+  - `TROPHY-SSBM-Peach-Peach SMASH-1` "Peach SMASH" pos=35 desc=sim img=sim vídeo=sim lutador=sim rel=12 chr=0
+- drmariosmash
+  - `TROPHY-SSBM-Dr_Mario_SMASH_2` "Dr. Mario SMASH (2)" pos=63 desc=sim img=sim vídeo=sim lutador=sim rel=11 chr=0
+  - `TROPHY-SSBM-Dr. Mario-Dr. Mario SMASH` "Dr. Mario SMASH" pos=62 desc=sim img=sim vídeo=sim lutador=sim rel=12 chr=0
+- ganondorfsmash
+  - `TROPHY-SSBM-Ganondorf_SMASH_2` "Ganondorf SMASH (2)" pos=66 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+  - `TROPHY-SSBM-Ganondorf-Ganondorf SMASH-1` "Ganondorf SMASH" pos=65 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+- iceclimberssmash
+  - `TROPHY-SSBM-Ice Climbers-Ice Climbers SMASH` "Ice Climbers SMASH" pos=38 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+  - `TROPHY-SSBM-Ice_Climbers_SMASH_2` "Ice Climbers SMASH (2)" pos=39 desc=sim img=sim vídeo=sim lutador=sim rel=33 chr=0
+- luigismash
+  - `TROPHY-SSBM-Luigi_SMASH_2` "Luigi SMASH (2)" pos=275 desc=sim img=sim vídeo=sim lutador=sim rel=12 chr=0
+  - `TROPHY-SSBM-Luigi-Luigi SMASH` "Luigi SMASH" pos=47 desc=sim img=sim vídeo=sim lutador=sim rel=11 chr=0
+- marthsmash
+  - `TROPHY-SSBM-Marth_SMASH` "Marth SMASH" pos=56 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+  - `TROPHY-SSBM-Marth_SMASH_2` "Marth SMASH (2)" pos=57 desc=sim img=sim vídeo=sim lutador=sim rel=9 chr=0
+
+### Mesma posição
+
+- posição 189
+  - `TROPHY-SSBM-Mr_Game__Watch_SMASH_2` "Mr. Game & Watch SMASH (2)" pos=189 desc=sim img=sim vídeo=sim lutador=sim rel=10 chr=0
+  - `TROPHY-SSBM-Target` "Target" pos=189 desc=sim img=sim vídeo=sim lutador=NÃO rel=0 chr=1
+- posição 238
+  - `TROPHY-SSBM-Waddle_Dee` "Waddle Dee" pos=238 desc=sim img=sim vídeo=sim lutador=NÃO rel=17 chr=2
+  - `TROPHY-SSBM-Kirby_SMASH_2` "Kirby SMASH (2)" pos=238 desc=sim img=sim vídeo=sim lutador=sim rel=28 chr=0
+- posição 12
+  - `TROPHY-SSBM-Samus_Aran_SMASH_2` "Samus Aran SMASH (2)" pos=12 desc=sim img=sim vídeo=sim lutador=sim rel=11 chr=0
+  - `TROPHY-SSBM-Motion-Sensor Bomb` "Motion-Sensor Bomb" pos=12 desc=sim img=NÃO vídeo=NÃO lutador=NÃO rel=0 chr=0
+- posição 275
+  - `TROPHY-SSBM-Pikmin` "Pikmin" pos=275 desc=sim img=sim vídeo=sim lutador=NÃO rel=21 chr=1
+  - `TROPHY-SSBM-Luigi_SMASH_2` "Luigi SMASH (2)" pos=275 desc=sim img=sim vídeo=sim lutador=sim rel=12 chr=0
+- posição 83
+  - `TROPHY-SSBM-Master Hand` "Master Hand" pos=83 desc=sim img=sim vídeo=sim lutador=NÃO rel=24 chr=1
+  - `TROPHY-SSBM-Bowser_SMASH_2` "Bowser SMASH (2)" pos=83 desc=sim img=sim vídeo=sim lutador=sim rel=45 chr=0
+- posição 46
+  - `TROPHY-SSBM-Donkey Kong Jr.` "Donkey Kong Jr." pos=46 desc=sim img=NÃO vídeo=NÃO lutador=sim rel=0 chr=0
+  - `TROPHY-SSBM-Luigi-Luigi` "Luigi" pos=46 desc=sim img=sim vídeo=sim lutador=sim rel=32 chr=2
+
