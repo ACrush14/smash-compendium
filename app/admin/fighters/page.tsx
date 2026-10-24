@@ -75,7 +75,7 @@ export default function AdminFightersPage() {
   const [idx, setIdx]           = useState(0);
   const [loading, setLoading]   = useState(true);
   const [saving, setSaving]     = useState(false);
-  const [filter, setFilter]     = useState<Filter>("pending_review");
+  const [filter, setFilter]     = useState<Filter>("all"); // "Todos" por padrão: com 0 pendentes, "Pendentes" abria uma tela vazia
   const [notes, setNotes]       = useState("");
 
   const load = useCallback(async () => {

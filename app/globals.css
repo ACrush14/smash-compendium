@@ -343,3 +343,10 @@ footer, footer span, footer a { color: #6f98aa; }
 
 /* Links dentro de texto/rodapé não podem depender só da cor */
 footer a, p a, li > a:not([class*="block"]):not([class*="flex"]) { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── Admin: a barra de navegação (altura fixa) ocupa o topo; páginas que usavam a tela toda usam o resto ── */
+.admin-shell { --admin-nav-h: 2.25rem; }
+.admin-nav { height: var(--admin-nav-h); }
+.admin-shell .h-screen { height: calc(100vh - var(--admin-nav-h)); height: calc(100dvh - var(--admin-nav-h)); }
+.admin-shell .min-h-screen { min-height: calc(100vh - var(--admin-nav-h)); min-height: calc(100dvh - var(--admin-nav-h)); }
+.admin-shell div.sticky.top-0.z-40 { top: var(--admin-nav-h); }

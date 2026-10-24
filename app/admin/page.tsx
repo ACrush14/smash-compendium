@@ -1,43 +1,37 @@
 import Link from "next/link";
-import RevalidateButton from "./RevalidateButton";
+
+const SECTIONS = [
+  { href: "/admin/fighters",     title: "Lutadores",         desc: "Revisar e aprovar os 90 lutadores.", accent: false },
+  { href: "/admin/collectibles", title: "Colecionáveis",     desc: "Troféus, stickers e spirits: ligações e dados.", accent: false },
+  { href: "/admin/chronicles",   title: "Chronicles",        desc: "Histórico dos jogos: capas, datas e links.", accent: false },
+  { href: "/admin/music",        title: "Músicas (lutador)", desc: "Música icônica de cada personagem.", accent: false },
+  { href: "/admin/music-tracks", title: "Faixas de música",  desc: "Mais de 1.100 faixas do SSBU: editar, filtrar, YouTube.", accent: false },
+  { href: "/admin/timestamps",   title: "Timestamps",        desc: "Início e fim dos vídeos: Melee, Brawl e Smash 4.", accent: true },
+  { href: "/admin/create",       title: "Construtor",        desc: "Criar novos registros no banco.", accent: false },
+];
 
 export default function AdminDashboard() {
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
-      <p className="text-gray-400 mb-8">Select a section to manage content:</p>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Link href="/admin/fighters" className="p-6 border border-zinc-800 rounded-lg hover:bg-zinc-900 transition-colors">
-          <h2 className="text-xl font-semibold mb-2">Fighters</h2>
-          <p className="text-gray-500 text-sm">Manage Smash Bros fighters.</p>
-        </Link>
-        <Link href="/admin/collectibles" className="p-6 border border-zinc-800 rounded-lg hover:bg-zinc-900 transition-colors">
-          <h2 className="text-xl font-semibold mb-2">Collectibles</h2>
-          <p className="text-gray-500 text-sm">Manage items, spirits, and trophies.</p>
-        </Link>
-        <Link href="/admin/chronicles" className="p-6 border border-zinc-800 rounded-lg hover:bg-zinc-900 transition-colors">
-          <h2 className="text-xl font-semibold mb-2">Chronicles</h2>
-          <p className="text-gray-500 text-sm">Manage game history and lore.</p>
-        </Link>
-        <Link href="/admin/music" className="p-6 border border-zinc-800 rounded-lg hover:bg-zinc-900 transition-colors">
-          <h2 className="text-xl font-semibold mb-2">Music (Fighter)</h2>
-          <p className="text-gray-500 text-sm">Música icônica por personagem.</p>
-        </Link>
-        <Link href="/admin/music-tracks" className="p-6 border border-zinc-800 rounded-lg hover:bg-zinc-900 transition-colors">
-          <h2 className="text-xl font-semibold mb-2">Music Tracks</h2>
-          <p className="text-gray-500 text-sm">1.100+ faixas SSBU — editar, filtrar, YouTube.</p>
-        </Link>
-        <Link href="/admin/create" className="p-6 border border-zinc-800 rounded-lg hover:bg-zinc-900 transition-colors">
-          <h2 className="text-xl font-semibold mb-2">Create New</h2>
-          <p className="text-gray-500 text-sm">Add new database entries.</p>
-        </Link>
-        <Link href="/admin/timestamps" className="p-6 border border-cyan-900/40 rounded-lg hover:bg-cyan-950/40 transition-colors">
-          <h2 className="text-xl font-semibold mb-2">⏱ Timestamps</h2>
-          <p className="text-gray-500 text-sm">Revisar e corrigir timestamps de vídeo — Melee, Brawl, Smash 4.</p>
-        </Link>
+    <div className="mx-auto max-w-4xl p-6 sm:p-8">
+      <h1 className="mb-2 text-3xl font-bold">Painel do admin</h1>
+      <p className="mb-8 text-gray-400">
+        Escolha uma seção aqui ou na barra no topo. Nela também ficam os botões <b>Limpar cache</b> (para ver edições feitas fora do painel), <b>Ver site</b> e <b>Sair</b>.
+      </p>
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {SECTIONS.map(s => (
+          <Link
+            key={s.href}
+            href={s.href}
+            className={`rounded-lg border p-6 transition-colors ${
+              s.accent ? "border-cyan-900/40 hover:bg-cyan-950/40" : "border-zinc-800 hover:bg-zinc-900"
+            }`}
+          >
+            <h2 className="mb-2 text-xl font-semibold">{s.title}</h2>
+            <p className="text-sm text-gray-400">{s.desc}</p>
+          </Link>
+        ))}
       </div>
-      <RevalidateButton />
     </div>
   );
 }

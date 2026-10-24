@@ -129,7 +129,7 @@ export default function AdminMusicPage() {
         </div>
       </div>
 
-      <div className="flex h-[calc(100vh-73px)]">
+      <div className="flex h-[calc(100vh-109px)]">
 
         {/* ── Fighter list sidebar ── */}
         <div className="w-64 border-r border-cyan-500/10 overflow-y-auto shrink-0">

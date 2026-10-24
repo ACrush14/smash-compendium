@@ -40,7 +40,8 @@ export default function TimestampEditor({ tabs }: { tabs: Tab[] }) {
   const [saving, setSaving]       = useState<Record<string, boolean>>({});
   const [saved,  setSaved]        = useState<Record<string, boolean>>({});
   // `bounded`: a linha tem trecho (início/fim) e o preview toca só esse trecho. Sem trecho, o vídeo fica livre para o usuário procurar.
-  const [preview, setPreview]     = useState<{ src: string; start: number; end: number; name: string; bounded: boolean } | null>(null);
+  const [preview, setPreview]     = useState<{ src: string; start: number; end: number; name: string; bounded: boolean; entryId: string } | null>(null);
+  const [nowSec, setNowSec]       = useState(0); // tempo atual do vídeo (para os botões "Início/Fim = agora")
   const videoRef = useRef<HTMLVideoElement>(null);
   // true quando o usuário navegou por conta própria (barra de tempo ou "Ir para segundo"): não volta mais ao início do trecho.
   const freeRef = useRef(false);
@@ -94,6 +95,16 @@ export default function TimestampEditor({ tabs }: { tabs: Tab[] }) {
     return () => { v.removeEventListener('timeupdate', check); v.removeEventListener('seeking', onSeeking); };
   }, [preview]);
 
+  // Relógio do vídeo para mostrar o segundo atual
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || !preview) return;
+    const tick = () => setNowSec(Math.floor(v.currentTime));
+    v.addEventListener('timeupdate', tick);
+    v.addEventListener('seeked', tick);
+    return () => { v.removeEventListener('timeupdate', tick); v.removeEventListener('seeked', tick); };
+  }, [preview]);
+
   const getEdit = (id: string, field: 'start' | 'end', fallback: number | null) => {
     if (edits[id]?.[field] !== undefined) return edits[id]![field];
     return fallback == null ? '' : String(fallback);
@@ -144,7 +155,7 @@ export default function TimestampEditor({ tabs }: { tabs: Tab[] }) {
     const endNum = endRaw !== undefined ? parseInt(endRaw, 10) : entry.videoEndSec;
     const end = endNum != null && !Number.isNaN(endNum) ? endNum : start + 15;
     // Sem início definido: o vídeo abre livre (sem trecho), para você procurar onde essa linha aparece.
-    setPreview({ src: tab.videoSrc, start, end, name: entry.name, bounded: hasStart });
+    setPreview({ src: tab.videoSrc, start, end, name: entry.name, bounded: hasStart, entryId: entry.id });
   };
 
   const filtered = tab.entries.filter(e => {
@@ -345,6 +356,29 @@ export default function TimestampEditor({ tabs }: { tabs: Tab[] }) {
                   <p className="text-white/40">Esta linha ainda não tem trecho. O vídeo está livre: use a barra de tempo ou "Ir para segundo" para procurar.</p>
                 )}
               </div>
+
+              {/* Marcar o tempo atual do vídeo como início/fim da linha escolhida */}
+              {(() => {
+                const entry = tab.entries.find(e => e.id === preview.entryId);
+                const dirty = entry ? isDirty(entry) : false;
+                const mark = (field: 'start' | 'end') => setEdit(preview.entryId, field, String(videoRef.current ? Math.floor(videoRef.current.currentTime) : nowSec));
+                return (
+                  <div className="border-t border-white/10 pt-3 space-y-2">
+                    <p className="text-xs text-white/30">Tempo atual do vídeo: <span className="font-mono text-cyan-300">{nowSec}s ({fmt(nowSec)})</span></p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button onClick={() => mark('start')} className="px-2 py-1.5 text-xs bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded transition-colors">Início = agora</button>
+                      <button onClick={() => mark('end')} className="px-2 py-1.5 text-xs bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded transition-colors">Fim = agora</button>
+                    </div>
+                    <button
+                      onClick={() => entry && handleSave(entry)}
+                      disabled={!entry || !dirty || !!saving[preview.entryId]}
+                      className="w-full px-2 py-1.5 text-xs bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 rounded transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
+                      {saving[preview.entryId] ? 'Salvando…' : saved[preview.entryId] ? 'Salvo ✓' : dirty ? 'Salvar esta linha' : 'Sem alterações'}
+                    </button>
+                  </div>
+                );
+              })()}
 
               <div className="border-t border-white/10 pt-3">
                 <p className="text-xs text-white/30 mb-2">Ir para segundo:</p>
