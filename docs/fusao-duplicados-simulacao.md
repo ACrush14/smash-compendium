@@ -1,0 +1,270 @@
+# Fusão de duplicados — Spirits e Stickers (2026-10-24)
+
+129 grupos (54 spirits, 75 stickers); 133 linhas seriam removidas.
+
+Cada item mostra a linha que FICA, a que SAI, os campos que a que fica recebe e quantas relações/ligações são aproveitadas.
+
+## Spirits
+
+- **Bowser** (pos 7) — FICA `SPIRIT-SSBU-Bowser-7` · SAI `SPIRIT-SSBU-Bowser`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 3, repetidas descartadas: 30 | ligações Chronicles aproveitadas: 0
+- **Captain Falcon** (pos 591) — FICA `SPIRIT-SSBU-Captain Falcon-591` · SAI `SPIRIT-SSBU-Captain Falcon`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 12, repetidas descartadas: 6 | ligações Chronicles aproveitadas: 0
+- **Chrom** (pos 613) — FICA `SPIRIT-SSBU-Chrom-613` · SAI `SPIRIT-SSBU-Chrom`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 6 | ligações Chronicles aproveitadas: 0
+- **Cloud** (pos 1004) — FICA `SPIRIT-SSBU-Cloud` · SAI `SPIRIT-SSBU-Cloud-1004`
+  - recebe: sourceGame | relações aproveitadas: 0, repetidas descartadas: 8 | ligações Chronicles aproveitadas: 0
+- **Daisy** (pos 6) — FICA `SPIRIT-SSBU-Daisy-6` · SAI `SPIRIT-SSBU-Daisy`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 21 | ligações Chronicles aproveitadas: 0
+- **Dark Pit** (pos 704) — FICA `SPIRIT-SSBU-Dark Pit-704` · SAI `SPIRIT-SSBU-Dark Pit`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 5, repetidas descartadas: 14 | ligações Chronicles aproveitadas: 0
+- **Dark Samus** (pos 265) — FICA `SPIRIT-SSBU-Dark Samus-265` · SAI `SPIRIT-SSBU-Dark Samus`
+  - recebe: description, orderIndex, posicaoSpiritSsbu | relações aproveitadas: 4, repetidas descartadas: 13 | ligações Chronicles aproveitadas: 0
+- **Diddy Kong** (pos 135) — FICA `SPIRIT-SSBU-Diddy Kong-135` · SAI `SPIRIT-SSBU-Diddy Kong`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 15, repetidas descartadas: 17 | ligações Chronicles aproveitadas: 0
+- **Donkey Kong** (pos 134) — FICA `SPIRIT-SSBU-Donkey Kong-134` · SAI `SPIRIT-SSBU-Donkey Kong`
+  - recebe: sourceGame, orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 25 | ligações Chronicles aproveitadas: 0
+- **Duck Hunt** (pos 974) — FICA `SPIRIT-SSBU-Duck Hunt-974` · SAI `SPIRIT-SSBU-Duck Hunt`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 14 | ligações Chronicles aproveitadas: 0
+- **Ganondorf** (pos 175) — FICA `SPIRIT-SSBU-Ganondorf` · SAI `SPIRIT-SSBU-Ganondorf-175`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 19 | ligações Chronicles aproveitadas: 0
+- **Greninja** (pos 418) — FICA `SPIRIT-SSBU-Greninja-418` · SAI `SPIRIT-SSBU-Greninja`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 8 | ligações Chronicles aproveitadas: 0
+- **Ice Climbers** (pos 606) — FICA `SPIRIT-SSBU-Ice Climbers-606` · SAI `SPIRIT-SSBU-Ice Climbers`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 10 | ligações Chronicles aproveitadas: 0
+- **Incineroar** (pos 419) — FICA `SPIRIT-SSBU-Incineroar-419` · SAI `SPIRIT-SSBU-Incineroar`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 2 | ligações Chronicles aproveitadas: 0
+- **Isabelle** (pos 827) — FICA `SPIRIT-SSBU-Isabelle` · SAI `SPIRIT-SSBU-Isabelle-827`
+  - recebe: sourceGame | relações aproveitadas: 0, repetidas descartadas: 8 | ligações Chronicles aproveitadas: 0
+- **Jigglypuff** (pos 409) — FICA `SPIRIT-SSBU-Jigglypuff-409` · SAI `SPIRIT-SSBU-Jigglypuff`
+  - recebe: sourceGame, orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Ken** (pos 978) — FICA `SPIRIT-SSBU-Ken` · SAI `SPIRIT-SSBU-Ken-978`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 4 | ligações Chronicles aproveitadas: 0
+- **King Dedede** (pos 325) — FICA `SPIRIT-SSBU-King Dedede-325` · SAI `SPIRIT-SSBU-King Dedede`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 3, repetidas descartadas: 18 | ligações Chronicles aproveitadas: 0
+- **Kirby** (pos 323) — FICA `SPIRIT-SSBU-Kirby-323` · SAI `SPIRIT-SSBU-Kirby`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 28 | ligações Chronicles aproveitadas: 0
+- **Link** (pos 172) — FICA `SPIRIT-SSBU-Link` · SAI `SPIRIT-SSBU-Link-172`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 54 | ligações Chronicles aproveitadas: 0
+- **Little Mac** (pos 932) — FICA `SPIRIT-SSBU-Little Mac-932` · SAI `SPIRIT-SSBU-Little Mac`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 17 | ligações Chronicles aproveitadas: 0
+- **Lucario** (pos 417) — FICA `SPIRIT-SSBU-Lucario-417` · SAI `SPIRIT-SSBU-Lucario`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Lucas** (pos 564) — FICA `SPIRIT-SSBU-Lucas-564` · SAI `SPIRIT-SSBU-Lucas`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 10 | ligações Chronicles aproveitadas: 0
+- **Lucina** (pos 611) — FICA `SPIRIT-SSBU-Lucina-611` · SAI `SPIRIT-SSBU-Lucina`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 8 | ligações Chronicles aproveitadas: 0
+- **Luigi** (pos 4) — FICA `SPIRIT-SSBU-Luigi-4` · SAI `SPIRIT-SSBU-Luigi`
+  - recebe: sourceGame, orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 30 | ligações Chronicles aproveitadas: 0
+- **Mario** (pos 1) — FICA `SPIRIT-SSBU-Mario-1` · SAI `SPIRIT-SSBU-Mario`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 7, repetidas descartadas: 77 | ligações Chronicles aproveitadas: 0
+- **Marth** (pos 610) — FICA `SPIRIT-SSBU-Marth-610` · SAI `SPIRIT-SSBU-Marth`
+  - recebe: sourceGame, orderIndex, posicaoSpiritSsbu, spiritFirstAppearance, spiritArtworkSource, spiritMusicTitle, spiritMusicArtist, spiritMusicDuration, spiritCuratorComment | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Mega Man** (pos 864) — FICA `SPIRIT-SSBU-Mega Man-864` · SAI `SPIRIT-SSBU-Mega Man`
+  - recebe: sourceGame, orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 19 | ligações Chronicles aproveitadas: 0
+- **Meta Knight** (pos 324) — FICA `SPIRIT-SSBU-Meta Knight-324` · SAI `SPIRIT-SSBU-Meta Knight`
+  - recebe: sourceGame, orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 18 | ligações Chronicles aproveitadas: 0
+- **Mewtwo** (pos 411) — FICA `SPIRIT-SSBU-Mewtwo-411` · SAI `SPIRIT-SSBU-Mewtwo`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Mii Brawler** (pos 1090) — FICA `SPIRIT-SSBU-Mii Brawler` · SAI `SPIRIT-SSBU-Mii Brawler-1090`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Mii Gunner** (pos 1092) — FICA `SPIRIT-SSBU-Mii Gunner-1092` · SAI `SPIRIT-SSBU-Mii Gunner`
+  - recebe: description, sourceGame, orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 15 | ligações Chronicles aproveitadas: 0
+- **Mii Swordfighter** (pos 1091) — FICA `SPIRIT-SSBU-Mii Swordfighter-1091` · SAI `SPIRIT-SSBU-Mii Swordfighter`
+  - recebe: description, sourceGame, orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Mythra** (pos 968) — FICA `SPIRIT-SSBU-Mythra` · SAI `SPIRIT-SSBU-Mythra-968`
+  - recebe: sourceGame | relações aproveitadas: 0, repetidas descartadas: 4 | ligações Chronicles aproveitadas: 0
+- **Ness** (pos 563) — FICA `SPIRIT-SSBU-Ness-563` · SAI `SPIRIT-SSBU-Ness`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Olimar** (pos 798) — FICA `SPIRIT-SSBU-Olimar-798` · SAI `SPIRIT-SSBU-Olimar`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 14 | ligações Chronicles aproveitadas: 0
+- **Pac-Man** (pos 946) — FICA `SPIRIT-SSBU-Pac-Man-946` · SAI `SPIRIT-SSBU-PAC-MAN`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 14 | ligações Chronicles aproveitadas: 0
+- **Palutena** (pos 705) — FICA `SPIRIT-SSBU-Palutena-705` · SAI `SPIRIT-SSBU-Palutena`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 19 | ligações Chronicles aproveitadas: 0
+- **Peach** (pos 5) — FICA `SPIRIT-SSBU-Peach-5` · SAI `SPIRIT-SSBU-Peach`
+  - recebe: sourceGame, orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 36 | ligações Chronicles aproveitadas: 0
+- **Pichu** (pos 410) — FICA `SPIRIT-SSBU-Pichu-410` · SAI `SPIRIT-SSBU-Pichu`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 10 | ligações Chronicles aproveitadas: 0
+- **Pikachu** (pos 407) — FICA `SPIRIT-SSBU-Pikachu-407` · SAI `SPIRIT-SSBU-Pikachu`
+  - recebe: sourceGame, orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 19 | ligações Chronicles aproveitadas: 0
+- **Pit** (pos 703) — FICA `SPIRIT-SSBU-Pit-703` · SAI `SPIRIT-SSBU-Pit`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 4, repetidas descartadas: 15 | ligações Chronicles aproveitadas: 0
+- **Pyra** (pos 967) — FICA `SPIRIT-SSBU-Pyra` · SAI `SPIRIT-SSBU-Pyra-967`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 4 | ligações Chronicles aproveitadas: 0
+- **Ridley** (pos 267) — FICA `SPIRIT-SSBU-Ridley-267` · SAI `SPIRIT-SSBU-Ridley`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 18 | ligações Chronicles aproveitadas: 0
+- **Ryu** (pos 977) — FICA `SPIRIT-SSBU-Ryu` · SAI `SPIRIT-SSBU-Ryu-977`
+  - recebe: sourceGame | relações aproveitadas: 0, repetidas descartadas: 8 | ligações Chronicles aproveitadas: 0
+- **Samus** (pos 264) — FICA `SPIRIT-SSBU-Samus-264` · SAI `SPIRIT-SSBU-Samus`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 1, repetidas descartadas: 43 | ligações Chronicles aproveitadas: 0
+- **Sheik** (pos 174) — FICA `SPIRIT-SSBU-Sheik` · SAI `SPIRIT-SSBU-Sheik-174`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 18 | ligações Chronicles aproveitadas: 0
+- **Shulk** (pos 951) — FICA `SPIRIT-SSBU-Shulk` · SAI `SPIRIT-SSBU-Shulk-951`
+  - recebe: sourceGame | relações aproveitadas: 0, repetidas descartadas: 6 | ligações Chronicles aproveitadas: 0
+- **Toon Link** (pos 177) — FICA `SPIRIT-SSBU-Toon Link` · SAI `SPIRIT-SSBU-Toon Link-177`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 15 | ligações Chronicles aproveitadas: 0
+- **Wario** (pos 729) — FICA `SPIRIT-SSBU-Wario-729` · SAI `SPIRIT-SSBU-Wario`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 29 | ligações Chronicles aproveitadas: 0
+- **Yoshi** (pos 297) — FICA `SPIRIT-SSBU-Yoshi-297` · SAI `SPIRIT-SSBU-Yoshi`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 0, repetidas descartadas: 28 | ligações Chronicles aproveitadas: 0
+- **Young Link** (pos 176) — FICA `SPIRIT-SSBU-Young Link` · SAI `SPIRIT-SSBU-Young Link-176`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 12 | ligações Chronicles aproveitadas: 0
+- **Zelda** (pos 173) — FICA `SPIRIT-SSBU-Zelda` · SAI `SPIRIT-SSBU-Zelda-173`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 32 | ligações Chronicles aproveitadas: 0
+- **Zero Suit Samus** (pos 266) — FICA `SPIRIT-SSBU-Zero Suit Samus-266` · SAI `SPIRIT-SSBU-Zero Suit Samus`
+  - recebe: orderIndex, posicaoSpiritSsbu | relações aproveitadas: 6, repetidas descartadas: 21 | ligações Chronicles aproveitadas: 0
+
+## Stickers
+
+- **Baby Mario** (pos 269) — FICA `STICKER-SSBB-Mario-Baby Mario` · SAI `STICKER-SSBB-Baby Mario`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 0, repetidas descartadas: 14 | ligações Chronicles aproveitadas: 0
+- **Bowser** (pos 95) — FICA `STICKER-SSBB-Bowser` · SAI `STICKER-SSBB-Bowser-Bowser`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 34 | ligações Chronicles aproveitadas: 0
+- **Bowser Jr.** (pos 32) — FICA `STICKER-SSBB-Bowser Jr.-Bowser Jr.` · SAI `STICKER-SSBB-Bowser Jr.`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Bubble Baby Mario** (pos 268) — FICA `STICKER-SSBB-Bubble Baby Mario` · SAI `STICKER-SSBB-Mario-Bubble Baby Mario`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 4, repetidas descartadas: 10 | ligações Chronicles aproveitadas: 0
+- **Capt. Falcon** (pos 384) — FICA `STICKER-SSBB-Captain Falcon-Capt. Falcon` · SAI `STICKER-SSBB-Capt. Falcon`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 7, repetidas descartadas: 6 | ligações Chronicles aproveitadas: 0
+- **Car Yoshi** (pos 265) — FICA `STICKER-SSBB-Car Yoshi` · SAI `STICKER-SSBB-Yoshi-Car Yoshi`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 7, repetidas descartadas: 9 | ligações Chronicles aproveitadas: 0
+- **Classic Sonic** (pos 673) — FICA `STICKER-SSBB-Classic Sonic` · SAI `STICKER-SSBB-Sonic-Classic Sonic`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 3, repetidas descartadas: 14 | ligações Chronicles aproveitadas: 0
+- **Cook Kirby** (pos 277) — FICA `STICKER-SSBB-Kirby-Cook Kirby` · SAI `STICKER-SSBB-Cook Kirby`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 0, repetidas descartadas: 10 | ligações Chronicles aproveitadas: 0
+- **Cupid Kirby** (pos 288) — FICA `STICKER-SSBB-Cupid Kirby` · SAI `STICKER-SSBB-Kirby-Cupid Kirby`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 7, repetidas descartadas: 9 | ligações Chronicles aproveitadas: 0
+- **Daisy** (pos 34) — FICA `STICKER-SSBB-Daisy` · SAI `STICKER-SSBB-Daisy-Daisy`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 18 | ligações Chronicles aproveitadas: 0
+- **Dark Samus** (pos 237) — FICA `STICKER-SSBB-Dark Samus` · SAI `STICKER-SSBB-Dark Samus-Dark Samus`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 20 | ligações Chronicles aproveitadas: 0
+- **Dark Suit Samus** (pos 232) — FICA `STICKER-SSBB-Dark Suit Samus` · SAI `STICKER-SSBB-Samus-Dark Suit Samus`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 15 | ligações Chronicles aproveitadas: 0
+- **Deku Link** (pos 170) — FICA `STICKER-SSBB-Deku Link` · SAI `STICKER-SSBB-Young Link-Deku Link`
+  - recebe: description | relações aproveitadas: 0, repetidas descartadas: 12 | ligações Chronicles aproveitadas: 0
+- **Diddy Kong** (pos 127) — FICA `STICKER-SSBB-Diddy Kong` · SAI `STICKER-SSBB-Diddy Kong-Diddy Kong`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 25 | ligações Chronicles aproveitadas: 0
+- **DK** (pos 29) — FICA `STICKER-SSBB-DK` · SAI `STICKER-SSBB-Donkey Kong-DK`
+  - recebe: franchiseId, fighterId | relações aproveitadas: 0, repetidas descartadas: 2 | ligações Chronicles aproveitadas: 0
+- **DK with Barrel** (pos 111) — FICA `STICKER-SSBB-DK with Barrel` · SAI `STICKER-SSBB-Donkey Kong-DK with Barrel`
+  - recebe: franchiseId, fighterId | relações aproveitadas: 4, repetidas descartadas: 2 | ligações Chronicles aproveitadas: 0
+- **Dr. Mario** (pos 532) — FICA `STICKER-SSBB-Dr. Mario` · SAI `STICKER-SSBB-Dr. Mario-Dr. Mario`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 14 | ligações Chronicles aproveitadas: 0
+- **Duck** (pos 651) — FICA `STICKER-SSBB-Duck` · SAI `STICKER-SSBB-Duck Hunt-Duck`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Eight Yoshis** (pos 271) — FICA `STICKER-SSBB-Eight Yoshis` · SAI `STICKER-SSBB-Yoshi-Eight Yoshis`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 7 | ligações Chronicles aproveitadas: 0
+- **Epona & Link** (pos 153) — FICA `STICKER-SSBB-Epona & Link` · SAI `STICKER-SSBB-Link-Epona & Link`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 10 | ligações Chronicles aproveitadas: 0
+- **Fierce Deity Link** (pos 167) — FICA `STICKER-SSBB-Fierce Deity Link` · SAI `STICKER-SSBB-Young Link-Fierce Deity Link`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 10 | ligações Chronicles aproveitadas: 0
+- **Fox** (pos 330) — FICA `STICKER-SSBB-Fox-Fox` · SAI `STICKER-SSBB-Fox`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 0, repetidas descartadas: 23 | ligações Chronicles aproveitadas: 0
+- **Ganondorf** (pos 186) — FICA `STICKER-SSBB-Ganondorf` · SAI `STICKER-SSBB-Ganondorf-Ganondorf`
+  - recebe: description | relações aproveitadas: 0, repetidas descartadas: 20 | ligações Chronicles aproveitadas: 0
+- **Girl** (pos 625) — FICA `STICKER-SSBB-Girl` · SAI `STICKER-SSBB-Villager-Girl`
+  - recebe: description, franchiseId | relações aproveitadas: 2, repetidas descartadas: 2 | ligações Chronicles aproveitadas: 0
+- **Gravity Suit Samus** (pos 228) — FICA `STICKER-SSBB-Gravity Suit Samus` · SAI `STICKER-SSBB-Samus-Gravity Suit Samus`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 10, repetidas descartadas: 9 | ligações Chronicles aproveitadas: 0
+- **Ike** (pos 484) — FICA `STICKER-SSBB-Ike` · SAI `STICKER-SSBB-Ike-Ike`
+  - recebe: description | relações aproveitadas: 0, repetidas descartadas: 12 | ligações Chronicles aproveitadas: 0
+- **Jigglypuff** (pos 342) — FICA `STICKER-SSBB-Jigglypuff` · SAI `STICKER-SSBB-Jigglypuff-Jigglypuff`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **King Dedede & Kirby** (pos 284) — FICA `STICKER-SSBB-King Dedede & Kirby` · SAI `STICKER-SSBB-King Dedede-King Dedede & Kirby`, `STICKER-SSBB-Kirby-King Dedede & Kirby`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 5, repetidas descartadas: 33 | ligações Chronicles aproveitadas: 0
+- **King K. Rool** (pos 125) — FICA `STICKER-SSBB-King K. Rool-King K. Rool` · SAI `STICKER-SSBB-King K. Rool`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 14, repetidas descartadas: 10 | ligações Chronicles aproveitadas: 0
+- **King of Red Lions & Link** (pos 178) — FICA `STICKER-SSBB-King of Red Lions & Link` · SAI `STICKER-SSBB-Toon Link-King of Red Lions & Link`
+  - recebe: description | relações aproveitadas: 0, repetidas descartadas: 14 | ligações Chronicles aproveitadas: 0
+- **Link** (pos 207) — FICA `STICKER-SSBB-Link` · SAI `STICKER-SSBB-Link-Link`
+  - recebe: fighterId | relações aproveitadas: 14, repetidas descartadas: 43 | ligações Chronicles aproveitadas: 0
+- **Link & Pigs** (pos 190) — FICA `STICKER-SSBB-Toon Link-Link & Pigs` · SAI `STICKER-SSBB-Link & Pigs`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 0, repetidas descartadas: 10 | ligações Chronicles aproveitadas: 0
+- **Link with Goron Mask** (pos 168) — FICA `STICKER-SSBB-Link with Goron Mask` · SAI `STICKER-SSBB-Young Link-Link with Goron Mask`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 12 | ligações Chronicles aproveitadas: 0
+- **Lucario** (pos 344) — FICA `STICKER-SSBB-Lucario` · SAI `STICKER-SSBB-Lucario-Lucario`
+  - recebe: description | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Lucas** (pos 412) — FICA `STICKER-SSBB-Lucas` · SAI `STICKER-SSBB-Lucas-Lucas`
+  - recebe: description | relações aproveitadas: 0, repetidas descartadas: 10 | ligações Chronicles aproveitadas: 0
+- **Luigi** (pos 104) — FICA `STICKER-SSBB-Luigi` · SAI `STICKER-SSBB-Luigi-Luigi`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 31 | ligações Chronicles aproveitadas: 0
+- **Luigi & Baby Luigi** (pos 108) — FICA `STICKER-SSBB-Luigi & Baby Luigi` · SAI `STICKER-SSBB-Luigi-Luigi & Baby Luigi`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 9, repetidas descartadas: 13 | ligações Chronicles aproveitadas: 0
+- **Mario** (pos 97) — FICA `STICKER-SSBB-Mario` · SAI `STICKER-SSBB-Mario-Mario`
+  - recebe: description | relações aproveitadas: 6, repetidas descartadas: 77 | ligações Chronicles aproveitadas: 0
+- **Mario & Luigi** (pos 103) — FICA `STICKER-SSBB-Mario & Luigi` · SAI `STICKER-SSBB-Luigi-Mario & Luigi`, `STICKER-SSBB-Mario-Mario & Luigi`
+  - recebe: fighterId | relações aproveitadas: 0, repetidas descartadas: 20 | ligações Chronicles aproveitadas: 0
+- **Mario & Yoshi** (pos 24) — FICA `STICKER-SSBB-Mario & Yoshi` · SAI `STICKER-SSBB-Mario-Mario & Yoshi`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 43, repetidas descartadas: 4 | ligações Chronicles aproveitadas: 0
+- **Marth** (pos 462) — FICA `STICKER-SSBB-Marth` · SAI `STICKER-SSBB-Marth-Marth`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Meta Knight** (pos 295) — FICA `STICKER-SSBB-Meta Knight` · SAI `STICKER-SSBB-Meta Knight-Meta Knight`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 1, repetidas descartadas: 18 | ligações Chronicles aproveitadas: 0
+- **Meta Knight Ball** (pos 290) — FICA `STICKER-SSBB-Meta Knight Ball` · SAI `STICKER-SSBB-Meta Knight-Meta Knight Ball`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 1, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Midna & Wolf Link** (pos 194) — FICA `STICKER-SSBB-Midna & Wolf Link` · SAI `STICKER-SSBB-Link-Midna & Wolf Link`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 13 | ligações Chronicles aproveitadas: 0
+- **Nana** (pos 420) — FICA `STICKER-SSBB-Ice Climbers-Nana` · SAI `STICKER-SSBB-Nana`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 10, repetidas descartadas: 2 | ligações Chronicles aproveitadas: 0
+- **Needle Kirby** (pos 279) — FICA `STICKER-SSBB-Kirby-Needle Kirby` · SAI `STICKER-SSBB-Needle Kirby`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 0, repetidas descartadas: 11 | ligações Chronicles aproveitadas: 0
+- **Ness** (pos 403) — FICA `STICKER-SSBB-Ness-Ness` · SAI `STICKER-SSBB-Ness`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Pauline & Donkey Kong** (pos 113) — FICA `STICKER-SSBB-Pauline & Donkey Kong` · SAI `STICKER-SSBB-Donkey Kong-Pauline & Donkey Kong`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 17, repetidas descartadas: 11 | ligações Chronicles aproveitadas: 0
+- **Peach** (pos 39) — FICA `STICKER-SSBB-Peach` · SAI `STICKER-SSBB-Peach-Peach`
+  - recebe: description | relações aproveitadas: 0, repetidas descartadas: 35 | ligações Chronicles aproveitadas: 0
+- **Peach & Daisy** (pos 75) — FICA `STICKER-SSBB-Peach-Peach & Daisy` · SAI `STICKER-SSBB-Daisy-Peach & Daisy`, `STICKER-SSBB-Peach & Daisy`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 0, repetidas descartadas: 37 | ligações Chronicles aproveitadas: 0
+- **Petey Piranha** (pos 42) — FICA `STICKER-SSBB-Piranha Plant-Petey Piranha` · SAI `STICKER-SSBB-Petey Piranha`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 6, repetidas descartadas: 6 | ligações Chronicles aproveitadas: 0
+- **Pikachu** (pos 343) — FICA `STICKER-SSBB-Pikachu` · SAI `STICKER-SSBB-Pikachu-Pikachu`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 19 | ligações Chronicles aproveitadas: 0
+- **Pit** (pos 445) — FICA `STICKER-SSBB-Pit-Pit` · SAI `STICKER-SSBB-Pit`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 0, repetidas descartadas: 20 | ligações Chronicles aproveitadas: 0
+- **Pokémon Trainer** (pos 338) — FICA `STICKER-SSBB-Pokémon Trainer` · SAI `STICKER-SSBB-Pokémon Trainer-Pokémon Trainer`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 18 | ligações Chronicles aproveitadas: 0
+- **Raccoon Mario** (pos 4) — FICA `STICKER-SSBB-Raccoon Mario` · SAI `STICKER-SSBB-Mario-Raccoon Mario`
+  - recebe: description | relações aproveitadas: 0, repetidas descartadas: 10 | ligações Chronicles aproveitadas: 0
+- **Ridley** (pos 225) — FICA `STICKER-SSBB-Ridley` · SAI `STICKER-SSBB-Ridley-Ridley`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 18 | ligações Chronicles aproveitadas: 0
+- **ROB** (pos 316) — FICA `STICKER-SSBB-ROB` · SAI `STICKER-SSBB-R.O.B.-R.O.B.`
+  - recebe: videoStartSec, videoEndSec | relações aproveitadas: 10, repetidas descartadas: 0 | ligações Chronicles aproveitadas: 0
+- **Robot** (pos 50) — FICA `STICKER-SSBB-Robot` · SAI `STICKER-SSBB-R.O.B.-Robot`
+  - recebe: description | relações aproveitadas: 0, repetidas descartadas: 8 | ligações Chronicles aproveitadas: 0
+- **Robot & Blocks** (pos 643) — FICA `STICKER-SSBB-Robot & Blocks` · SAI `STICKER-SSBB-R.O.B.-Robot & Blocks`
+  - recebe: description | relações aproveitadas: 0, repetidas descartadas: 8 | ligações Chronicles aproveitadas: 0
+- **Roy** (pos 466) — FICA `STICKER-SSBB-Roy` · SAI `STICKER-SSBB-Roy-Roy`
+  - recebe: description | relações aproveitadas: 0, repetidas descartadas: 15 | ligações Chronicles aproveitadas: 0
+- **Running Zero Suit Samus** (pos 227) — FICA `STICKER-SSBB-Running Zero Suit Samus` · SAI `STICKER-SSBB-Zero Suit Samus-Running Zero Suit Samus`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 5, repetidas descartadas: 14 | ligações Chronicles aproveitadas: 0
+- **Sheik** (pos 152) — FICA `STICKER-SSBB-Sheik` · SAI `STICKER-SSBB-Sheik-Sheik`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 18 | ligações Chronicles aproveitadas: 0
+- **Solid Snake** (pos 664) — FICA `STICKER-SSBB-Snake-Solid Snake` · SAI `STICKER-SSBB-Solid Snake`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 0, repetidas descartadas: 16 | ligações Chronicles aproveitadas: 0
+- **Sonic The Hedgehog** (pos 674) — FICA `STICKER-SSBB-Sonic-Sonic The Hedgehog` · SAI `STICKER-SSBB-Sonic The Hedgehog`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 0, repetidas descartadas: 15 | ligações Chronicles aproveitadas: 0
+- **Super Mario Bros.** (pos 1) — FICA `STICKER-SSBB-Super Mario Bros.` · SAI `STICKER-SSBB-Bowser-Super Mario Bros.`, `STICKER-SSBB-Mario-Super Mario Bros.`
+  - recebe: fighterId | relações aproveitadas: 14, repetidas descartadas: 30 | ligações Chronicles aproveitadas: 0
+- **Super Sonic** (pos 676) — FICA `STICKER-SSBB-Super Sonic` · SAI `STICKER-SSBB-Sonic-Super Sonic`
+  - recebe: videoStartSec, videoEndSec | relações aproveitadas: 0, repetidas descartadas: 15 | ligações Chronicles aproveitadas: 0
+- **Tiny Wario** (pos 422) — FICA `STICKER-SSBB-Tiny Wario` · SAI `STICKER-SSBB-Wario-Tiny Wario`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 9 | ligações Chronicles aproveitadas: 0
+- **Wario** (pos 438) — FICA `STICKER-SSBB-Wario` · SAI `STICKER-SSBB-Wario-Wario`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 28 | ligações Chronicles aproveitadas: 0
+- **Wario-Man** (pos 432) — FICA `STICKER-SSBB-Wario-Man` · SAI `STICKER-SSBB-Wario-Wario-Man`
+  - recebe: description | relações aproveitadas: 0, repetidas descartadas: 12 | ligações Chronicles aproveitadas: 0
+- **Wolf** (pos 559) — FICA `STICKER-SSBB-Wolf` · SAI `STICKER-SSBB-Wolf-Wolf`
+  - recebe: description | relações aproveitadas: 1, repetidas descartadas: 19 | ligações Chronicles aproveitadas: 0
+- **Yoshi Ship** (pos 247) — FICA `STICKER-SSBB-Yoshi-Yoshi Ship` · SAI `STICKER-SSBB-Yoshi Ship`
+  - recebe: posicaoTrofeuBrawl | relações aproveitadas: 0, repetidas descartadas: 9 | ligações Chronicles aproveitadas: 0
+- **Young Zelda** (pos 192) — FICA `STICKER-SSBB-Young Zelda` · SAI `STICKER-SSBB-Zelda-Young Zelda`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 4, repetidas descartadas: 15 | ligações Chronicles aproveitadas: 0
+- **Zelda** (pos 161) — FICA `STICKER-SSBB-Zelda` · SAI `STICKER-SSBB-Zelda-Zelda`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 33 | ligações Chronicles aproveitadas: 0
+- **Zero Suit Samus** (pos 226) — FICA `STICKER-SSBB-Zero Suit Samus` · SAI `STICKER-SSBB-Zero Suit Samus-Zero Suit Samus`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 8, repetidas descartadas: 19 | ligações Chronicles aproveitadas: 0
+- **Zora Link** (pos 172) — FICA `STICKER-SSBB-Zora Link` · SAI `STICKER-SSBB-Young Link-Zora Link`
+  - recebe: nada (a que fica já tem tudo) | relações aproveitadas: 0, repetidas descartadas: 10 | ligações Chronicles aproveitadas: 0
+
